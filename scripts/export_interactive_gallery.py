@@ -46,7 +46,7 @@ def page(tag, models):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{html.escape(tag)} · Profiles of attention heads</title>
-  <meta name="description" content="Explore attention-head profiles: interactive 3-D simplex, projection to Δ, parity profiles, and clusters by layer.">
+  <meta name="description" content="Explore attention-head profiles: interactive 3-D simplex, projection to Δ, spectral distributions by parity, and clusters by layer.">
   <link rel="stylesheet" href="gallery.css?v={versions['gallery.css']}">
   <script src="gallery.js?v={versions['gallery.js']}" defer></script>
 </head>
@@ -72,7 +72,7 @@ def page(tag, models):
     <nav class="figure-labels" role="tablist" aria-label="Figures">
       <button id="figure-tab-0" type="button" role="tab" aria-controls="viewer" data-figure="0" aria-selected="true">3-D simplex</button>
       <button id="figure-tab-1" type="button" role="tab" aria-controls="viewer" data-figure="1" aria-selected="false" tabindex="-1">Projection to Δ</button>
-      <button id="figure-tab-2" type="button" role="tab" aria-controls="viewer" data-figure="2" aria-selected="false" tabindex="-1">Parity profiles</button>
+      <button id="figure-tab-2" type="button" role="tab" aria-controls="viewer" data-figure="2" aria-selected="false" tabindex="-1">Spectral distributions by parity</button>
       <button id="figure-tab-3" type="button" role="tab" aria-controls="viewer" data-figure="3" aria-selected="false" tabindex="-1">Clusters by layer</button>
     </nav>
   </footer>

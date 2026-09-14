@@ -3,7 +3,7 @@
 const figures = [
   { key: 'simplex', title: 'Interactive 3-D simplex', file: 'simplex.html', help: 'Drag to rotate, scroll to zoom, and hover for layer and head details.' },
   { key: 'delta', title: '2-D projection to Δ', file: 'delta.png', help: 'Projection of the head profiles onto the face of symmetric profiles.' },
-  { key: 'extreme-histograms', title: 'Parity profiles (k = 3)', file: 'extreme-histograms.png', help: 'Mean histograms of the extreme members of each spectral type.' },
+  { key: 'extreme-histograms', title: 'Spectral distributions by parity (k = 3)', file: 'extreme-histograms.png', help: 'Mean histograms of the extreme members of each spectral type.' },
   { key: 'clusters-by-layer', title: 'Clusters by layer (k = 3)', file: 'clusters-by-layer.png', help: 'The distribution of the three spectral types across model layers.' },
 ];
 const model = document.getElementById('model');
@@ -21,7 +21,7 @@ function showFigure(index, updateURL = true) {
   document.getElementById('figure-help').textContent = figure.help;
   document.getElementById('viewer').setAttribute('aria-labelledby', `figure-tab-${index}`);
   document.title = `${model.value} · ${figure.title}`;
-  const source = `assets/${model.value}/${figure.file}?v=tabs-1`;
+  const source = `assets/${model.value}/${figure.file}?v=profile-titles-2`;
   document.getElementById('open-figure').href = source;
   error.hidden = true;
   frame.hidden = index !== 0;

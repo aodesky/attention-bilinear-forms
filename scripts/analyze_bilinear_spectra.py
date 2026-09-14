@@ -787,15 +787,9 @@ def render_interactive_simplex(
             frames.append(go.Frame(
                 name=str(int(power)), data=traces,
                 traces=list(range(head_trace_start, head_trace_start + 3)),
-                layout=go.Layout(title_text=(
-                    f"{model.repo_id}: bilinear-form weights (RoPE power d = {int(power)})"
-                )),
             ))
         fig.frames = frames
     fig.update_layout(
-        title=(f"{model.repo_id}: bilinear-form weights"
-               + (" (RoPE power d = 0)" if rope_weights is not None else
-                  " (three profile types)")),
         scene={
             "xaxis": {"visible": False}, "yaxis": {"visible": False},
             "zaxis": {"visible": False}, "aspectmode": "cube",
@@ -808,7 +802,7 @@ def render_interactive_simplex(
             },
         },
         legend={"x": 0.01, "y": 0.99},
-        margin={"l": 0, "r": 0, "t": 55, "b": 0},
+        margin={"l": 0, "r": 0, "t": 10, "b": 0},
     )
     powers_json = json.dumps(
         [int(power) for power in rope_powers] if rope_powers is not None else []

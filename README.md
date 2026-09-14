@@ -27,7 +27,7 @@ python3 scripts/export_interactive_gallery.py --dataset /path/to/data/bilinear-f
 ```
 
 This preserves the model page URLs and exports the interactive 3-D simplex
-with the local markers, the 2-D projection to Δ, parity profiles
+with the local markers, the 2-D projection to Δ, spectral distributions by parity
 (k = 3), and clusters by layer (k = 3). The top dropdown changes
 models while retaining the figure selected by the bottom tabs. Figure
 selections can be linked directly using the page's URL fragment. Plotly is
