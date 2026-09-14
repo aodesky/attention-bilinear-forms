@@ -1,0 +1,7 @@
+.project-links{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:18px;margin-left:auto;font:12px/1.5 system-ui,-apple-system,sans-serif}
+.project-links a{color:#42655d;text-decoration:none;white-space:nowrap}
+.project-links a:hover{text-decoration:underline;text-underline-offset:3px}
+.project-links a:focus-visible{outline:2px solid #276c62;outline-offset:4px}
+body>header:has(.project-links){flex-wrap:wrap;gap:12px;flex-shrink:0}
+body>header .project-links{padding:2px 7px}
+@media(max-width:600px){.project-links{gap:14px;font-size:11px}body>header .project-links{padding:0}}

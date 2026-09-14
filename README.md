@@ -3,6 +3,8 @@
 Experimental code, data and Lean formalizations accompanying the paper
 *On attention heads and bilinear forms*.
 
+Visit the [project website](https://aodesky.github.io/attention-bilinear-forms/) for the plots, formalization blueprint, and links to code and data.
+
 Every attention head of a decoder-only transformer carries a bilinear
 form `L = W_K^T W_Q` on the residual stream. This repository contains
 the code that extracts those forms from fourteen pretrained models,
@@ -69,8 +71,7 @@ multi-head and grouped-query attention.
 
 `interactive/` holds one page per model, plotting the profile of every
 head on the simplex of profiles, coloured by spectral type. Open
-any of them in a browser; the plotly library is loaded from a CDN, so
-an internet connection is needed to view them.
+any of them in a browser; the Plotly library is included as a shared local asset.
 
 ## Formalization
 
@@ -101,3 +102,12 @@ analysis needs `numpy`, `scipy`, `pandas`, `matplotlib` and
 `scikit-learn`; the extraction additionally needs `torch`,
 `transformers`, `safetensors` and `huggingface_hub`. Regenerating the
 figures needs a LaTeX installation, since they are typeset with it.
+
+## Project website
+
+`index.html` and `assets/site.css` provide the GitHub Pages landing page.
+The paper section reserves a place for the forthcoming arXiv link.
+`python scripts/build_site_artwork.py` regenerates the illustration and
+social card from the included GPT-2 head measurements (requires Pillow).
+The gallery exporter and blueprint builder preserve navigation back to
+the project home and between the hosted components.

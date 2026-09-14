@@ -16,6 +16,8 @@ import shutil
 import subprocess
 import tempfile
 
+from site_navigation import add_blueprint_navigation
+
 
 ROOT = Path(__file__).resolve().parent.parent
 BLUEPRINT = ROOT / "blueprint"
@@ -121,6 +123,8 @@ def main():
             text = path.read_text()
             for old in sorted(links, key=len, reverse=True):
                 text = text.replace(old, links[old])
+            if path.suffix == ".html" and '<header>' in text:
+                text = add_blueprint_navigation(text)
             path.write_text(text)
     for path in output.iterdir():
         destination = BLUEPRINT / path.name

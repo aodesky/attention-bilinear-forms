@@ -48,11 +48,16 @@ def page(tag, models):
   <title>{html.escape(tag)} · Profiles of attention heads</title>
   <meta name="description" content="Explore attention-head profiles: interactive 3-D simplex, projection to Δ, spectral distributions by parity, and clusters by layer.">
   <link rel="stylesheet" href="gallery.css?v={versions['gallery.css']}">
+  <link rel="stylesheet" href="../assets/project-nav.css?v=1">
   <script src="gallery.js?v={versions['gallery.js']}" defer></script>
 </head>
 <body>
   <header>
-    <a class="home" href="index.html">Profiles of attention heads</a>
+    <a class="home" href="../">Attention &amp; bilinear forms</a>
+    <nav class="project-links" aria-label="Project navigation">
+      <a href="../blueprint/">Blueprint</a>
+      <a href="https://github.com/aodesky/attention-bilinear-forms">GitHub ↗</a>
+    </nav>
     <label for="model">Model</label>
     <select id="model">{options}</select>
   </header>
