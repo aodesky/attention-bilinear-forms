@@ -1,0 +1,6 @@
+.title { font-family: Georgia, 'Times New Roman', serif; }
+.theorem { scroll-margin-top: 1rem; }
+a.lean_decl { overflow-wrap: anywhere; }
+@media (max-width: 650px) {
+  .displaymath { overflow-x: auto; max-width: 100%; }
+}

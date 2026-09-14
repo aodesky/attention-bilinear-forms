@@ -1,0 +1,3 @@
+leanblueprint==0.0.20
+plasTeX==3.1
+plastexdepgraph==0.0.5

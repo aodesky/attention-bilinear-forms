@@ -1,0 +1,403 @@
+\href{https://aodesky.github.io/attention-bilinear-forms/}{Project home}
+\quad $\cdot$ \quad
+\href{dep_graph_document.html}{Dependency graph}
+
+This blueprint presents the mathematical results implemented in the
+audited Lean formalization of \emph{On attention heads and bilinear forms}.
+It covers Appendices A, B and C, together with Definition 6 and Theorem 5
+from the main text. Lemma, corollary, proposition and theorem numbers
+match the paper; auxiliary definitions are named separately.
+
+Each result includes a proof outline and links to its Lean declarations.
+The dependency graph records the mathematical dependencies between these
+results and definitions; internal helper lemmas and mathlib dependencies
+are omitted. A green result and proof indicate that both have been
+formalized. The source links point to the audited revision of the Lean files.
+
+The empirical observations and the other main-text theorems are outside
+this formalization. In particular, Lemma 7 is formalized here, but the
+main-text accumulation theorem that applies it is not. The two expository
+remarks following Lemma 11 are also outside the scope.
+
+\chapter{Bilinear forms and their shapes}
+
+All matrices are real. Matrix norms are Frobenius norms. The Lean
+development uses their squares to avoid unnecessary square roots.
+
+\begin{definition}[Symmetric and antisymmetric parts]
+\label{def:parts}
+\lean{Appendices.frobSq, Appendices.symPart, Appendices.skewPart}
+\leanok
+For $L\in M_N(\R)$, put
+\[
+ S=\tfrac12(L+L^T),\qquad T=\tfrac12(L-L^T),\qquad
+ \norm{L}^2=\tr(L^TL).
+\]
+Then $L=S+T$, with $S$ symmetric and $T$ antisymmetric.
+\end{definition}
+
+\setcounter{definition}{5}
+\begin{definition}[Shape of a bilinear form]
+\label{def:shape}
+\lean{Appendices.sortDesc, Appendices.alphaList, Appendices.betaList, Appendices.shapeA, Appendices.shapeB, Appendices.shapeC, Appendices.shapeD}
+\leanok
+\uses{def:parts}
+For $L\ne0$, let $\alpha$ and $\beta$ be the decreasing lists of positive
+eigenvalues of $S$ and absolute values of its negative eigenvalues,
+padded with zeros to equal length. Define $s(L)=(a,b,c,d)$ by
+\[
+ a=\frac{\norm{T}^2}{\norm{L}^2},\qquad
+ b=\frac{2\langle\alpha,\beta\rangle}{\norm{L}^2},\qquad
+ c=\frac{\norm{(\alpha-\beta)_+}^2}{\norm{L}^2},\qquad
+ d=\frac{\norm{(\alpha-\beta)_-}^2}{\norm{L}^2}.
+\]
+Positive and negative parts are taken entrywise. Lean pads both lists
+to length $N$ and includes the denominator in each definition.
+\end{definition}
+
+\chapter{Random matrices}
+
+These results give the random baselines for the symmetric energy of an
+attention head. The distinction between a ratio of expectations and
+the expectation of a ratio matters: the latter uses Gaussian symmetry.
+
+\setcounter{lemma}{5}
+\begin{lemma}[Symmetric and skew energy identities]
+\label{lem:energy}
+\lean{Appendices.frobSq_eq_frobSq_symPart_add_frobSq_skewPart, Appendices.frobSq_symPart, Appendices.frobSq_skewPart, Appendices.frobSq_symPart_div, Appendices.frobSq_skewPart_div}
+\leanok
+\uses{def:parts}
+For any $L\in M_N(\R)$,
+\[
+ \norm{L}^2=\norm{S}^2+\norm{T}^2,\qquad
+ \norm{S}^2=\tfrac12\norm{L}^2+\tfrac12\tr(L^2),\qquad
+ \norm{T}^2=\tfrac12\norm{L}^2-\tfrac12\tr(L^2).
+\]
+For $L\ne0$, division gives
+\[
+ \frac{\norm{S}^2}{\norm{L}^2}=\frac12+\frac{\tr(L^2)}{2\norm{L}^2},
+ \qquad
+ \frac{\norm{T}^2}{\norm{L}^2}=\frac12-\frac{\tr(L^2)}{2\norm{L}^2}.
+\]
+\end{lemma}
+\begin{proof}
+\leanok
+\uses{def:parts}
+Expand the squared Frobenius norms entrywise, using invariance under
+transpose and $\sum_{i,j}L_{ij}L_{ji}=\tr(L^2)$. Adding the two
+identities gives the orthogonal decomposition of the energy.
+\end{proof}
+
+\begin{corollary}[Iid square random matrix baseline]
+\label{cor:iid}
+\lean{Appendices.integral_frobSq_iid, Appendices.integral_frobSq_symPart_iid, Appendices.integral_frobSq_skewPart_iid, Appendices.integral_frobSq_symPart_div_integral_frobSq_iid, Appendices.integral_frobSq_skewPart_div_integral_frobSq_iid, Appendices.integral_frobSq_symPart_div_frobSq_gaussian, Appendices.integral_frobSq_skewPart_div_frobSq_gaussian}
+\leanok
+\uses{def:parts}
+Let the entries of $L\in M_N(\R)$ be independent, mean zero, and
+square-integrable with common variance $\sigma^2$. Then
+\[
+ \E\norm{L}^2=N^2\sigma^2,\quad
+ \E\norm{S}^2=\frac{N(N+1)}2\sigma^2,\quad
+ \E\norm{T}^2=\frac{N(N-1)}2\sigma^2.
+\]
+For $N>0$ and $\sigma\ne0$, the ratios to $\E\norm{L}^2$ are
+$(N+1)/(2N)$ and $(N-1)/(2N)$ respectively. If the entries are iid
+nondegenerate centered Gaussian, then also
+\[
+ \E\left[\frac{\norm{S}^2}{\norm{L}^2}\right]=\frac{N+1}{2N},
+ \qquad
+ \E\left[\frac{\norm{T}^2}{\norm{L}^2}\right]=\frac{N-1}{2N}.
+\]
+\end{corollary}
+\begin{proof}
+\leanok
+\uses{lem:energy}
+Independence and centering kill the off-diagonal cross terms, giving
+$\E\tr(L^2)=N\sigma^2$. Apply the energy identities. In the Gaussian
+case, symmetry of the joint law makes the expected normalized squared
+coordinate equal to $1/N^2$, while sign symmetry cancels the remaining
+normalized cross terms.
+\end{proof}
+
+\begin{corollary}[Random QK-product baseline]
+\label{cor:qk}
+\lean{Appendices.integral_frobSq_qk, Appendices.integral_trace_mul_self_qk, Appendices.integral_frobSq_symPart_qk, Appendices.integral_frobSq_skewPart_qk, Appendices.integral_frobSq_symPart_div_integral_frobSq_qk, Appendices.integral_frobSq_skewPart_div_integral_frobSq_qk}
+\leanok
+\uses{def:parts}
+Let $W_K,W_Q\in M_{n\times N}(\R)$ have jointly independent,
+mean-zero, square-integrable entries, with variances $\sigma_K^2$ and
+$\sigma_Q^2$ respectively. For $L=W_K^TW_Q$,
+\[
+ \E\norm{L}^2=nN^2\sigma_K^2\sigma_Q^2,\qquad
+ \E\norm{S}^2=\frac{nN(N+1)}2\sigma_K^2\sigma_Q^2,\qquad
+ \E\norm{T}^2=\frac{nN(N-1)}2\sigma_K^2\sigma_Q^2.
+\]
+For positive dimensions and nonzero variances, the ratios of the last
+two expectations to the first are $(N+1)/(2N)$ and $(N-1)/(2N)$.
+\end{corollary}
+\begin{proof}
+\leanok
+\uses{lem:energy}
+Expand $L_{ab}=\sum_r(W_K)_{ra}(W_Q)_{rb}$. Independence gives
+$\E L_{ab}^2=n\sigma_K^2\sigma_Q^2$ and
+$\E\tr(L^2)=nN\sigma_K^2\sigma_Q^2$. Sum the entries and use Lemma 6.
+\end{proof}
+
+\setcounter{proposition}{3}
+\begin{proposition}[Expected symmetric energy for random low-rank QK products]
+\label{prop:low-rank}
+\lean{Appendices.expected_symmetric_energy_low_rank_qk, Appendices.expected_skew_energy_low_rank_qk}
+\leanok
+\uses{def:parts}
+Let $1\le n\le N$ and let $W_K,W_Q\in M_{n\times N}(\R)$ have
+jointly independent centered Gaussian entries, iid within each matrix,
+with respective nonzero variances $v_K,v_Q$. For $L=W_K^TW_Q$,
+\[
+ \E\left[\frac{\norm{S}^2}{\norm{L}^2}\right]=\frac{N+1}{2N},
+ \qquad
+ \E\left[\frac{\norm{T}^2}{\norm{L}^2}\right]=\frac{N-1}{2N},
+\]
+independently of the head dimension $n$.
+\end{proposition}
+\begin{proof}
+\leanok
+\uses{lem:energy}
+First take equal variances. Sign changes and permutations of Gaussian
+columns preserve the joint law. Sign symmetry cancels the off-diagonal
+terms of $\tr(L^2)/\norm{L}^2$; permutation symmetry makes the expected
+normalized squared entries equal. Thus its expectation is $1/N$, and
+Lemma 6 gives the result. The denominator is nonzero almost surely.
+Rescale $W_K$ to reduce unequal variances to the equal-variance case;
+the normalized energies are unchanged by this rescaling.
+\end{proof}
+
+\begin{lemma}[Proportional lobes]
+\label{lem:proportional}
+\lean{Appendices.proportional_lobes}
+\leanok
+\uses{def:shape}
+Let $X>0$ almost surely, with finite nonzero second moment, and fix
+$u,v>0$, $\rho=u/v$. Let $\alpha_n$ be the decreasing sorting of
+$vX_1,\ldots,vX_n$ and $\beta_n$ the decreasing sorting of
+$uX'_1,\ldots,uX'_n$, where the two sequences together consist of
+independent copies of $X$. Then
+\[
+ \frac{\norm{\beta_n-\rho\alpha_n}}{\norm{\alpha_n}}
+ \longrightarrow 0\qquad\text{almost surely as }n\longrightarrow\infty.
+\]
+\end{lemma}
+\begin{proof}
+\leanok
+\uses{def:shape}
+Reduce to two samples with the same scale. For sorted nonnegative
+lists, a layer-cake identity expresses their inner product using the
+minimum of two empirical survival counts. The strong law controls
+these counts and the empirical second moments. Fatou's lemma bounds
+the limiting inner product from below by the common second moment.
+Expanding the squared difference gives convergence to zero after
+division by $n$; the squared denominator divided by $n$ converges to
+the strictly positive second moment. Restore the scales $u,v$.
+\end{proof}
+
+\chapter{Balanced bimodal spectra and simplex faces}
+
+\begin{definition}[Pairing geometry]
+\label{def:balanced}
+\lean{Appendices.MemLambdaSet, Appendices.lamPlus, Appendices.lamMinus, Appendices.imbalance, Appendices.statC, Appendices.pairingScore, Appendices.iotaMap}
+\leanok
+For $m\ge1$, let $\Lambda_m$ consist of the unit vectors
+$\lambda_1\le\cdots\le\lambda_{2m}$ with
+$\lambda_m<0<\lambda_{m+1}$. Set
+\[
+ (\lambda_+)_j=\lambda_{2m+1-j},\qquad
+ (\lambda_-)_j=-\lambda_j\quad(1\le j\le m).
+\]
+Define
+\[
+ \mathcal I=\norm{\lambda_+}^2-\norm{\lambda_-}^2,\quad
+ C=\langle\lambda_+,\lambda_-\rangle,\quad
+ \mathcal P=1-\norm{\lambda_+-\lambda_-},\quad
+ (\iota\lambda)_i=-\lambda_{2m+1-i}.
+\]
+\end{definition}
+
+\begin{lemma}[Bimodal identities]
+\label{lem:bimodal}
+\lean{Appendices.sum_sq_lamPlus_eq, Appendices.sum_sq_lamMinus_eq, Appendices.two_mul_norm_lamPlus_mul_norm_lamMinus, Appendices.sum_sq_lamPlus_sub_lamMinus, Appendices.pairingScore_eq, Appendices.sum_sq_complex, Appendices.statC_nonneg, Appendices.two_mul_statC_le_one, Appendices.pairingScore_nonneg, Appendices.pairingScore_le_one}
+\leanok
+\uses{def:balanced}
+For $\lambda\in\Lambda_m$,
+\[
+ \norm{\lambda_+}^2=\tfrac12(1+\mathcal I),\qquad
+ \norm{\lambda_-}^2=\tfrac12(1-\mathcal I),\qquad
+ 2\norm{\lambda_+}\norm{\lambda_-}=\sqrt{1-\mathcal I^2},
+\]
+\[
+ \norm{\lambda_+-\lambda_-}^2=1-2C,\qquad
+ \mathcal P=1-\sqrt{1-2C},\qquad
+ \sum_j((\lambda_+)_j+i(\lambda_-)_j)^2=\mathcal I+2iC.
+\]
+Moreover, $0\le2C\le1$ and $0\le\mathcal P\le1$.
+\end{lemma}
+\begin{proof}
+\leanok
+\uses{def:balanced}
+The two lobes partition a unit vector, so their squared norms sum to
+one. Combine this with their difference $\mathcal I$, expand the
+squared difference and the complex square, and use nonnegativity of
+the lobe entries and of squared norms for the bounds.
+\end{proof}
+
+\begin{lemma}[Bimodal involution]
+\label{lem:involution}
+\lean{Appendices.iotaMap_iotaMap, Appendices.iotaMap_add, Appendices.iotaMap_smul, Appendices.sum_iotaMap_mul_iotaMap, Appendices.sum_iotaMap_mul, Appendices.memLambdaSet_iotaMap_iff, Appendices.lamPlus_iotaMap, Appendices.lamMinus_iotaMap, Appendices.imbalance_iotaMap, Appendices.statC_iotaMap, Appendices.pairingScore_iotaMap, Appendices.sum_sq_sub_iotaMap, Appendices.pairingScore_eq_dist_iotaMap, Appendices.pairingScore_eq_one_iff}
+\leanok
+\uses{def:balanced}
+The map $\iota$ is an orthogonal, self-adjoint linear involution,
+preserves $\Lambda_m$, and exchanges $\lambda_+$ and $\lambda_-$.
+Consequently $\mathcal I\circ\iota=-\mathcal I$, $C\circ\iota=C$ and
+$\mathcal P\circ\iota=\mathcal P$. For $\lambda\in\Lambda_m$,
+\[
+ \norm{\lambda-\iota\lambda}^2=2\norm{\lambda_+-\lambda_-}^2,\qquad
+ \mathcal P(\lambda)=1-\frac1{\sqrt2}\norm{\lambda-\iota\lambda}.
+\]
+In particular, $\mathcal P(\lambda)=1$ if and only if $\iota\lambda=\lambda$.
+\end{lemma}
+\begin{proof}
+\leanok
+\uses{def:balanced}
+Reversing the coordinates twice gives the identity; reversing and
+negating preserves inner products and the ordering and sign pattern
+defining $\Lambda_m$. Reindex the finite sums to obtain the
+transformation rules. Split the displacement sum into its two halves
+to identify both with the squared distance between the lobes.
+\end{proof}
+
+\setcounter{theorem}{4}
+\begin{theorem}[Fibers of the shape map over the simplex faces]
+\label{thm:faces}
+\lean{Appendices.shapeA_nonneg, Appendices.shapeB_nonneg, Appendices.shapeC_nonneg, Appendices.shapeD_nonneg, Appendices.shape_sum_eq_one, Appendices.shapeA_eq_zero_iff, Appendices.shapeA_eq_one_iff, Appendices.shapeB_eq_zero_iff, Appendices.shapeB_eq_one_iff, Appendices.shapeD_eq_zero_iff_forall, Appendices.shapeD_eq_zero_iff_decomp, Appendices.shapeD_eq_zero_decomp_commute, Appendices.shapeD_eq_one_iff, Appendices.shapeC_eq_zero_iff_forall, Appendices.shapeC_eq_zero_iff_decomp, Appendices.shapeC_eq_zero_decomp_commute, Appendices.shapeC_eq_one_iff}
+\leanok
+\uses{def:shape}
+Let $L\ne0$ and $s(L)=(a,b,c,d)$. The coordinates are nonnegative
+and sum to one. Their faces and vertices have the following fibers.
+\begin{enumerate}
+\item $a=0$ exactly when $L$ is symmetric, and $a=1$ exactly when
+$L$ is antisymmetric.
+\item $b=0$ exactly when $S$ is semidefinite, and $b=1$ exactly when
+$L$ is symmetric and $\alpha=\beta$.
+\item $d=0$ exactly when $\alpha_j\ge\beta_j$ for every $j$,
+equivalently $S=H+P$ with $H$ symmetric with spectrum symmetric about
+zero and $P$ positive semidefinite. The matrices may be chosen to
+commute with $S$ and with each other, with
+$\norm{P}^2=c\norm{L}^2$. Also, $d=1$ exactly when $L$ is symmetric
+negative semidefinite.
+\item $c=0$ exactly when $\beta_j\ge\alpha_j$ for every $j$,
+equivalently $S=H-P$ with the same conditions on $H,P$. They may be
+chosen to commute with $S$ and with each other, with
+$\norm{P}^2=d\norm{L}^2$. Also, $c=1$ exactly when $L$ is symmetric
+positive semidefinite.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\leanok
+\uses{def:shape,lem:energy}
+The spectral theorem and the energy partition give nonnegativity and
+sum one. Vanishing squared norms characterize the $a$ face and the
+coordinatewise inequalities for $c,d$. The lobe inner product vanishes
+exactly when one lobe is zero, giving the $b$ face. When
+$\alpha\ge\beta$, pair positive and negative eigenvectors to construct
+$H$ with paired eigenvalues; the remainder $P$ is positive semidefinite.
+Both are diagonal in an eigenbasis of $S$, giving commutation and the
+norm formula. Conversely, adding a positive semidefinite matrix
+increases the ordered eigenvalues, so comparison with the paired
+spectrum of $H$ gives lobe dominance. Apply the argument to $-L$ for
+the other face. The vertices follow from the partition of one.
+\end{proof}
+
+\chapter{Moments and the Gram form}
+
+\begin{definition}[Odd, even and resolvent statistics]
+\label{def:moment-statistics}
+\lean{Appendices.statO, Appendices.statE, Appendices.statR}
+\leanok
+For a vector $\lambda$ with $|\lambda_i|<1$, define
+\[
+ O(\lambda)=\sum_i\frac{\lambda_i}{1-\lambda_i^2},\qquad
+ E(\lambda)=\sum_i\frac{\lambda_i^2}{1-\lambda_i^2},\qquad
+ R(\lambda)=\sum_i\frac1{1-\lambda_i}.
+\]
+\end{definition}
+
+\begin{lemma}[Equivalent expressions for the moments]
+\label{lem:moment-identities}
+\lean{Appendices.MemLambdaSet.abs_entry_lt_one, Appendices.statO_eq_tsum_odd_moments, Appendices.statE_eq_tsum_even_moments, Appendices.summable_abs_odd_moments, Appendices.summable_abs_even_moments, Appendices.statO_eq_half_statR_sub, Appendices.statE_add_card_eq_half_statR_add, Appendices.statO_iotaMap, Appendices.statE_iotaMap, Appendices.trace_eq_statO, Appendices.trace_eq_statE, Appendices.trace_eq_statR}
+\leanok
+\uses{def:balanced,def:moment-statistics}
+Every $\lambda\in\Lambda_m$ has $|\lambda_i|<1$. Writing $n=2m$,
+\[
+ O(\lambda)=\sum_{r=0}^{\infty}\sum_i\lambda_i^{2r+1},\qquad
+ E(\lambda)=\sum_{r=0}^{\infty}\sum_i\lambda_i^{2r+2},
+\]
+and both series converge absolutely. Moreover,
+\[
+ O=\tfrac12(R-R\circ\iota),\qquad
+ n+E=\tfrac12(R+R\circ\iota),\qquad
+ O\circ\iota=-O,\qquad E\circ\iota=E.
+\]
+If a symmetric matrix $A$ has spectrum $\lambda$, with multiplicity, then
+\[
+ O(\lambda)=\tr(A(I-A^2)^{-1}),\quad
+ E(\lambda)=\tr(A^2(I-A^2)^{-1}),\quad
+ R(\lambda)=\tr((I-A)^{-1}).
+\]
+\end{lemma}
+\begin{proof}
+\leanok
+\uses{def:balanced,def:moment-statistics,lem:involution}
+The unit-norm condition and the presence of both signs force each
+coordinate to have absolute value below one. Sum the convergent
+geometric series coordinatewise. Partial fractions and reversal of
+the coordinates give the identities involving $\iota$. For the trace
+formulas, diagonalize $A$ orthogonally and evaluate the rational
+functions on its eigenvalues.
+\end{proof}
+
+\begin{lemma}[Computation from the key and query matrices]
+\label{lem:gram}
+\lean{Appendices.GramForm.M, Appendices.GramForm.J, Appendices.GramForm.G, Appendices.GramForm.symPart_eq_half_conj, Appendices.GramForm.trace_pow_symPart, Appendices.GramForm.frobSq_symPart_eq_quarter_trace, Appendices.GramForm.charpoly_roots_filter_ne_zero, Appendices.GramForm.card_charpoly_roots_symPart, Appendices.GramForm.card_charpoly_roots_half_JG, Appendices.GramForm.IsSortedNormalizedNonzeroSpectrum, Appendices.GramForm.exists_isSortedNormalizedNonzeroSpectrum, Appendices.GramForm.isSortedNormalizedNonzeroSpectrum_unique, Appendices.GramForm.memLambdaSet_of_isSortedNormalizedNonzeroSpectrum, Appendices.GramForm.statO_eq_trace, Appendices.GramForm.statE_eq_trace, Appendices.GramForm.statR_eq_trace}
+\leanok
+\uses{def:parts,def:balanced,def:moment-statistics}
+For $W_K,W_Q\in M_{n\times N}(\R)$, set
+\[
+ M=\begin{pmatrix}W_K\\W_Q\end{pmatrix},\qquad
+ G=MM^T,\qquad J=\begin{pmatrix}0&I_n\\I_n&0\end{pmatrix}.
+\]
+The symmetric part of $W_K^TW_Q$ is $S=\tfrac12M^TJM$. For every
+$k\ge1$,
+\[
+ \tr(S^k)=\tr((\tfrac12JG)^k),\qquad
+ \norm{S}^2=\tfrac14\tr((JG)^2).
+\]
+If $M:\R^N\to\R^{2n}$ is surjective and $n\ge1$, the nonzero spectrum
+of $S$, with multiplicity, is the spectrum of $\tfrac12JG$. Its
+sorted normalized nonzero spectrum $\lambda$ exists uniquely and
+belongs to $\Lambda_n$. For $H=JG/(2\norm{S})$,
+\[
+ O(\lambda)=\tr(H(I-H^2)^{-1}),\qquad
+ E(\lambda)=\tr(H^2(I-H^2)^{-1}),\qquad
+ R(\lambda)=\tr((I-H)^{-1}).
+\]
+\end{lemma}
+\begin{proof}
+\leanok
+\uses{def:parts,def:balanced,def:moment-statistics,lem:moment-identities}
+Block multiplication gives the factorization of $S$; cyclicity of
+trace gives the power identities. Under surjectivity, $G$ is positive
+definite. The characteristic-polynomial identity for rectangular
+products identifies the nonzero spectrum, including multiplicities.
+Congruence with $J$ gives exactly $n$ eigenvalues of each sign, so
+sorting and normalization yield a vector in $\Lambda_n$. The matrix
+$JG$ is similar to the symmetric matrix $G^{1/2}JG^{1/2}$; evaluate
+the three rational functions on its real eigenvalues and take traces.
+\end{proof}

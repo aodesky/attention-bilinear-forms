@@ -4,6 +4,12 @@ Lean 4 formalizations of the mathematical results of the appendices
 of *On attention heads and bilinear forms*, together with the
 definition and the main-text theorem on which Appendix B rests.
 
+The [blueprint](https://aodesky.github.io/attention-bilinear-forms/blueprint/)
+presents these statements and proof outlines with links to their Lean
+declarations and a
+[dependency graph](https://aodesky.github.io/attention-bilinear-forms/blueprint/dep_graph_document.html).
+Its source and build instructions are in [`../blueprint/`](../blueprint/README.md).
+
 ## Requirements
 
 - Lean toolchain: see `lean-toolchain` (elan installs it automatically)

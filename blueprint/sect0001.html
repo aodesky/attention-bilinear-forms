@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bilinear forms and their shapes</title>
+<link rel="next" href="sect0002.html" title="Random matrices" />
+<link rel="prev" href="index.html" title="On attention heads and bilinear forms" />
+<link rel="up" href="index.html" title="On attention heads and bilinear forms" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">On attention heads and bilinear forms</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class=" active current">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Bilinear forms and their shapes</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Random matrices</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">Balanced bimodal spectra and simplex faces</span></a>
+ </li>
+<li class="">
+  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Moments and the Gram form</span></a>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="a0000000002">1 Bilinear forms and their shapes</h1>
+<p>All matrices are real. Matrix norms are Frobenius norms. The Lean development uses their squares to avoid unnecessary square roots. </p>
+<div class="definition_thmwrapper theorem-style-plain" id="def:parts">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">1</span>
+    <span class="definition_thmtitle">Symmetric and antisymmetric parts</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#def:parts">#</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Common.lean#L21" class="lean_decl">Appendices.frobSq</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Common.lean#L25" class="lean_decl">Appendices.symPart</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Common.lean#L29" class="lean_decl">Appendices.skewPart</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>   For \(L\in M_N(\mathbb {R})\), put </p>
+<div class="displaymath" id="a0000000006">
+  \[  S=\tfrac 12(L+L^T),\qquad T=\tfrac 12(L-L^T),\qquad \lVert L\rVert ^2=\operatorname {tr}(L^TL).  \]
+</div>
+<p> Then \(L=S+T\), with \(S\) symmetric and \(T\) antisymmetric. </p>
+
+  </div>
+</div>
+
+<div class="definition_thmwrapper theorem-style-plain" id="def:shape">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">6</span>
+    <span class="definition_thmtitle">Shape of a bilinear form</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#def:shape">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0001.html#def:parts">Definition 1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L32" class="lean_decl">Appendices.sortDesc</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L62" class="lean_decl">Appendices.alphaList</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L69" class="lean_decl">Appendices.betaList</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L74" class="lean_decl">Appendices.shapeA</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L79" class="lean_decl">Appendices.shapeB</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L84" class="lean_decl">Appendices.shapeC</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L89" class="lean_decl">Appendices.shapeD</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    For \(L\ne 0\), let \(\alpha \) and \(\beta \) be the decreasing lists of positive eigenvalues of \(S\) and absolute values of its negative eigenvalues, padded with zeros to equal length. Define \(s(L)=(a,b,c,d)\) by </p>
+<div class="displaymath" id="a0000000007">
+  \[  a=\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2},\qquad b=\frac{2\langle \alpha ,\beta \rangle }{\lVert L\rVert ^2},\qquad c=\frac{\lVert (\alpha -\beta )_+\rVert ^2}{\lVert L\rVert ^2},\qquad d=\frac{\lVert (\alpha -\beta )_-\rVert ^2}{\lVert L\rVert ^2}.  \]
+</div>
+<p> Positive and negative parts are taken entrywise. Lean pads both lists to length \(N\) and includes the denominator in each definition. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <a href="index.html" title="On attention heads and bilinear forms"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="On attention heads and bilinear forms"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="sect0002.html" title="Random matrices"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+</body>
+</html>

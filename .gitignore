@@ -8,3 +8,9 @@ data/
 # private working notes and extra formalizations, kept in the paper's repository
 formalization/HANDOFF.md
 formalization/Extras/
+
+# temporary blueprint renderer output (the static site is copied to blueprint/)
+.venv-blueprint/
+blueprint/web/
+blueprint/src/*.paux
+blueprint/src/*.log

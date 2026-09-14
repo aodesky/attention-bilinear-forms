@@ -74,6 +74,11 @@ an internet connection is needed to view them.
 
 ## Formalization
 
+Read the [formalization blueprint](https://aodesky.github.io/attention-bilinear-forms/blueprint/)
+for mathematical statements, proof outlines and links to the audited Lean
+declarations, or explore its
+[dependency graph](https://aodesky.github.io/attention-bilinear-forms/blueprint/dep_graph_document.html).
+
 `formalization/` contains Lean 4 formalizations of the mathematical
 results of the appendices, together with the definition of the shape
 of a bilinear form and the main-text theorem on the faces of the
