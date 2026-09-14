@@ -32,5 +32,5 @@ def add_blueprint_navigation(document: str) -> str:
         raise ValueError('Blueprint page is missing its head or body')
     document = re.sub(r'<nav class="project-links".*?</nav>\n?', '', document, flags=re.S)
     document = re.sub(r'<link rel="stylesheet" href="../assets/project-nav.css[^"]*">\n?', '', document)
-    document = document.replace('</head>', '<link rel="stylesheet" href="../assets/project-nav.css?v=4">\n</head>', 1)
+    document = document.replace('</head>', '<link rel="stylesheet" href="../assets/project-nav.css?v=5">\n</head>', 1)
     return document.replace('<body>\n', '<body>\n' + project_navigation(current="blueprint"), 1)
