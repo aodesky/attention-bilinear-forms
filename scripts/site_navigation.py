@@ -18,6 +18,7 @@ def project_navigation(prefix="../", current=""):
         items.append(f'  <a href="{href}"{attributes}>{label}</a>')
     # Replace this placeholder with the paper link once it is on arXiv.
     items.append('  <span class="paper-forthcoming">arXiv (forthcoming)</span>')
+    items.append('  <a href="https://andrewodesky.com">Andrew O’Desky</a>')
     return '<nav class="project-links" aria-label="Project navigation">\n' + "\n".join(items) + "\n</nav>\n"
 
 
