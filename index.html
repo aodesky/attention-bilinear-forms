@@ -59,18 +59,12 @@ d &amp;= \lVert(\lambda_+ - \lambda_-)_-\rVert^2,
 \]
 </div>
 
-<p>taking positive and negative parts entrywise. These are nonnegative
-and sum to one, so the profile is a point of the \(3\)-simplex, drawn as
+<p>Here \(x_+ = \max(x,0)\) and \(x_- = \max(-x,0)\) for a real
+number \(x\); for vectors, these operations are applied entrywise.
+The four coordinates are nonnegative and sum to one, so the profile is a point of the \(3\)-simplex, drawn as
 a tetrahedron whose vertices are the antisymmetric forms
 (\(a = 1\)), the forms whose two lobes agree (\(b = 1\)), and the
 positive and negative semidefinite forms (\(c = 1\), \(d = 1\)).</p>
-
-<p>Each page below plots the profile of every head of one model,
-coloured by spectral type. Drag to rotate, scroll to zoom, and hover a
-point for the layer and head it belongs to. Use the model dropdown at the
-top to switch models. The tabs at the bottom select the 3-D
-simplex, the 2-D projection to \(\Delta\), spectral distributions by parity
-(\(k = 3\)), or clusters by layer (\(k = 3\)).</p>
 
 <table>
   <thead>
@@ -167,19 +161,19 @@ simplex, the 2-D projection to \(\Delta\), spectral distributions by parity
         <td>6</td><td>8</td>
         <td>512</td><td>64</td>
         <td>48</td>
-        <td>rope &#9679;</td>
+        <td>rope <sup><a href="#rope-note" aria-label="RoPE distance note">&dagger;</a></sup></td>
       </tr>
       <tr>
         <td><a href="interactive/Mistral-Small-24B-Base.html">Mistral-Small-24B-Base</a></td>
         <td>40</td><td>32</td>
         <td>5120</td><td>128</td>
         <td>1,280</td>
-        <td>rope &#9679;</td>
+        <td>rope <sup><a href="#rope-note" aria-label="RoPE distance note">&dagger;</a></sup></td>
       </tr>
   </tbody>
 </table>
 
-<p class="note">&#9679; With rotary embeddings the bilinear form varies
+<p class="note" id="rope-note"><sup>&dagger;</sup> With rotary embeddings the bilinear form varies
 with the distance between the two tokens; those pages carry a slider
 over the relative position \(d\), from 0 to 128. For the other
 models the form does not depend on position.</p>
