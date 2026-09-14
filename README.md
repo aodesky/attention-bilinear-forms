@@ -67,8 +67,8 @@ multi-head and grouped-query attention.
 
 ## Interactive plots
 
-`interactive/` holds one page per model, plotting the shape of every
-head on the simplex of shapes, coloured by spectral type. Open
+`interactive/` holds one page per model, plotting the profile of every
+head on the simplex of profiles, coloured by spectral type. Open
 any of them in a browser; the plotly library is loaded from a CDN, so
 an internet connection is needed to view them.
 
@@ -80,7 +80,7 @@ declarations, or explore its
 [dependency graph](https://aodesky.github.io/attention-bilinear-forms/blueprint/dep_graph_document.html).
 
 `formalization/` contains Lean 4 formalizations of the mathematical
-results of the appendices, together with the definition of the shape
+results of the appendices, together with the definition of the profile
 of a bilinear form and the main-text theorem on the faces of the
 simplex, whose proof is given there. Building requires the Lean toolchain named in
 `formalization/lean-toolchain`, which `elan` installs automatically:

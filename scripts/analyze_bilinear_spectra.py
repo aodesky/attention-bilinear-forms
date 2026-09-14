@@ -671,7 +671,7 @@ def render_interactive_simplex(
     rope_powers: np.ndarray | None = None,
     rope_weights: np.ndarray | None = None,
 ) -> None:
-    """Draggable 3-D rendering of the shapes, with optional RoPE displacement."""
+    """Draggable 3-D rendering of the profiles, with optional RoPE displacement."""
     import plotly.graph_objects as go
 
     # Four alternating vertices of a cube form a regular tetrahedron.

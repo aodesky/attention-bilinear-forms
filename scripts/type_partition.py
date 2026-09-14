@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""The three-type partition of the heads, from the shape map.
+"""The three-type partition of the heads, from the profile map.
 
 Definition (types) cuts the three types out of the face Delta by exact
 equations: Type I+ is d = 0, Type I- is c = 0 and Type II is b = 1.  No
 trained head satisfies any of these exactly, so a partition of the heads
 needs the parity of the section on theta-forms: a head is Type II when
-the shape (0, b, c, d) of its symmetric part lies in a neighborhood N of
+the profile (0, b, c, d) of its symmetric part lies in a neighborhood N of
 the hyperbolic vertex, and otherwise is Type I+ or Type I- according as
 c > d or d > c.
 
@@ -43,7 +43,7 @@ NAMES = {1: "Type I+", 2: "Type II", 3: "Type I-"}
 
 
 def assign(frame: pd.DataFrame, radius: float) -> np.ndarray:
-    """The type of every head, from the shape of its symmetric part."""
+    """The type of every head, from the profile of its symmetric part."""
     c = frame.c_sym.to_numpy()
     d = frame.d_sym.to_numpy()
     inside = (c + d) <= radius     # 1 - b = c + d

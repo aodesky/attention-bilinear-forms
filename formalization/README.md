@@ -33,7 +33,7 @@ and theorems are numbered in separate sequences.
 | File | Paper |
 |---|---|
 | `Appendices/Common.lean` | Frobenius norm; symmetric and antisymmetric parts (shared definitions) |
-| `Appendices/Shape.lean` | Definition 6, the shape `s(L) = (a, b, c, d)` of a bilinear form (§6.1) |
+| `Appendices/Profile.lean` | Definition 6, the profile `s(L) = (a, b, c, d)` of a bilinear form (§6.1) |
 | **Appendix A, Random matrices** | |
 | `Appendices/RandomMatrices/EnergyIdentities.lean` | Lemma 6 (symmetric and skew energy identities) |
 | `Appendices/RandomMatrices/IidBaseline.lean` | Corollary 1 (iid square random matrix baseline) |
@@ -44,7 +44,7 @@ and theorems are numbered in separate sequences.
 | `Appendices/BalancedBimodalSpectra/Defs.lean` | The pairing geometry: `Λ_m`, `λ±`, `ℐ`, `C`, `𝒫`, `ι` |
 | `Appendices/BalancedBimodalSpectra/BimodalIdentities.lean` | Lemma 8, the identities for `ℐ`, `C`, `𝒫`, with the note `0 ≤ 2C ≤ 1` |
 | `Appendices/BalancedBimodalSpectra/BimodalInvolution.lean` | Lemma 9, the involution `ι` |
-| `Appendices/BalancedBimodalSpectra/SimplexFaces.lean` | Theorem 5, the fibers of the shape map over the faces of `Δ₃` (stated in §6.1, proved in Appendix B) |
+| `Appendices/BalancedBimodalSpectra/SimplexFaces.lean` | Theorem 5, the fibers of the profile map over the faces of `Δ₃` (stated in §6.1, proved in Appendix B) |
 | **Appendix C, Moments** | |
 | `Appendices/Moments/Defs.lean` | The statistics `O`, `E`, `R` |
 | `Appendices/Moments/OEEquivalences.lean` | Lemma 10, `O` and `E` as sums of odd and even moments, partial fractions, and traces |

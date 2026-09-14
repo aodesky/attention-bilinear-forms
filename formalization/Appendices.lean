@@ -1,5 +1,5 @@
 import Appendices.Common
-import Appendices.Shape
+import Appendices.Profile
 import Appendices.RandomMatrices.EnergyIdentities
 import Appendices.RandomMatrices.IidBaseline
 import Appendices.RandomMatrices.QKProductBaseline

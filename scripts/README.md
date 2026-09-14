@@ -30,7 +30,7 @@ so the analysis can be reproduced without repeating it.
 
 **Analysis.** Everything else reads that database. `model_set.py` fixes
 the set of models reported in the paper and opens the stored forms;
-`head_statistics.py` computes the per-head scores, shapes and spectra
+`head_statistics.py` computes the per-head scores, profiles and spectra
 once into `survey_results/`; the remaining scripts read those files and
 produce the figures and tables.
 
@@ -49,7 +49,7 @@ not editing the individual scripts.
 ## Layout
 
     model_set.py             the reported models, and access to their forms
-    head_statistics.py       per-head scores, shapes and spectra
+    head_statistics.py       per-head scores, profiles and spectra
     extract_qk_bilinear_db.py   model weights -> bilinear forms (stage one)
     analyze_bilinear_spectra.py spectra, clustering and type assignment
     survey_results/          per-head statistics and spectra (written)

@@ -45,14 +45,14 @@ def page(tag, models):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{html.escape(tag)} · Shapes of attention heads</title>
-  <meta name="description" content="Explore attention-head shapes: interactive 3-D simplex, projection to Δ, parity profiles, and clusters by layer.">
+  <title>{html.escape(tag)} · Profiles of attention heads</title>
+  <meta name="description" content="Explore attention-head profiles: interactive 3-D simplex, projection to Δ, parity profiles, and clusters by layer.">
   <link rel="stylesheet" href="gallery.css?v={versions['gallery.css']}">
   <script src="gallery.js?v={versions['gallery.js']}" defer></script>
 </head>
 <body>
   <header>
-    <a class="home" href="index.html">Shapes of attention heads</a>
+    <a class="home" href="index.html">Profiles of attention heads</a>
     <label for="model">Model</label>
     <select id="model">{options}</select>
   </header>

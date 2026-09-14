@@ -52,7 +52,7 @@ less than one by Lemma OE-equivalences
 (`MemLambdaSet.abs_entry_lt_one`).
 -/
 import Appendices.Common
-import Appendices.Shape
+import Appendices.Profile
 import Appendices.Moments.Defs
 import Appendices.Moments.OEEquivalences
 import Appendices.BalancedBimodalSpectra.Defs

@@ -31,7 +31,7 @@ layer-cake identity writes `⟨α_n, α_n'⟩ / n` as an integral over
 Fatou's lemma bounds below by the second moment of `γ`.
 -/
 import Appendices.Common
-import Appendices.Shape
+import Appendices.Profile
 import Appendices.RandomMatrices.EnergyIdentities
 
 open MeasureTheory ProbabilityTheory Filter Set Finset

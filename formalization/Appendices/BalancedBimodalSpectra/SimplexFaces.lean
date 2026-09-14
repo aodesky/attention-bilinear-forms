@@ -10,8 +10,8 @@ decreasing order, padded with zeros to a common length, and let
     a = ‖T‖²/‖L‖²,          b = 2⟨α, β⟩/‖L‖²,
     c = ‖(α-β)₊‖²/‖L‖²,     d = ‖(α-β)₋‖²/‖L‖²
 
-be the shape of `L` (`shapeA`, …, `shapeD` of
-`Appendices.Shape`).  Then `a + b + c + d = 1`, each coordinate is
+be the profile of `L` (`profileA`, …, `profileD` of
+`Appendices.Profile`).  Then `a + b + c + d = 1`, each coordinate is
 nonnegative, and:
 
 1. `a = 0` iff `L` is symmetric, and `a = 1` iff `L` is antisymmetric;
@@ -32,7 +32,7 @@ negation.  Over `ℝ`, `Matrix.IsHermitian` means symmetric, and
 `Matrix.PosSemidef` includes symmetry.
 -/
 import Appendices.Common
-import Appendices.Shape
+import Appendices.Profile
 import Appendices.RandomMatrices.EnergyIdentities
 
 namespace Appendices
@@ -215,26 +215,26 @@ end Spectral
 
 variable (L : Matrix (Fin N) (Fin N) ℝ)
 
-/-- The coordinates of the shape are nonnegative. -/
-theorem shapeA_nonneg : 0 ≤ shapeA L :=
+/-- The coordinates of the profile are nonnegative. -/
+theorem profileA_nonneg : 0 ≤ profileA L :=
   div_nonneg (frobSq_nonneg _) (frobSq_nonneg _)
 
-theorem shapeB_nonneg : 0 ≤ shapeB L := by
-  unfold shapeB
+theorem profileB_nonneg : 0 ≤ profileB L := by
+  unfold profileB
   refine div_nonneg ?_ (frobSq_nonneg L)
   refine mul_nonneg (by norm_num) (Finset.sum_nonneg fun j _ => ?_)
   exact mul_nonneg (alphaList_nonneg (symPart_isHermitian L) j)
     (betaList_nonneg (symPart_isHermitian L) j)
 
-theorem shapeC_nonneg : 0 ≤ shapeC L :=
+theorem profileC_nonneg : 0 ≤ profileC L :=
   div_nonneg (Finset.sum_nonneg fun _ _ => sq_nonneg _) (frobSq_nonneg _)
 
-theorem shapeD_nonneg : 0 ≤ shapeD L :=
+theorem profileD_nonneg : 0 ≤ profileD L :=
   div_nonneg (Finset.sum_nonneg fun _ _ => sq_nonneg _) (frobSq_nonneg _)
 
 /-- The partition of the energy: `a + b + c + d = 1` for `L ≠ 0`. -/
-theorem shape_sum_eq_one (hL : L ≠ 0) :
-    shapeA L + shapeB L + shapeC L + shapeD L = 1 := by
+theorem profile_sum_eq_one (hL : L ≠ 0) :
+    profileA L + profileB L + profileC L + profileD L = 1 := by
   have hfs : frobSq L ≠ 0 := fun h => hL ((frobSq_eq_zero_iff L).mp h)
   set hS := symPart_isHermitian L
   have key : frobSq (skewPart L)
@@ -265,14 +265,14 @@ theorem shape_sum_eq_one (hL : L ≠ 0) :
     rw [h1, sum_alpha_sq_add_beta_sq hS, ← frobSq_of_isHermitian hS,
       frobSq_eq_frobSq_symPart_add_frobSq_skewPart L]
     ring
-  unfold shapeA shapeB shapeC shapeD
+  unfold profileA profileB profileC profileD
   field_simp
   linarith [key]
 
 /-- Theorem (1), first half: `a = 0` iff `L` is symmetric. -/
-theorem shapeA_eq_zero_iff (hL : L ≠ 0) : shapeA L = 0 ↔ L.IsSymm := by
+theorem profileA_eq_zero_iff (hL : L ≠ 0) : profileA L = 0 ↔ L.IsSymm := by
   have hfs : frobSq L ≠ 0 := fun h => hL ((frobSq_eq_zero_iff L).mp h)
-  rw [shapeA, div_eq_zero_iff, or_iff_left hfs, frobSq_eq_zero_iff,
+  rw [profileA, div_eq_zero_iff, or_iff_left hfs, frobSq_eq_zero_iff,
     Matrix.IsSymm]
   constructor
   · intro h
@@ -285,9 +285,9 @@ theorem shapeA_eq_zero_iff (hL : L ≠ 0) : shapeA L = 0 ↔ L.IsSymm := by
     simp [skewPart, h]
 
 /-- Theorem (1), second half: `a = 1` iff `L` is antisymmetric. -/
-theorem shapeA_eq_one_iff (hL : L ≠ 0) : shapeA L = 1 ↔ Lᵀ = -L := by
+theorem profileA_eq_one_iff (hL : L ≠ 0) : profileA L = 1 ↔ Lᵀ = -L := by
   have hfs : frobSq L ≠ 0 := fun h => hL ((frobSq_eq_zero_iff L).mp h)
-  rw [shapeA, div_eq_one_iff_eq hfs]
+  rw [profileA, div_eq_one_iff_eq hfs]
   rw [frobSq_eq_frobSq_symPart_add_frobSq_skewPart L]
   constructor
   · intro h
@@ -1050,11 +1050,11 @@ private lemma symPart_eq_of_isSymm (hsymm : L.IsSymm) : symPart L = L := by
   norm_num
 
 /-- Theorem (3), first half: `d = 0` iff `α_j ≥ β_j` for every `j`. -/
-theorem shapeD_eq_zero_iff_forall (hL : L ≠ 0) :
-    shapeD L = 0
+theorem profileD_eq_zero_iff_forall (hL : L ≠ 0) :
+    profileD L = 0
       ↔ ∀ j, betaList (symPart L) (symPart_isHermitian L) j
           ≤ alphaList (symPart L) (symPart_isHermitian L) j := by
-  rw [shapeD, div_eq_zero_iff, or_iff_left (frobSq_ne_zero L hL),
+  rw [profileD, div_eq_zero_iff, or_iff_left (frobSq_ne_zero L hL),
     Finset.sum_eq_zero_iff_of_nonneg (fun j _ => sq_nonneg _)]
   constructor
   · intro h j
@@ -1066,11 +1066,11 @@ theorem shapeD_eq_zero_iff_forall (hL : L ≠ 0) :
     norm_num
 
 /-- Theorem (4), first half: `c = 0` iff `β_j ≥ α_j` for every `j`. -/
-theorem shapeC_eq_zero_iff_forall (hL : L ≠ 0) :
-    shapeC L = 0
+theorem profileC_eq_zero_iff_forall (hL : L ≠ 0) :
+    profileC L = 0
       ↔ ∀ j, alphaList (symPart L) (symPart_isHermitian L) j
           ≤ betaList (symPart L) (symPart_isHermitian L) j := by
-  rw [shapeC, div_eq_zero_iff, or_iff_left (frobSq_ne_zero L hL),
+  rw [profileC, div_eq_zero_iff, or_iff_left (frobSq_ne_zero L hL),
     Finset.sum_eq_zero_iff_of_nonneg (fun j _ => sq_nonneg _)]
   constructor
   · intro h j
@@ -1082,12 +1082,12 @@ theorem shapeC_eq_zero_iff_forall (hL : L ≠ 0) :
     norm_num
 
 /-- Theorem (2), first half: `b = 0` iff `S` is semidefinite. -/
-theorem shapeB_eq_zero_iff (hL : L ≠ 0) :
-    shapeB L = 0 ↔ (symPart L).PosSemidef ∨ (-(symPart L)).PosSemidef := by
-  have hsum : shapeB L = 0
+theorem profileB_eq_zero_iff (hL : L ≠ 0) :
+    profileB L = 0 ↔ (symPart L).PosSemidef ∨ (-(symPart L)).PosSemidef := by
+  have hsum : profileB L = 0
       ↔ ∀ j, alphaList (symPart L) (symPart_isHermitian L) j
           * betaList (symPart L) (symPart_isHermitian L) j = 0 := by
-    rw [shapeB, div_eq_zero_iff, or_iff_left (frobSq_ne_zero L hL), mul_eq_zero,
+    rw [profileB, div_eq_zero_iff, or_iff_left (frobSq_ne_zero L hL), mul_eq_zero,
       or_iff_right two_ne_zero,
       Finset.sum_eq_zero_iff_of_nonneg (fun j _ =>
         mul_nonneg (alphaList_nonneg (symPart_isHermitian L) j)
@@ -1120,40 +1120,40 @@ theorem shapeB_eq_zero_iff (hL : L ≠ 0) :
     · rw [alphaList_apply, max_eq_right (h j), zero_mul]
 
 /-- Theorem (2), second half: `b = 1` iff `L` is symmetric with `α = β`. -/
-theorem shapeB_eq_one_iff (hL : L ≠ 0) :
-    shapeB L = 1
+theorem profileB_eq_one_iff (hL : L ≠ 0) :
+    profileB L = 1
       ↔ L.IsSymm ∧ alphaList (symPart L) (symPart_isHermitian L)
           = betaList (symPart L) (symPart_isHermitian L) := by
-  have hsum := shape_sum_eq_one L hL
-  have ha := shapeA_nonneg L
-  have hc := shapeC_nonneg L
-  have hd := shapeD_nonneg L
+  have hsum := profile_sum_eq_one L hL
+  have ha := profileA_nonneg L
+  have hc := profileC_nonneg L
+  have hd := profileD_nonneg L
   constructor
   · intro h
-    have ha0 : shapeA L = 0 := by linarith
-    have hc0 : shapeC L = 0 := by linarith
-    have hd0 : shapeD L = 0 := by linarith
-    refine ⟨(shapeA_eq_zero_iff L hL).mp ha0, funext fun j => le_antisymm ?_ ?_⟩
-    · exact (shapeC_eq_zero_iff_forall L hL).mp hc0 j
-    · exact (shapeD_eq_zero_iff_forall L hL).mp hd0 j
+    have ha0 : profileA L = 0 := by linarith
+    have hc0 : profileC L = 0 := by linarith
+    have hd0 : profileD L = 0 := by linarith
+    refine ⟨(profileA_eq_zero_iff L hL).mp ha0, funext fun j => le_antisymm ?_ ?_⟩
+    · exact (profileC_eq_zero_iff_forall L hL).mp hc0 j
+    · exact (profileD_eq_zero_iff_forall L hL).mp hd0 j
   · rintro ⟨hsymm, hαβ⟩
-    have ha0 : shapeA L = 0 := (shapeA_eq_zero_iff L hL).mpr hsymm
-    have hc0 : shapeC L = 0 :=
-      (shapeC_eq_zero_iff_forall L hL).mpr fun j => by rw [hαβ]
-    have hd0 : shapeD L = 0 :=
-      (shapeD_eq_zero_iff_forall L hL).mpr fun j => by rw [hαβ]
+    have ha0 : profileA L = 0 := (profileA_eq_zero_iff L hL).mpr hsymm
+    have hc0 : profileC L = 0 :=
+      (profileC_eq_zero_iff_forall L hL).mpr fun j => by rw [hαβ]
+    have hd0 : profileD L = 0 :=
+      (profileD_eq_zero_iff_forall L hL).mpr fun j => by rw [hαβ]
     linarith
 
 /-- Theorem (3), the decomposition: if `d = 0` then `S = H + P` for
 symmetric `H` and `P` with the spectrum of `H` symmetric about zero and
 `P` positive semidefinite, where `H` and `P` commute with `S` and with
 each other and `‖P‖² = c‖L‖²`. -/
-theorem shapeD_eq_zero_decomp_commute (hL : L ≠ 0) (h : shapeD L = 0) :
+theorem profileD_eq_zero_decomp_commute (hL : L ≠ 0) (h : profileD L = 0) :
     ∃ H P : Matrix (Fin N) (Fin N) ℝ, ∃ hH : H.IsHermitian,
       SpectrumSymmAboutZero hH ∧ P.PosSemidef ∧ symPart L = H + P
       ∧ Commute H (symPart L) ∧ Commute P (symPart L) ∧ Commute H P
-      ∧ frobSq P = shapeC L * frobSq L := by
-  have hβα := (shapeD_eq_zero_iff_forall L hL).mp h
+      ∧ frobSq P = profileC L * frobSq L := by
+  have hβα := (profileD_eq_zero_iff_forall L hL).mp h
   refine ⟨conjDiag (symPart_isHermitian L)
       (hvec (symPart_isHermitian L) ∘ evPerm (N := N)),
     conjDiag (symPart_isHermitian L)
@@ -1165,7 +1165,7 @@ theorem shapeD_eq_zero_decomp_commute (hL : L ≠ 0) (h : shapeD L = 0) :
     intro i
     simp only [Function.comp_apply]
     linarith [hβα (evPerm i)]
-  · rw [frobSq_conjDiag, shapeC, div_mul_cancel₀ _ (frobSq_ne_zero L hL)]
+  · rw [frobSq_conjDiag, profileC, div_mul_cancel₀ _ (frobSq_ne_zero L hL)]
     refine (Fintype.sum_equiv (evPerm (N := N)) _
       (fun j => (alphaList (symPart L) (symPart_isHermitian L) j
         - betaList (symPart L) (symPart_isHermitian L) j) ^ 2)
@@ -1176,16 +1176,16 @@ theorem shapeD_eq_zero_decomp_commute (hL : L ≠ 0) (h : shapeD L = 0) :
 /-- Theorem (3), second half: `d = 0` iff `S = H + P` for symmetric `H`
 and `P` such that the spectrum of `H` is symmetric about zero and `P`
 is positive semidefinite. -/
-theorem shapeD_eq_zero_iff_decomp (hL : L ≠ 0) :
-    shapeD L = 0
+theorem profileD_eq_zero_iff_decomp (hL : L ≠ 0) :
+    profileD L = 0
       ↔ ∃ H P : Matrix (Fin N) (Fin N) ℝ, ∃ hH : H.IsHermitian,
           SpectrumSymmAboutZero hH ∧ P.PosSemidef ∧ symPart L = H + P := by
   constructor
   · intro h
-    obtain ⟨H, P, hH, hsym, hP, hSHP, -⟩ := shapeD_eq_zero_decomp_commute L hL h
+    obtain ⟨H, P, hH, hsym, hP, hSHP, -⟩ := profileD_eq_zero_decomp_commute L hL h
     exact ⟨H, P, hH, hsym, hP, hSHP⟩
   · rintro ⟨H, P, hH, hsym, hP, hSHP⟩
-    rw [shapeD_eq_zero_iff_forall L hL]
+    rw [profileD_eq_zero_iff_forall L hL]
     apply forall_le_of_card_le
     intro t ht
     rw [card_alpha_gt (symPart_isHermitian L) t ht,
@@ -1195,12 +1195,12 @@ theorem shapeD_eq_zero_iff_decomp (hL : L ≠ 0) :
 /-- Theorem (4), the decomposition: if `c = 0` then `S = H - P` with
 `H` as in (3) and `P` positive semidefinite, where `H` and `P` commute
 with `S` and with each other and `‖P‖² = d‖L‖²`. -/
-theorem shapeC_eq_zero_decomp_commute (hL : L ≠ 0) (h : shapeC L = 0) :
+theorem profileC_eq_zero_decomp_commute (hL : L ≠ 0) (h : profileC L = 0) :
     ∃ H P : Matrix (Fin N) (Fin N) ℝ, ∃ hH : H.IsHermitian,
       SpectrumSymmAboutZero hH ∧ P.PosSemidef ∧ symPart L = H - P
       ∧ Commute H (symPart L) ∧ Commute P (symPart L) ∧ Commute H P
-      ∧ frobSq P = shapeD L * frobSq L := by
-  have hαβ := (shapeC_eq_zero_iff_forall L hL).mp h
+      ∧ frobSq P = profileD L * frobSq L := by
+  have hαβ := (profileC_eq_zero_iff_forall L hL).mp h
   refine ⟨conjDiag (symPart_isHermitian L)
       (hvec (symPart_isHermitian L) ∘ evPerm (N := N)),
     conjDiag (symPart_isHermitian L)
@@ -1212,7 +1212,7 @@ theorem shapeC_eq_zero_decomp_commute (hL : L ≠ 0) (h : shapeC L = 0) :
     intro i
     simp only [Function.comp_apply]
     linarith [hαβ (evPerm i)]
-  · rw [frobSq_conjDiag, shapeD, div_mul_cancel₀ _ (frobSq_ne_zero L hL)]
+  · rw [frobSq_conjDiag, profileD, div_mul_cancel₀ _ (frobSq_ne_zero L hL)]
     refine (Fintype.sum_equiv (evPerm (N := N)) _
       (fun j => (betaList (symPart L) (symPart_isHermitian L) j
         - alphaList (symPart L) (symPart_isHermitian L) j) ^ 2)
@@ -1222,16 +1222,16 @@ theorem shapeC_eq_zero_decomp_commute (hL : L ≠ 0) (h : shapeC L = 0) :
 
 /-- Theorem (4), second half: `c = 0` iff `S = H - P` with `H` as in
 (3) and `P` positive semidefinite. -/
-theorem shapeC_eq_zero_iff_decomp (hL : L ≠ 0) :
-    shapeC L = 0
+theorem profileC_eq_zero_iff_decomp (hL : L ≠ 0) :
+    profileC L = 0
       ↔ ∃ H P : Matrix (Fin N) (Fin N) ℝ, ∃ hH : H.IsHermitian,
           SpectrumSymmAboutZero hH ∧ P.PosSemidef ∧ symPart L = H - P := by
   constructor
   · intro h
-    obtain ⟨H, P, hH, hsym, hP, hSHP, -⟩ := shapeC_eq_zero_decomp_commute L hL h
+    obtain ⟨H, P, hH, hsym, hP, hSHP, -⟩ := profileC_eq_zero_decomp_commute L hL h
     exact ⟨H, P, hH, hsym, hP, hSHP⟩
   · rintro ⟨H, P, hH, hsym, hP, hSHP⟩
-    rw [shapeC_eq_zero_iff_forall L hL]
+    rw [profileC_eq_zero_iff_forall L hL]
     apply forall_le_of_card_le'
     intro t ht
     rw [card_alpha_gt (symPart_isHermitian L) t ht,
@@ -1240,23 +1240,23 @@ theorem shapeC_eq_zero_iff_decomp (hL : L ≠ 0) :
 
 /-- Theorem (3), last part: `d = 1` iff `L` is symmetric negative
 semidefinite. -/
-theorem shapeD_eq_one_iff (hL : L ≠ 0) :
-    shapeD L = 1 ↔ L.IsSymm ∧ (-L).PosSemidef := by
-  have hsum := shape_sum_eq_one L hL
-  have ha := shapeA_nonneg L
-  have hb := shapeB_nonneg L
-  have hc := shapeC_nonneg L
+theorem profileD_eq_one_iff (hL : L ≠ 0) :
+    profileD L = 1 ↔ L.IsSymm ∧ (-L).PosSemidef := by
+  have hsum := profile_sum_eq_one L hL
+  have ha := profileA_nonneg L
+  have hb := profileB_nonneg L
+  have hc := profileC_nonneg L
   constructor
   · intro h
-    have ha0 : shapeA L = 0 := by linarith
-    have hb0 : shapeB L = 0 := by linarith
-    have hc0 : shapeC L = 0 := by linarith
-    have hsymm := (shapeA_eq_zero_iff L hL).mp ha0
+    have ha0 : profileA L = 0 := by linarith
+    have hb0 : profileB L = 0 := by linarith
+    have hc0 : profileC L = 0 := by linarith
+    have hsymm := (profileA_eq_zero_iff L hL).mp ha0
     refine ⟨hsymm, ?_⟩
     rw [← symPart_eq_of_isSymm L hsymm,
       neg_posSemidef_iff_evDesc_nonpos (symPart_isHermitian L)]
-    have hαβ := (shapeC_eq_zero_iff_forall L hL).mp hc0
-    rcases (shapeB_eq_zero_iff L hL).mp hb0 with hpos | hneg
+    have hαβ := (profileC_eq_zero_iff_forall L hL).mp hc0
+    rcases (profileB_eq_zero_iff L hL).mp hb0 with hpos | hneg
     · rw [posSemidef_iff_evDesc_nonneg (symPart_isHermitian L)] at hpos
       intro i
       have h1 := hαβ i
@@ -1267,11 +1267,11 @@ theorem shapeD_eq_one_iff (hL : L ≠ 0) :
     · exact (neg_posSemidef_iff_evDesc_nonpos (symPart_isHermitian L)).mp hneg
   · rintro ⟨hsymm, hneg⟩
     have hS : symPart L = L := symPart_eq_of_isSymm L hsymm
-    have ha0 : shapeA L = 0 := (shapeA_eq_zero_iff L hL).mpr hsymm
+    have ha0 : profileA L = 0 := (profileA_eq_zero_iff L hL).mpr hsymm
     have hneg' : (-(symPart L)).PosSemidef := by rw [hS]; exact hneg
-    have hb0 : shapeB L = 0 := (shapeB_eq_zero_iff L hL).mpr (Or.inr hneg')
-    have hc0 : shapeC L = 0 := by
-      rw [shapeC_eq_zero_iff_forall L hL]
+    have hb0 : profileB L = 0 := (profileB_eq_zero_iff L hL).mpr (Or.inr hneg')
+    have hc0 : profileC L = 0 := by
+      rw [profileC_eq_zero_iff_forall L hL]
       intro j
       rw [alphaList_apply, max_eq_right
         ((neg_posSemidef_iff_evDesc_nonpos (symPart_isHermitian L)).mp hneg' j)]
@@ -1280,23 +1280,23 @@ theorem shapeD_eq_one_iff (hL : L ≠ 0) :
 
 /-- Theorem (4), last part: `c = 1` iff `L` is symmetric positive
 semidefinite. -/
-theorem shapeC_eq_one_iff (hL : L ≠ 0) :
-    shapeC L = 1 ↔ L.IsSymm ∧ L.PosSemidef := by
-  have hsum := shape_sum_eq_one L hL
-  have ha := shapeA_nonneg L
-  have hb := shapeB_nonneg L
-  have hd := shapeD_nonneg L
+theorem profileC_eq_one_iff (hL : L ≠ 0) :
+    profileC L = 1 ↔ L.IsSymm ∧ L.PosSemidef := by
+  have hsum := profile_sum_eq_one L hL
+  have ha := profileA_nonneg L
+  have hb := profileB_nonneg L
+  have hd := profileD_nonneg L
   constructor
   · intro h
-    have ha0 : shapeA L = 0 := by linarith
-    have hb0 : shapeB L = 0 := by linarith
-    have hd0 : shapeD L = 0 := by linarith
-    have hsymm := (shapeA_eq_zero_iff L hL).mp ha0
+    have ha0 : profileA L = 0 := by linarith
+    have hb0 : profileB L = 0 := by linarith
+    have hd0 : profileD L = 0 := by linarith
+    have hsymm := (profileA_eq_zero_iff L hL).mp ha0
     refine ⟨hsymm, ?_⟩
     rw [← symPart_eq_of_isSymm L hsymm,
       posSemidef_iff_evDesc_nonneg (symPart_isHermitian L)]
-    have hβα := (shapeD_eq_zero_iff_forall L hL).mp hd0
-    rcases (shapeB_eq_zero_iff L hL).mp hb0 with hpos | hneg
+    have hβα := (profileD_eq_zero_iff_forall L hL).mp hd0
+    rcases (profileB_eq_zero_iff L hL).mp hb0 with hpos | hneg
     · exact (posSemidef_iff_evDesc_nonneg (symPart_isHermitian L)).mp hpos
     · rw [neg_posSemidef_iff_evDesc_nonpos (symPart_isHermitian L)] at hneg
       intro i
@@ -1306,11 +1306,11 @@ theorem shapeC_eq_one_iff (hL : L ≠ 0) :
       linarith [le_max_left (-(evDesc (symPart_isHermitian L) i)) 0]
   · rintro ⟨hsymm, hpos⟩
     have hS : symPart L = L := symPart_eq_of_isSymm L hsymm
-    have ha0 : shapeA L = 0 := (shapeA_eq_zero_iff L hL).mpr hsymm
+    have ha0 : profileA L = 0 := (profileA_eq_zero_iff L hL).mpr hsymm
     have hpos' : (symPart L).PosSemidef := by rw [hS]; exact hpos
-    have hb0 : shapeB L = 0 := (shapeB_eq_zero_iff L hL).mpr (Or.inl hpos')
-    have hd0 : shapeD L = 0 := by
-      rw [shapeD_eq_zero_iff_forall L hL]
+    have hb0 : profileB L = 0 := (profileB_eq_zero_iff L hL).mpr (Or.inl hpos')
+    have hd0 : profileD L = 0 := by
+      rw [profileD_eq_zero_iff_forall L hL]
       intro j
       rw [betaList_apply, max_eq_right (by
         linarith [(posSemidef_iff_evDesc_nonneg (symPart_isHermitian L)).mp hpos'

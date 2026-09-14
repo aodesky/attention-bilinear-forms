@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shapes of attention heads</title>
+<title>Profiles of attention heads</title>
 <style>
   body { font-family: Georgia, 'Times New Roman', serif; line-height: 1.55;
          max-width: 46rem; margin: 3rem auto; padding: 0 1.25rem;
@@ -23,7 +23,7 @@
 </style>
 </head>
 <body>
-<h1>Shapes of attention heads</h1>
+<h1>Profiles of attention heads</h1>
 <p class="sub">Interactive figures for
 <em>On attention heads and bilinear forms</em>.</p>
 
@@ -34,7 +34,7 @@ residual stream. Write it as <i>L</i> = <i>S</i> + <i>T</i> with
 &#8214;<i>L</i>&#8214; = 1. Let &lambda;<sub>+</sub> list the positive
 eigenvalues of <i>S</i> and &lambda;<sub>&minus;</sub> the absolute
 values of its negative eigenvalues, both decreasing and padded with
-zeros to a common length. The <i>shape</i> of <i>L</i> is</p>
+zeros to a common length. The <i>profile</i> of <i>L</i> is</p>
 
 <p class="formula">
 <i>a</i> = &#8214;<i>T</i>&#8214;<sup>2</sup>,&nbsp;&nbsp;
@@ -44,12 +44,12 @@ zeros to a common length. The <i>shape</i> of <i>L</i> is</p>
 </p>
 
 <p>taking positive and negative parts entrywise. These are nonnegative
-and sum to one, so the shape is a point of the 3&#8209;simplex, drawn as
+and sum to one, so the profile is a point of the 3&#8209;simplex, drawn as
 a tetrahedron whose vertices are the antisymmetric forms
 (<i>a</i> = 1), the forms whose two lobes agree (<i>b</i> = 1), and the
 positive and negative semidefinite forms (<i>c</i> = 1, <i>d</i> = 1).</p>
 
-<p>Each page below plots the shape of every head of one model,
+<p>Each page below plots the profile of every head of one model,
 coloured by spectral type. Drag to rotate, scroll to zoom, and hover a
 point for the layer and head it belongs to. Use the model dropdown at the
 top to switch models. The tabs at the bottom select the 3-D

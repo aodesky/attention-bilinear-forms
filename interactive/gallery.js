@@ -2,7 +2,7 @@
 
 const figures = [
   { key: 'simplex', title: 'Interactive 3-D simplex', file: 'simplex.html', help: 'Drag to rotate, scroll to zoom, and hover for layer and head details.' },
-  { key: 'delta', title: '2-D projection to Δ', file: 'delta.png', help: 'Projection of the head shapes onto the face of symmetric shapes.' },
+  { key: 'delta', title: '2-D projection to Δ', file: 'delta.png', help: 'Projection of the head profiles onto the face of symmetric profiles.' },
   { key: 'extreme-histograms', title: 'Parity profiles (k = 3)', file: 'extreme-histograms.png', help: 'Mean histograms of the extreme members of each spectral type.' },
   { key: 'clusters-by-layer', title: 'Clusters by layer (k = 3)', file: 'clusters-by-layer.png', help: 'The distribution of the three spectral types across model layers.' },
 ];

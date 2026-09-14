@@ -19,7 +19,7 @@ this formalization. In particular, Lemma 7 is formalized here, but the
 main-text accumulation theorem that applies it is not. The two expository
 remarks following Lemma 11 are also outside the scope.
 
-\chapter{Bilinear forms and their shapes}
+\chapter{Bilinear forms and their profiles}
 
 All matrices are real. Matrix norms are Frobenius norms. The Lean
 development uses their squares to avoid unnecessary square roots.
@@ -37,9 +37,9 @@ Then $L=S+T$, with $S$ symmetric and $T$ antisymmetric.
 \end{definition}
 
 \setcounter{definition}{5}
-\begin{definition}[Shape of a bilinear form]
-\label{def:shape}
-\lean{Appendices.sortDesc, Appendices.alphaList, Appendices.betaList, Appendices.shapeA, Appendices.shapeB, Appendices.shapeC, Appendices.shapeD}
+\begin{definition}[Profile of a bilinear form]
+\label{def:profile}
+\lean{Appendices.sortDesc, Appendices.alphaList, Appendices.betaList, Appendices.profileA, Appendices.profileB, Appendices.profileC, Appendices.profileD}
 \leanok
 \uses{def:parts}
 For $L\ne0$, let $\alpha$ and $\beta$ be the decreasing lists of positive
@@ -175,7 +175,7 @@ the normalized energies are unchanged by this rescaling.
 \label{lem:proportional}
 \lean{Appendices.proportional_lobes}
 \leanok
-\uses{def:shape}
+\uses{def:profile}
 Let $X>0$ almost surely, with finite nonzero second moment, and fix
 $u,v>0$, $\rho=u/v$. Let $\alpha_n$ be the decreasing sorting of
 $vX_1,\ldots,vX_n$ and $\beta_n$ the decreasing sorting of
@@ -188,7 +188,7 @@ independent copies of $X$. Then
 \end{lemma}
 \begin{proof}
 \leanok
-\uses{def:shape}
+\uses{def:profile}
 Reduce to two samples with the same scale. For sorted nonnegative
 lists, a layer-cake identity expresses their inner product using the
 minimum of two empirical survival counts. The strong law controls
@@ -274,11 +274,11 @@ to identify both with the squared distance between the lobes.
 \end{proof}
 
 \setcounter{theorem}{4}
-\begin{theorem}[Fibers of the shape map over the simplex faces]
+\begin{theorem}[Fibers of the profile map over the simplex faces]
 \label{thm:faces}
-\lean{Appendices.shapeA_nonneg, Appendices.shapeB_nonneg, Appendices.shapeC_nonneg, Appendices.shapeD_nonneg, Appendices.shape_sum_eq_one, Appendices.shapeA_eq_zero_iff, Appendices.shapeA_eq_one_iff, Appendices.shapeB_eq_zero_iff, Appendices.shapeB_eq_one_iff, Appendices.shapeD_eq_zero_iff_forall, Appendices.shapeD_eq_zero_iff_decomp, Appendices.shapeD_eq_zero_decomp_commute, Appendices.shapeD_eq_one_iff, Appendices.shapeC_eq_zero_iff_forall, Appendices.shapeC_eq_zero_iff_decomp, Appendices.shapeC_eq_zero_decomp_commute, Appendices.shapeC_eq_one_iff}
+\lean{Appendices.profileA_nonneg, Appendices.profileB_nonneg, Appendices.profileC_nonneg, Appendices.profileD_nonneg, Appendices.profile_sum_eq_one, Appendices.profileA_eq_zero_iff, Appendices.profileA_eq_one_iff, Appendices.profileB_eq_zero_iff, Appendices.profileB_eq_one_iff, Appendices.profileD_eq_zero_iff_forall, Appendices.profileD_eq_zero_iff_decomp, Appendices.profileD_eq_zero_decomp_commute, Appendices.profileD_eq_one_iff, Appendices.profileC_eq_zero_iff_forall, Appendices.profileC_eq_zero_iff_decomp, Appendices.profileC_eq_zero_decomp_commute, Appendices.profileC_eq_one_iff}
 \leanok
-\uses{def:shape}
+\uses{def:profile}
 Let $L\ne0$ and $s(L)=(a,b,c,d)$. The coordinates are nonnegative
 and sum to one. Their faces and vertices have the following fibers.
 \begin{enumerate}
@@ -301,7 +301,7 @@ positive semidefinite.
 \end{theorem}
 \begin{proof}
 \leanok
-\uses{def:shape,lem:energy}
+\uses{def:profile,lem:energy}
 The spectral theorem and the energy partition give nonnegativity and
 sum one. Vanishing squared norms characterize the $a$ face and the
 coordinatewise inequalities for $c,d$. The lobe inner product vanishes

@@ -5,7 +5,7 @@ For each head this computes, from the bilinear form L stored by the
 extraction database:
 
 * the symmetric energy S, the balance score B and the pairing score P;
-* the shape (a, b, c, d) of L and of its symmetric part;
+* the profile (a, b, c, d) of L and of its symmetric part;
 * the ratio rho = ||lambda_-|| / ||lambda_+|| and the bound of the
   pairing lemma at that rho, with the gap between the two;
 * the departure from proportional lobes,

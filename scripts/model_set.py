@@ -170,7 +170,7 @@ def sorted_lobes(S: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
     The positive eigenvalues and the absolute values of the negative
     eigenvalues, each sorted decreasing and padded with zeros to a common
-    length, as in the definition of the shape map.
+    length, as in the definition of the profile map.
     """
     ev = np.linalg.eigvalsh(S)
     pos = np.sort(ev[ev > 0])[::-1]
@@ -179,12 +179,12 @@ def sorted_lobes(S: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     return (np.pad(pos, (0, m - pos.size)), np.pad(neg, (0, m - neg.size)))
 
 
-def shape(L: np.ndarray) -> tuple[float, float, float, float]:
-    """The shape (a, b, c, d) of a nonzero bilinear form."""
+def profile(L: np.ndarray) -> tuple[float, float, float, float]:
+    """The profile (a, b, c, d) of a nonzero bilinear form."""
     S, T = symmetric_antisymmetric(L)
     norm_sq = float((L ** 2).sum())
     if norm_sq == 0.0:
-        raise ValueError("the shape of the zero form is undefined")
+        raise ValueError("the profile of the zero form is undefined")
     lam_p, lam_m = sorted_lobes(S)
     u = lam_p - lam_m
     return (float((T ** 2).sum()) / norm_sq,
