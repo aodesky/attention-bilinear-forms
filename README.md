@@ -68,15 +68,16 @@ multi-head and grouped-query attention.
 ## Interactive plots
 
 `interactive/` holds one page per model, plotting the shape of every
-head on the simplex of the weight map, coloured by spectral type. Open
+head on the simplex of shapes, coloured by spectral type. Open
 any of them in a browser; the plotly library is loaded from a CDN, so
 an internet connection is needed to view them.
 
 ## Formalization
 
 `formalization/` contains Lean 4 formalizations of the mathematical
-results of the appendices, together with the two main-text results whose
-proofs are given there. Building requires the Lean toolchain named in
+results of the appendices, together with the definition of the shape
+of a bilinear form and the main-text theorem on the faces of the
+simplex, whose proof is given there. Building requires the Lean toolchain named in
 `formalization/lean-toolchain`, which `elan` installs automatically:
 
     cd formalization

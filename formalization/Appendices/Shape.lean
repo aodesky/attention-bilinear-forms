@@ -1,24 +1,23 @@
 /-
-Main text, §"A simplex-valued map on bilinear forms".
+Main text, §"The shape of a real bilinear form", Definition (defn:shapeMap).
 
 Let `L ∈ M_N(ℝ)` with `L = S + T`, `S` symmetric, `T` antisymmetric.
 Let `α` (resp. `β`) list the positive eigenvalues (resp. the absolute
 values of the negative eigenvalues) of `S` in decreasing order,
 appending zeros so that the two lists have equal length.  The
-*weights* of `L` (for `‖L‖ = 1`) are
+*shape* of `L` (for `‖L‖ = 1`) is `s(L) = (a, b, c, d)`, where
 
     a = ‖T‖²,  b = 2⟨α, β⟩,  c = ‖(α-β)₊‖²,  d = ‖(α-β)₋‖²,
 
-where `x₊ = max(x,0)` and `x₋ = max(-x,0)` entrywise.  The map
-`w = (a,b,c,d)` is extended to all `L ≠ 0` invariantly under positive
-scaling; we build the normalization `‖L‖² = 1` into the definitions by
+where `x₊ = max(x,0)` and `x₋ = max(-x,0)` entrywise.  The shape
+is extended to all `L ≠ 0` invariantly under positive scaling; we build the normalization `‖L‖² = 1` into the definitions by
 dividing by `‖L‖²`.
 
 Encoding: both lists are padded with zeros to the common length `N`;
 `α` is realized as the decreasing sort of the vector `(max(λ_i, 0))_i`
 of positive parts of the eigenvalues (sorting appends the padding
 zeros automatically), and `β` as the decreasing sort of
-`(max(-λ_i, 0))_i`.  The weights do not depend on the amount of zero
+`(max(-λ_i, 0))_i`.  The shape does not depend on the amount of zero
 padding.
 -/
 import Appendices.Common
@@ -48,7 +47,7 @@ lemma sum_comp_sortDesc {n : ℕ} (v : Fin n → ℝ) (g : ℝ → ℝ) :
     (fun i => g (v ((Fin.revPerm.trans (Tuple.sort v)) i))) (fun i => g (v i))
     (fun i => rfl) |>.symm ▸ rfl
 
-/-! ### The lists `α` and `β` and the weights -/
+/-! ### The lists `α` and `β` and the shape -/
 
 variable {N : ℕ}
 
@@ -71,23 +70,23 @@ noncomputable def betaList (S : Matrix (Fin N) (Fin N) ℝ)
     (hS : S.IsHermitian) : Fin N → ℝ :=
   sortDesc (fun i => max (-hS.eigenvalues i) 0)
 
-/-- The weight `a = ‖T‖²/‖L‖²`. -/
-noncomputable def weightA (L : Matrix (Fin N) (Fin N) ℝ) : ℝ :=
+/-- The coordinate `a = ‖T‖²/‖L‖²` of the shape. -/
+noncomputable def shapeA (L : Matrix (Fin N) (Fin N) ℝ) : ℝ :=
   frobSq (skewPart L) / frobSq L
 
-/-- The weight `b = 2⟨α, β⟩/‖L‖²`, where `α`, `β` are the lists of the
+/-- The coordinate `b = 2⟨α, β⟩/‖L‖²` of the shape, where `α`, `β` are the lists of the
 symmetric part of `L`. -/
-noncomputable def weightB (L : Matrix (Fin N) (Fin N) ℝ) : ℝ :=
+noncomputable def shapeB (L : Matrix (Fin N) (Fin N) ℝ) : ℝ :=
   2 * (∑ j, alphaList (symPart L) (symPart_isHermitian L) j *
     betaList (symPart L) (symPart_isHermitian L) j) / frobSq L
 
-/-- The weight `c = ‖(α-β)₊‖²/‖L‖²`. -/
-noncomputable def weightC (L : Matrix (Fin N) (Fin N) ℝ) : ℝ :=
+/-- The coordinate `c = ‖(α-β)₊‖²/‖L‖²` of the shape. -/
+noncomputable def shapeC (L : Matrix (Fin N) (Fin N) ℝ) : ℝ :=
   (∑ j, max (alphaList (symPart L) (symPart_isHermitian L) j -
     betaList (symPart L) (symPart_isHermitian L) j) 0 ^ 2) / frobSq L
 
-/-- The weight `d = ‖(α-β)₋‖²/‖L‖²`. -/
-noncomputable def weightD (L : Matrix (Fin N) (Fin N) ℝ) : ℝ :=
+/-- The coordinate `d = ‖(α-β)₋‖²/‖L‖²` of the shape. -/
+noncomputable def shapeD (L : Matrix (Fin N) (Fin N) ℝ) : ℝ :=
   (∑ j, max (betaList (symPart L) (symPart_isHermitian L) j -
     alphaList (symPart L) (symPart_isHermitian L) j) 0 ^ 2) / frobSq L
 

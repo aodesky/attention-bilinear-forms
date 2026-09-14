@@ -21,7 +21,7 @@ Formalization notes.
   `gaussianReal 0 v_K` and the entries of `W_Q` have law
   `gaussianReal 0 v_Q` (`expected_symmetric_energy_low_rank_qk`,
   `expected_skew_energy_low_rank_qk`).  The core computation is done
-  for a common variance `v` (`…_common_variance`); the general case
+  for a common variance `v` (the private `…_common_variance` steps); the general case
   reduces to it by rescaling `W_K`, which leaves `𝒮` and `𝒜` unchanged.
 * The hypotheses `v_K, v_Q ≠ 0` are required: for `v = 0` we would have
   `L = 0` almost surely and `𝒮` would be the junk value `0/0 = 0`.  The
@@ -554,7 +554,8 @@ section MainStatement
 variable {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
   {n N : ℕ} {v : ℝ≥0} {WK WQ : Ω → Matrix (Fin n) (Fin N) ℝ}
 
-/-- The common-variance case of the proposition: all `2nN` entries are
+/-- Step of the proof of `expected_symmetric_energy_low_rank_qk`, the
+common-variance case: all `2nN` entries are
 jointly independent with the same law `gaussianReal 0 v`, `v ≠ 0`, and
 `1 ≤ n ≤ N`.  With `L = W_Kᵀ W_Q`, `S = ½(L + Lᵀ)` and
 `𝒮 = ‖S‖²/‖L‖²`:
@@ -562,7 +563,7 @@ jointly independent with the same law `gaussianReal 0 v`, `v ≠ 0`, and
     `𝔼[𝒮] = (N+1)/(2N)`,
 
 independently of the head dimension `n`. -/
-theorem expected_symmetric_energy_low_rank_qk_common_variance
+private theorem expected_symmetric_energy_low_rank_qk_common_variance
     (hn : 1 ≤ n) (hnN : n ≤ N) (hv : v ≠ 0)
     (hmeas : ∀ i, AEMeasurable (qkEntry WK WQ i) μ)
     (hindep : iIndepFun (qkEntry WK WQ) μ)
@@ -592,14 +593,15 @@ theorem expected_symmetric_energy_low_rank_qk_common_variance
           ∂(LowRankQK.P n N v) := by rw [hJlaw]
     _ = ((N : ℝ) + 1) / (2 * N) := LowRankQK.integral_symPart_ratio hn hN hv
 
-/-- The common-variance case, skew part: in the setting of
+/-- Step of the proof of `expected_skew_energy_low_rank_qk`, the
+common-variance case, skew part: in the setting of
 `expected_symmetric_energy_low_rank_qk_common_variance`, with
 `T = ½(L - Lᵀ)` and `𝒜 = ‖T‖²/‖L‖²`:
 
     `𝔼[𝒜] = (N-1)/(2N)`,
 
 independently of the head dimension `n`. -/
-theorem expected_skew_energy_low_rank_qk_common_variance
+private theorem expected_skew_energy_low_rank_qk_common_variance
     (hn : 1 ≤ n) (hnN : n ≤ N) (hv : v ≠ 0)
     (hmeas : ∀ i, AEMeasurable (qkEntry WK WQ i) μ)
     (hindep : iIndepFun (qkEntry WK WQ) μ)

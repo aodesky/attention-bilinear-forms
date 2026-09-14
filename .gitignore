@@ -4,3 +4,7 @@ __pycache__/
 
 # extraction output: rebuilt by scripts/extract_qk_bilinear_db.py
 data/
+
+# private working notes and extra formalizations, kept in the paper's repository
+formalization/HANDOFF.md
+formalization/Extras/

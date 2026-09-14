@@ -23,23 +23,15 @@ Encoding choices (documented in the theorem docstring):
   proof);
 * norms are written out as `√(∑ …²)`.
 
-The instance used in the proof of Theorem (thm:accumulation) of the
-main text — `X` with law `γ_{ν,k}`, `v = 1`, `u = ρ = |μ|/ν` — is
-recorded as `proportional_lobes_gamma`.  The paper's distribution
-`γ_{ν,k}` (for `ν > 0`, `k > 1`) has density
-`Γ(k)⁻¹ ((k−1)/ν)^k x^{k−1} e^{−(k−1)x/ν}` on `x > 0`: it is the Gamma
-distribution with shape `k` and rate `(k−1)/ν`, i.e. mathlib's
-`ProbabilityTheory.gammaMeasure k ((k−1)/ν)`.
-
 The proof follows the paper's three steps (pointwise convergence of the
 sorted lists, the strong law of large numbers for the second moment,
 and Fatou's lemma), with the first and third steps combined: a
 layer-cake identity writes `⟨α_n, α_n'⟩ / n` as an integral over
 `(0,∞)²` of the minimum of two empirical survival counts, whose liminf
-Fatou's lemma bounds below by the second moment of `γ_{ν,k}`.
+Fatou's lemma bounds below by the second moment of `γ`.
 -/
 import Appendices.Common
-import Appendices.Weights
+import Appendices.Shape
 import Appendices.RandomMatrices.EnergyIdentities
 
 open MeasureTheory ProbabilityTheory Filter Set Finset
@@ -186,155 +178,6 @@ private lemma ofReal_sum_mul_eq_lintegral_card {a b : Fin n → ℝ}
   exact Finset.sum_congr rfl fun i _ => ENNReal.ofReal_mul (ha0 i)
 
 end LayerCake
-
-/-! ### Facts about the gamma distribution
-
-`γ_{ν,k}` is `gammaMeasure k ((k-1)/ν)`.  We need: it gives no mass to
-`(-∞, 0]`; the scaling relation `γ_{|μ|,k} = (ρ • ·)_* γ_{ν,k}` with
-`ρ = |μ|/ν`; and that its second moment is finite and positive. -/
-
-section GammaFacts
-
-open ProbabilityTheory
-
-private lemma gammaMeasure_singleton (a r x : ℝ) : gammaMeasure a r {x} = 0 := by
-  rw [gammaMeasure, withDensity_apply _ (measurableSet_singleton x)]
-  rw [Measure.restrict_eq_zero.mpr (measure_singleton x), lintegral_zero_measure]
-
-private lemma gammaMeasure_Iic_zero (a r : ℝ) : gammaMeasure a r (Set.Iic 0) = 0 := by
-  have h : (Set.Iic (0:ℝ)) = Set.Iio 0 ∪ {0} := by
-    ext x; simp [le_iff_lt_or_eq]
-  rw [h]
-  refine le_antisymm (le_trans (measure_union_le _ _) ?_) (zero_le _)
-  rw [gammaMeasure_singleton]
-  rw [gammaMeasure, withDensity_apply _ measurableSet_Iio]
-  rw [setLIntegral_congr_fun measurableSet_Iio
-    (fun x (hx : x < 0) => gammaPDF_of_neg hx), lintegral_zero, zero_add]
-
-private lemma ofReal_inv_mul_gammaPDF_div {a r ρ : ℝ} (ha : 0 < a) (hr : 0 < r)
-    (hρ : 0 < ρ) (y : ℝ) :
-    ENNReal.ofReal ρ⁻¹ * gammaPDF a r (y / ρ) = gammaPDF a (r / ρ) y := by
-  rcases le_or_gt 0 y with hy | hy
-  · rw [gammaPDF_of_nonneg (by positivity), gammaPDF_of_nonneg hy,
-      ← ENNReal.ofReal_mul (by positivity)]
-    congr 1
-    have harg : r * (y / ρ) = r / ρ * y := by field_simp
-    rw [harg, Real.div_rpow hy hρ.le, Real.div_rpow hr.le hρ.le,
-      Real.rpow_sub hρ, Real.rpow_one]
-    have hΓ : Real.Gamma a ≠ 0 := (Real.Gamma_pos_of_pos ha).ne'
-    have hρa : (0:ℝ) < ρ ^ a := Real.rpow_pos_of_pos hρ a
-    field_simp
-  · rw [gammaPDF_of_neg hy, gammaPDF_of_neg (div_neg_of_neg_of_pos hy hρ), mul_zero]
-
-/-- Scaling: pushing `gammaMeasure a r` forward along `x ↦ ρx` (`ρ > 0`)
-gives `gammaMeasure a (r/ρ)`. -/
-private lemma map_mul_left_gammaMeasure {a r ρ : ℝ} (ha : 0 < a) (hr : 0 < r)
-    (hρ : 0 < ρ) :
-    Measure.map (fun x => ρ * x) (gammaMeasure a r) = gammaMeasure a (r / ρ) := by
-  have hmeas : Measurable (fun x : ℝ => ρ * x) := measurable_const_mul ρ
-  refine Measure.ext fun A hA => ?_
-  rw [Measure.map_apply hmeas hA, gammaMeasure,
-    withDensity_apply _ (hA.preimage hmeas), gammaMeasure, withDensity_apply _ hA]
-  have hfun : Measurable (A.indicator (fun y => gammaPDF a r (y / ρ))) :=
-    Measurable.indicator (Measurable.ennreal_ofReal
-      ((measurable_gammaPDFReal a r).comp (measurable_id.div_const ρ))) hA
-  have h1 : (∫⁻ x in (fun x => ρ * x) ⁻¹' A, gammaPDF a r x)
-      = ∫⁻ x, (A.indicator (fun y => gammaPDF a r (y / ρ))) (ρ * x) := by
-    rw [← lintegral_indicator (hA.preimage hmeas)]
-    refine lintegral_congr fun x => ?_
-    by_cases hx : ρ * x ∈ A
-    · rw [Set.indicator_of_mem hx, Set.indicator_of_mem (by exact hx),
-        mul_div_cancel_left₀ _ hρ.ne']
-    · rw [Set.indicator_of_notMem hx, Set.indicator_of_notMem (by exact hx)]
-  have h2 : (∫⁻ x, (A.indicator (fun y => gammaPDF a r (y / ρ))) (ρ * x))
-      = ∫⁻ y, (A.indicator (fun y => gammaPDF a r (y / ρ))) y
-          ∂(Measure.map (fun x => ρ * x) volume) :=
-    (lintegral_map hfun hmeas).symm
-  rw [h1, h2, Real.map_volume_mul_left hρ.ne', abs_inv, abs_of_pos hρ,
-    lintegral_smul_measure, lintegral_indicator hA, smul_eq_mul,
-    ← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
-  exact setLIntegral_congr_fun hA
-    (fun y _ => ofReal_inv_mul_gammaPDF_div ha hr hρ y)
-
-private lemma measurable_ofReal_sq : Measurable (fun x : ℝ => ENNReal.ofReal (x ^ 2)) :=
-  Measurable.ennreal_ofReal (measurable_id.pow_const 2)
-
-private lemma lintegral_sq_gammaMeasure_one_lt_top {a : ℝ} (ha : 0 < a) :
-    (∫⁻ x, ENNReal.ofReal (x ^ 2) ∂(gammaMeasure a 1)) < ⊤ := by
-  have hpdf : Measurable (gammaPDF a 1) :=
-    Measurable.ennreal_ofReal (measurable_gammaPDFReal a 1)
-  rw [gammaMeasure, lintegral_withDensity_eq_lintegral_mul _ hpdf measurable_ofReal_sq]
-  rw [← lintegral_add_compl _ (measurableSet_Ioi (a := (0:ℝ))), compl_Ioi]
-  have hIic : (∫⁻ x in Set.Iic 0, (gammaPDF a 1 * fun x => ENNReal.ofReal (x ^ 2)) x) = 0 := by
-    rw [setLIntegral_congr_fun measurableSet_Iic (g := fun _ => 0), lintegral_zero]
-    intro x hx
-    rcases lt_or_eq_of_le (Set.mem_Iic.mp hx) with h | h
-    · simp [Pi.mul_apply, gammaPDF_of_neg h]
-    · simp [Pi.mul_apply, ← h]
-  have hIoi : (∫⁻ x in Set.Ioi 0, (gammaPDF a 1 * fun x => ENNReal.ofReal (x ^ 2)) x)
-      = ENNReal.ofReal (1 / Real.Gamma a)
-        * ∫⁻ x in Set.Ioi 0, ENNReal.ofReal (Real.exp (-x) * x ^ (a + 2 - 1)) := by
-    rw [← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
-    refine setLIntegral_congr_fun measurableSet_Ioi (fun x hx => ?_)
-    have hx : (0:ℝ) < x := hx
-    rw [Pi.mul_apply, gammaPDF_of_nonneg hx.le,
-      ← ENNReal.ofReal_mul (by positivity),
-      ← ENNReal.ofReal_mul (by positivity)]
-    congr 1
-    rw [Real.one_rpow, one_mul]
-    rw [show a + 2 - 1 = (a - 1) + 2 by ring, Real.rpow_add hx, Real.rpow_two]
-    ring
-  rw [hIic, hIoi, add_zero]
-  refine ENNReal.mul_lt_top ENNReal.ofReal_lt_top ?_
-  have hint := Real.GammaIntegral_convergent (s := a + 2) (by linarith)
-  have h2 := hint.2
-  rw [hasFiniteIntegral_iff_enorm] at h2
-  refine lt_of_le_of_lt (le_of_eq ?_) h2
-  refine setLIntegral_congr_fun measurableSet_Ioi (fun x hx => ?_)
-  have hx' : (0:ℝ) < x := hx
-  rw [Real.enorm_eq_ofReal (by positivity)]
-
-private lemma lintegral_sq_gammaMeasure_lt_top {a r : ℝ} (ha : 0 < a) (hr : 0 < r) :
-    (∫⁻ x, ENNReal.ofReal (x ^ 2) ∂(gammaMeasure a r)) < ⊤ := by
-  have hmap : gammaMeasure a r = Measure.map (fun x => r⁻¹ * x) (gammaMeasure a 1) := by
-    rw [map_mul_left_gammaMeasure ha one_pos (inv_pos.mpr hr), one_div, inv_inv]
-  rw [hmap, lintegral_map measurable_ofReal_sq (measurable_const_mul r⁻¹)]
-  have h : ∀ x : ℝ, ENNReal.ofReal ((r⁻¹ * x) ^ 2)
-      = ENNReal.ofReal (r⁻¹ ^ 2) * ENNReal.ofReal (x ^ 2) := by
-    intro x; rw [mul_pow, ENNReal.ofReal_mul (by positivity)]
-  simp_rw [h]
-  rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
-  exact ENNReal.mul_lt_top ENNReal.ofReal_lt_top (lintegral_sq_gammaMeasure_one_lt_top ha)
-
-private lemma lintegral_sq_gammaMeasure_pos {a r : ℝ} (ha : 0 < a) (hr : 0 < r) :
-    0 < ∫⁻ x, ENNReal.ofReal (x ^ 2) ∂(gammaMeasure a r) := by
-  have hprob := isProbabilityMeasure_gammaMeasure ha hr
-  rw [pos_iff_ne_zero]
-  intro h0
-  rw [lintegral_eq_zero_iff measurable_ofReal_sq] at h0
-  have hae : ∀ᵐ x ∂(gammaMeasure a r), x = 0 := by
-    filter_upwards [h0] with x hx
-    have hx' : ENNReal.ofReal (x ^ 2) = 0 := hx
-    rw [ENNReal.ofReal_eq_zero] at hx'
-    nlinarith [sq_nonneg x]
-  have h1 : gammaMeasure a r ({(0:ℝ)}ᶜ) = 0 := by
-    have hset : {x : ℝ | ¬ x = 0} = {(0:ℝ)}ᶜ := by ext x; simp
-    exact hset ▸ ae_iff.mp hae
-  have h3 := measure_union_le (μ := gammaMeasure a r) ({(0:ℝ)}) ({(0:ℝ)}ᶜ)
-  rw [Set.union_compl_self, measure_univ, gammaMeasure_singleton, h1] at h3
-  simp at h3
-
-/-- Samples from a gamma law are almost surely positive. -/
-private lemma ae_pos_of_map_eq_gammaMeasure {Ω : Type*} [MeasurableSpace Ω]
-    {P : Measure Ω} {X : Ω → ℝ} (hX : Measurable X) {a r : ℝ}
-    (hlaw : Measure.map X P = gammaMeasure a r) : ∀ᵐ ω ∂P, 0 < X ω := by
-  have h : P (X ⁻¹' Set.Iic 0) = 0 := by
-    rw [← Measure.map_apply hX measurableSet_Iic, hlaw, gammaMeasure_Iic_zero]
-  rw [ae_iff]
-  convert h using 2
-  ext ω; simp [not_lt]
-
-end GammaFacts
 
 /-! ### Empirical survival counts
 
@@ -915,81 +758,6 @@ theorem proportional_lobes {u v : ℝ} (hu : 0 < u) (hv : 0 < v)
   have h := hω.const_mul (u / v)
   rw [mul_zero] at h
   exact h.congr fun n => (hkey n).symm
-
-/-- The instance of Lemma (lem:proportional-lobes) used in the proof of
-Theorem (thm:accumulation) of the main text: `X` with law
-`γ_{ν,k} = gammaMeasure k ((k−1)/ν)`, `v = 1` and `u = ρ = |μ|/ν`, so
-that `uX'` has law `γ_{|μ|,k} = gammaMeasure k ((k−1)/|μ|)`.
-
-Encoding: `X i` are the samples from `γ_{ν,k}` and `Y i` the samples
-from `γ_{|μ|,k}`; `hindep` says that all the samples
-`X 0, X 1, …, Y 0, Y 1, …` are independent (so in particular the two
-samples are independent of each other);
-`α_n = sortDesc (fun i : Fin n => X i ω)`,
-`β_n = sortDesc (fun i : Fin n => Y i ω)`, `ρ = |μ|/ν`, and the norms
-are written out as `√(∑ …²)`. -/
-theorem proportional_lobes_gamma {k μ ν : ℝ} (hk : 1 < k) (hμ : μ < 0) (hν : 0 < ν)
-    {X Y : ℕ → Ω → ℝ} (hX : ∀ i, Measurable (X i)) (hY : ∀ i, Measurable (Y i))
-    (hindep : iIndepFun (Sum.elim X Y) P)
-    (hXlaw : ∀ i, Measure.map (X i) P = gammaMeasure k ((k - 1) / ν))
-    (hYlaw : ∀ i, Measure.map (Y i) P = gammaMeasure k ((k - 1) / |μ|)) :
-    ∀ᵐ ω ∂P, Tendsto (fun n =>
-        √(∑ i : Fin n,
-            (sortDesc (fun i => Y i ω) i - (|μ| / ν) * sortDesc (fun i => X i ω) i) ^ 2)
-          / √(∑ i : Fin n, (sortDesc (fun i => X i ω) i) ^ 2))
-      atTop (𝓝 0) := by
-  have hμ0 : 0 < |μ| := abs_pos.mpr hμ.ne
-  have hk0 : 0 < k := by linarith
-  have hk1 : 0 < k - 1 := by linarith
-  set ρ := |μ| / ν with hρ
-  have hρ0 : 0 < ρ := div_pos hμ0 hν
-  set c := ν / |μ| with hc
-  have hc0 : 0 < c := div_pos hν hμ0
-  have hcρ : ρ * c = 1 := by
-    rw [hρ, hc]; field_simp
-  -- the samples `X' i = c * Y i` have law `γ_{ν,k}`, and `Y i = ρ * X' i`
-  set X' : ℕ → Ω → ℝ := fun i ω => c * Y i ω with hX'
-  have hX'm : ∀ i, Measurable (X' i) := fun i => (hY i).const_mul c
-  have hXi : iIndepFun X P :=
-    iIndepFun.precomp (f := Sum.elim X Y) (g := Sum.inl) Sum.inl_injective hindep
-  have hYi : iIndepFun Y P :=
-    iIndepFun.precomp (f := Sum.elim X Y) (g := Sum.inr) Sum.inr_injective hindep
-  have hX'i : iIndepFun X' P :=
-    hYi.comp (fun _ y => c * y) (fun _ => measurable_const_mul c)
-  have hX'l : ∀ i, Measure.map (X' i) P = gammaMeasure k ((k - 1) / ν) := by
-    intro i
-    have h : X' i = (fun y => c * y) ∘ Y i := rfl
-    rw [h, ← Measure.map_map (measurable_const_mul c) (hY i), hYlaw i,
-      map_mul_left_gammaMeasure hk0 (div_pos hk1 hμ0) hc0]
-    congr 1
-    rw [hc]
-    field_simp
-  have hr : 0 < (k - 1) / ν := div_pos hk1 hν
-  have hmain := tendsto_sortDesc_diff_div_of_iid hX hX'm hXi hX'i hXlaw hX'l
-    (gammaMeasure_Iic_zero k ((k - 1) / ν)) (lintegral_sq_gammaMeasure_lt_top hk0 hr).ne
-    (lintegral_sq_gammaMeasure_pos hk0 hr)
-  filter_upwards [hmain] with ω hω
-  have hkey : ∀ n : ℕ,
-      √(∑ i : Fin n, (sortDesc (fun i => Y i ω) i - ρ * sortDesc (fun i => X i ω) i) ^ 2)
-        = ρ * √(∑ i : Fin n,
-            (sortDesc (fun i => X' i ω) i - sortDesc (fun i => X i ω) i) ^ 2) := by
-    intro n
-    have hY' : (fun i : Fin n => Y i ω) = fun i : Fin n => ρ * X' i ω := by
-      funext i
-      show Y i ω = ρ * (c * Y i ω)
-      rw [← mul_assoc, hcρ, one_mul]
-    rw [hY', sortDesc_const_mul hρ0.le]
-    have hs : ∑ i : Fin n,
-          (ρ * sortDesc (fun i => X' i ω) i - ρ * sortDesc (fun i => X i ω) i) ^ 2
-        = ρ ^ 2 * ∑ i : Fin n,
-            (sortDesc (fun i => X' i ω) i - sortDesc (fun i => X i ω) i) ^ 2 := by
-      rw [Finset.mul_sum]
-      exact Finset.sum_congr rfl fun i _ => by ring
-    rw [hs, Real.sqrt_mul (sq_nonneg ρ), Real.sqrt_sq hρ0.le]
-  have h := hω.const_mul ρ
-  rw [mul_zero] at h
-  refine h.congr fun n => ?_
-  rw [hkey n, mul_div_assoc]
 
 end Main
 
