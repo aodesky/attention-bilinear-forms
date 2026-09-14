@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.DS_Store
+
+# extraction output: rebuilt by scripts/extract_qk_bilinear_db.py
+data/

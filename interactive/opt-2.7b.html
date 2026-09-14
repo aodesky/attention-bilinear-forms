@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>opt-2.7b · Shapes of attention heads</title>
+  <meta name="description" content="Explore attention-head shapes: interactive 3-D simplex, projection to Δ, parity profiles, and clusters by layer.">
+  <link rel="stylesheet" href="gallery.css?v=51a6d56a51b0">
+  <script src="gallery.js?v=4b1faf29e27c" defer></script>
+</head>
+<body>
+  <header>
+    <a class="home" href="index.html">Shapes of attention heads</a>
+    <label for="model">Model</label>
+    <select id="model"><option value="distilgpt2">distilgpt2</option><option value="gpt2">gpt2</option><option value="gpt2-medium">gpt2-medium</option><option value="gpt2-large">gpt2-large</option><option value="opt-125m">opt-125m</option><option value="opt-350m">opt-350m</option><option value="opt-1.3b">opt-1.3b</option><option value="opt-2.7b" selected>opt-2.7b</option><option value="opt-6.7b">opt-6.7b</option><option value="opt-13b">opt-13b</option><option value="bloom-3b">bloom-3b</option><option value="bloom-7b1">bloom-7b1</option><option value="pythia-70m-deduped">pythia-70m-deduped</option><option value="Mistral-Small-24B-Base">Mistral-Small-24B-Base</option></select>
+  </header>
+  <main>
+    <div class="caption">
+      <h1 id="figure-title">Interactive 3-D simplex</h1>
+      <a id="open-figure" href="assets/opt-2.7b/simplex.html" target="_blank" rel="noopener">Open figure ↗</a>
+    </div>
+    <p id="figure-help">Drag to rotate, scroll to zoom, and hover for layer and head details.</p>
+    <div id="viewer" role="tabpanel" aria-labelledby="figure-tab-0">
+      <iframe id="interactive-figure" title="Interactive 3-D simplex for opt-2.7b"></iframe>
+      <img id="static-figure" alt="" hidden>
+      <p id="figure-error" role="alert" hidden>This figure could not be loaded. Try opening it separately.</p>
+    </div>
+  </main>
+  <footer>
+    <nav class="figure-labels" role="tablist" aria-label="Figures">
+      <button id="figure-tab-0" type="button" role="tab" aria-controls="viewer" data-figure="0" aria-selected="true">3-D simplex</button>
+      <button id="figure-tab-1" type="button" role="tab" aria-controls="viewer" data-figure="1" aria-selected="false" tabindex="-1">Projection to Δ</button>
+      <button id="figure-tab-2" type="button" role="tab" aria-controls="viewer" data-figure="2" aria-selected="false" tabindex="-1">Parity profiles</button>
+      <button id="figure-tab-3" type="button" role="tab" aria-controls="viewer" data-figure="3" aria-selected="false" tabindex="-1">Clusters by layer</button>
+    </nav>
+  </footer>
+  <noscript>Enable JavaScript to use the model dropdown and figure tabs. <a href="assets/opt-2.7b/simplex.html">Open the 3-D figure</a>.</noscript>
+</body>
+</html>

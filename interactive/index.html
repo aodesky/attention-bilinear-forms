@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shapes of attention heads</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; line-height: 1.55;
+         max-width: 46rem; margin: 3rem auto; padding: 0 1.25rem;
+         color: #1a1a1a; }
+  h1 { font-size: 1.6rem; font-weight: normal; margin-bottom: 0.2rem; }
+  p.sub { color: #555; margin-top: 0; }
+  table { border-collapse: collapse; width: 100%; margin-top: 1.5rem;
+           font-size: 0.92rem; }
+  th, td { text-align: right; padding: 0.35rem 0.6rem;
+            border-bottom: 1px solid #e3e3e3; }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-weight: normal; color: #555; border-bottom: 1px solid #bbb; }
+  a { color: #1a5fb4; }
+  code, .formula { font-size: 0.95em; }
+  .formula { text-align: center; margin: 0.9rem 0; }
+  .note { color: #555; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<h1>Shapes of attention heads</h1>
+<p class="sub">Interactive figures for
+<em>On attention heads and bilinear forms</em>.</p>
+
+<p>Every attention head carries a bilinear form
+<i>L</i> = <i>W<sub>K</sub></i><sup>T</sup><i>W<sub>Q</sub></i> on the
+residual stream. Write it as <i>L</i> = <i>S</i> + <i>T</i> with
+<i>S</i> symmetric and <i>T</i> antisymmetric, and scale so that
+&#8214;<i>L</i>&#8214; = 1. Let &lambda;<sub>+</sub> list the positive
+eigenvalues of <i>S</i> and &lambda;<sub>&minus;</sub> the absolute
+values of its negative eigenvalues, both decreasing and padded with
+zeros to a common length. The <i>shape</i> of <i>L</i> is</p>
+
+<p class="formula">
+<i>a</i> = &#8214;<i>T</i>&#8214;<sup>2</sup>,&nbsp;&nbsp;
+<i>b</i> = 2&#8239;&lang;&lambda;<sub>+</sub>, &lambda;<sub>&minus;</sub>&rang;,&nbsp;&nbsp;
+<i>c</i> = &#8214;(&lambda;<sub>+</sub> &minus; &lambda;<sub>&minus;</sub>)<sub>+</sub>&#8214;<sup>2</sup>,&nbsp;&nbsp;
+<i>d</i> = &#8214;(&lambda;<sub>+</sub> &minus; &lambda;<sub>&minus;</sub>)<sub>&minus;</sub>&#8214;<sup>2</sup>,
+</p>
+
+<p>taking positive and negative parts entrywise. These are nonnegative
+and sum to one, so the shape is a point of the 3&#8209;simplex, drawn as
+a tetrahedron whose vertices are the antisymmetric forms
+(<i>a</i> = 1), the forms whose two lobes agree (<i>b</i> = 1), and the
+positive and negative semidefinite forms (<i>c</i> = 1, <i>d</i> = 1).</p>
+
+<p>Each page below plots the shape of every head of one model,
+coloured by spectral type. Drag to rotate, scroll to zoom, and hover a
+point for the layer and head it belongs to. Use the model dropdown at the
+top to switch models. The tabs at the bottom select the 3-D
+simplex, the 2-D projection to &Delta;, parity profiles
+(<i>k</i> = 3), or clusters by layer (<i>k</i> = 3).</p>
+
+<table>
+  <thead>
+    <tr><th>model</th><th>layers</th><th>heads/layer</th>
+        <th>N</th><th>n</th><th>heads</th><th>positional</th></tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><a href="distilgpt2.html">distilgpt2</a></td>
+        <td>6</td><td>12</td>
+        <td>768</td><td>64</td>
+        <td>72</td>
+        <td>learned absolute</td>
+      </tr>
+      <tr>
+        <td><a href="gpt2.html">gpt2</a></td>
+        <td>12</td><td>12</td>
+        <td>768</td><td>64</td>
+        <td>144</td>
+        <td>learned absolute</td>
+      </tr>
+      <tr>
+        <td><a href="gpt2-medium.html">gpt2-medium</a></td>
+        <td>24</td><td>16</td>
+        <td>1024</td><td>64</td>
+        <td>384</td>
+        <td>learned absolute</td>
+      </tr>
+      <tr>
+        <td><a href="gpt2-large.html">gpt2-large</a></td>
+        <td>36</td><td>20</td>
+        <td>1280</td><td>64</td>
+        <td>720</td>
+        <td>learned absolute</td>
+      </tr>
+      <tr>
+        <td><a href="opt-125m.html">opt-125m</a></td>
+        <td>12</td><td>12</td>
+        <td>768</td><td>64</td>
+        <td>144</td>
+        <td>learned absolute</td>
+      </tr>
+      <tr>
+        <td><a href="opt-350m.html">opt-350m</a></td>
+        <td>24</td><td>16</td>
+        <td>1024</td><td>64</td>
+        <td>384</td>
+        <td>learned absolute</td>
+      </tr>
+      <tr>
+        <td><a href="opt-1.3b.html">opt-1.3b</a></td>
+        <td>24</td><td>32</td>
+        <td>2048</td><td>64</td>
+        <td>768</td>
+        <td>learned absolute</td>
+      </tr>
+      <tr>
+        <td><a href="opt-2.7b.html">opt-2.7b</a></td>
+        <td>32</td><td>32</td>
+        <td>2560</td><td>80</td>
+        <td>1,024</td>
+        <td>learned absolute</td>
+      </tr>
+      <tr>
+        <td><a href="opt-6.7b.html">opt-6.7b</a></td>
+        <td>32</td><td>32</td>
+        <td>4096</td><td>128</td>
+        <td>1,024</td>
+        <td>learned absolute</td>
+      </tr>
+      <tr>
+        <td><a href="opt-13b.html">opt-13b</a></td>
+        <td>40</td><td>40</td>
+        <td>5120</td><td>128</td>
+        <td>1,600</td>
+        <td>learned absolute</td>
+      </tr>
+      <tr>
+        <td><a href="bloom-3b.html">bloom-3b</a></td>
+        <td>30</td><td>32</td>
+        <td>2560</td><td>80</td>
+        <td>960</td>
+        <td>alibi</td>
+      </tr>
+      <tr>
+        <td><a href="bloom-7b1.html">bloom-7b1</a></td>
+        <td>30</td><td>32</td>
+        <td>4096</td><td>128</td>
+        <td>960</td>
+        <td>alibi</td>
+      </tr>
+      <tr>
+        <td><a href="pythia-70m-deduped.html">pythia-70m-deduped</a></td>
+        <td>6</td><td>8</td>
+        <td>512</td><td>64</td>
+        <td>48</td>
+        <td>rope &#9679;</td>
+      </tr>
+      <tr>
+        <td><a href="Mistral-Small-24B-Base.html">Mistral-Small-24B-Base</a></td>
+        <td>40</td><td>32</td>
+        <td>5120</td><td>128</td>
+        <td>1,280</td>
+        <td>rope &#9679;</td>
+      </tr>
+  </tbody>
+</table>
+
+<p class="note">&#9679; With rotary embeddings the bilinear form varies
+with the distance between the two tokens; those pages carry a slider
+over the relative position <i>d</i>, from 0 to 128. For the other
+models the form does not depend on position.</p>
+
+<p style="margin-top:2rem">Code, data and the Lean formalizations are in
+the <a href="https://github.com/aodesky/attention-bilinear-forms">repository</a>.</p>
+</body>
+</html>
