@@ -12,7 +12,7 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Bilinear forms and their shapes</title>
+<title>Bilinear forms and their profiles</title>
 <link rel="next" href="sect0002.html" title="Random matrices" />
 <link rel="prev" href="index.html" title="On attention heads and bilinear forms" />
 <link rel="up" href="index.html" title="On attention heads and bilinear forms" />
@@ -32,7 +32,7 @@
 <nav class="toc">
 <ul class="sub-toc-0">
 <li class=" active current">
-  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Bilinear forms and their shapes</span></a>
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Bilinear forms and their profiles</span></a>
  </li>
 <li class="">
   <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Random matrices</span></a>
@@ -52,7 +52,7 @@
 
 
 <div class="main-text">
-<h1 id="a0000000002">1 Bilinear forms and their shapes</h1>
+<h1 id="a0000000002">1 Bilinear forms and their profiles</h1>
 <p>All matrices are real. Matrix norms are Frobenius norms. The Lean development uses their squares to avoid unnecessary square roots. </p>
 <div class="definition_thmwrapper theorem-style-plain" id="def:parts">
   <div class="definition_thmheading">
@@ -83,11 +83,11 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Common.lean#L21" class="lean_decl">Appendices.frobSq</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/62e335e1667f991ae902de64565a062beb43043b/formalization/Appendices/Common.lean#L21" class="lean_decl">Appendices.frobSq</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Common.lean#L25" class="lean_decl">Appendices.symPart</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/62e335e1667f991ae902de64565a062beb43043b/formalization/Appendices/Common.lean#L25" class="lean_decl">Appendices.symPart</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Common.lean#L29" class="lean_decl">Appendices.skewPart</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/62e335e1667f991ae902de64565a062beb43043b/formalization/Appendices/Common.lean#L29" class="lean_decl">Appendices.skewPart</a></li>
           
         </ul>
     
@@ -107,13 +107,13 @@
   </div>
 </div>
 
-<div class="definition_thmwrapper theorem-style-plain" id="def:shape">
+<div class="definition_thmwrapper theorem-style-plain" id="def:profile">
   <div class="definition_thmheading">
     <span class="definition_thmcaption">
     Definition
     </span>
     <span class="definition_thmlabel">6</span>
-    <span class="definition_thmtitle">Shape of a bilinear form</span>
+    <span class="definition_thmtitle">Profile of a bilinear form</span>
     <div class="thm_header_extras">
 
     
@@ -121,7 +121,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0001.html#def:shape">#</a>
+    <a class="icon proof" href="sect0001.html#def:profile">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -156,19 +156,19 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L32" class="lean_decl">Appendices.sortDesc</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/62e335e1667f991ae902de64565a062beb43043b/formalization/Appendices/Profile.lean#L32" class="lean_decl">Appendices.sortDesc</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L62" class="lean_decl">Appendices.alphaList</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/62e335e1667f991ae902de64565a062beb43043b/formalization/Appendices/Profile.lean#L62" class="lean_decl">Appendices.alphaList</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L69" class="lean_decl">Appendices.betaList</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/62e335e1667f991ae902de64565a062beb43043b/formalization/Appendices/Profile.lean#L69" class="lean_decl">Appendices.betaList</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L74" class="lean_decl">Appendices.shapeA</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/62e335e1667f991ae902de64565a062beb43043b/formalization/Appendices/Profile.lean#L74" class="lean_decl">Appendices.profileA</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L79" class="lean_decl">Appendices.shapeB</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/62e335e1667f991ae902de64565a062beb43043b/formalization/Appendices/Profile.lean#L79" class="lean_decl">Appendices.profileB</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L84" class="lean_decl">Appendices.shapeC</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/62e335e1667f991ae902de64565a062beb43043b/formalization/Appendices/Profile.lean#L84" class="lean_decl">Appendices.profileC</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/470f780dda45b8ee3ebd6dec77d28bfc6486a75e/formalization/Appendices/Shape.lean#L89" class="lean_decl">Appendices.shapeD</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/62e335e1667f991ae902de64565a062beb43043b/formalization/Appendices/Profile.lean#L89" class="lean_decl">Appendices.profileD</a></li>
           
         </ul>
     
