@@ -13,6 +13,8 @@
   color: #222;
   font: 14px/1.5 system-ui, -apple-system, sans-serif;
 }
+.project-links a, .project-links .paper-forthcoming { display: inline-flex; align-items: center; gap: 6px; }
+.project-links .nav-icon { display: block; flex: 0 0 14px; width: 14px; height: 14px; opacity: .7; }
 .project-links a { color: #555; text-decoration: none; white-space: nowrap; }
 .project-links .paper-forthcoming { color: #777; white-space: nowrap; }
 .project-links .project-name { margin-right: auto; color: #222; }
