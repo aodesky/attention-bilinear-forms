@@ -16,11 +16,12 @@
   th:first-child, td:first-child { text-align: left; }
   th { font-weight: normal; color: var(--project-muted); border-bottom: 1px solid #bbb; }
   a { color: var(--project-link); }
-  code, .formula { font-size: 0.95em; }
-  .formula { text-align: center; margin: 0.9rem 0; }
+  code { font-size: 0.95em; }
+  .formula { margin: 1.25rem 0; overflow-x: auto; }
   .note { color: var(--project-muted); font-size: 0.9rem; }
 </style>
 <link rel="stylesheet" href="../assets/project-nav.css?v=5">
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
 </head>
 <body>
 <nav class="project-links" aria-label="Project navigation">
@@ -37,38 +38,41 @@
 <em>On attention heads and bilinear forms</em>.</p>
 
 <p>Every attention head carries a bilinear form
-<i>L</i> = <i>W<sub>K</sub></i><sup>T</sup><i>W<sub>Q</sub></i> on the
-residual stream. Write it as <i>L</i> = <i>S</i> + <i>T</i> with
-<i>S</i> symmetric and <i>T</i> antisymmetric, and scale so that
-&#8214;<i>L</i>&#8214; = 1. Let &lambda;<sub>+</sub> list the positive
-eigenvalues of <i>S</i> and &lambda;<sub>&minus;</sub> the absolute
-values of its negative eigenvalues, both decreasing and padded with
-zeros to a common length. The <i>profile</i> &pi;(<i>L</i>) = (<i>a</i>, <i>b</i>, <i>c</i>, <i>d</i>) is given by</p>
+\(L = W_K^{\mathsf T} W_Q\) on the residual stream. Write it as
+\(L = S + T\) with \(S\) symmetric and \(T\) antisymmetric, and scale
+so that \(\lVert L\rVert = 1\). Let \(\lambda_+\) list the positive
+eigenvalues of \(S\) and \(\lambda_-\) the absolute values of its
+negative eigenvalues, both decreasing and padded with zeros to a common
+length. The <em>profile</em> \(\pi(L) = (a,b,c,d)\) is given by</p>
 
-<p class="formula">
-<i>a</i> = &#8214;<i>T</i>&#8214;<sup>2</sup>,&nbsp;&nbsp;
-<i>b</i> = 2&#8239;&lang;&lambda;<sub>+</sub>, &lambda;<sub>&minus;</sub>&rang;,&nbsp;&nbsp;
-<i>c</i> = &#8214;(&lambda;<sub>+</sub> &minus; &lambda;<sub>&minus;</sub>)<sub>+</sub>&#8214;<sup>2</sup>,&nbsp;&nbsp;
-<i>d</i> = &#8214;(&lambda;<sub>+</sub> &minus; &lambda;<sub>&minus;</sub>)<sub>&minus;</sub>&#8214;<sup>2</sup>,
-</p>
+<div class="formula">
+\[
+\begin{aligned}
+a &amp;= \lVert T\rVert^2, \\
+b &amp;= 2\,\langle \lambda_+,\lambda_-\rangle, \\
+c &amp;= \lVert(\lambda_+ - \lambda_-)_+\rVert^2, \\
+d &amp;= \lVert(\lambda_+ - \lambda_-)_-\rVert^2,
+\end{aligned}
+\]
+</div>
 
 <p>taking positive and negative parts entrywise. These are nonnegative
-and sum to one, so the profile is a point of the 3&#8209;simplex, drawn as
+and sum to one, so the profile is a point of the \(3\)-simplex, drawn as
 a tetrahedron whose vertices are the antisymmetric forms
-(<i>a</i> = 1), the forms whose two lobes agree (<i>b</i> = 1), and the
-positive and negative semidefinite forms (<i>c</i> = 1, <i>d</i> = 1).</p>
+(\(a = 1\)), the forms whose two lobes agree (\(b = 1\)), and the
+positive and negative semidefinite forms (\(c = 1\), \(d = 1\)).</p>
 
 <p>Each page below plots the profile of every head of one model,
 coloured by spectral type. Drag to rotate, scroll to zoom, and hover a
 point for the layer and head it belongs to. Use the model dropdown at the
 top to switch models. The tabs at the bottom select the 3-D
-simplex, the 2-D projection to &Delta;, spectral distributions by parity
-(<i>k</i> = 3), or clusters by layer (<i>k</i> = 3).</p>
+simplex, the 2-D projection to \(\Delta\), spectral distributions by parity
+(\(k = 3\)), or clusters by layer (\(k = 3\)).</p>
 
 <table>
   <thead>
     <tr><th>model</th><th>layers</th><th>heads/layer</th>
-        <th>N</th><th>n</th><th>heads</th><th>positional</th></tr>
+        <th>\(N\)</th><th>\(n\)</th><th>heads</th><th>positional</th></tr>
   </thead>
   <tbody>
       <tr>
@@ -174,7 +178,7 @@ simplex, the 2-D projection to &Delta;, spectral distributions by parity
 
 <p class="note">&#9679; With rotary embeddings the bilinear form varies
 with the distance between the two tokens; those pages carry a slider
-over the relative position <i>d</i>, from 0 to 128. For the other
+over the relative position \(d\), from 0 to 128. For the other
 models the form does not depend on position.</p>
 
 <p style="margin-top:2rem">Code, data and the Lean formalizations are in
