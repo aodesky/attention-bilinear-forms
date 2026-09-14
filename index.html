@@ -3,92 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive plots, a Lean formalization blueprint, and experimental code for On attention heads and bilinear forms, by Andrew O’Desky.">
-  <meta name="theme-color" content="#f8f7f3">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="On attention heads and bilinear forms">
-  <meta property="og:description" content="Explore attention-head profiles, follow the formalized mathematics, and find the code and data.">
-  <meta property="og:url" content="https://aodesky.github.io/attention-bilinear-forms/">
-  <meta property="og:image" content="https://aodesky.github.io/attention-bilinear-forms/assets/social-preview.png">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="description" content="Interactive attention-head profile plots for On attention heads and bilinear forms, by Andrew O’Desky.">
   <link rel="canonical" href="https://aodesky.github.io/attention-bilinear-forms/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=1">
+  <link rel="stylesheet" href="assets/site.css?v=2">
+  <link rel="stylesheet" href="assets/project-nav.css?v=2">
   <title>On attention heads and bilinear forms · Andrew O’Desky</title>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <div class="page">
-    <header class="site-header">
-      <a class="wordmark" href="./" aria-label="Attention and bilinear forms — project home"><span class="mark" aria-hidden="true">π</span> Attention &amp; bilinear forms</a>
-      <nav aria-label="Main navigation">
-        <a href="interactive/gpt2-medium.html">Plots</a>
-        <a href="blueprint/">Blueprint</a>
-        <a href="https://github.com/aodesky/attention-bilinear-forms">GitHub <span aria-hidden="true">↗</span></a>
-      </nav>
-    </header>
+<nav class="project-links" aria-label="Project navigation">
+  <a href="./" class="project-name" aria-current="page">Attention &amp; bilinear forms</a>
+  <a href="./interactive/gpt2-medium.html">Plots</a>
+  <a href="./blueprint/">Blueprint</a>
+  <a href="https://github.com/aodesky/attention-bilinear-forms">GitHub</a>
+</nav>
+  <main id="main">
+    <h1>On attention heads and bilinear forms</h1>
+    <p class="author">Andrew O’Desky</p>
 
-    <main id="main">
-      <section class="hero" aria-labelledby="project-title">
-        <div class="hero-copy">
-          <p class="eyebrow">Mathematics of attention</p>
-          <h1 id="project-title">On attention heads<br>and bilinear forms</h1>
-          <p class="author">Andrew O’Desky</p>
-          <p class="intro">A geometric view of the bilinear forms inside trained language models. Explore the empirical profiles, the mathematics, and its Lean formalization.</p>
-        </div>
-        <figure class="hero-figure">
-          <img src="assets/head-profiles.svg" width="440" height="340" alt="The profiles of 144 GPT-2 attention heads plotted inside a tetrahedron, with vertices a, b, c, and d.">
-          <figcaption><span class="formula">π(L) ∈ Δ₃</span><a href="interactive/gpt2.html">GPT-2 · 144 attention heads <span aria-hidden="true">→</span></a></figcaption>
-        </figure>
-      </section>
+    <section aria-labelledby="plots-title">
+      <h2 id="plots-title"><a href="interactive/gpt2-medium.html">Interactive plots</a></h2>
+      <p>Explore attention-head profiles. Choose a model at the top and a figure using the tabs below the plot.</p>
+      <p><a href="interactive/">Model list and profile definition</a></p>
+    </section>
 
-      <section class="destinations" aria-label="Explore the project">
-        <article class="destination plots">
-          <div class="section-top"><span class="eyebrow">Explore the data</span><span class="number" aria-hidden="true">01</span></div>
-          <h2><a href="interactive/gpt2-medium.html">Interactive plots <span aria-hidden="true">→</span></a></h2>
-          <p>Compare 9,512 attention heads across 14 models. Rotate the profile simplex and explore relative distances in the RoPE models.</p>
-          <ul class="figure-links" aria-label="Open a figure">
-            <li><a href="interactive/gpt2-medium.html#simplex">3-D simplex <span aria-hidden="true">→</span></a></li>
-            <li><a href="interactive/gpt2-medium.html#delta">Projection to Δ <span aria-hidden="true">→</span></a></li>
-            <li><a href="interactive/gpt2-medium.html#extreme-histograms">Spectral distributions by parity <span aria-hidden="true">→</span></a></li>
-            <li><a href="interactive/gpt2-medium.html#clusters-by-layer">Clusters by layer <span aria-hidden="true">→</span></a></li>
-          </ul>
-          <a class="text-link card-bottom" href="interactive/">Browse all models <span aria-hidden="true">→</span></a>
-        </article>
-
-        <article class="destination formalization">
-          <div class="section-top"><span class="eyebrow">Follow the mathematics</span><span class="number" aria-hidden="true">02</span></div>
-          <h2><a href="blueprint/">Formalization blueprint <span aria-hidden="true">→</span></a></h2>
-          <p>Read mathematical statements and proof outlines, with direct links to their checked Lean declarations.</p>
-          <div class="blueprint-detail">
-            <span class="status-dot" aria-hidden="true"></span>
-            <p>Appendices A–C, the profile definition, and the theorem on simplex faces.</p>
-          </div>
-          <div class="formalization-links">
-            <a class="text-link" href="blueprint/dep_graph_document.html">Explore the dependency graph <span aria-hidden="true">→</span></a>
-            <a class="text-link" href="https://github.com/aodesky/attention-bilinear-forms/tree/main/formalization">Lean source &amp; build instructions <span aria-hidden="true">↗</span></a>
-          </div>
-          <a class="text-link card-bottom" href="blueprint/">Read the blueprint <span aria-hidden="true">→</span></a>
-        </article>
-      </section>
-
-      <section class="paper" id="paper" aria-labelledby="paper-title">
-        <div><p class="eyebrow">The paper</p><h2 id="paper-title">Read the preprint</h2><p>The paper will be linked here when it is available on arXiv.</p></div>
-        <!-- Replace this status with the arXiv link when the preprint is uploaded. -->
-        <span class="forthcoming">arXiv link forthcoming</span>
-      </section>
-
-      <section class="resources" aria-labelledby="resources-title">
-        <div class="resources-heading"><p class="eyebrow">Code &amp; data</p><h2 id="resources-title">Continue on GitHub</h2></div>
-        <div class="resource-links">
-          <a href="https://github.com/aodesky/attention-bilinear-forms"><span><strong>Project repository</strong><small>Source files and project documentation</small></span><span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/aodesky/attention-bilinear-forms/tree/main/scripts"><span><strong>Experimental code</strong><small>Extraction, analysis, and figure generation</small></span><span aria-hidden="true">↗</span></a>
-          <a href="https://github.com/aodesky/attention-bilinear-forms/tree/main/scripts/survey_results"><span><strong>Measurements &amp; spectra</strong><small>The per-head results used in the paper</small></span><span aria-hidden="true">↗</span></a>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer"><span>On attention heads and bilinear forms</span><a href="#project-title">Back to top <span aria-hidden="true">↑</span></a></footer>
-  </div>
+    <section id="paper" aria-labelledby="paper-title">
+      <h2 id="paper-title">Paper</h2>
+      <!-- Replace this text with the arXiv link when the preprint is uploaded. -->
+      <p>arXiv link forthcoming.</p>
+    </section>
+  </main>
 </body>
 </html>

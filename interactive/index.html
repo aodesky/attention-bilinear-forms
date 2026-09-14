@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Profiles of attention heads</title>
 <style>
-  body { font-family: Georgia, 'Times New Roman', serif; line-height: 1.55;
-         max-width: 46rem; margin: 3rem auto; padding: 0 1.25rem;
-         color: #1a1a1a; }
+  body { margin: 0; font: 15px/1.55 system-ui, sans-serif; color: #222; }
+  main { max-width: 46rem; margin: 2rem auto; padding: 0 1.25rem; overflow-x: auto; }
   h1 { font-size: 1.6rem; font-weight: normal; margin-bottom: 0.2rem; }
   p.sub { color: #555; margin-top: 0; }
   table { border-collapse: collapse; width: 100%; margin-top: 1.5rem;
@@ -21,14 +20,16 @@
   .formula { text-align: center; margin: 0.9rem 0; }
   .note { color: #555; font-size: 0.9rem; }
 </style>
-<link rel="stylesheet" href="../assets/project-nav.css?v=1">
+<link rel="stylesheet" href="../assets/project-nav.css?v=2">
 </head>
 <body>
-<nav class="project-links" aria-label="Project navigation" style="justify-content:flex-start;margin-bottom:2rem">
-  <a href="../">Project home</a>
+<nav class="project-links" aria-label="Project navigation">
+  <a href="../" class="project-name">Attention &amp; bilinear forms</a>
+  <a href="../interactive/gpt2-medium.html" aria-current="page">Plots</a>
   <a href="../blueprint/">Blueprint</a>
-  <a href="https://github.com/aodesky/attention-bilinear-forms">GitHub ↗</a>
+  <a href="https://github.com/aodesky/attention-bilinear-forms">GitHub</a>
 </nav>
+<main>
 <h1>Profiles of attention heads</h1>
 <p class="sub">Interactive figures for
 <em>On attention heads and bilinear forms</em>.</p>
@@ -176,5 +177,6 @@ models the form does not depend on position.</p>
 
 <p style="margin-top:2rem">Code, data and the Lean formalizations are in
 the <a href="https://github.com/aodesky/attention-bilinear-forms">repository</a>.</p>
+</main>
 </body>
 </html>

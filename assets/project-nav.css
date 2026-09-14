@@ -1,7 +1,24 @@
-.project-links{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:18px;margin-left:auto;font:12px/1.5 system-ui,-apple-system,sans-serif}
-.project-links a{color:#42655d;text-decoration:none;white-space:nowrap}
-.project-links a:hover{text-decoration:underline;text-underline-offset:3px}
-.project-links a:focus-visible{outline:2px solid #276c62;outline-offset:4px}
-body>header:has(.project-links){flex-wrap:wrap;gap:12px;flex-shrink:0}
-body>header .project-links{padding:2px 7px}
-@media(max-width:600px){.project-links{gap:14px;font-size:11px}body>header .project-links{padding:0}}
+.project-links {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: 8px 24px;
+  width: 100%;
+  margin: 0;
+  padding: 12px 24px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+  color: #222;
+  font: 14px/1.5 system-ui, -apple-system, sans-serif;
+}
+.project-links a { color: #555; text-decoration: none; white-space: nowrap; }
+.project-links .project-name { margin-right: auto; color: #222; }
+.project-links a[aria-current="page"] { color: #222; font-weight: 600; }
+.project-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.project-links a:focus-visible { outline: 2px solid #1a5fb4; outline-offset: 4px; }
+@media (max-width: 600px) {
+  .project-links { padding: 10px 12px; gap: 8px 20px; }
+  .project-links .project-name { flex-basis: 100%; }
+}
