@@ -33,7 +33,7 @@ and theorems are numbered in separate sequences.
 | File | Paper |
 |---|---|
 | `Appendices/Common.lean` | Frobenius norm; symmetric and antisymmetric parts (shared definitions) |
-| `Appendices/Profile.lean` | Definition 6, the profile `s(L) = (a, b, c, d)` of a bilinear form (§6.1) |
+| `Appendices/Profile.lean` | Definition 6, the profile `π(L) = (a, b, c, d)` of a bilinear form (§6.1) |
 | **Appendix A, Random matrices** | |
 | `Appendices/RandomMatrices/EnergyIdentities.lean` | Lemma 6 (symmetric and skew energy identities) |
 | `Appendices/RandomMatrices/IidBaseline.lean` | Corollary 1 (iid square random matrix baseline) |

@@ -170,7 +170,7 @@ function interactiveCard(plot){{return `<article class="card"><h2>${{esc(plot.ti
 function show(updateHash=true){{
   const m=MODELS.find(x=>x.id===select.value)||MODELS[0];
   if(!m){{summary.innerHTML='';content.innerHTML='<p class="empty">No completed analyses found.</p>';return;}}
-  summary.innerHTML=`<div><span>model</span> <strong>${{esc(m.id)}}</strong></div><div><span>revision</span> <strong>${{m.revision}}</strong></div><div><span>position method</span> <strong>${{esc(m.positional_method)}}</strong></div><div><span>heads</span> <strong>${{m.heads.toLocaleString()}}</strong></div><div><span>spectrum length</span> <strong>${{m.spectrum_dimension}}</strong></div><div><span>classification</span> <strong>three weight-map types</strong></div><div><span>first 3 components</span> <strong>${{m.component_share.toFixed(1)}}%</strong></div>`;
+  summary.innerHTML=`<div><span>model</span> <strong>${{esc(m.id)}}</strong></div><div><span>revision</span> <strong>${{m.revision}}</strong></div><div><span>position method</span> <strong>${{esc(m.positional_method)}}</strong></div><div><span>heads</span> <strong>${{m.heads.toLocaleString()}}</strong></div><div><span>spectrum length</span> <strong>${{m.spectrum_dimension}}</strong></div><div><span>classification</span> <strong>three profile types</strong></div><div><span>first 3 components</span> <strong>${{m.component_share.toFixed(1)}}%</strong></div>`;
   let body='';
   if(m.interactive.length) body+=`<h2 class="section-title">Interactive 3-D views</h2><div class="grid">${{m.interactive.map(interactiveCard).join('')}}</div>`;
   body+=`<h2 class="section-title">All generated figures</h2><div class="grid">${{m.plots.map(card).join('')}}</div>`;

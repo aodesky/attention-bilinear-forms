@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """The simplex Delta^3 of weights, with its faces labeled by the fibers
-of the weight map.
+of the profile map.
 
 A reference picture for the introduction: no data and no accumulation
 family, only the tetrahedron, its four vertices, and its edges, each labeled
-by the fiber of w over it, as an equation in the decomposition
+by the fiber of π over it, as an equation in the decomposition
 L = S + T (the theorem on the faces of the simplex).  The facets carry
 no labels; the caption in attention.tex describes them.
 Here H is a symmetric matrix whose spectrum is symmetric about zero and
@@ -128,7 +128,7 @@ def main() -> None:
     for v in (VA, VB, VC, VD):
         ax.plot(*v, marker="o", markersize=4, color="black", zorder=3)
 
-    # vertices, each labeled by the fiber of w over it.  At a vertex
+    # vertices, each labeled by the fiber of π over it.  At a vertex
     # T = 0 except at a = 1, so the label is an equation for L itself.
     ax.text(VD[0], VD[1] + 0.035,
             r"$d = 1$: negative semidefinite, $L = -P$",

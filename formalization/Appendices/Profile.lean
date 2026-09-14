@@ -5,7 +5,7 @@ Let `L ∈ M_N(ℝ)` with `L = S + T`, `S` symmetric, `T` antisymmetric.
 Let `α` (resp. `β`) list the positive eigenvalues (resp. the absolute
 values of the negative eigenvalues) of `S` in decreasing order,
 appending zeros so that the two lists have equal length.  The
-*profile* of `L` (for `‖L‖ = 1`) is `s(L) = (a, b, c, d)`, where
+*profile* of `L` (for `‖L‖ = 1`) is `π(L) = (a, b, c, d)`, where
 
     a = ‖T‖²,  b = 2⟨α, β⟩,  c = ‖(α-β)₊‖²,  d = ‖(α-β)₋‖²,
 

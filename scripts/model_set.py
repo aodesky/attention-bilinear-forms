@@ -180,7 +180,7 @@ def sorted_lobes(S: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 
 def profile(L: np.ndarray) -> tuple[float, float, float, float]:
-    """The profile (a, b, c, d) of a nonzero bilinear form."""
+    """The profile π(L) = (a, b, c, d) of a nonzero bilinear form."""
     S, T = symmetric_antisymmetric(L)
     norm_sq = float((L ** 2).sum())
     if norm_sq == 0.0:

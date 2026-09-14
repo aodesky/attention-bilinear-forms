@@ -7,7 +7,7 @@ selected model this script:
 * computes the sorted eigenvalues of S=(L+L.T)/2 for every head;
 * retains both raw and unit-length spectra, keyed to the extraction database;
 * performs uncentered singular-value analysis as in Appendix D;
-* assigns heads to the three spectral types using the weight map and the
+* assigns heads to the three spectral types using the profile map and the
   one-parameter accumulating family;
 * records the assignments and whole-cluster and extreme-member average spectra; and
 * renders the Appendix-D-style projection and spectrum figures.
@@ -274,7 +274,7 @@ def simplex_weights_for_form(
     eigenvalues: np.ndarray | None = None,
     antisymmetric: np.ndarray | None = None,
 ) -> tuple[float, float, float, float]:
-    """Return the four weight-map coordinates of one bilinear form."""
+    """Return the four profile coordinates of one bilinear form."""
     if antisymmetric is None:
         antisymmetric = 0.5 * (form - form.T)
     if eigenvalues is None:
@@ -334,7 +334,7 @@ def rotate_reduced_queries(
 
 
 def simplex_weights_for_forms(forms: np.ndarray) -> np.ndarray:
-    """Vectorized eigensolves followed by the weight map for a batch of forms."""
+    """Vectorized eigensolves followed by the profile map for a batch of forms."""
     symmetric = 0.5 * (forms + forms.swapaxes(-1, -2))
     antisymmetric = 0.5 * (forms - forms.swapaxes(-1, -2))
     eigenvalues = np.linalg.eigvalsh(symmetric)
@@ -361,7 +361,7 @@ def extract_rope_weight_trajectory(
     powers: np.ndarray,
     weights_at_zero: np.ndarray,
 ) -> np.ndarray | None:
-    """Compute weight-map coordinates across RoPE powers from compact factors."""
+    """Compute profile coordinates across RoPE powers from compact factors."""
     if model.positional_method != "rope":
         return None
     frequencies = rope_inverse_frequencies(model)
@@ -507,7 +507,7 @@ def weight_map_types(
     tolerance: float = TYPE_IMBALANCE_TOLERANCE,
     edge_tolerance: float = TYPE_II_EDGE_TOLERANCE,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Assign each head by explicit inequalities on its weight-map values.
+    """Assign each head by explicit inequalities on its profile values.
 
     Type II contains the closed imbalance band and all heads sufficiently
     close to the a-b edge. Outside that edge neighborhood, Type I+ and I-
@@ -795,7 +795,7 @@ def render_interactive_simplex(
     fig.update_layout(
         title=(f"{model.repo_id}: bilinear-form weights"
                + (" (RoPE power d = 0)" if rope_weights is not None else
-                  " (three weight-map types)")),
+                  " (three profile types)")),
         scene={
             "xaxis": {"visible": False}, "yaxis": {"visible": False},
             "zaxis": {"visible": False}, "aspectmode": "cube",
@@ -1220,7 +1220,7 @@ def analyze_model(
         {"analysis_id": analysis_id, "relative_path": output.relative_to(dataset).as_posix()},
     )
     print(
-        f"[{model.repo_id}] complete in {elapsed:.1f}s; three weight-map types; "
+        f"[{model.repo_id}] complete in {elapsed:.1f}s; three profile types; "
         f"results: {output}"
     )
     return summary
@@ -1279,7 +1279,7 @@ def main() -> int:
         shares = summary["singular_value_energy_shares_first_three"]
         print(
             f"  {summary['model']['repo_id']}: {summary['head_count']:,} heads; "
-            f"three weight-map types; "
+            f"three profile types; "
             f"first three components={100 * sum(shares):.1f}%"
         )
     return 0
