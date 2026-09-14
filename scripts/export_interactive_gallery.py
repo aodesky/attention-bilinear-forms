@@ -50,7 +50,7 @@ def page(tag, models):
   <title>{html.escape(tag)} · Profiles of attention heads</title>
   <meta name="description" content="Explore attention-head profiles: interactive 3-D simplex, projection to Δ, spectral distributions by parity, and clusters by layer.">
   <link rel="stylesheet" href="gallery.css?v={versions['gallery.css']}">
-  <link rel="stylesheet" href="../assets/project-nav.css?v=2">
+  <link rel="stylesheet" href="../assets/project-nav.css?v=3">
   <script src="gallery.js?v={versions['gallery.js']}" defer></script>
 </head>
 <body>

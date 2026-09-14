@@ -20,7 +20,7 @@
   .formula { text-align: center; margin: 0.9rem 0; }
   .note { color: #555; font-size: 0.9rem; }
 </style>
-<link rel="stylesheet" href="../assets/project-nav.css?v=2">
+<link rel="stylesheet" href="../assets/project-nav.css?v=3">
 </head>
 <body>
 <nav class="project-links" aria-label="Project navigation">
@@ -28,6 +28,7 @@
   <a href="../interactive/gpt2-medium.html" aria-current="page">Plots</a>
   <a href="../blueprint/">Blueprint</a>
   <a href="https://github.com/aodesky/attention-bilinear-forms">GitHub</a>
+  <span class="paper-forthcoming">arXiv (forthcoming)</span>
 </nav>
 <main>
 <h1>Profiles of attention heads</h1>
@@ -41,7 +42,7 @@ residual stream. Write it as <i>L</i> = <i>S</i> + <i>T</i> with
 &#8214;<i>L</i>&#8214; = 1. Let &lambda;<sub>+</sub> list the positive
 eigenvalues of <i>S</i> and &lambda;<sub>&minus;</sub> the absolute
 values of its negative eigenvalues, both decreasing and padded with
-zeros to a common length. The <i>profile</i> of <i>L</i> is</p>
+zeros to a common length. The <i>profile</i> &pi;(<i>L</i>) = (<i>a</i>, <i>b</i>, <i>c</i>, <i>d</i>) is given by</p>
 
 <p class="formula">
 <i>a</i> = &#8214;<i>T</i>&#8214;<sup>2</sup>,&nbsp;&nbsp;
