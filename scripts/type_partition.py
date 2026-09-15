@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 """The three-type partition of the heads, from the profile map.
 
-Definition (types) cuts the three types out of the face Delta by exact
-equations: Type I+ is d = 0, Type I- is c = 0 and Type II is b = 1.  No
-trained head satisfies any of these exactly, so a partition of the heads
-needs the parity of the section on theta-forms: a head is Type II when
-the profile (0, b, c, d) of its symmetric part lies in a neighborhood N of
-the hyperbolic vertex, and otherwise is Type I+ or Type I- according as
-c > d or d > c.
+The paper classifies a head using the profile (0, b, c, d) of its
+symmetric part. Type II means c + d <= RADIUS, a neighborhood N of
+(0, 1, 0, 0) in the face Delta. Outside N, Type I+ means c > d;
+Type I- is the remaining case (including exact ties).
 
 Only the parity is canonical.  The sign of c - d is determined by the
 head, but the heads fill a continuum around the hyperbolic vertex with
@@ -17,8 +14,7 @@ at the radius the paper fixes, the parity on its own, and the
 sensitivity of the partition to the radius, so that the reader can see
 which statements depend on the choice and which do not.
 
-Distance from the hyperbolic vertex in the face Delta is 1 - b = c + d,
-and N is the ball {1 - b <= RADIUS}.
+On the symmetric profile, 1 - b = c + d; the default tolerance is 0.02.
 
 Usage:
     python type_partition.py
