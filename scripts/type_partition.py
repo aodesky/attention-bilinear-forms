@@ -7,7 +7,7 @@ symmetric part. Type II means c + d <= RADIUS, a neighborhood N of
 Type I- is the remaining case (including exact ties).
 
 Only the parity is canonical.  The sign of c - d is determined by the
-head, but the heads fill a continuum around the hyperbolic vertex with
+head, but the heads fill a continuum around the b = 1 vertex with
 no gap at which to cut, so the separation of Type II from the rest
 depends on the choice of N.  This script therefore reports the partition
 at the radius the paper fixes, the parity on its own, and the

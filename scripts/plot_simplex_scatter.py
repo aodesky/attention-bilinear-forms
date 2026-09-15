@@ -131,7 +131,7 @@ def figure_bcd(labels, b, c, d):
     draw_triangle(ax, Pb, Pc, Pd, fontsize=13, vertex_labels=False)
     ax.text(Pb[0], Pb[1] + 0.075, r"Type $\mathrm{II}$",
             ha="center", va="bottom", fontsize=13)
-    ax.text(Pb[0], Pb[1] + 0.03, r"$b = 1$: hyperbolic",
+    ax.text(Pb[0], Pb[1] + 0.03, r"$b = 1$: $\lambda_+=\lambda_-$",
             ha="center", va="bottom", fontsize=12)
     ax.text(Pc[0] - 0.02, Pc[1] - 0.03,
             r"$c = 1$: positive semidefinite",
@@ -141,11 +141,11 @@ def figure_bcd(labels, b, c, d):
             ha="right", va="top", fontsize=12)
     ax.text(0.205, 0.47,
             r"\begin{tabular}{c}Type $\mathrm{I}_+$ ($d = 0$)\\"
-            r"hyperbolic $+$ positive semidef.\end{tabular}",
+            r"$S=H+P$\end{tabular}",
             ha="right", va="center", fontsize=12, rotation=60)
     ax.text(0.795, 0.47,
             r"\begin{tabular}{c}Type $\mathrm{I}_-$ ($c = 0$)\\"
-            r"hyperbolic $+$ negative semidef.\end{tabular}",
+            r"$S=H-P$\end{tabular}",
             ha="left", va="center", fontsize=12, rotation=-60)
     for cl in (1, 2, 3):
         m = labels == cl
@@ -191,7 +191,7 @@ def figure_abcd(labels, b, c, d, s):
         ax.plot(*p, marker="o", markersize=4, color="black", zorder=3)
     ax.text(A[0], A[1] + 0.03, r"$a = 1$: antisymmetric",
             ha="center", va="bottom", fontsize=11)
-    ax.text(B[0] - 0.02, B[1], r"$b = 1$: hyperbolic",
+    ax.text(B[0] - 0.02, B[1], r"$b = 1$: $\lambda_+=\lambda_-$",
             ha="right", va="center", fontsize=11)
     ax.text(C[0], C[1] - 0.04, r"$c = 1$: positive semidefinite",
             ha="center", va="top", fontsize=11)

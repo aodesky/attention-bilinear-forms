@@ -29,7 +29,7 @@ def main() -> None:
 
     # ------------------------------------------------------- 3-simplex
     A = (0.42, 1.00)   # a = 1 : antisymmetric (apex)
-    B = (0.00, 0.12)   # b = 1 : hyperbolic
+    B = (0.00, 0.12)   # b = 1 : equal spectral lobes
     C = (0.78, 0.00)   # c = 1 : positive semidefinite
     D = (1.00, 0.48)   # d = 1 : negative semidefinite
 
@@ -45,7 +45,7 @@ def main() -> None:
 
     ax1.text(A[0], A[1] + 0.04, r"$a = 1$: antisymmetric",
              ha="center", va="bottom", fontsize=11)
-    ax1.text(B[0] - 0.03, B[1], r"$b = 1$: hyperbolic",
+    ax1.text(B[0] - 0.03, B[1], r"$b = 1$: $\lambda_+=\lambda_-$",
              ha="right", va="center", fontsize=11)
     ax1.text(C[0], C[1] - 0.05, r"$c = 1$: positive semidefinite",
              ha="center", va="top", fontsize=11)
@@ -60,7 +60,7 @@ def main() -> None:
     ax1.axis("off")
 
     # ------------------------------------------------------- 2-simplex
-    Pb = (0.50, 0.90)  # hyperbolic vertex
+    Pb = (0.50, 0.90)  # b = 1 vertex
     Pc = (0.02, 0.06)  # positive semidefinite vertex
     Pd = (0.98, 0.06)  # negative semidefinite vertex
 
@@ -72,7 +72,7 @@ def main() -> None:
         ax2.plot(*p, marker="o", markersize=4, color="black", zorder=3)
 
     ax2.text(Pb[0], Pb[1] + 0.04,
-             r"$b = 1$: hyperbolic (Type $\mathrm{II}$)",
+             r"$b = 1$: $\lambda_+=\lambda_-$ (Type $\mathrm{II}$)",
              ha="center", va="bottom", fontsize=11)
     ax2.text(Pc[0] - 0.04, Pc[1] - 0.04, r"$c = 1$: positive semidefinite",
              ha="right", va="top", fontsize=11)
@@ -81,11 +81,11 @@ def main() -> None:
 
     ax2.text(0.16, 0.52,
              r"\begin{tabular}{c}$d = 0$: Type $\mathrm{I}_+$"
-             r"\\ hyperbolic $+$ positive semidef.\end{tabular}",
+             r"\\ $S=H+P$\end{tabular}",
              ha="right", va="center", fontsize=10, rotation=60)
     ax2.text(0.84, 0.52,
              r"\begin{tabular}{c}$c = 0$: Type $\mathrm{I}_-$"
-             r"\\ hyperbolic $+$ negative semidef.\end{tabular}",
+             r"\\ $S=H-P$\end{tabular}",
              ha="left", va="center", fontsize=10, rotation=-60)
     ax2.text(0.50, -0.11,
              r"$b = 0$: empty fiber over the open edge",

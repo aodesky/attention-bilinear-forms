@@ -10,7 +10,7 @@ attracting point
 
     (b, c, d) = (2 rho / (1 + rho^2), (1 - rho)^2 / (1 + rho^2), 0)
 
-on the edge {d = 0} of the simplex, degenerating to the hyperbolic
+on the edge {d = 0} of the simplex, degenerating to the b = 1
 vertex at rho = 1 (Proposition prop:accumulation of the paper).
 
 Outputs:

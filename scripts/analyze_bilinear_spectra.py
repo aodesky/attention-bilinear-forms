@@ -562,7 +562,7 @@ def render_simplex_weights(
     vertices = np.asarray(
         [
             [0.42, 1.00],  # a: antisymmetric
-            [0.00, 0.12],  # b: hyperbolic
+            [0.00, 0.12],  # b: equal positive and negative spectral lobes
             [0.78, 0.00],  # c: positive semidefinite
             [1.00, 0.48],  # d: negative semidefinite
         ]
@@ -583,7 +583,7 @@ def render_simplex_weights(
         ax.plot(*vertex, marker="o", markersize=4, color="black", zorder=3)
     ax.text(va[0], va[1] + 0.03, "a = 1: antisymmetric",
             ha="center", va="bottom", fontsize=11)
-    ax.text(vb[0] - 0.02, vb[1], "b = 1: hyperbolic",
+    ax.text(vb[0] - 0.02, vb[1], r"b = 1: $\lambda_+=\lambda_-$",
             ha="right", va="center", fontsize=11)
     ax.text(vc[0], vc[1] - 0.04, "c = 1: positive semidefinite",
             ha="center", va="top", fontsize=11)
@@ -637,7 +637,7 @@ def render_symmetric_simplex(
             linestyle="--", dashes=(4, 3))
     for vertex in (pb, pc, pd):
         ax.plot(*vertex, marker="o", markersize=4, color="black", zorder=3)
-    ax.text(pb[0], pb[1] + 0.035, "b = 1: hyperbolic",
+    ax.text(pb[0], pb[1] + 0.035, r"b = 1: $\lambda_+=\lambda_-$",
             ha="center", va="bottom", fontsize=11)
     ax.text(pc[0] - 0.02, pc[1] - 0.035, "c = 1: positive semidefinite",
             ha="left", va="top", fontsize=11)
@@ -704,7 +704,7 @@ def render_interactive_simplex(
             )
         )
     vertex_text = [
-        "a = 1: antisymmetric", "b = 1: hyperbolic",
+        "a = 1: antisymmetric", "b = 1: λ₊ = λ₋",
         "c = 1: positive semidefinite", "d = 1: negative semidefinite",
     ]
     fig.add_trace(

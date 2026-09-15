@@ -8,7 +8,7 @@ data/bilinear-forms; nothing is recomputed here.  Each model's analysis
 is resolved through its latest.json, so the figure follows whichever
 analysis is current.
 
-The negative semidefinite vertex d = 1 is at the top, the hyperbolic
+The negative semidefinite vertex d = 1 is at the top, the
 vertex b = 1 at the bottom nearest the viewer, the antisymmetric vertex
 a = 1 to the left and the positive semidefinite vertex c = 1 to the
 right.  This sends the facet {b = 0}, whose relative interior is empty,
@@ -70,7 +70,7 @@ def _vertices():
 
     The base carries b, a, c in that cyclic order, which is the
     reflection through the plane a = b of the arrangement with a, b, c.
-    It puts the hyperbolic vertex b nearest the viewer and sends the
+    It puts the vertex b = 1 nearest the viewer and sends the
     facet {b = 0}, whose relative interior is empty, to the back."""
     ang = np.deg2rad(BASE_AZIMUTH - np.array([0.0, 120.0, 240.0]))
     base = np.stack([np.cos(ang), np.sin(ang), np.zeros(3)], axis=1)
@@ -131,7 +131,7 @@ def load_weights(model_dir):
 def draw_frame(ax):
     """The tetrahedron, its vertex labels, and the family Theta.
 
-    The hyperbolic vertex b is nearest the viewer and d is on top, so
+    The vertex b = 1 is nearest the viewer and d is on top, so
     the visible facets are {c = 0} = ABD on the left and {a = 0} = BCD
     on the right, sharing the front edge BD; the hidden edge is AC."""
     for tri, shade in (([VB, VD, VA], "#f4f4f4"), ([VB, VD, VC], "#e6e6e6")):

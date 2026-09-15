@@ -14,7 +14,7 @@ written in L rather than S marks a face on which T = 0.
 
 The viewpoint is the one used by plot_simplex_scatter_pair.py, so this
 picture and the scatter of the heads are seen from the same direction:
-the negative semidefinite vertex d = 1 at the top, the hyperbolic
+the negative semidefinite vertex d = 1 at the top, the
 vertex b = 1 to the left, the positive semidefinite vertex c = 1 to the
 right, and the antisymmetric vertex a = 1 at the bottom, nearest the
 viewer.  The two faces meeting the viewer are shaded and the edge
@@ -59,7 +59,7 @@ def _vertices():
 
     The base carries b, a, c in that cyclic order, which is the
     reflection through the plane a = b of the arrangement with a, b, c.
-    It puts the hyperbolic vertex b nearest the viewer and sends the
+    It puts the vertex b = 1 nearest the viewer and sends the
     facet {b = 0}, whose relative interior is empty, to the back."""
     ang = np.deg2rad(BASE_AZIMUTH - np.array([0.0, 120.0, 240.0]))
     base = np.stack([np.cos(ang), np.sin(ang), np.zeros(3)], axis=1)
@@ -134,7 +134,7 @@ def main() -> None:
             r"$d = 1$: negative semidefinite, $L = -P$",
             ha="center", va="bottom", fontsize=11)
     ax.text(VB[0], VB[1] - 0.045,
-            r"$b = 1$: hyperbolic, $L = H$",
+            r"$b = 1$: $\lambda_+=\lambda_-$",
             ha="center", va="top", fontsize=11)
     ax.text(VA[0] - 0.035, VA[1],
             r"$a = 1$: antisymmetric, $L = T$",
@@ -143,7 +143,7 @@ def main() -> None:
             r"$c = 1$: positive semidefinite, $L = P$",
             ha="left", va="center", fontsize=11)
 
-    # edges.  The three edges through the hyperbolic vertex B lie in
+    # edges.  The three edges through the b = 1 vertex B lie in
     # {a = 0} except BA itself, so their labels are equations for L.
     # BD is {a = c = 0}, BC is {a = d = 0}, AB is {c = d = 0}.
     edge_label(ax, VB, VD, r"$L = H - P$", side=-1, at=0.5, dist=0.035)
