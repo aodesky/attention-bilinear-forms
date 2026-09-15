@@ -1,36 +1,29 @@
 #!/usr/bin/env python3
-"""How closely the heads satisfy the hypotheses of the accumulation theorem.
+"""Empirical proportionality of sorted lobes and related profile predictions.
 
-For each head the bilinear form L = W_K^T W_Q is restricted to the
-reduced subspace im(W_K^T) + im(W_Q^T) and split as L = S + T.  With
-alpha and beta the positive eigenvalues of S and the absolute values
-of its negative eigenvalues, both sorted decreasing and padded with
-zeros to a common length, and rho = ||beta|| / ||alpha||, the theorem
-assumes
+Observation 5 reports the error in lambda_- = rho lambda_+, where
+rho = ||lambda_-|| / ||lambda_+||.  Section 6.2.1 relates it to the
+proportionality that arises asymptotically from independent samples
+of a common distribution in the accumulation theorem.  That theorem
+concerns the symmetric part S and predicts
 
-  (i)  beta = rho * alpha            (proportional lobes), and
-  (ii) ||T||^2 = 2 <alpha, beta>     (equivalently a = b),
+  (b, c, d) = (2 rho, (1 - rho)_+^2, (rho - 1)_+^2) / (1 + rho^2).
 
-and concludes that the weights of L are
+This script reports, per model and pooled:
 
-  (a, b, c, d) = (2 rho, 2 rho, (1 - rho)_+^2, (rho - 1)_+^2) / (1 + rho)^2 .
+  (i)  ||lambda_- - rho lambda_+|| / ||lambda_-||;
+  (ii) ||T||^2 / (2 <lambda_+, lambda_->) = a / b;
+  (iii) the distance of the full profile to the candidate below; and
+  (iv) the distance of the symmetric profile to the theorem's limit.
 
-For each head the script reports the departure from each hypothesis,
+The full-profile candidate
 
-  (i)  ||beta - rho alpha|| / ||beta||,   equivalently sqrt(2 - 2 cos),
-       with cos = <alpha, beta> / (||alpha|| ||beta||);
-  (ii) ||T||^2 / (2 <alpha, beta>) = a / b;
+  (a, b, c, d) = (2 rho, 2 rho, (1 - rho)_+^2, (rho - 1)_+^2) / (1 + rho)^2
 
-and the departure from the conclusion, namely the Euclidean distance
-in R^4 between the observed weights and the point predicted from the
-head's own rho, together with the same distance for the symmetric
-part alone, whose predicted weights are
-
-  (b, c, d) = (2 rho, (1 - rho)_+^2, (rho - 1)_+^2) / (1 + rho^2) .
-
-Medians and central 80 per cent intervals are printed per model and
-pooled.  Every number is recomputed from the model weights; nothing is
-read from disk.
+requires the additional condition a = b, besides proportional lobes.
+It is a separate diagnostic, not a conclusion of the accumulation
+theorem for S.  Quantity (i) is the lobe_departure statistic quoted in
+Observation 5. Medians and central 80 percent intervals are reported.
 
 Usage:
     python proportional_lobes.py

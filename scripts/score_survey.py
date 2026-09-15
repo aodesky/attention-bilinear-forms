@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""The score survey figures: symmetric energy, balance and pairing.
+"""Symmetric-energy and pairing figures, and the balanced-spectrum check.
 
-One panel per model, laid out on a common grid, for each of the three
-scores of the paper:
+One panel per model, laid out on a common grid, for the scores of the
+paper; balance is checked directly from eigenvalue counts:
 
 * the symmetric energy S, against a random baseline of the same shape;
-* the balance score B, which the balanced-attention theorem forces to
-  be one at every head;
+* equal positive and negative eigenvalue counts, as predicted by the
+  balanced-attention theorem;
 * the pairing score P, against the same random baseline, and as a
   histogram over the heads of each model.
 
@@ -18,9 +18,11 @@ QK products; it is redrawn here rather than cached, from a fixed seed.
 
 Writes, to figures/qk_geometry/:
     combined_qk_diagnostics.pdf            symmetric energy, trained vs random
-    combined_qk_diagnostics_balance.pdf    balance score
     combined_qk_diagnostics_random.pdf     pairing score, trained vs random
     pairing_score_histogram.pdf            pairing score, per-model histograms
+
+Also reports the lobe proportionality error and pairing-bound gap in
+Observation 5, from the same stored statistics used in Section 6.2.1.
 
 Usage:
     python score_survey.py
@@ -160,6 +162,37 @@ def histogram_figure(df: pd.DataFrame, path: Path) -> None:
     print(f"Wrote {path}")
 
 
+def print_balance_summary(df: pd.DataFrame) -> None:
+    """Check Observation 1 directly from positive and negative eigenvalue counts."""
+    print("Balanced symmetric spectra (equal positive and negative counts):")
+    for tag, rows in df.groupby("model", sort=False):
+        balanced = int((rows.n_pos == rows.n_neg).sum())
+        print(f"  {tag:26s} {balanced}/{len(rows)} heads")
+
+
+def print_pairing_summary(df: pd.DataFrame) -> None:
+    """Report the quantities in Observation 5 and the proportional-lobes discussion."""
+    columns = ("lobe_departure", "pairing_gap", "pairing")
+    print("Proportional lobes: median [10%, 90%] over heads")
+    print("lobe_departure = ||lambda_- - rho lambda_+|| / ||lambda_-||")
+    print("pairing_gap = bound at the head's rho minus its pairing score")
+    print(f"{'model':26s} {'heads':>6s}  " +
+          "  ".join(f"{column:>25s}" for column in columns))
+    groups = [(tag, df[df.model == tag]) for tag in ms.TAGS]
+    groups.append(("pooled", df))
+    for tag, rows in groups:
+        cells = []
+        for column in columns:
+            low, median, high = rows[column].quantile([0.1, 0.5, 0.9])
+            cells.append(f"{median:.3f} [{low:.3f}, {high:.3f}]")
+        print(f"{tag:26s} {len(rows):6d}  " +
+              "  ".join(f"{cell:>25s}" for cell in cells))
+    print("Per-model median ranges:")
+    for column in columns:
+        medians = df.groupby("model")[column].median()
+        print(f"  {column}: {medians.min():.3f} to {medians.max():.3f}")
+
+
 def main() -> None:
     if not STATS.exists():
         raise FileNotFoundError(
@@ -173,8 +206,8 @@ def main() -> None:
                    OUT / "combined_qk_diagnostics.pdf",
                    centre=0.5, label=r"$\mathscr{S}$",
                    baseline="symmetric_energy")
-    heatmap_figure(df, "balance", OUT / "combined_qk_diagnostics_balance.pdf",
-                   centre=None, label=r"$\mathscr{B}$")
+    print_balance_summary(df)
+    print_pairing_summary(df)
     heatmap_figure(df, "pairing", OUT / "combined_qk_diagnostics_random.pdf",
                    centre=0.5, label=r"$\mathscr{P}$", baseline="pairing")
     histogram_figure(df, OUT / "pairing_score_histogram.pdf")
