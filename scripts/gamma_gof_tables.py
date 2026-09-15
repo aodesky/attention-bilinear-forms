@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The goodness-of-fit tables of Section 4, as LaTeX.
+"""The goodness-of-fit tables of Section 3, as LaTeX.
 
 Reads the summary written by ``gamma_goodness_of_fit.py`` and prints the
 two tables of the paper: the share of heads best fit by each of the two

@@ -4,7 +4,7 @@
 
 This blueprint presents the mathematical results implemented in the
 audited Lean formalization of \emph{On attention heads and bilinear forms}.
-It covers Appendices A, B and C, together with Definition 6 and Theorem 5
+It covers Appendices A, B and C, together with Definition 6 and Theorem 4
 from the main text. Lemma, corollary, proposition and theorem numbers
 match the paper; auxiliary definitions are named separately.
 
@@ -15,9 +15,9 @@ are omitted. A green result and proof indicate that both have been
 formalized. The source links point to the audited revision of the Lean files.
 
 The empirical observations and the other main-text theorems are outside
-this formalization. In particular, Lemma 7 is formalized here, but the
+this formalization. In particular, Lemma 6 is formalized here, but the
 main-text accumulation theorem that applies it is not. The two expository
-remarks following Lemma 11 are also outside the scope.
+remarks following Lemma 10 are also outside the scope.
 
 \chapter{Bilinear forms and their profiles}
 
@@ -61,7 +61,7 @@ These results give the random baselines for the symmetric energy of an
 attention head. The distinction between a ratio of expectations and
 the expectation of a ratio matters: the latter uses Gaussian symmetry.
 
-\setcounter{lemma}{5}
+\setcounter{lemma}{4}
 \begin{lemma}[Symmetric and skew energy identities]
 \label{lem:energy}
 \lean{Appendices.frobSq_eq_frobSq_symPart_add_frobSq_skewPart, Appendices.frobSq_symPart, Appendices.frobSq_skewPart, Appendices.frobSq_symPart_div, Appendices.frobSq_skewPart_div}
@@ -140,10 +140,10 @@ two expectations to the first are $(N+1)/(2N)$ and $(N-1)/(2N)$.
 \uses{lem:energy}
 Expand $L_{ab}=\sum_r(W_K)_{ra}(W_Q)_{rb}$. Independence gives
 $\E L_{ab}^2=n\sigma_K^2\sigma_Q^2$ and
-$\E\tr(L^2)=nN\sigma_K^2\sigma_Q^2$. Sum the entries and use Lemma 6.
+$\E\tr(L^2)=nN\sigma_K^2\sigma_Q^2$. Sum the entries and use Lemma 5.
 \end{proof}
 
-\setcounter{proposition}{4}
+\setcounter{proposition}{5}
 \begin{proposition}[Expected symmetric energy for random low-rank QK products]
 \label{prop:low-rank}
 \lean{Appendices.expected_symmetric_energy_low_rank_qk, Appendices.expected_skew_energy_low_rank_qk}
@@ -166,7 +166,7 @@ First take equal variances. Sign changes and permutations of Gaussian
 columns preserve the joint law. Sign symmetry cancels the off-diagonal
 terms of $\tr(L^2)/\norm{L}^2$; permutation symmetry makes the expected
 normalized squared entries equal. Thus its expectation is $1/N$, and
-Lemma 6 gives the result. The denominator is nonzero almost surely.
+Lemma 5 gives the result. The denominator is nonzero almost surely.
 Rescale $W_K$ to reduce unequal variances to the equal-variance case;
 the normalized energies are unchanged by this rescaling.
 \end{proof}
@@ -273,7 +273,7 @@ transformation rules. Split the displacement sum into its two halves
 to identify both with the squared distance between the lobes.
 \end{proof}
 
-\setcounter{theorem}{4}
+\setcounter{theorem}{3}
 \begin{theorem}[Fibers of the profile map over the simplex faces]
 \label{thm:faces}
 \lean{Appendices.profileA_nonneg, Appendices.profileB_nonneg, Appendices.profileC_nonneg, Appendices.profileD_nonneg, Appendices.profile_sum_eq_one, Appendices.profileA_eq_zero_iff, Appendices.profileA_eq_one_iff, Appendices.profileB_eq_zero_iff, Appendices.profileB_eq_one_iff, Appendices.profileD_eq_zero_iff_forall, Appendices.profileD_eq_zero_iff_decomp, Appendices.profileD_eq_zero_decomp_commute, Appendices.profileD_eq_one_iff, Appendices.profileC_eq_zero_iff_forall, Appendices.profileC_eq_zero_iff_decomp, Appendices.profileC_eq_zero_decomp_commute, Appendices.profileC_eq_one_iff}

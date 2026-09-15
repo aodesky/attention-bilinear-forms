@@ -2,7 +2,7 @@
 """Empirical proportionality of sorted lobes and related profile predictions.
 
 Observation 5 reports the error in lambda_- = rho lambda_+, where
-rho = ||lambda_-|| / ||lambda_+||.  Section 6.2.1 relates it to the
+rho = ||lambda_-|| / ||lambda_+||.  Section 5.2.1 relates it to the
 proportionality that arises asymptotically from independent samples
 of a common distribution in the accumulation theorem.  That theorem
 concerns the symmetric part S and predicts

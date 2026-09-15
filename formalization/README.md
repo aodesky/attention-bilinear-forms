@@ -33,35 +33,35 @@ and theorems are numbered in separate sequences.
 | File | Paper |
 |---|---|
 | `Appendices/Common.lean` | Frobenius norm; symmetric and antisymmetric parts (shared definitions) |
-| `Appendices/Profile.lean` | Definition 6, the profile `π(L) = (a, b, c, d)` of a bilinear form (§6.1) |
+| `Appendices/Profile.lean` | Definition 6, the profile `π(L) = (a, b, c, d)` of a bilinear form (§5.1) |
 | **Appendix A, Random matrices** | |
-| `Appendices/RandomMatrices/EnergyIdentities.lean` | Lemma 6 (symmetric and skew energy identities) |
+| `Appendices/RandomMatrices/EnergyIdentities.lean` | Lemma 5 (symmetric and skew energy identities) |
 | `Appendices/RandomMatrices/IidBaseline.lean` | Corollary 1 (iid square random matrix baseline) |
 | `Appendices/RandomMatrices/QKProductBaseline.lean` | Corollary 2 (random QK-product baseline) |
-| `Appendices/RandomMatrices/LowRankExpectedEnergy.lean` | Proposition 5 (expected symmetric energy for random low-rank QK products) |
-| `Appendices/RandomMatrices/ProportionalLobes.lean` | Lemma 7, the sorted lobes of two samples become proportional |
+| `Appendices/RandomMatrices/LowRankExpectedEnergy.lean` | Proposition 6 (expected symmetric energy for random low-rank QK products) |
+| `Appendices/RandomMatrices/ProportionalLobes.lean` | Lemma 6, the sorted lobes of two samples become proportional |
 | **Appendix B, Balanced bimodal spectra** | |
 | `Appendices/BalancedBimodalSpectra/Defs.lean` | The pairing geometry: `Λ_m`, `λ±`, `ℐ`, `C`, `𝒫`, `ι` |
-| `Appendices/BalancedBimodalSpectra/BimodalIdentities.lean` | Lemma 8, the identities for `ℐ`, `C`, `𝒫`, with the note `0 ≤ 2C ≤ 1` |
-| `Appendices/BalancedBimodalSpectra/BimodalInvolution.lean` | Lemma 9, the involution `ι` |
-| `Appendices/BalancedBimodalSpectra/SimplexFaces.lean` | Theorem 5, the fibers of the profile map over the faces of `Δ₃` (stated in §6.1, proved in Appendix B) |
+| `Appendices/BalancedBimodalSpectra/BimodalIdentities.lean` | Lemma 7, the identities for `ℐ`, `C`, `𝒫`, with the note `0 ≤ 2C ≤ 1` |
+| `Appendices/BalancedBimodalSpectra/BimodalInvolution.lean` | Lemma 8, the involution `ι` |
+| `Appendices/BalancedBimodalSpectra/SimplexFaces.lean` | Theorem 4, the fibers of the profile map over the faces of `Δ₃` (stated in §5.1, proved in Appendix B) |
 | **Appendix C, Moments** | |
 | `Appendices/Moments/Defs.lean` | The statistics `O`, `E`, `R` |
-| `Appendices/Moments/OEEquivalences.lean` | Lemma 10, `O` and `E` as sums of odd and even moments, partial fractions, and traces |
-| `Appendices/Moments/GramForm.lean` | Lemma 11, computation of `O`, `E`, `R` from the key and query matrices |
+| `Appendices/Moments/OEEquivalences.lean` | Lemma 9, `O` and `E` as sums of odd and even moments, partial fractions, and traces |
+| `Appendices/Moments/GramForm.lean` | Lemma 10, computation of `O`, `E`, `R` from the key and query matrices |
 
 ## Scope
 
 Every numbered result stated or proved in Appendices A, B and C is
-formalized: Lemmas 6 to 11, Corollaries 1 and 2, Proposition 5, and
-Theorem 5, whose statement is in the main text and whose proof is
-Appendix B.  Definition 6 is formalized because Theorem 5 is stated in
+formalized: Lemmas 5 to 10, Corollaries 1 and 2, Proposition 6, and
+Theorem 4, whose statement is in the main text and whose proof is
+Appendix B.  Definition 6 is formalized because Theorem 4 is stated in
 its terms.
 
-Not formalized: the two remarks following Lemma 11, which are
+Not formalized: the two remarks following Lemma 10, which are
 expository and stated without proof; and the results of the main
-text, including Theorem 6, whose proof in the main text applies
-Lemma 7.  Appendices D and E contain experiment descriptions, tables
+text, including Theorem 5, whose proof in the main text applies
+Lemma 6.  Appendices D and E contain experiment descriptions, tables
 and figures, with no mathematical results.
 
 Each statement is formalized as stated in the paper; where a proof

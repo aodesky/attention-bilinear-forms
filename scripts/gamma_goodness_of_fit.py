@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Goodness-of-fit diagnostics for the spectral claims in Section 4.
+"""Goodness-of-fit diagnostics for the spectral claims in Section 3.
 
 For each head of the models in the paper's survey (model_set.MODELS),
 compare a generalized gamma fit with a lognormal fit, both with

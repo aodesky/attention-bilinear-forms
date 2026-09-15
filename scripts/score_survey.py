@@ -22,7 +22,7 @@ Writes, to figures/qk_geometry/:
     pairing_score_histogram.pdf            pairing score, per-model histograms
 
 Also reports the lobe proportionality error and pairing-bound gap in
-Observation 5, from the same stored statistics used in Section 6.2.1.
+Observation 5, from the same stored statistics used in Section 5.2.1.
 
 Usage:
     python score_survey.py
