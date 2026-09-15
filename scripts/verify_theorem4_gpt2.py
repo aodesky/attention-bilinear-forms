@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-verify_theorem3_gpt2.py
+verify_theorem4_gpt2.py
 
-Empirical verification of Theorem 3 ("Heads have balanced attention") for
+Empirical verification of Theorem 4 ("Heads have balanced attention") for
 every attention head in GPT-2 small.
 
-Theorem 3 states: for any non-degenerate, non-big head H in a multi-head
+Theorem 4 states: for any non-degenerate, non-big head H in a multi-head
 biaffine attention block on residual stream R^D, the residual-stream
 symmetric form
 
@@ -22,17 +22,17 @@ This script also reports the head-space symmetric-form inertia of
 
     S_head = (W_K W_Q^T + W_Q W_K^T) / 2  in R^{d_i x d_i},
 
-which is a *different* matrix not directly constrained by Theorem 3.
+which is a *different* matrix not directly constrained by Theorem 4.
 Migliarini's "self-hating attention head" analysis of L1H5 reports
 spectrum information for the head-space form, so we print head-space
 inertia for the labelled head families and L1H5 in particular for
 comparison.
 
 Usage:
-    python verify_theorem3_gpt2.py
+    python verify_theorem4_gpt2.py
 
 Outputs:
-    - prints per-head Theorem-3 check; expects 0 deviations
+    - prints per-head Theorem-4 check; expects 0 deviations
     - prints head-space inertia summary by published category
 
 Dependencies: torch, transformers, numpy.
@@ -142,7 +142,7 @@ def head_space_inertia(Wq_h: np.ndarray, Wk_h: np.ndarray) -> Tuple[int, int, in
     Inertia of S_head = (W_K W_Q^T + W_Q W_K^T) / 2  on R^{d_head}.
 
     This is the matrix Migliarini analyzes in his L1H5 writeup. It is *not*
-    directly constrained by Theorem 3, which is about the residual-stream
+    directly constrained by Theorem 4, which is about the residual-stream
     symmetrization. Returns (n_+, n_-, n_0) for the d_head x d_head matrix.
     """
     M = Wk_h @ Wq_h.T  # [d_head, d_head]
@@ -163,10 +163,10 @@ def main() -> None:
 
     predicted_inertia = (head_dim, head_dim, d_model - 2 * head_dim)
     print(f"  n_layers={n_layers}  n_heads={n_heads}  d_model={d_model}  head_dim={head_dim}")
-    print(f"  Theorem 3 prediction for each head: (n_+, n_-, n_0) = {predicted_inertia}")
+    print(f"  Theorem 4 prediction for each head: (n_+, n_-, n_0) = {predicted_inertia}")
     print()
 
-    # Theorem 3 verification on the residual stream.
+    # Theorem 4 verification on the residual stream.
     deviations: List[Tuple[int, int, Tuple[int, int, int]]] = []
     head_space_rows: List[Dict] = []
 
@@ -188,7 +188,7 @@ def main() -> None:
             })
 
     total = n_layers * n_heads
-    print(f"=== Residual-stream Theorem-3 check ===")
+    print(f"=== Residual-stream Theorem-4 check ===")
     print(f"  Heads checked: {total}")
     print(f"  Heads matching {predicted_inertia}: {total - len(deviations)}")
     if deviations:
@@ -196,13 +196,13 @@ def main() -> None:
         for (l, h, iner) in deviations[:20]:
             print(f"    L{l}H{h}: {iner}")
     else:
-        print(f"  All {total} heads satisfy Theorem 3 exactly.")
+        print(f"  All {total} heads satisfy Theorem 4 exactly.")
     print()
 
     # Head-space inertia summary by category. This is not predicted by
-    # Theorem 3; we report it because Migliarini's L1H5 claim ("33 of 64
+    # Theorem 4; we report it because Migliarini's L1H5 claim ("33 of 64
     # negative eigenvalues") is about this matrix.
-    print(f"=== Head-space inertia summary (not constrained by Theorem 3) ===")
+    print(f"=== Head-space inertia summary (not constrained by Theorem 4) ===")
     print(f"  S_head = (W_K W_Q^T + W_Q W_K^T)/2  has shape {head_dim} x {head_dim}.")
     print(f"  All entries below report mean and range of n_- = #negative eigvals (out of {head_dim}).")
     print()
@@ -221,7 +221,7 @@ def main() -> None:
     row = next(r for r in head_space_rows
                if r["layer"] == layer_sh and r["head"] == head_sh)
     print(f"=== L1H5 (Migliarini's self-hating head) ===")
-    print(f"  Residual-stream inertia: {row['rs_inertia']} -> matches Theorem 3: "
+    print(f"  Residual-stream inertia: {row['rs_inertia']} -> matches Theorem 4: "
           f"{row['rs_inertia'] == predicted_inertia}")
     print(f"  Head-space inertia: "
           f"(n_+, n_-, n_0) = ({row['hs_n_pos']}, {row['hs_n_neg']}, {row['hs_n_zero']})")

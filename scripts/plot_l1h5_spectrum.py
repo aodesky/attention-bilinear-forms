@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Plot the nonzero spectrum of the residual-stream symmetric form of L1H5.
 
-L1H5 is Migliarini's "self-hating" head in GPT-2 small. By Theorem 3 its
+L1H5 is Migliarini's "self-hating" head in GPT-2 small. By Theorem 4 its
 residual-stream symmetrization S_H = (W_K^T W_Q + W_Q^T W_K)/2 has inertia
 (64, 64, 640); this script plots a histogram of the 128 nonzero
 eigenvalues and verifies the claims of the paper's "Reconciling

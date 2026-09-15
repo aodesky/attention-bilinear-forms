@@ -38,7 +38,7 @@ and theorems are numbered in separate sequences.
 | `Appendices/RandomMatrices/EnergyIdentities.lean` | Lemma 6 (symmetric and skew energy identities) |
 | `Appendices/RandomMatrices/IidBaseline.lean` | Corollary 1 (iid square random matrix baseline) |
 | `Appendices/RandomMatrices/QKProductBaseline.lean` | Corollary 2 (random QK-product baseline) |
-| `Appendices/RandomMatrices/LowRankExpectedEnergy.lean` | Proposition 4 (expected symmetric energy for random low-rank QK products) |
+| `Appendices/RandomMatrices/LowRankExpectedEnergy.lean` | Proposition 5 (expected symmetric energy for random low-rank QK products) |
 | `Appendices/RandomMatrices/ProportionalLobes.lean` | Lemma 7, the sorted lobes of two samples become proportional |
 | **Appendix B, Balanced bimodal spectra** | |
 | `Appendices/BalancedBimodalSpectra/Defs.lean` | The pairing geometry: `Λ_m`, `λ±`, `ℐ`, `C`, `𝒫`, `ι` |
@@ -53,7 +53,7 @@ and theorems are numbered in separate sequences.
 ## Scope
 
 Every numbered result stated or proved in Appendices A, B and C is
-formalized: Lemmas 6 to 11, Corollaries 1 and 2, Proposition 4, and
+formalized: Lemmas 6 to 11, Corollaries 1 and 2, Proposition 5, and
 Theorem 5, whose statement is in the main text and whose proof is
 Appendix B.  Definition 6 is formalized because Theorem 5 is stated in
 its terms.
