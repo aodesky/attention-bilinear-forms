@@ -134,7 +134,7 @@ def main() -> None:
             r"$d = 1$: negative semidefinite, $L = -P$",
             ha="center", va="bottom", fontsize=11)
     ax.text(VB[0], VB[1] - 0.045,
-            r"$b = 1$: $\lambda_+=\lambda_-$",
+            r"$b = 1$: $L=H$",
             ha="center", va="top", fontsize=11)
     ax.text(VA[0] - 0.035, VA[1],
             r"$a = 1$: antisymmetric, $L = T$",

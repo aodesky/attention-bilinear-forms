@@ -127,7 +127,7 @@ def main() -> None:
         ax.plot(*v, marker="o", markersize=4, color="black", zorder=3)
     ax.text(VA[0], VA[1] + 0.03, r"$a = 1$: antisymmetric",
             ha="center", va="bottom", fontsize=11)
-    ax.text(VB[0] - 0.02, VB[1], r"$b = 1$: $\lambda_+=\lambda_-$",
+    ax.text(VB[0] - 0.02, VB[1], r"$b = 1$: $L=H$",
             ha="right", va="center", fontsize=11)
     ax.text(VC[0], VC[1] - 0.04, r"$c = 1$: positive semidefinite",
             ha="center", va="top", fontsize=11)

@@ -45,7 +45,7 @@ def main() -> None:
 
     ax1.text(A[0], A[1] + 0.04, r"$a = 1$: antisymmetric",
              ha="center", va="bottom", fontsize=11)
-    ax1.text(B[0] - 0.03, B[1], r"$b = 1$: $\lambda_+=\lambda_-$",
+    ax1.text(B[0] - 0.03, B[1], r"$b = 1$: $L=H$",
              ha="right", va="center", fontsize=11)
     ax1.text(C[0], C[1] - 0.05, r"$c = 1$: positive semidefinite",
              ha="center", va="top", fontsize=11)
@@ -72,7 +72,7 @@ def main() -> None:
         ax2.plot(*p, marker="o", markersize=4, color="black", zorder=3)
 
     ax2.text(Pb[0], Pb[1] + 0.04,
-             r"$b = 1$: $\lambda_+=\lambda_-$ (Type $\mathrm{II}$)",
+             r"$b = 1$: $S=H$ (Type $\mathrm{II}$)",
              ha="center", va="bottom", fontsize=11)
     ax2.text(Pc[0] - 0.04, Pc[1] - 0.04, r"$c = 1$: positive semidefinite",
              ha="right", va="top", fontsize=11)

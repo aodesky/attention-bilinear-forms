@@ -32,7 +32,7 @@ N_EXTREME = 10
 
 TITLES = [
     r"Type I$_+$ (positive-definite-like)",
-    r"Type II (approximately symmetric spectrum)",
+    r"Type II (symmetric spectrum)",
     r"Type I$_-$ (negative-definite-like)",
 ]
 
