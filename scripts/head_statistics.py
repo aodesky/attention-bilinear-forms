@@ -10,12 +10,17 @@ extraction database:
   pairing lemma at that rho, with the gap between the two;
 * the departure from proportional lobes,
   ||lambda_- - rho lambda_+|| / ||lambda_-||;
-* the eigenvalue counts n_+, n_-, n_0 of the symmetric part; and
-* the normalized trace |tr L| / ||L||.
+* the eigenvalue counts n_+, n_-, n_0 of the symmetric part;
+* the normalized trace |tr L| / ||L||; and
+* from the singular values h_i of L, the participation ratio
+  (sum h_i^2)^2 / sum h_i^4, the stable rank sum h_i^2 / h_1^2 and the
+  leading energy share h_1^2 / sum h_i^2.  The first two equal 1 exactly
+  when L has rank one and n when its spectrum is flat.
 
 The spectra themselves (the sorted lobes, the full eigenvalue
-magnitudes, and the singular values of the antisymmetric part) are saved
-alongside, so the spectral figures need not reopen the forms.
+magnitudes, the singular values of the antisymmetric part and the
+singular values of L) are saved alongside, so the spectral figures need
+not reopen the forms.
 
 The result is written once and reused: every downstream script reads
 ``scripts/survey_results/head_statistics.csv`` rather than recomputing.
@@ -71,6 +76,8 @@ def head_row(tag: str, layer: int, head: int, kv_head: int,
              if norm_m > 0 else np.nan)
 
     sigma_T = np.linalg.svd(T, compute_uv=False)
+    sigma_L = np.linalg.svd(L, compute_uv=False)
+    energy = sigma_L ** 2
     row = dict(
         model=tag, layer=layer, head=head, kv_head=kv_head,
         dim=L.shape[0],
@@ -87,8 +94,11 @@ def head_row(tag: str, layer: int, head: int, kv_head: int,
         c_sym=float((u[u > 0] ** 2).sum()) / sym_sq,
         d_sym=float((u[u < 0] ** 2).sum()) / sym_sq,
         trace_ratio=abs(float(np.trace(L))) / np.sqrt(norm_sq),
+        participation_ratio=float(energy.sum() ** 2 / (energy ** 2).sum()),
+        stable_rank=float(energy.sum() / energy[0]),
+        leading_share=float(energy[0] / energy.sum()),
     )
-    spectra = dict(eigenvalues=ev, sigma_T=sigma_T)
+    spectra = dict(eigenvalues=ev, sigma_T=sigma_T, sigma_L=sigma_L)
     return row, spectra
 
 
@@ -100,11 +110,13 @@ def run(tags: list[str]) -> None:
         rows: list[dict] = []
         eigs: list[np.ndarray] = []
         sigs: list[np.ndarray] = []
+        sigs_L: list[np.ndarray] = []
         for layer, head, kv_head, L in ms.iter_forms(tag):
             row, spec = head_row(tag, layer, head, kv_head, L)
             rows.append(row)
             eigs.append(spec["eigenvalues"])
             sigs.append(spec["sigma_T"])
+            sigs_L.append(spec["sigma_L"])
 
         info = ms.model_info(tag)
         if len(rows) != info.n_heads_total:
@@ -116,6 +128,7 @@ def run(tags: list[str]) -> None:
             OUT / f"{tag}_spectra.npz",
             eigenvalues=np.array(eigs),
             sigma_T=np.array(sigs),
+            sigma_L=np.array(sigs_L),
             layer=np.array([r["layer"] for r in rows]),
             head=np.array([r["head"] for r in rows]))
         all_rows.extend(rows)
@@ -124,7 +137,8 @@ def run(tags: list[str]) -> None:
         print(f"{tag:26s} {len(rows):5d} heads   "
               f"balance min {df.balance.min():.3f}   "
               f"S median {df.symmetric_energy.median():.3f}   "
-              f"P median {df.pairing.median():.3f}")
+              f"P median {df.pairing.median():.3f}   "
+              f"PR median {df.participation_ratio.median():.1f}")
 
     out = pd.DataFrame(all_rows)
     path = OUT / "head_statistics.csv"

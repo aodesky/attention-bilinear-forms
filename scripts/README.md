@@ -50,6 +50,8 @@ not editing the individual scripts.
 
     model_set.py             the reported models, and access to their forms
     head_statistics.py       per-head scores, profiles and spectra
+    effective_rank.py        participation ratio and stable rank of L, from
+                             the singular values saved by head_statistics.py
     extract_qk_bilinear_db.py   model weights -> bilinear forms (stage one)
     analyze_bilinear_spectra.py spectra, clustering and type assignment
     survey_results/          per-head statistics and spectra (written)
