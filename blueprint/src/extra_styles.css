@@ -4,3 +4,5 @@ a.lean_decl { overflow-wrap: anywhere; }
 @media (max-width: 650px) {
   .displaymath { overflow-x: auto; max-width: 100%; }
 }
+/* The author is already named in the site's top bar. */
+.titlepage .authors { display: none; }

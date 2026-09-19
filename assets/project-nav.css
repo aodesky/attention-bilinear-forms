@@ -34,11 +34,20 @@ body a:hover { text-decoration: underline; }
 .project-links .nav-icon { display: block; flex: 0 0 14px; width: 14px; height: 14px; opacity: .7; }
 .project-links a { color: var(--project-link); text-decoration: none; white-space: nowrap; }
 .project-links .paper-forthcoming { color: var(--project-muted); white-space: nowrap; }
-.project-links .project-name { margin-right: auto; color: var(--project-text); }
+.project-links .project-name { display: inline; margin-right: auto; color: var(--project-text); }
 .project-links a[aria-current="page"] { color: var(--project-text); font-weight: 600; }
 .project-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .project-links a:focus-visible { outline: 2px solid var(--project-link); outline-offset: 4px; }
+/* Narrow screens: keep the bar on one row by shortening labels step by step
+   (same rules as the top bar on andrewodesky.com). */
 @media (max-width: 600px) {
-  .project-links { padding: 10px 12px; gap: 8px 20px; }
-  .project-links .project-name { flex-basis: 100%; }
+  .project-links { padding: 9px 12px; gap: 8px 14px; }
+  .project-links .nav-label { display: none; }        /* GitHub, arXiv: icon only */
+}
+@media (max-width: 480px) {
+  .project-links .nav-long { display: none; }         /* "Attention & bilinear forms" -> "Attention" */
+}
+@media (max-width: 380px) {
+  .project-links { gap: 8px 12px; }
+  .project-links .author-link { display: none; }
 }

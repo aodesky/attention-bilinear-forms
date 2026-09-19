@@ -1,23 +1,11 @@
-\href{https://aodesky.github.io/attention-bilinear-forms/}{Project home}
-\quad $\cdot$ \quad
-\href{dep_graph_document.html}{Dependency graph}
-
-This blueprint presents the mathematical results implemented in the
-audited Lean formalization of \emph{On attention heads and bilinear forms}.
-It covers Appendices A, B and C, together with Definition 6 and Theorem 4
-from the main text. Lemma, corollary, proposition and theorem numbers
-match the paper; auxiliary definitions are named separately.
-
-Each result includes a proof outline and links to its Lean declarations.
-The dependency graph records the mathematical dependencies between these
-results and definitions; internal helper lemmas and mathlib dependencies
-are omitted. A green result and proof indicate that both have been
-formalized. The source links point to the audited revision of the Lean files.
-
-The empirical observations and the other main-text theorems are outside
-this formalization. In particular, Lemma 6 is formalized here, but the
-main-text accumulation theorem that applies it is not. The two expository
-remarks following Lemma 10 are also outside the scope.
+This blueprint covers the results of \emph{On attention heads and bilinear forms}
+that are formalized in Lean: Appendices A, B and C, together with Definition 6
+and Theorem 4 of the main text. Numbering follows the paper. Each result has a
+proof outline and links to its Lean declarations; in the
+\href{dep_graph_document.html}{dependency graph}, green means that the statement
+and its proof are both formalized. The empirical observations and the remaining
+main-text theorems, including the accumulation theorem that applies Lemma 6,
+are not formalized.
 
 \chapter{Bilinear forms and their profiles}
 
