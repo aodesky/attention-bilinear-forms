@@ -106,7 +106,7 @@ figures needs a LaTeX installation, since they are typeset with it.
 ## Project website
 
 `index.html` and `assets/site.css` provide the GitHub Pages landing page.
-The paper section reserves a place for the forthcoming arXiv link.
+The navigation links to the paper on arXiv.
 `python scripts/build_site_artwork.py` regenerates the illustration and
 social card from the included GPT-2 head measurements (requires Pillow).
 The gallery exporter and blueprint builder preserve navigation back to

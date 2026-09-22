@@ -14,18 +14,18 @@ def project_navigation(prefix="../", current=""):
         ("blueprint", prefix + "blueprint/", "Blueprint"),
         ("github", "https://github.com/aodesky/attention-bilinear-forms",
          f'{icon("github")}<span class="nav-label">GitHub</span>'),
+        ("arxiv", "https://arxiv.org/abs/2609.22990",
+         f'{icon("arxiv")}<span class="nav-label">arXiv</span>'),
     )
     items = []
     for key, href, label in links:
         attributes = ' class="project-name"' if key == "home" else ""
-        if key == "github":
-            attributes += ' aria-label="GitHub" title="GitHub"'  # the text label is hidden on narrow screens
+        if key in ("github", "arxiv"):
+            label_text = "GitHub" if key == "github" else "arXiv"
+            attributes += f' aria-label="{label_text}" title="{label_text}"'  # the text label is hidden on narrow screens
         if key == current:
             attributes += ' aria-current="page"'
         items.append(f'  <a href="{href}"{attributes}>{label}</a>')
-    # Replace this placeholder with the paper link once it is on arXiv.
-    items.append(f'  <span class="paper-forthcoming" aria-label="arXiv (forthcoming)" title="arXiv (forthcoming)">'
-                 f'{icon("arxiv")}<span class="nav-label">arXiv (forthcoming)</span></span>')
     items.append('  <a href="https://andrewodesky.com" class="author-link">Andrew O’Desky</a>')
     return '<nav class="project-links" aria-label="Project navigation">\n' + "\n".join(items) + "\n</nav>\n"
 
