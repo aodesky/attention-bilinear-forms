@@ -12,8 +12,8 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Bilinear forms and their profiles</title>
-<link rel="next" href="sect0002.html" title="Random matrices" />
+<title>Attention functions and transformers</title>
+<link rel="next" href="sect0002.html" title="Pairing and balance" />
 <link rel="prev" href="index.html" title="On attention heads and bilinear forms" />
 <link rel="up" href="index.html" title="On attention heads and bilinear forms" />
 <link rel="stylesheet" href="styles/theme-white.css" />
@@ -43,16 +43,22 @@
 <nav class="toc">
 <ul class="sub-toc-0">
 <li class=" active current">
-  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Bilinear forms and their profiles</span></a>
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Attention functions and transformers</span></a>
  </li>
 <li class="">
-  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Random matrices</span></a>
+  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Pairing and balance</span></a>
  </li>
 <li class="">
-  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">Balanced bimodal spectra and simplex faces</span></a>
+  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">Profiles of bilinear forms</span></a>
  </li>
 <li class="">
-  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Moments and the Gram form</span></a>
+  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Appendix A: Random matrices</span></a>
+ </li>
+<li class="">
+  <a href="sect0005.html"><span class="toc_ref">5</span> <span class="toc_entry">Appendix B: Balanced bimodal spectra and simplex faces</span></a>
+ </li>
+<li class="">
+  <a href="sect0006.html"><span class="toc_ref">6</span> <span class="toc_entry">Appendix C: Moments and the Gram form</span></a>
  </li>
 <li ><a href="dep_graph_document.html">Dependency graph</a></li>
 </ul>
@@ -63,15 +69,15 @@
 
 
 <div class="main-text">
-<h1 id="a0000000002">1 Bilinear forms and their profiles</h1>
-<p>All matrices are real. Matrix norms are Frobenius norms. The Lean development uses their squares to avoid unnecessary square roots. </p>
-<div class="definition_thmwrapper theorem-style-plain" id="def:parts">
+<h1 id="a0000000002">1 Attention functions and transformers</h1>
+<p>Throughout, \(C\) is a finite-dimensional real vector space. Smooth means \(C^\infty \), and \(\Delta _{k-1}\subset \mathbb {R}^k\) is the standard simplex. </p>
+<div class="definition_thmwrapper theorem-style-plain" id="def:attention-function">
   <div class="definition_thmheading">
     <span class="definition_thmcaption">
     Definition
     </span>
     <span class="definition_thmlabel">1</span>
-    <span class="definition_thmtitle">Symmetric and antisymmetric parts</span>
+    <span class="definition_thmtitle">Attention function</span>
     <div class="thm_header_extras">
 
     
@@ -79,7 +85,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0001.html#def:parts">#</a>
+    <a class="icon proof" href="sect0001.html#def:attention-function">#</a>
     
     
     
@@ -94,11 +100,9 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/Common.lean#L21" class="lean_decl">Appendices.frobSq</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L74" class="lean_decl">Appendices.MainText.IsPolyFun</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/Common.lean#L25" class="lean_decl">Appendices.symPart</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/Common.lean#L29" class="lean_decl">Appendices.skewPart</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L80" class="lean_decl">Appendices.MainText.IsAttentionFunction</a></li>
           
         </ul>
     
@@ -109,22 +113,21 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>   For \(L\in M_N(\mathbb {R})\), put </p>
-<div class="displaymath" id="a0000000006">
-  \[  S=\tfrac 12(L+L^T),\qquad T=\tfrac 12(L-L^T),\qquad \lVert L\rVert ^2=\operatorname {tr}(L^TL).  \]
+  <p>   A smooth map \(a\colon C^k\to C\) is an attention function if there are a smooth \(\omega \colon C^k\to \Delta _{k-1}\), a smooth convex \(\phi \colon \mathbb {R}^k\to \mathbb {R}\) and a polynomial map \(\sigma \colon C^k\to \mathbb {R}^k\) with </p>
+<div class="displaymath" id="a0000000008">
+  \[  \omega =(\nabla \phi )\circ \sigma ,\qquad a(x_1,\ldots ,x_k)=\sum _{j=1}^k\omega _j(x)\, x_j.  \]
 </div>
-<p> Then \(L=S+T\), with \(S\) symmetric and \(T\) antisymmetric. </p>
+<p> The data \(\omega ,\phi ,\sigma \) are carried along with \(a\). A polynomial map is one whose components are polynomials in the coordinates of \(x_1,\ldots ,x_k\). </p>
 
   </div>
 </div>
-
-<div class="definition_thmwrapper theorem-style-plain" id="def:profile">
+<div class="definition_thmwrapper theorem-style-plain" id="def:bilinear">
   <div class="definition_thmheading">
     <span class="definition_thmcaption">
     Definition
     </span>
-    <span class="definition_thmlabel">6</span>
-    <span class="definition_thmtitle">Profile of a bilinear form</span>
+    <span class="definition_thmlabel">2</span>
+    <span class="definition_thmtitle">Biaffine and bilinear attention functions</span>
     <div class="thm_header_extras">
 
     
@@ -132,7 +135,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0001.html#def:profile">#</a>
+    <a class="icon proof" href="sect0001.html#def:bilinear">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -147,7 +150,7 @@
         
         <ul class="uses">
           
-          <li><a href="sect0001.html#def:parts">Definition 1</a></li>
+          <li><a href="sect0001.html#def:attention-function">Definition 1</a></li>
           
         </ul>
     
@@ -167,19 +170,7 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/Profile.lean#L32" class="lean_decl">Appendices.sortDesc</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/Profile.lean#L62" class="lean_decl">Appendices.alphaList</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/Profile.lean#L69" class="lean_decl">Appendices.betaList</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/Profile.lean#L74" class="lean_decl">Appendices.profileA</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/Profile.lean#L79" class="lean_decl">Appendices.profileB</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/Profile.lean#L84" class="lean_decl">Appendices.profileC</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/Profile.lean#L89" class="lean_decl">Appendices.profileD</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L95" class="lean_decl">Appendices.MainText.IsBilinearScore</a></li>
           
         </ul>
     
@@ -190,11 +181,543 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>    For \(L\ne 0\), let \(\alpha \) and \(\beta \) be the decreasing lists of positive eigenvalues of \(S\) and absolute values of its negative eigenvalues, padded with zeros to equal length. Define \(\pi (L)=(a,b,c,d)\) by </p>
-<div class="displaymath" id="a0000000007">
-  \[  a=\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2},\qquad b=\frac{2\langle \alpha ,\beta \rangle }{\lVert L\rVert ^2},\qquad c=\frac{\lVert (\alpha -\beta )_+\rVert ^2}{\lVert L\rVert ^2},\qquad d=\frac{\lVert (\alpha -\beta )_-\rVert ^2}{\lVert L\rVert ^2}.  \]
+  <p>    An attention function whose scoring function has the form \(\sigma (x)=(P_{k-1}(x_1,x_k),\ldots ,P_0(x_k,x_k))\) for polynomials \(P_d\colon C^2\to \mathbb {R}\) of bidegree at most \((1,1)\) is biaffine; it is bilinear if every \(P_d\) is a bilinear form. </p>
+
+  </div>
 </div>
-<p> Positive and negative parts are taken entrywise. Lean pads both lists to length \(N\) and includes the denominator in each definition. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:biaffine-decomposition">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1</span>
+    <span class="lemma_thmtitle">Biaffine decomposition</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#lem:biaffine-decomposition">#</a>
+    
+    <a class="icon proof" href="sect0001.html#a0000000009"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BiaffineDecomposition.lean#L43" class="lean_decl">Appendices.MainText.IsPolyBidegreeLeOneOne</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BiaffineDecomposition.lean#L102" class="lean_decl">Appendices.MainText.biaffine_components</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BiaffineDecomposition.lean#L115" class="lean_decl">Appendices.MainText.biaffine_decomposition</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   Every polynomial \(P\colon C\times C\to \mathbb {R}\) of bidegree at most \((1,1)\) has a unique decomposition \(P(u,v)=B(u,v)+L(u)+R(v)+D\) with \(B\) bilinear, \(L,R\) linear and \(D\in \mathbb {R}\), namely </p>
+<div class="displaymath" id="a0000000010">
+  \[  D=P(0,0),\quad L(u)=P(u,0)-P(0,0),\quad R(v)=P(0,v)-P(0,0),  \]
+</div>
+<div class="displaymath" id="a0000000011">
+  \[  B(u,v)=P(u,v)-P(u,0)-P(0,v)+P(0,0).  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000009">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p>The paper calls this elementary and gives no proof. Each monomial of bidegree at most \((1,1)\) is a product of an affine function of \(u\) and an affine function of \(v\); expanding the product shows that the four expressions are bilinear, linear, linear and constant, and they add up to \(P\). Evaluating any decomposition at \((0,0)\), \((u,0)\) and \((0,v)\) gives the formulas, hence uniqueness. </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-plain" id="def:rope-like">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">3</span>
+    <span class="definition_thmtitle">RoPE-like</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#def:rope-like">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0001.html#def:bilinear">Definition 2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/RoPELike.lean#L45" class="lean_decl">Appendices.MainText.ropeL</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/RoPELike.lean#L49" class="lean_decl">Appendices.MainText.ropeL0Equiv</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/RoPELike.lean#L57" class="lean_decl">Appendices.MainText.ropeT</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/RoPELike.lean#L63" class="lean_decl">Appendices.MainText.IsRoPELike</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    Let a bilinear attention function on a head space \(H\) have forms \(B_{k-1},\ldots ,B_0\), let \(L_j\colon H\to H^\vee \), \(L_j(v)(u)=B_j(u,v)\), assume \(B_0\) nondegenerate, and set \(T_d=L_0^{-1}L_d\). The function is RoPE-like if \(T_{d+e}=T_dT_e\) whenever \(d,e\ge 0\) and \(d+e{\lt}k\). </p>
+
+  </div>
+</div>
+<div class="proposition_thmwrapper theorem-style-plain" id="prop:rope-like">
+  <div class="proposition_thmheading">
+    <span class="proposition_thmcaption">
+    Proposition
+    </span>
+    <span class="proposition_thmlabel">1</span>
+    <span class="proposition_thmtitle">Classification of RoPE-like attention functions</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#prop:rope-like">#</a>
+    
+    <a class="icon proof" href="sect0001.html#a0000000012"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0001.html#def:rope-like">Definition 3</a></li>
+          
+          <li><a href="sect0001.html#def:rope-like">Definition 3</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/RoPELike.lean#L76" class="lean_decl">Appendices.MainText.isRoPELike_iff</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/RoPELike.lean#L109" class="lean_decl">Appendices.MainText.eq_ropeT_one_of_forall</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="proposition_thmcontent">
+  <p>    With \(B_0\) nondegenerate, the function is RoPE-like if and only if there is \(S\in \operatorname {End}(H)\) with \(T_d=S^d\) for all \(0\le d{\lt}k\). When \(S\) exists it is \(T_1=L_0^{-1}L_1\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000012">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p> The RoPE-like condition gives \(L_{d+e}=L_dL_0^{-1}L_e\), in particular \(L_{d+1}=L_dS\) with \(S=T_1\). By induction \(L_d=L_0S^d\), that is \(T_d=S^d\). Conversely \(S^{d+e}=S^dS^e\). </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-plain" id="def:head">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">4</span>
+    <span class="definition_thmtitle">Attention head</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#def:head">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0001.html#def:attention-function">Definition 1</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L101" class="lean_decl">Appendices.MainText.head</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    For attention functions \(a_k\colon C^k\to C\), \(k=2,\ldots ,\ell \), the causal attention head is \(A(x_1,\ldots ,x_\ell )=(x_1,a_2(x_1,x_2),\ldots ,a_\ell (x_1,\ldots ,x_\ell ))\). </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-plain" id="def:transformer">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">5</span>
+    <span class="definition_thmtitle">Transformer</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#def:transformer">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0001.html#def:head">Definition 4</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L106" class="lean_decl">Appendices.MainText.transformer</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    For a head \(A\), a linear value map \(V\colon C\to C\) and a map \(M\colon C\to C\), the single-head transformer is \(T=T_M\circ T_A\) with \(T_A(x)_i=x_i+V(A(x)_i)\) and \(T_M(y)_i=y_i+M(y_i)\). </p>
+
+  </div>
+</div>
+<div class="proposition_thmwrapper theorem-style-plain" id="prop:near-identity">
+  <div class="proposition_thmheading">
+    <span class="proposition_thmcaption">
+    Proposition
+    </span>
+    <span class="proposition_thmlabel">2</span>
+    <span class="proposition_thmtitle">Transformers are near-identity</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#prop:near-identity">#</a>
+    
+    <a class="icon proof" href="sect0001.html#a0000000013"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0001.html#def:transformer">Definition 5</a></li>
+          
+          <li><a href="sect0001.html#def:transformer">Definition 5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/NearIdentity.lean#L43" class="lean_decl">Appendices.MainText.IsAttentionOutput</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/NearIdentity.lean#L73" class="lean_decl">Appendices.MainText.attentionBlock</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/NearIdentity.lean#L79" class="lean_decl">Appendices.MainText.norm_attentionBlock_le</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/NearIdentity.lean#L97" class="lean_decl">Appendices.MainText.near_identity</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="proposition_thmcontent">
+  <p>    Fix a norm on \(C\) and put \(\lVert x\rVert _\infty =\max _k\lVert x_k\rVert \). If \(\lVert M(y)\rVert \le L\lVert y\rVert \) for all \(y\) and \(V=\sum _i\lVert V_i\rVert \) (operator norms), then \(\lVert T(x)-x\rVert _\infty \le (L+V+LV)\lVert x\rVert _\infty \). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000013">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p> Each component of a head is a convex combination of its inputs, so its norm is at most \(\lVert x\rVert _\infty \); the attention block is then bounded by \(V\lVert x\rVert _\infty \). The \(k\)-th component of \(T(x)-x\) is \(A(x)_k+M(x_k+A(x)_k)\), whose norm is at most \(V\lVert x\rVert _\infty +L(1+V)\lVert x\rVert _\infty \). The Lean statement assumes only that each head returns convex combinations of its inputs, which is what the proof uses. </p>
+
+  </div>
+</div>
+<div class="proposition_thmwrapper theorem-style-plain" id="prop:homogenization">
+  <div class="proposition_thmheading">
+    <span class="proposition_thmcaption">
+    Proposition
+    </span>
+    <span class="proposition_thmlabel">3</span>
+    <span class="proposition_thmtitle">Bilinear attention recovers QKV attention</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0001.html#prop:homogenization">#</a>
+    
+    <a class="icon proof" href="sect0001.html#a0000000014"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0001.html#def:bilinear">Definition 2</a></li>
+          
+          <li><a href="sect0001.html#def:transformer">Definition 5</a></li>
+          
+          <li><a href="sect0001.html#def:bilinear">Definition 2</a></li>
+          
+          <li><a href="sect0001.html#def:transformer">Definition 5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L114" class="lean_decl">Appendices.MainText.qkvScore</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L160" class="lean_decl">Appendices.MainText.homForm</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L167" class="lean_decl">Appendices.MainText.homForm_apply</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L179" class="lean_decl">Appendices.MainText.homScore</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L185" class="lean_decl">Appendices.MainText.dehom</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L190" class="lean_decl">Appendices.MainText.homScore_eq</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L128" class="lean_decl">Appendices.MainText.isPolyFun_bilinear</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/Homogenization.lean#L225" class="lean_decl">Appendices.MainText.qkv_homogenizes_to_bilinear</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="proposition_thmcontent">
+  <p>    Let \(\widehat C=C\oplus \mathbb {R}e\) and \(\iota (x)=x+e\). For every single-head QKV transformer \(T\colon C^\ell \to C^\ell \), with scores \(\langle Q(x_k+p_k),K(x_j+p_j)\rangle /\sqrt n\), there is a single-head bilinear transformer \(\widehat T\) on \(\widehat C\) with the same potentials such that \(\widehat T(\iota x_1,\ldots ,\iota x_\ell )=\iota ^\ell (T(x_1,\ldots ,x_\ell ))\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000014">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p> Define \(\widehat B(u+\alpha e,v+\beta e)=\langle Q(v+\beta p_k),K(u+\alpha p_j)\rangle /\sqrt n\), which expands to the paper’s four-term formula. It agrees with the QKV score on the chart \(C+e\), so the weights agree there and \(\sum _j\omega _j(x_j+e)=a_k(x)+e\). Extend \(V\) and \(M\) by ignoring the new coordinate. The homogenized weights are simplex-valued on all of \(\widehat C^k\) because \(\widehat\sigma (u+\alpha e,\ldots )=\sigma (x)\) with \(x_j=u_j+(\alpha _j-1)p_j\); this also gives their smoothness. The Lean statement allows any potentials, softmax included. </p>
 
   </div>
 </div>
@@ -209,7 +732,7 @@
 </a>
   <a href="index.html" title="On attention heads and bilinear forms"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0002.html" title="Random matrices"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0002.html" title="Pairing and balance"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

@@ -1,8 +1,9 @@
 # Formalization blueprint
 
 The [published blueprint](https://aodesky.github.io/attention-bilinear-forms/blueprint/)
-covers the audited public formalization: Definition 6, Lemmas 5–10,
-Corollaries 1–2, Proposition 6 and Theorem 4, plus their shared definitions.
+covers the audited public formalization: every numbered result of the paper
+(Definitions 1–6, Lemmas 1–10, Corollaries 1–2, Propositions 1–5 and
+Theorems 3–5), plus auxiliary definitions A1–A3.
 The dependency graph records mathematical dependencies between these nodes.
 
 Edit `src/content.tex` to change statements, proof outlines, declaration

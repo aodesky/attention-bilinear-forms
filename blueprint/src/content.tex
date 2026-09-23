@@ -1,17 +1,167 @@
-This blueprint covers the results of \emph{On attention heads and bilinear forms}
-that are formalized in Lean: Appendices A, B and C, together with Definition 6
-and Theorem 4 of the main text. Numbering follows the paper. Each result has a
-proof outline and links to its Lean declarations; in the
-\href{dep_graph_document.html}{dependency graph}, green means that the statement
-and its proof are both formalized. The empirical observations and the remaining
-main-text theorems, including the accumulation theorem that applies Lemma 6,
-are not formalized.
+This blueprint covers every numbered result of \emph{On attention heads and
+bilinear forms}, all of which are formalized in Lean: the lemmas,
+propositions and theorems of the main text and of Appendices A, B and C,
+together with the definitions they are stated in. Numbering follows the paper;
+Theorems 1 and 2 of the introduction restate Theorems 3 and 5. Definitions
+numbered A1--A3 are auxiliary: they collect notation that the paper introduces
+in the running text. Each result has a proof outline and links to its Lean
+declarations; in the \href{dep_graph_document.html}{dependency graph}, green
+means that the statement and its proof are both formalized. The empirical
+observations and the two remarks of the main text, which are stated without
+proof, are not formalized.
 
-\chapter{Bilinear forms and their profiles}
+\chapter{Attention functions and transformers}
 
-All matrices are real. Matrix norms are Frobenius norms. The Lean
-development uses their squares to avoid unnecessary square roots.
+Throughout, $C$ is a finite-dimensional real vector space. Smooth means
+$C^\infty$, and $\Delta_{k-1}\subset\R^k$ is the standard simplex.
 
+\begin{definition}[Attention function]
+\label{def:attention-function}
+\lean{Appendices.MainText.IsPolyFun, Appendices.MainText.IsAttentionFunction}
+\leanok
+A smooth map $a\colon C^k\to C$ is an attention function if there are a
+smooth $\omega\colon C^k\to\Delta_{k-1}$, a smooth convex
+$\phi\colon\R^k\to\R$ and a polynomial map $\sigma\colon C^k\to\R^k$ with
+\[
+ \omega=(\nabla\phi)\circ\sigma,\qquad a(x_1,\ldots,x_k)=\sum_{j=1}^k\omega_j(x)\,x_j.
+\]
+The data $\omega,\phi,\sigma$ are carried along with $a$. A polynomial map is
+one whose components are polynomials in the coordinates of $x_1,\ldots,x_k$.
+\end{definition}
+
+\begin{definition}[Biaffine and bilinear attention functions]
+\label{def:bilinear}
+\lean{Appendices.MainText.IsBilinearScore}
+\leanok
+\uses{def:attention-function}
+An attention function whose scoring function has the form
+$\sigma(x)=(P_{k-1}(x_1,x_k),\ldots,P_0(x_k,x_k))$ for polynomials
+$P_d\colon C^2\to\R$ of bidegree at most $(1,1)$ is biaffine; it is bilinear
+if every $P_d$ is a bilinear form.
+\end{definition}
+
+\begin{lemma}[Biaffine decomposition]
+\label{lem:biaffine-decomposition}
+\lean{Appendices.MainText.IsPolyBidegreeLeOneOne, Appendices.MainText.biaffine_components, Appendices.MainText.biaffine_decomposition}
+\leanok
+Every polynomial $P\colon C\times C\to\R$ of bidegree at most $(1,1)$ has a
+unique decomposition $P(u,v)=B(u,v)+L(u)+R(v)+D$ with $B$ bilinear, $L,R$
+linear and $D\in\R$, namely
+\[
+ D=P(0,0),\quad L(u)=P(u,0)-P(0,0),\quad R(v)=P(0,v)-P(0,0),
+\]
+\[
+ B(u,v)=P(u,v)-P(u,0)-P(0,v)+P(0,0).
+\]
+\end{lemma}
+\begin{proof}
+\leanok
+The paper calls this elementary and gives no proof. Each monomial of
+bidegree at most $(1,1)$ is a product of an affine function of $u$ and an
+affine function of $v$; expanding the product shows that the four
+expressions are bilinear, linear, linear and constant, and they add up to
+$P$. Evaluating any decomposition at $(0,0)$, $(u,0)$ and $(0,v)$ gives the
+formulas, hence uniqueness.
+\end{proof}
+
+\begin{definition}[RoPE-like]
+\label{def:rope-like}
+\lean{Appendices.MainText.ropeL, Appendices.MainText.ropeL0Equiv, Appendices.MainText.ropeT, Appendices.MainText.IsRoPELike}
+\leanok
+\uses{def:bilinear}
+Let a bilinear attention function on a head space $H$ have forms
+$B_{k-1},\ldots,B_0$, let $L_j\colon H\to H^\vee$, $L_j(v)(u)=B_j(u,v)$,
+assume $B_0$ nondegenerate, and set $T_d=L_0^{-1}L_d$. The function is
+RoPE-like if $T_{d+e}=T_dT_e$ whenever $d,e\ge0$ and $d+e<k$.
+\end{definition}
+
+\begin{proposition}[Classification of RoPE-like attention functions]
+\label{prop:rope-like}
+\lean{Appendices.MainText.isRoPELike_iff, Appendices.MainText.eq_ropeT_one_of_forall}
+\leanok
+\uses{def:rope-like}
+With $B_0$ nondegenerate, the function is RoPE-like if and only if there is
+$S\in\operatorname{End}(H)$ with $T_d=S^d$ for all $0\le d<k$. When $S$
+exists it is $T_1=L_0^{-1}L_1$.
+\end{proposition}
+\begin{proof}
+\leanok
+\uses{def:rope-like}
+The RoPE-like condition gives $L_{d+e}=L_dL_0^{-1}L_e$, in particular
+$L_{d+1}=L_dS$ with $S=T_1$. By induction $L_d=L_0S^d$, that is
+$T_d=S^d$. Conversely $S^{d+e}=S^dS^e$.
+\end{proof}
+
+\begin{definition}[Attention head]
+\label{def:head}
+\lean{Appendices.MainText.head}
+\leanok
+\uses{def:attention-function}
+For attention functions $a_k\colon C^k\to C$, $k=2,\ldots,\ell$, the causal
+attention head is
+$A(x_1,\ldots,x_\ell)=(x_1,a_2(x_1,x_2),\ldots,a_\ell(x_1,\ldots,x_\ell))$.
+\end{definition}
+
+\begin{definition}[Transformer]
+\label{def:transformer}
+\lean{Appendices.MainText.transformer}
+\leanok
+\uses{def:head}
+For a head $A$, a linear value map $V\colon C\to C$ and a map
+$M\colon C\to C$, the single-head transformer is $T=T_M\circ T_A$ with
+$T_A(x)_i=x_i+V(A(x)_i)$ and $T_M(y)_i=y_i+M(y_i)$.
+\end{definition}
+
+\begin{proposition}[Transformers are near-identity]
+\label{prop:near-identity}
+\lean{Appendices.MainText.IsAttentionOutput, Appendices.MainText.attentionBlock, Appendices.MainText.norm_attentionBlock_le, Appendices.MainText.near_identity}
+\leanok
+\uses{def:transformer}
+Fix a norm on $C$ and put $\norm{x}_\infty=\max_k\norm{x_k}$. If
+$\norm{M(y)}\le L\norm y$ for all $y$ and $V=\sum_i\norm{V_i}$ (operator
+norms), then $\norm{T(x)-x}_\infty\le(L+V+LV)\norm{x}_\infty$.
+\end{proposition}
+\begin{proof}
+\leanok
+\uses{def:transformer}
+Each component of a head is a convex combination of its inputs, so its norm
+is at most $\norm x_\infty$; the attention block is then bounded by
+$V\norm x_\infty$. The $k$-th component of $T(x)-x$ is
+$A(x)_k+M(x_k+A(x)_k)$, whose norm is at most
+$V\norm x_\infty+L(1+V)\norm x_\infty$. The Lean statement assumes only that
+each head returns convex combinations of its inputs, which is what the proof
+uses.
+\end{proof}
+
+\begin{proposition}[Bilinear attention recovers QKV attention]
+\label{prop:homogenization}
+\lean{Appendices.MainText.qkvScore, Appendices.MainText.homForm, Appendices.MainText.homForm_apply, Appendices.MainText.homScore, Appendices.MainText.dehom, Appendices.MainText.homScore_eq, Appendices.MainText.isPolyFun_bilinear, Appendices.MainText.qkv_homogenizes_to_bilinear}
+\leanok
+\uses{def:bilinear,def:transformer}
+Let $\widehat C=C\oplus\R e$ and $\iota(x)=x+e$. For every single-head QKV
+transformer $T\colon C^\ell\to C^\ell$, with scores
+$\langle Q(x_k+p_k),K(x_j+p_j)\rangle/\sqrt n$, there is a single-head
+bilinear transformer $\widehat T$ on $\widehat C$ with the same potentials
+such that $\widehat T(\iota x_1,\ldots,\iota x_\ell)=\iota^\ell(T(x_1,\ldots,x_\ell))$.
+\end{proposition}
+\begin{proof}
+\leanok
+\uses{def:bilinear,def:transformer}
+Define
+$\widehat B(u+\alpha e,v+\beta e)=\langle Q(v+\beta p_k),K(u+\alpha p_j)\rangle/\sqrt n$,
+which expands to the paper's four-term formula. It agrees with the QKV score
+on the chart $C+e$, so the weights agree there and
+$\sum_j\omega_j(x_j+e)=a_k(x)+e$. Extend $V$ and $M$ by ignoring the new
+coordinate. The homogenized weights are simplex-valued on all of
+$\widehat C^k$ because $\widehat\sigma(u+\alpha e,\ldots)=\sigma(x)$ with
+$x_j=u_j+(\alpha_j-1)p_j$; this also gives their smoothness. The Lean
+statement allows any potentials, softmax included.
+\end{proof}
+
+\chapter{Pairing and balance}
+
+\setcounter{definition}{0}
+\renewcommand{\thedefinition}{A\arabic{definition}}
 \begin{definition}[Symmetric and antisymmetric parts]
 \label{def:parts}
 \lean{Appendices.frobSq, Appendices.symPart, Appendices.skewPart}
@@ -23,6 +173,78 @@ For $L\in M_N(\R)$, put
 \]
 Then $L=S+T$, with $S$ symmetric and $T$ antisymmetric.
 \end{definition}
+\renewcommand{\thedefinition}{\arabic{definition}}
+
+\begin{lemma}[Pairing bound]
+\label{lem:pairing-bound}
+\lean{Appendices.MainText.lamPlusVec, Appendices.MainText.lamMinusVec, Appendices.MainText.pairingScoreSym, Appendices.MainText.frobSq_eq_norm_sq_add_norm_sq, Appendices.MainText.pairing_bound}
+\leanok
+\uses{def:parts}
+Let $S$ be symmetric, let $\lambda_\pm$ be its sorted positive eigenvalues and
+absolute values of negative eigenvalues, padded with zeros to equal length,
+and let $\mathcal P=1-\norm{\lambda_+-\lambda_-}/\norm S$. If
+$\lambda_+\ne0$ and $\rho=\norm{\lambda_-}/\norm{\lambda_+}$, then
+\[
+ \mathcal P=1-\sqrt{1-\frac{2\langle\lambda_+,\lambda_-\rangle}{\norm S^2}}
+ \le 1-\frac{|1-\rho|}{\sqrt{1+\rho^2}},
+\]
+with equality if and only if $\lambda_-=\rho\lambda_+$.
+\end{lemma}
+\begin{proof}
+\leanok
+\uses{def:parts}
+Since $\norm S^2=\norm{\lambda_+}^2+\norm{\lambda_-}^2$, expanding
+$\norm{\lambda_+-\lambda_-}^2$ gives the equality. The triangle inequality
+gives $\norm{\lambda_+-\lambda_-}\ge|1-\rho|\norm{\lambda_+}$, with equality
+if and only if one list is a nonnegative multiple of the other; divide by
+$\norm S=\sqrt{1+\rho^2}\norm{\lambda_+}$.
+\end{proof}
+
+\begin{lemma}[Rank balance]
+\label{lem:rank-balance}
+\lean{Appendices.MainText.finrank_le_of_posDefOn, Appendices.MainText.rank_balance}
+\leanok
+\uses{def:parts}
+If $L\in M_N(\R)$ has rank at most $n$, the symmetric part of $L$ has at
+most $n$ positive and at most $n$ negative eigenvalues, counted with
+multiplicity.
+\end{lemma}
+\begin{proof}
+\leanok
+\uses{def:parts}
+The quadratic form of $S$ vanishes on $\ker L$, of dimension at least
+$N-n$. The span of the eigenvectors with positive eigenvalues meets
+$\ker L$ only in $0$, so its dimension $n_+$ is at most $n$. For $n_-$,
+apply the same argument to $-L$.
+\end{proof}
+
+\setcounter{theorem}{2}
+\begin{theorem}[Heads have balanced attention]
+\label{thm:balanced}
+\lean{Appendices.MainText.stacked, Appendices.MainText.Nondegenerate, Appendices.MainText.headForm, Appendices.MainText.radical_eq_ker, Appendices.MainText.finrank_radical, Appendices.MainText.gram, Appendices.MainText.signature, Appendices.MainText.gram_eq_symPart, Appendices.MainText.ker_gram_eq_map, Appendices.MainText.heads_have_balanced_attention}
+\leanok
+\uses{lem:rank-balance}
+Let $Q,K\colon C\to H$ with $\dim H=n$ and $\dim C=N$. If the stacked map
+$J=(Q,K)\colon C\to H\oplus H$ is surjective, the symmetric form
+$S(x,y)=\tfrac12(\langle Kx,Qy\rangle+\langle Qx,Ky\rangle)$ has signature
+$(n_+,n_-,n_0)=(n,n,N-2n)$. In Lean the signature is read off the Gram
+matrix of $S$ in an arbitrary basis of $C$.
+\end{theorem}
+\begin{proof}
+\leanok
+\uses{lem:rank-balance}
+The Gram matrix of $2S$ is the symmetric part of $2K^TQ$, which has rank at
+most $n$, so Lemma 3 gives $n_\pm\le n$. The radical of $S$ is $\ker J$:
+if $S(x,\cdot)=0$ then $B(Jx,\cdot)$ vanishes on $J(C)=H\oplus H$ for the
+nondegenerate form $B((a,b),(a',b'))=\langle a,b'\rangle+\langle b,a'\rangle$.
+By surjectivity $\dim\ker J=N-2n$, so $S$ has rank $2n=n_++n_-$, which
+forces $n_+=n_-=n$.
+\end{proof}
+
+\chapter{Profiles of bilinear forms}
+
+All matrices are real. Matrix norms are Frobenius norms. The Lean
+development uses their squares to avoid unnecessary square roots.
 
 \setcounter{definition}{5}
 \begin{definition}[Profile of a bilinear form]
@@ -43,13 +265,86 @@ Positive and negative parts are taken entrywise. Lean pads both lists
 to length $N$ and includes the denominator in each definition.
 \end{definition}
 
-\chapter{Random matrices}
+\begin{lemma}[Profile scale]
+\label{lem:profile-scale}
+\lean{Appendices.MainText.profileA_symPart, Appendices.MainText.one_sub_profileA, Appendices.MainText.profile_scale}
+\leanok
+\uses{def:profile,lem:energy}
+If the symmetric part $S$ of $L$ is nonzero, $\pi(L)=(a,b,c,d)$ and
+$\pi(S)=(0,b_S,c_S,d_S)$, then $(b,c,d)=(1-a)(b_S,c_S,d_S)$.
+\end{lemma}
+\begin{proof}
+\leanok
+\uses{def:profile,lem:energy}
+Both triples are the same expressions in the eigenvalues of $S$, divided by
+$\norm L^2$ and by $\norm S^2$ respectively, and
+$\norm S^2/\norm L^2=1-\norm T^2/\norm L^2=1-a$.
+\end{proof}
+
+\setcounter{proposition}{3}
+\begin{proposition}[Profiles of rank-one matrices]
+\label{prop:rank-one}
+\lean{Appendices.MainText.profile, Appendices.MainText.Theta, Appendices.MainText.profile_conj, Appendices.MainText.exists_orthogonal_cols, Appendices.MainText.profile_smul_vecMulVec, Appendices.MainText.exists_smul_vecMulVec_of_rank_eq_one, Appendices.MainText.profile_rank_one, Appendices.MainText.profiles_rank_one_eq_Theta}
+\leanok
+\uses{def:profile,lem:energy}
+If $L$ has rank one and unit norm, then with $t=\tr(L)$,
+\[
+ \pi(L)=\Bigl(\frac{1-t^2}2,\frac{1-t^2}2,(t_+)^2,(t_-)^2\Bigr).
+\]
+For $N\ge2$ the set of profiles of rank-one matrices is
+$\Theta=\{a=b,\ cd=0\}\subset\Delta_3$. (For $N=1$ only the two vertices
+$c=1$ and $d=1$ occur, so the set statement needs $N\ge2$.)
+\end{proposition}
+\begin{proof}
+\leanok
+\uses{def:profile,lem:energy}
+Write $L=uv^T$ with unit vectors, so $t=\langle u,v\rangle$; the profile is
+invariant under orthogonal changes of coordinates. If $u=\pm v$, bring $u$
+to the first basis vector. Otherwise $e=(u+v)/\sqrt{2+2t}$ and
+$f=(v-u)/\sqrt{2-2t}$ are orthonormal; in a basis extending them $L$ is the
+block $\tfrac12\bigl(\begin{smallmatrix}1+t&\sqrt{1-t^2}\\-\sqrt{1-t^2}&t-1\end{smallmatrix}\bigr)$,
+whose symmetric part is $\operatorname{diag}((1+t)/2,(t-1)/2)$. Read off
+the profile. Every point of $\Theta$ arises from $u=e_1$,
+$v=te_1+\sqrt{1-t^2}\,e_2$.
+\end{proof}
+
+\setcounter{theorem}{4}
+\begin{theorem}[Accumulation]
+\label{thm:accumulation}
+\lean{Appendices.MainText.profile_of_spectrum, Appendices.MainText.accumulation_estimates, Appendices.MainText.accumulation, Appendices.MainText.limitProfile, Appendices.MainText.projP, Appendices.MainText.limitProfile_mem_projP_Theta, Appendices.MainText.limitB, Appendices.MainText.limitProfile_edge_d, Appendices.MainText.limitProfile_edge_c, Appendices.MainText.limitB_strictMonoOn, Appendices.MainText.limitB_strictAntiOn, Appendices.MainText.limitB_image_Ioc, Appendices.MainText.limitB_image_Ici}
+\leanok
+\uses{lem:proportional,prop:rank-one}
+Let $X>0$ have finite nonzero second moment, fix $u,v>0$ and $\rho=u/v$. Let
+$N_n\ge2n$ and let $S_n\in M_{N_n}(\R)$ be symmetric with eigenvalues
+$vX_1,\ldots,vX_n$, $-uX'_1,\ldots,-uX'_n$ and zeros, where the $X_i,X'_i$
+are independent copies of $X$. Then almost surely
+\[
+ \pi(S_n)\longrightarrow\frac1{1+\rho^2}\bigl(0,\,2\rho,\,(1-\rho)_+^2,\,(\rho-1)_+^2\bigr)\in p(\Theta),
+\]
+where $p(a,b,c,d)=(0,a+b,c,d)$. As $\rho$ ranges over $(0,1]$ the limit
+traces the edge $\{d=0\}$, and over $[1,\infty)$ the edge $\{c=0\}$.
+\end{theorem}
+\begin{proof}
+\leanok
+\uses{lem:proportional,prop:rank-one}
+Write $\beta_n=\rho\alpha_n+\varepsilon_n$ for the sorted lobes; by Lemma 6,
+$\delta_n=\norm{\varepsilon_n}/\norm{\alpha_n}\to0$ almost surely. By
+Cauchy--Schwarz, the triangle inequality and the $1$-Lipschitz property of
+$x\mapsto x_\pm$, the ratios $\langle\alpha,\beta\rangle/\norm\alpha^2$,
+$\norm\beta^2/\norm\alpha^2$ and $\norm{(\alpha-\beta)_\pm}/\norm\alpha$ lie
+within $\delta_n$, $\delta_n^2+2\rho\delta_n$ and $\delta_n$ of $\rho$,
+$\rho^2$ and $(1-\rho)_\pm$. Divide by
+$\norm{S_n}^2/\norm{\alpha_n}^2=1+\norm{\beta_n}^2/\norm{\alpha_n}^2$. On
+each edge, $b(\rho)=2\rho/(1+\rho^2)$ is a strictly monotone bijection onto
+$(0,1]$.
+\end{proof}
+
+\chapter{Appendix A: Random matrices}
 
 These results give the random baselines for the symmetric energy of an
 attention head. The distinction between a ratio of expectations and
 the expectation of a ratio matters: the latter uses Gaussian symmetry.
 
-\setcounter{lemma}{4}
 \begin{lemma}[Symmetric and skew energy identities]
 \label{lem:energy}
 \lean{Appendices.frobSq_eq_frobSq_symPart_add_frobSq_skewPart, Appendices.frobSq_symPart, Appendices.frobSq_skewPart, Appendices.frobSq_symPart_div, Appendices.frobSq_skewPart_div}
@@ -131,7 +426,6 @@ $\E L_{ab}^2=n\sigma_K^2\sigma_Q^2$ and
 $\E\tr(L^2)=nN\sigma_K^2\sigma_Q^2$. Sum the entries and use Lemma 5.
 \end{proof}
 
-\setcounter{proposition}{5}
 \begin{proposition}[Expected symmetric energy for random low-rank QK products]
 \label{prop:low-rank}
 \lean{Appendices.expected_symmetric_energy_low_rank_qk, Appendices.expected_skew_energy_low_rank_qk}
@@ -187,8 +481,10 @@ division by $n$; the squared denominator divided by $n$ converges to
 the strictly positive second moment. Restore the scales $u,v$.
 \end{proof}
 
-\chapter{Balanced bimodal spectra and simplex faces}
+\chapter{Appendix B: Balanced bimodal spectra and simplex faces}
 
+\setcounter{definition}{1}
+\renewcommand{\thedefinition}{A\arabic{definition}}
 \begin{definition}[Pairing geometry]
 \label{def:balanced}
 \lean{Appendices.MemLambdaSet, Appendices.lamPlus, Appendices.lamMinus, Appendices.imbalance, Appendices.statC, Appendices.pairingScore, Appendices.iotaMap}
@@ -303,7 +599,7 @@ spectrum of $H$ gives lobe dominance. Apply the argument to $-L$ for
 the other face. The vertices follow from the partition of one.
 \end{proof}
 
-\chapter{Moments and the Gram form}
+\chapter{Appendix C: Moments and the Gram form}
 
 \begin{definition}[Odd, even and resolvent statistics]
 \label{def:moment-statistics}

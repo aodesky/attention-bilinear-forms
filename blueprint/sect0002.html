@@ -12,9 +12,9 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Random matrices</title>
-<link rel="next" href="sect0003.html" title="Balanced bimodal spectra and simplex faces" />
-<link rel="prev" href="sect0001.html" title="Bilinear forms and their profiles" />
+<title>Pairing and balance</title>
+<link rel="next" href="sect0003.html" title="Profiles of bilinear forms" />
+<link rel="prev" href="sect0001.html" title="Attention functions and transformers" />
 <link rel="up" href="index.html" title="On attention heads and bilinear forms" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
@@ -43,16 +43,22 @@
 <nav class="toc">
 <ul class="sub-toc-0">
 <li class="">
-  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Bilinear forms and their profiles</span></a>
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Attention functions and transformers</span></a>
  </li>
 <li class=" active current">
-  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Random matrices</span></a>
+  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Pairing and balance</span></a>
  </li>
 <li class="">
-  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">Balanced bimodal spectra and simplex faces</span></a>
+  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">Profiles of bilinear forms</span></a>
  </li>
 <li class="">
-  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Moments and the Gram form</span></a>
+  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Appendix A: Random matrices</span></a>
+ </li>
+<li class="">
+  <a href="sect0005.html"><span class="toc_ref">5</span> <span class="toc_entry">Appendix B: Balanced bimodal spectra and simplex faces</span></a>
+ </li>
+<li class="">
+  <a href="sect0006.html"><span class="toc_ref">6</span> <span class="toc_entry">Appendix C: Moments and the Gram form</span></a>
  </li>
 <li ><a href="dep_graph_document.html">Dependency graph</a></li>
 </ul>
@@ -63,16 +69,68 @@
 
 
 <div class="main-text">
-<h1 id="a0000000003">2 Random matrices</h1>
-<p>These results give the random baselines for the symmetric energy of an attention head. The distinction between a ratio of expectations and the expectation of a ratio matters: the latter uses Gaussian symmetry. </p>
+<h1 id="a0000000003">2 Pairing and balance</h1>
 
-<div class="lemma_thmwrapper theorem-style-plain" id="lem:energy">
+<div class="definition_thmwrapper theorem-style-plain" id="def:parts">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">A1</span>
+    <span class="definition_thmtitle">Symmetric and antisymmetric parts</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#def:parts">#</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/Common.lean#L21" class="lean_decl">Appendices.frobSq</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/Common.lean#L25" class="lean_decl">Appendices.symPart</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/Common.lean#L29" class="lean_decl">Appendices.skewPart</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>   For \(L\in M_N(\mathbb {R})\), put </p>
+<div class="displaymath" id="a0000000015">
+  \[  S=\tfrac 12(L+L^T),\qquad T=\tfrac 12(L-L^T),\qquad \lVert L\rVert ^2=\operatorname {tr}(L^TL).  \]
+</div>
+<p> Then \(L=S+T\), with \(S\) symmetric and \(T\) antisymmetric. </p>
+
+  </div>
+</div>
+
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:pairing-bound">
   <div class="lemma_thmheading">
     <span class="lemma_thmcaption">
     Lemma
     </span>
-    <span class="lemma_thmlabel">5</span>
-    <span class="lemma_thmtitle">Symmetric and skew energy identities</span>
+    <span class="lemma_thmlabel">2</span>
+    <span class="lemma_thmtitle">Pairing bound</span>
     <div class="thm_header_extras">
 
     
@@ -80,299 +138,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0002.html#lem:energy">#</a>
-    
-    <a class="icon proof" href="sect0002.html#a0000000008"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0001.html#def:parts">Definition 1</a></li>
-          
-          <li><a href="sect0001.html#def:parts">Definition 1</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L69" class="lean_decl">Appendices.frobSq_eq_frobSq_symPart_add_frobSq_skewPart</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L34" class="lean_decl">Appendices.frobSq_symPart</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L51" class="lean_decl">Appendices.frobSq_skewPart</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L74" class="lean_decl">Appendices.frobSq_symPart_div</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L82" class="lean_decl">Appendices.frobSq_skewPart_div</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="lemma_thmcontent">
-  <p>    For any \(L\in M_N(\mathbb {R})\), </p>
-<div class="displaymath" id="a0000000009">
-  \[  \lVert L\rVert ^2=\lVert S\rVert ^2+\lVert T\rVert ^2,\qquad \lVert S\rVert ^2=\tfrac 12\lVert L\rVert ^2+\tfrac 12\operatorname {tr}(L^2),\qquad \lVert T\rVert ^2=\tfrac 12\lVert L\rVert ^2-\tfrac 12\operatorname {tr}(L^2).  \]
-</div>
-<p> For \(L\ne 0\), division gives </p>
-<div class="displaymath" id="a0000000010">
-  \[  \frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}=\frac12+\frac{\operatorname {tr}(L^2)}{2\lVert L\rVert ^2}, \qquad \frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}=\frac12-\frac{\operatorname {tr}(L^2)}{2\lVert L\rVert ^2}.  \]
-</div>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000000008">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▼</span>
-  </div>
-  <div class="proof_content">
-  <p> Expand the squared Frobenius norms entrywise, using invariance under transpose and \(\sum _{i,j}L_{ij}L_{ji}=\operatorname {tr}(L^2)\). Adding the two identities gives the orthogonal decomposition of the energy. </p>
-
-  </div>
-</div>
-<div class="corollary_thmwrapper theorem-style-plain" id="cor:iid">
-  <div class="corollary_thmheading">
-    <span class="corollary_thmcaption">
-    Corollary
-    </span>
-    <span class="corollary_thmlabel">1</span>
-    <span class="corollary_thmtitle">Iid square random matrix baseline</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0002.html#cor:iid">#</a>
-    
-    <a class="icon proof" href="sect0002.html#a0000000011"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0001.html#def:parts">Definition 1</a></li>
-          
-          <li><a href="sect0002.html#lem:energy">Lemma 5</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/IidBaseline.lean#L86" class="lean_decl">Appendices.integral_frobSq_iid</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/IidBaseline.lean#L130" class="lean_decl">Appendices.integral_frobSq_symPart_iid</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/IidBaseline.lean#L144" class="lean_decl">Appendices.integral_frobSq_skewPart_iid</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/IidBaseline.lean#L159" class="lean_decl">Appendices.integral_frobSq_symPart_div_integral_frobSq_iid</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/IidBaseline.lean#L170" class="lean_decl">Appendices.integral_frobSq_skewPart_div_integral_frobSq_iid</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/IidBaseline.lean#L442" class="lean_decl">Appendices.integral_frobSq_symPart_div_frobSq_gaussian</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/IidBaseline.lean#L500" class="lean_decl">Appendices.integral_frobSq_skewPart_div_frobSq_gaussian</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="corollary_thmcontent">
-  <p>    Let the entries of \(L\in M_N(\mathbb {R})\) be independent, mean zero, and square-integrable with common variance \(\sigma ^2\). Then </p>
-<div class="displaymath" id="a0000000012">
-  \[  \mathbb {E}\lVert L\rVert ^2=N^2\sigma ^2,\quad \mathbb {E}\lVert S\rVert ^2=\frac{N(N+1)}2\sigma ^2,\quad \mathbb {E}\lVert T\rVert ^2=\frac{N(N-1)}2\sigma ^2.  \]
-</div>
-<p> For \(N{\gt}0\) and \(\sigma \ne 0\), the ratios to \(\mathbb {E}\lVert L\rVert ^2\) are \((N+1)/(2N)\) and \((N-1)/(2N)\) respectively. If the entries are iid nondegenerate centered Gaussian, then also </p>
-<div class="displaymath" id="a0000000013">
-  \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N}.  \]
-</div>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000000011">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▼</span>
-  </div>
-  <div class="proof_content">
-  <p> Independence and centering kill the off-diagonal cross terms, giving \(\mathbb {E}\operatorname {tr}(L^2)=N\sigma ^2\). Apply the energy identities. In the Gaussian case, symmetry of the joint law makes the expected normalized squared coordinate equal to \(1/N^2\), while sign symmetry cancels the remaining normalized cross terms. </p>
-
-  </div>
-</div>
-<div class="corollary_thmwrapper theorem-style-plain" id="cor:qk">
-  <div class="corollary_thmheading">
-    <span class="corollary_thmcaption">
-    Corollary
-    </span>
-    <span class="corollary_thmlabel">2</span>
-    <span class="corollary_thmtitle">Random QK-product baseline</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0002.html#cor:qk">#</a>
-    
-    <a class="icon proof" href="sect0002.html#a0000000014"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0001.html#def:parts">Definition 1</a></li>
-          
-          <li><a href="sect0002.html#lem:energy">Lemma 5</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L218" class="lean_decl">Appendices.integral_frobSq_qk</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L239" class="lean_decl">Appendices.integral_trace_mul_self_qk</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L268" class="lean_decl">Appendices.integral_frobSq_symPart_qk</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L293" class="lean_decl">Appendices.integral_frobSq_skewPart_qk</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L319" class="lean_decl">Appendices.integral_frobSq_symPart_div_integral_frobSq_qk</a></li>
-          
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L332" class="lean_decl">Appendices.integral_frobSq_skewPart_div_integral_frobSq_qk</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="corollary_thmcontent">
-  <p>    Let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent, mean-zero, square-integrable entries, with variances \(\sigma _K^2\) and \(\sigma _Q^2\) respectively. For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000015">
-  \[  \mathbb {E}\lVert L\rVert ^2=nN^2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert S\rVert ^2=\frac{nN(N+1)}2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert T\rVert ^2=\frac{nN(N-1)}2\sigma _K^2\sigma _Q^2.  \]
-</div>
-<p> For positive dimensions and nonzero variances, the ratios of the last two expectations to the first are \((N+1)/(2N)\) and \((N-1)/(2N)\). </p>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000000014">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▼</span>
-  </div>
-  <div class="proof_content">
-  <p> Expand \(L_{ab}=\sum _r(W_K)_{ra}(W_Q)_{rb}\). Independence gives \(\mathbb {E}L_{ab}^2=n\sigma _K^2\sigma _Q^2\) and \(\mathbb {E}\operatorname {tr}(L^2)=nN\sigma _K^2\sigma _Q^2\). Sum the entries and use Lemma 5. </p>
-
-  </div>
-</div>
-
-<div class="proposition_thmwrapper theorem-style-plain" id="prop:low-rank">
-  <div class="proposition_thmheading">
-    <span class="proposition_thmcaption">
-    Proposition
-    </span>
-    <span class="proposition_thmlabel">6</span>
-    <span class="proposition_thmtitle">Expected symmetric energy for random low-rank QK products</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0002.html#prop:low-rank">#</a>
+    <a class="icon proof" href="sect0002.html#lem:pairing-bound">#</a>
     
     <a class="icon proof" href="sect0002.html#a0000000016"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
@@ -390,9 +156,9 @@
         
         <ul class="uses">
           
-          <li><a href="sect0001.html#def:parts">Definition 1</a></li>
+          <li><a href="sect0002.html#def:parts">Definition A1</a></li>
           
-          <li><a href="sect0002.html#lem:energy">Lemma 5</a></li>
+          <li><a href="sect0002.html#def:parts">Definition A1</a></li>
           
         </ul>
     
@@ -412,9 +178,15 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/LowRankExpectedEnergy.lean#L719" class="lean_decl">Appendices.expected_symmetric_energy_low_rank_qk</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/PairingBound.lean#L42" class="lean_decl">Appendices.MainText.lamPlusVec</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/LowRankExpectedEnergy.lean#L749" class="lean_decl">Appendices.expected_skew_energy_low_rank_qk</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/PairingBound.lean#L48" class="lean_decl">Appendices.MainText.lamMinusVec</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/PairingBound.lean#L53" class="lean_decl">Appendices.MainText.pairingScoreSym</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/PairingBound.lean#L62" class="lean_decl">Appendices.MainText.frobSq_eq_norm_sq_add_norm_sq</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/PairingBound.lean#L120" class="lean_decl">Appendices.MainText.pairing_bound</a></li>
           
         </ul>
     
@@ -424,12 +196,12 @@
     
         </div>
   </div>
-  <div class="proposition_thmcontent">
-  <p>    Let \(1\le n\le N\) and let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent centered Gaussian entries, iid within each matrix, with respective nonzero variances \(v_K,v_Q\). For \(L=W_K^TW_Q\), </p>
+  <div class="lemma_thmcontent">
+  <p>    Let \(S\) be symmetric, let \(\lambda _\pm \) be its sorted positive eigenvalues and absolute values of negative eigenvalues, padded with zeros to equal length, and let \(\mathcal P=1-\lVert \lambda _+-\lambda _-\rVert /\lVert S\rVert \). If \(\lambda _+\ne 0\) and \(\rho =\lVert \lambda _-\rVert /\lVert \lambda _+\rVert \), then </p>
 <div class="displaymath" id="a0000000017">
-  \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N},  \]
+  \[  \mathcal P=1-\sqrt{1-\frac{2\langle \lambda _+,\lambda _-\rangle }{\lVert S\rVert ^2}} \le 1-\frac{|1-\rho |}{\sqrt{1+\rho ^2}},  \]
 </div>
-<p> independently of the head dimension \(n\). </p>
+<p> with equality if and only if \(\lambda _-=\rho \lambda _+\). </p>
 
   </div>
 </div>
@@ -441,17 +213,17 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> First take equal variances. Sign changes and permutations of Gaussian columns preserve the joint law. Sign symmetry cancels the off-diagonal terms of \(\operatorname {tr}(L^2)/\lVert L\rVert ^2\); permutation symmetry makes the expected normalized squared entries equal. Thus its expectation is \(1/N\), and Lemma 5 gives the result. The denominator is nonzero almost surely. Rescale \(W_K\) to reduce unequal variances to the equal-variance case; the normalized energies are unchanged by this rescaling. </p>
+  <p> Since \(\lVert S\rVert ^2=\lVert \lambda _+\rVert ^2+\lVert \lambda _-\rVert ^2\), expanding \(\lVert \lambda _+-\lambda _-\rVert ^2\) gives the equality. The triangle inequality gives \(\lVert \lambda _+-\lambda _-\rVert \ge |1-\rho |\lVert \lambda _+\rVert \), with equality if and only if one list is a nonnegative multiple of the other; divide by \(\lVert S\rVert =\sqrt{1+\rho ^2}\lVert \lambda _+\rVert \). </p>
 
   </div>
 </div>
-<div class="lemma_thmwrapper theorem-style-plain" id="lem:proportional">
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:rank-balance">
   <div class="lemma_thmheading">
     <span class="lemma_thmcaption">
     Lemma
     </span>
-    <span class="lemma_thmlabel">6</span>
-    <span class="lemma_thmtitle">Proportional lobes</span>
+    <span class="lemma_thmlabel">3</span>
+    <span class="lemma_thmtitle">Rank balance</span>
     <div class="thm_header_extras">
 
     
@@ -459,7 +231,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="sect0002.html#lem:proportional">#</a>
+    <a class="icon proof" href="sect0002.html#lem:rank-balance">#</a>
     
     <a class="icon proof" href="sect0002.html#a0000000018"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
@@ -477,9 +249,9 @@
         
         <ul class="uses">
           
-          <li><a href="sect0001.html#def:profile">Definition 6</a></li>
+          <li><a href="sect0002.html#def:parts">Definition A1</a></li>
           
-          <li><a href="sect0001.html#def:profile">Definition 6</a></li>
+          <li><a href="sect0002.html#def:parts">Definition A1</a></li>
           
         </ul>
     
@@ -499,7 +271,9 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/e03350c57d7eaa4c8ed615a7f1a9ce4b7bd239bf/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L705" class="lean_decl">Appendices.proportional_lobes</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/RankBalance.lean#L69" class="lean_decl">Appendices.MainText.finrank_le_of_posDefOn</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/RankBalance.lean#L88" class="lean_decl">Appendices.MainText.rank_balance</a></li>
           
         </ul>
     
@@ -510,10 +284,7 @@
         </div>
   </div>
   <div class="lemma_thmcontent">
-  <p>    Let \(X{\gt}0\) almost surely, with finite nonzero second moment, and fix \(u,v{\gt}0\), \(\rho =u/v\). Let \(\alpha _n\) be the decreasing sorting of \(vX_1,\ldots ,vX_n\) and \(\beta _n\) the decreasing sorting of \(uX'_1,\ldots ,uX'_n\), where the two sequences together consist of independent copies of \(X\). Then </p>
-<div class="displaymath" id="a0000000019">
-  \[  \frac{\lVert \beta _n-\rho \alpha _n\rVert }{\lVert \alpha _n\rVert } \longrightarrow 0\qquad \text{almost surely as }n\longrightarrow \infty .  \]
-</div>
+  <p>    If \(L\in M_N(\mathbb {R})\) has rank at most \(n\), the symmetric part of \(L\) has at most \(n\) positive and at most \(n\) negative eigenvalues, counted with multiplicity. </p>
 
   </div>
 </div>
@@ -525,7 +296,107 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Reduce to two samples with the same scale. For sorted nonnegative lists, a layer-cake identity expresses their inner product using the minimum of two empirical survival counts. The strong law controls these counts and the empirical second moments. Fatou’s lemma bounds the limiting inner product from below by the common second moment. Expanding the squared difference gives convergence to zero after division by \(n\); the squared denominator divided by \(n\) converges to the strictly positive second moment. Restore the scales \(u,v\). </p>
+  <p> The quadratic form of \(S\) vanishes on \(\ker L\), of dimension at least \(N-n\). The span of the eigenvectors with positive eigenvalues meets \(\ker L\) only in \(0\), so its dimension \(n_+\) is at most \(n\). For \(n_-\), apply the same argument to \(-L\). </p>
+
+  </div>
+</div>
+
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:balanced">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">3</span>
+    <span class="theorem_thmtitle">Heads have balanced attention</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0002.html#thm:balanced">#</a>
+    
+    <a class="icon proof" href="sect0002.html#a0000000019"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0002.html#lem:rank-balance">Lemma 3</a></li>
+          
+          <li><a href="sect0002.html#lem:rank-balance">Lemma 3</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BalancedHeads.lean#L49" class="lean_decl">Appendices.MainText.stacked</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BalancedHeads.lean#L52" class="lean_decl">Appendices.MainText.Nondegenerate</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BalancedHeads.lean#L55" class="lean_decl">Appendices.MainText.headForm</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BalancedHeads.lean#L91" class="lean_decl">Appendices.MainText.radical_eq_ker</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BalancedHeads.lean#L111" class="lean_decl">Appendices.MainText.finrank_radical</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BalancedHeads.lean#L132" class="lean_decl">Appendices.MainText.gram</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BalancedHeads.lean#L144" class="lean_decl">Appendices.MainText.signature</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BalancedHeads.lean#L158" class="lean_decl">Appendices.MainText.gram_eq_symPart</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BalancedHeads.lean#L183" class="lean_decl">Appendices.MainText.ker_gram_eq_map</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/MainText/BalancedHeads.lean#L212" class="lean_decl">Appendices.MainText.heads_have_balanced_attention</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    Let \(Q,K\colon C\to H\) with \(\dim H=n\) and \(\dim C=N\). If the stacked map \(J=(Q,K)\colon C\to H\oplus H\) is surjective, the symmetric form \(S(x,y)=\tfrac 12(\langle Kx,Qy\rangle +\langle Qx,Ky\rangle )\) has signature \((n_+,n_-,n_0)=(n,n,N-2n)\). In Lean the signature is read off the Gram matrix of \(S\) in an arbitrary basis of \(C\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000019">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p> The Gram matrix of \(2S\) is the symmetric part of \(2K^TQ\), which has rank at most \(n\), so Lemma 3 gives \(n_\pm \le n\). The radical of \(S\) is \(\ker J\): if \(S(x,\cdot )=0\) then \(B(Jx,\cdot )\) vanishes on \(J(C)=H\oplus H\) for the nondegenerate form \(B((a,b),(a',b'))=\langle a,b'\rangle +\langle b,a'\rangle \). By surjectivity \(\dim \ker J=N-2n\), so \(S\) has rank \(2n=n_++n_-\), which forces \(n_+=n_-=n\). </p>
 
   </div>
 </div>
@@ -536,11 +407,11 @@
 </div> <!-- wrapper -->
 
 <nav class="prev_up_next">
-  <a href="sect0001.html" title="Bilinear forms and their profiles"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="sect0001.html" title="Attention functions and transformers"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
   <a href="index.html" title="On attention heads and bilinear forms"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0003.html" title="Balanced bimodal spectra and simplex faces"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0003.html" title="Profiles of bilinear forms"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 

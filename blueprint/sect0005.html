@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Appendix B: Balanced bimodal spectra and simplex faces</title>
+<link rel="next" href="sect0006.html" title="Appendix C: Moments and the Gram form" />
+<link rel="prev" href="sect0004.html" title="Appendix A: Random matrices" />
+<link rel="up" href="index.html" title="On attention heads and bilinear forms" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+<link rel="stylesheet" href="../assets/project-nav.css?v=7">
+<script src="../assets/theme.js"></script>
+</head>
+
+<body>
+<nav class="project-links" aria-label="Project navigation">
+  <a href="../" class="project-name">Attention<span class="nav-long"> &amp; bilinear forms</span></a>
+  <a href="../interactive/gpt2-medium.html">Plots</a>
+  <a href="../blueprint/" aria-current="page">Blueprint</a>
+  <a href="https://github.com/aodesky/attention-bilinear-forms" aria-label="GitHub" title="GitHub"><img src="../assets/github.svg" class="nav-icon" width="14" height="14" alt="" aria-hidden="true"><span class="nav-label">GitHub</span></a>
+  <a href="https://arxiv.org/abs/2609.22990" aria-label="arXiv" title="arXiv"><img src="../assets/arxiv.svg" class="nav-icon" width="14" height="14" alt="" aria-hidden="true"><span class="nav-label">arXiv</span></a>
+  <a href="https://andrewodesky.com" class="author-link">Andrew O’Desky</a>
+  <button type="button" class="theme-toggle" title="Switch between dark and light mode"><svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-13a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm0 14a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zM4 12a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1zm14 0a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2h-1a1 1 0 0 1-1-1zM6.3 6.3a1 1 0 0 1 1.4 0l.7.7a1 1 0 0 1-1.4 1.4l-.7-.7a1 1 0 0 1 0-1.4zm9.3 9.3a1 1 0 0 1 1.4 0l.7.7a1 1 0 0 1-1.4 1.4l-.7-.7a1 1 0 0 1 0-1.4zm2.1-9.3a1 1 0 0 1 0 1.4l-.7.7a1 1 0 1 1-1.4-1.4l.7-.7a1 1 0 0 1 1.4 0zM8.4 15.6a1 1 0 0 1 0 1.4l-.7.7a1 1 0 0 1-1.4-1.4l.7-.7a1 1 0 0 1 1.4 0z"/></svg></button>
+</nav>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">On attention heads and bilinear forms</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Attention functions and transformers</span></a>
+ </li>
+<li class="">
+  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Pairing and balance</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">Profiles of bilinear forms</span></a>
+ </li>
+<li class="">
+  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Appendix A: Random matrices</span></a>
+ </li>
+<li class=" active current">
+  <a href="sect0005.html"><span class="toc_ref">5</span> <span class="toc_entry">Appendix B: Balanced bimodal spectra and simplex faces</span></a>
+ </li>
+<li class="">
+  <a href="sect0006.html"><span class="toc_ref">6</span> <span class="toc_entry">Appendix C: Moments and the Gram form</span></a>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="a0000000006">5 Appendix B: Balanced bimodal spectra and simplex faces</h1>
+
+<div class="definition_thmwrapper theorem-style-plain" id="def:balanced">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">A2</span>
+    <span class="definition_thmtitle">Pairing geometry</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0005.html#def:balanced">#</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L30" class="lean_decl">Appendices.MemLambdaSet</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L45" class="lean_decl">Appendices.lamPlus</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L50" class="lean_decl">Appendices.lamMinus</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L54" class="lean_decl">Appendices.imbalance</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L58" class="lean_decl">Appendices.statC</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L62" class="lean_decl">Appendices.pairingScore</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L67" class="lean_decl">Appendices.iotaMap</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>   For \(m\ge 1\), let \(\Lambda _m\) consist of the unit vectors \(\lambda _1\le \cdots \le \lambda _{2m}\) with \(\lambda _m{\lt}0{\lt}\lambda _{m+1}\). Set </p>
+<div class="displaymath" id="a0000000038">
+  \[  (\lambda _+)_j=\lambda _{2m+1-j},\qquad (\lambda _-)_j=-\lambda _j\quad (1\le j\le m).  \]
+</div>
+<p> Define </p>
+<div class="displaymath" id="a0000000039">
+  \[  \mathcal I=\lVert \lambda _+\rVert ^2-\lVert \lambda _-\rVert ^2,\quad C=\langle \lambda _+,\lambda _-\rangle ,\quad \mathcal P=1-\lVert \lambda _+-\lambda _-\rVert ,\quad (\iota \lambda )_i=-\lambda _{2m+1-i}.  \]
+</div>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:bimodal">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">7</span>
+    <span class="lemma_thmtitle">Bimodal identities</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0005.html#lem:bimodal">#</a>
+    
+    <a class="icon proof" href="sect0005.html#a0000000040"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0005.html#def:balanced">Definition A2</a></li>
+          
+          <li><a href="sect0005.html#def:balanced">Definition A2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L98" class="lean_decl">Appendices.sum_sq_lamPlus_eq</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L106" class="lean_decl">Appendices.sum_sq_lamMinus_eq</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L114" class="lean_decl">Appendices.two_mul_norm_lamPlus_mul_norm_lamMinus</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L139" class="lean_decl">Appendices.sum_sq_lamPlus_sub_lamMinus</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L151" class="lean_decl">Appendices.pairingScore_eq</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L158" class="lean_decl">Appendices.sum_sq_complex</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L185" class="lean_decl">Appendices.statC_nonneg</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L190" class="lean_decl">Appendices.two_mul_statC_le_one</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L197" class="lean_decl">Appendices.pairingScore_nonneg</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L206" class="lean_decl">Appendices.pairingScore_le_one</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    For \(\lambda \in \Lambda _m\), </p>
+<div class="displaymath" id="a0000000041">
+  \[  \lVert \lambda _+\rVert ^2=\tfrac 12(1+\mathcal I),\qquad \lVert \lambda _-\rVert ^2=\tfrac 12(1-\mathcal I),\qquad 2\lVert \lambda _+\rVert \lVert \lambda _-\rVert =\sqrt{1-\mathcal I^2},  \]
+</div>
+<div class="displaymath" id="a0000000042">
+  \[  \lVert \lambda _+-\lambda _-\rVert ^2=1-2C,\qquad \mathcal P=1-\sqrt{1-2C},\qquad \sum _j((\lambda _+)_j+i(\lambda _-)_j)^2=\mathcal I+2iC.  \]
+</div>
+<p> Moreover, \(0\le 2C\le 1\) and \(0\le \mathcal P\le 1\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000040">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p> The two lobes partition a unit vector, so their squared norms sum to one. Combine this with their difference \(\mathcal I\), expand the squared difference and the complex square, and use nonnegativity of the lobe entries and of squared norms for the bounds. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:involution">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">8</span>
+    <span class="lemma_thmtitle">Bimodal involution</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0005.html#lem:involution">#</a>
+    
+    <a class="icon proof" href="sect0005.html#a0000000043"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0005.html#def:balanced">Definition A2</a></li>
+          
+          <li><a href="sect0005.html#def:balanced">Definition A2</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L35" class="lean_decl">Appendices.iotaMap_iotaMap</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L41" class="lean_decl">Appendices.iotaMap_add</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L48" class="lean_decl">Appendices.iotaMap_smul</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L54" class="lean_decl">Appendices.sum_iotaMap_mul_iotaMap</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L60" class="lean_decl">Appendices.sum_iotaMap_mul</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L110" class="lean_decl">Appendices.memLambdaSet_iotaMap_iff</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L69" class="lean_decl">Appendices.lamPlus_iotaMap</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L75" class="lean_decl">Appendices.lamMinus_iotaMap</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L117" class="lean_decl">Appendices.imbalance_iotaMap</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L123" class="lean_decl">Appendices.statC_iotaMap</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L129" class="lean_decl">Appendices.pairingScore_iotaMap</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L155" class="lean_decl">Appendices.sum_sq_sub_iotaMap</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L175" class="lean_decl">Appendices.pairingScore_eq_dist_iotaMap</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L183" class="lean_decl">Appendices.pairingScore_eq_one_iff</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    The map \(\iota \) is an orthogonal, self-adjoint linear involution, preserves \(\Lambda _m\), and exchanges \(\lambda _+\) and \(\lambda _-\). Consequently \(\mathcal I\circ \iota =-\mathcal I\), \(C\circ \iota =C\) and \(\mathcal P\circ \iota =\mathcal P\). For \(\lambda \in \Lambda _m\), </p>
+<div class="displaymath" id="a0000000044">
+  \[  \lVert \lambda -\iota \lambda \rVert ^2=2\lVert \lambda _+-\lambda _-\rVert ^2,\qquad \mathcal P(\lambda )=1-\frac1{\sqrt2}\lVert \lambda -\iota \lambda \rVert .  \]
+</div>
+<p> In particular, \(\mathcal P(\lambda )=1\) if and only if \(\iota \lambda =\lambda \). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000043">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p> Reversing the coordinates twice gives the identity; reversing and negating preserves inner products and the ordering and sign pattern defining \(\Lambda _m\). Reindex the finite sums to obtain the transformation rules. Split the displacement sum into its two halves to identify both with the squared distance between the lobes. </p>
+
+  </div>
+</div>
+
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:faces">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">4</span>
+    <span class="theorem_thmtitle">Fibers of the profile map over the simplex faces</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="sect0005.html#thm:faces">#</a>
+    
+    <a class="icon proof" href="sect0005.html#a0000000045"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="sect0003.html#def:profile">Definition 6</a></li>
+          
+          <li><a href="sect0003.html#def:profile">Definition 6</a></li>
+          
+          <li><a href="sect0004.html#lem:energy">Lemma 5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L219" class="lean_decl">Appendices.profileA_nonneg</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L222" class="lean_decl">Appendices.profileB_nonneg</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L229" class="lean_decl">Appendices.profileC_nonneg</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L232" class="lean_decl">Appendices.profileD_nonneg</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L236" class="lean_decl">Appendices.profile_sum_eq_one</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L273" class="lean_decl">Appendices.profileA_eq_zero_iff</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L288" class="lean_decl">Appendices.profileA_eq_one_iff</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1085" class="lean_decl">Appendices.profileB_eq_zero_iff</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1123" class="lean_decl">Appendices.profileB_eq_one_iff</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1053" class="lean_decl">Appendices.profileD_eq_zero_iff_forall</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1179" class="lean_decl">Appendices.profileD_eq_zero_iff_decomp</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1151" class="lean_decl">Appendices.profileD_eq_zero_decomp_commute</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1243" class="lean_decl">Appendices.profileD_eq_one_iff</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1069" class="lean_decl">Appendices.profileC_eq_zero_iff_forall</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1225" class="lean_decl">Appendices.profileC_eq_zero_iff_decomp</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1198" class="lean_decl">Appendices.profileC_eq_zero_decomp_commute</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/9de1d397ac57badb5ad36e3b79d0a285393eea4f/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1283" class="lean_decl">Appendices.profileC_eq_one_iff</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    Let \(L\ne 0\) and \(\pi (L)=(a,b,c,d)\). The coordinates are nonnegative and sum to one. Their faces and vertices have the following fibers. </p>
+<ol class="enumerate">
+  <li><p>\(a=0\) exactly when \(L\) is symmetric, and \(a=1\) exactly when \(L\) is antisymmetric. </p>
+</li>
+  <li><p>\(b=0\) exactly when \(S\) is semidefinite, and \(b=1\) exactly when \(L\) is symmetric and \(\alpha =\beta \). </p>
+</li>
+  <li><p>\(d=0\) exactly when \(\alpha _j\ge \beta _j\) for every \(j\), equivalently \(S=H+P\) with \(H\) symmetric with spectrum symmetric about zero and \(P\) positive semidefinite. The matrices may be chosen to commute with \(S\) and with each other, with \(\lVert P\rVert ^2=c\lVert L\rVert ^2\). Also, \(d=1\) exactly when \(L\) is symmetric negative semidefinite. </p>
+</li>
+  <li><p>\(c=0\) exactly when \(\beta _j\ge \alpha _j\) for every \(j\), equivalently \(S=H-P\) with the same conditions on \(H,P\). They may be chosen to commute with \(S\) and with each other, with \(\lVert P\rVert ^2=d\lVert L\rVert ^2\). Also, \(c=1\) exactly when \(L\) is symmetric positive semidefinite. </p>
+</li>
+</ol>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000045">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p> The spectral theorem and the energy partition give nonnegativity and sum one. Vanishing squared norms characterize the \(a\) face and the coordinatewise inequalities for \(c,d\). The lobe inner product vanishes exactly when one lobe is zero, giving the \(b\) face. When \(\alpha \ge \beta \), pair positive and negative eigenvectors to construct \(H\) with paired eigenvalues; the remainder \(P\) is positive semidefinite. Both are diagonal in an eigenbasis of \(S\), giving commutation and the norm formula. Conversely, adding a positive semidefinite matrix increases the ordered eigenvalues, so comparison with the paired spectrum of \(H\) gives lobe dominance. Apply the argument to \(-L\) for the other face. The vertices follow from the partition of one. </p>
+
+  </div>
+</div>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <a href="sect0004.html" title="Appendix A: Random matrices"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="On attention heads and bilinear forms"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="sect0006.html" title="Appendix C: Moments and the Gram form"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+</body>
+</html>

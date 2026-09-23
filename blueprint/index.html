@@ -13,7 +13,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>On attention heads and bilinear forms</title>
-<link rel="next" href="sect0001.html" title="Bilinear forms and their profiles" />
+<link rel="next" href="sect0001.html" title="Attention functions and transformers" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/blueprint.css" />
@@ -40,16 +40,22 @@
 <nav class="toc">
 <ul class="sub-toc-0">
 <li class="">
-  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Bilinear forms and their profiles</span></a>
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Attention functions and transformers</span></a>
  </li>
 <li class="">
-  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Random matrices</span></a>
+  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Pairing and balance</span></a>
  </li>
 <li class="">
-  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">Balanced bimodal spectra and simplex faces</span></a>
+  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">Profiles of bilinear forms</span></a>
  </li>
 <li class="">
-  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Moments and the Gram form</span></a>
+  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Appendix A: Random matrices</span></a>
+ </li>
+<li class="">
+  <a href="sect0005.html"><span class="toc_ref">5</span> <span class="toc_entry">Appendix B: Balanced bimodal spectra and simplex faces</span></a>
+ </li>
+<li class="">
+  <a href="sect0006.html"><span class="toc_ref">6</span> <span class="toc_entry">Appendix C: Moments and the Gram form</span></a>
  </li>
 <li ><a href="dep_graph_document.html">Dependency graph</a></li>
 </ul>
@@ -66,21 +72,28 @@
 <span class="author">Andrew O’Desky</span>
 </p>
 </div>
-<p>This blueprint covers the results of <em>On attention heads and bilinear forms</em> that are formalized in Lean: Appendices A, B and C, together with Definition 6 and Theorem 4 of the main text. Numbering follows the paper. Each result has a proof outline and links to its Lean declarations; in the <a href ="dep_graph_document.html">dependency graph</a>, green means that the statement and its proof are both formalized. The empirical observations and the remaining main-text theorems, including the accumulation theorem that applies Lemma 6, are not formalized. </p>
+<p>This blueprint covers every numbered result of <em>On attention heads and bilinear forms</em>, all of which are formalized in Lean: the lemmas, propositions and theorems of the main text and of Appendices A, B and C, together with the definitions they are stated in. Numbering follows the paper; Theorems 1 and 2 of the introduction restate Theorems 3 and 5. Definitions numbered A1–A3 are auxiliary: they collect notation that the paper introduces in the running text. Each result has a proof outline and links to its Lean declarations; in the <a href ="dep_graph_document.html">dependency graph</a>, green means that the statement and its proof are both formalized. The empirical observations and the two remarks of the main text, which are stated without proof, are not formalized. </p>
+
 </div> <!--main-text -->
 <nav class=local_toc>
 <ul>
   <li>	
-  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Bilinear forms and their profiles</span></a>
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Attention functions and transformers</span></a>
   </li>
   <li>	
-  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Random matrices</span></a>
+  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Pairing and balance</span></a>
   </li>
   <li>	
-  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">Balanced bimodal spectra and simplex faces</span></a>
+  <a href="sect0003.html"><span class="toc_ref">3</span> <span class="toc_entry">Profiles of bilinear forms</span></a>
   </li>
   <li>	
-  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Moments and the Gram form</span></a>
+  <a href="sect0004.html"><span class="toc_ref">4</span> <span class="toc_entry">Appendix A: Random matrices</span></a>
+  </li>
+  <li>	
+  <a href="sect0005.html"><span class="toc_ref">5</span> <span class="toc_entry">Appendix B: Balanced bimodal spectra and simplex faces</span></a>
+  </li>
+  <li>	
+  <a href="sect0006.html"><span class="toc_ref">6</span> <span class="toc_entry">Appendix C: Moments and the Gram form</span></a>
   </li>
 </ul>
 </nav>
@@ -89,7 +102,7 @@
 </div> <!-- wrapper -->
 
 <nav class="prev_up_next">
-  <a href="sect0001.html" title="Bilinear forms and their profiles"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0001.html" title="Attention functions and transformers"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 
