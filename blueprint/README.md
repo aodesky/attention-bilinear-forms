@@ -9,7 +9,9 @@ The dependency graph records mathematical dependencies between these nodes.
 Edit `src/content.tex` to change statements, proof outlines, declaration
 links (`\lean`) or dependencies (`\uses`). The `\leanok` markers indicate
 completed formal statements and proofs. The theorem numbering follows the
-paper; the auxiliary definitions have their own blueprint entries.
+arXiv version,
+[arXiv:2609.22990v1](https://arxiv.org/abs/2609.22990v1); the auxiliary
+definitions have their own blueprint entries, numbered A1–A3.
 
 ## Build
 
