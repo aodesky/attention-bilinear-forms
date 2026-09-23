@@ -94,12 +94,16 @@ component of `T x - x` is `A(x)_k + M(x_k + A(x)_k)`.  With `‖M y‖ ≤ L ‖
 and `V = ∑ᵢ ‖Vᵢ‖`,
 
     ‖T x - x‖_∞ ≤ (L + V + L·V) ‖x‖_∞ . -/
-theorem near_identity [Nontrivial C] (V : Fin h → (C →L[ℝ] C))
+theorem near_identity (V : Fin h → (C →L[ℝ] C))
     (A : Fin h → (Fin ℓ → C) → Fin ℓ → C) (hA : ∀ i, IsAttentionOutput (A i))
     (M : C → C) (L : ℝ) (hM : ∀ y, ‖M y‖ ≤ L * ‖y‖)
     (x : Fin ℓ → C) (k : Fin ℓ) :
     ‖(attentionBlock V A x k + M (x k + attentionBlock V A x k))‖
       ≤ (L + (∑ i, ‖V i‖) + L * (∑ i, ‖V i‖)) * supNorm x := by
+  -- If `C = 0` both sides vanish; otherwise `C` has a nonzero vector.
+  rcases subsingleton_or_nontrivial C with hC | hC
+  · rw [Subsingleton.elim (attentionBlock V A x k + M (x k + attentionBlock V A x k)) 0,
+      norm_zero, supNorm, Subsingleton.elim x 0, norm_zero, mul_zero]
   set Vsum := ∑ i, ‖V i‖ with hV
   have hVnn : 0 ≤ Vsum := Finset.sum_nonneg fun i _ => norm_nonneg _
   have hAk : ‖attentionBlock V A x k‖ ≤ Vsum * supNorm x :=
