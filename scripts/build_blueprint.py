@@ -25,12 +25,15 @@ SOURCE = BLUEPRINT / "src"
 LEAN = ROOT / "formalization"
 DOC_BASE = "https://aodesky.github.io/attention-bilinear-forms/blueprint/lean"
 REPOSITORY = "https://github.com/aodesky/attention-bilinear-forms"
+# The Lean sources the blueprint links into.
+SOURCES = ["formalization/Appendices", "formalization/Appendices.lean",
+           "formalization/MainText", "formalization/MainText.lean"]
 
 
 def declaration_locations():
     """Index public declaration headers and their enclosing namespaces."""
     locations = {}
-    for path in sorted((LEAN / "Appendices").rglob("*.lean")):
+    for path in sorted([*(LEAN / "Appendices").rglob("*.lean"), *(LEAN / "MainText").rglob("*.lean")]):
         scopes = []
         for number, line in enumerate(path.read_text().splitlines(), 1):
             scope = re.match(r"^(namespace|section)\s*(\S*)", line)
@@ -69,13 +72,14 @@ def blueprint_declarations():
 def check_lean(project, declarations):
     # A cached local checkout may be used only when its public Lean sources and
     # pinned dependencies match the files being published.
-    for path in [LEAN / "Appendices.lean", LEAN / "lean-toolchain", LEAN / "lake-manifest.json",
-                 LEAN / "lakefile.toml", *(LEAN / "Appendices").rglob("*.lean")]:
+    for path in [LEAN / "Appendices.lean", LEAN / "MainText.lean", LEAN / "lean-toolchain",
+                 LEAN / "lake-manifest.json", LEAN / "lakefile.toml",
+                 *(LEAN / "Appendices").rglob("*.lean"), *(LEAN / "MainText").rglob("*.lean")]:
         other = project / path.relative_to(LEAN)
         if not other.is_file() or other.read_bytes() != path.read_bytes():
             raise ValueError(f"Lean check project differs from public source: {other}")
     subprocess.run(["lake", "build"], cwd=project, check=True)
-    checks = "import Appendices\n" + "\n".join(f"#check {name}" for name in declarations) + "\n"
+    checks = "import Appendices\nimport MainText\n" + "\n".join(f"#check {name}" for name in declarations) + "\n"
     with tempfile.TemporaryDirectory(prefix="blueprint-check-") as directory:
         path = Path(directory) / "BlueprintCheck.lean"
         path.write_text(checks)
@@ -102,11 +106,11 @@ def main():
             raise ValueError(f"Declaration not found in public Lean sources: {name}")
     check_lean(args.lean_project.resolve(), declarations)
     revision = subprocess.check_output(
-        ["git", "log", "-1", "--format=%H", "--", "formalization/Appendices", "formalization/Appendices.lean"],
+        ["git", "log", "-1", "--format=%H", "--", *SOURCES],
         cwd=ROOT, text=True).strip()
     # Refuse to publish links to a committed source different from the local one.
-    subprocess.run(["git", "diff", "--exit-code", revision, "--", "formalization/Appendices",
-                    "formalization/Appendices.lean"], cwd=ROOT, check=True, stdout=subprocess.PIPE)
+    subprocess.run(["git", "diff", "--exit-code", revision, "--", *SOURCES],
+                   cwd=ROOT, check=True, stdout=subprocess.PIPE)
     environment = os.environ.copy()
     environment["PATH"] = str(Path(executable).parent) + os.pathsep + environment["PATH"]
     subprocess.run([executable, "-c", "plastex.cfg", "web.tex"], cwd=SOURCE,

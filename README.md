@@ -9,14 +9,15 @@ Every attention head of a decoder-only transformer carries a bilinear
 form `L = W_K^T W_Q` on the residual stream. This repository contains
 the code that extracts those forms from fourteen pretrained models,
 the derived per-head measurements the paper reports, an interactive
-view of the results, and the Lean formalizations of the appendices.
+view of the results, and the Lean formalization of the paper's
+mathematical results.
 
 ## Layout
 
     scripts/               the experiments (Python)
     scripts/survey_results/  per-head statistics and spectra
     interactive/           model-selectable gallery with four figures per model
-    formalization/         the Lean formalizations of the appendices
+    formalization/         the Lean formalization of the paper's results
 
 `scripts/README.md` describes the experiments and how to rerun them.
 The appendix "Code and experimental data" of the paper lists each
@@ -80,10 +81,10 @@ for mathematical statements, proof outlines and links to the audited Lean
 declarations, or explore its
 [dependency graph](https://aodesky.github.io/attention-bilinear-forms/blueprint/dep_graph_document.html).
 
-`formalization/` contains Lean 4 formalizations of the mathematical
-results of the appendices, together with the definition of the profile
-of a bilinear form and the main-text theorem on the faces of the
-simplex, whose proof is given there. Building requires the Lean toolchain named in
+`formalization/` contains Lean 4 formalizations of every numbered
+lemma, proposition, corollary and theorem of the paper, in the main
+text and in the appendices, together with the definitions they are
+stated in. Building requires the Lean toolchain named in
 `formalization/lean-toolchain`, which `elan` installs automatically:
 
     cd formalization

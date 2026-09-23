@@ -1,4 +1,5 @@
 import Appendices
+import MainText
 
 -- Check the same complete set of project declarations as the formalization's
 -- check_axioms.sh, sharing the traversal cache across their dependencies.
@@ -9,7 +10,7 @@ run_cmd do
   let collectAll : CollectAxioms.M Unit := do
     for (name, _) in env.constants.toList do
       if let some mod := env.getModuleFor? name then
-        if (`Appendices).isPrefixOf mod then
+        if (`Appendices).isPrefixOf mod || (`MainText).isPrefixOf mod then
           CollectAxioms.collect name
   let (_, state) := (collectAll.run env).run {}
   for axiomName in state.axioms do

@@ -3,14 +3,15 @@
 # uses only the three standard axioms.
 set -e
 cd "$(dirname "$0")/.."
-if grep -rn "sorry" Appendices Appendices.lean --include='*.lean'; then
+if grep -rn "sorry" Appendices Appendices.lean MainText MainText.lean --include='*.lean'; then
   echo "FAIL: sorry found"; exit 1
 fi
-if grep -rn "^axiom\|[^_[:alnum:]]axiom " Appendices Appendices.lean --include='*.lean'; then
+if grep -rn "^axiom\|[^_[:alnum:]]axiom " Appendices Appendices.lean MainText MainText.lean --include='*.lean'; then
   echo "FAIL: axiom declaration found"; exit 1
 fi
 cat > /tmp/AxiomCheck.lean <<'LEAN'
 import Appendices
+import MainText
 open Lean Elab Command in
 run_cmd do
   let env ← getEnv
@@ -18,7 +19,7 @@ run_cmd do
   let mut bad := #[]
   for (n, _) in env.constants.toList do
     if let some mod := env.getModuleFor? n then
-      if (`Appendices).isPrefixOf mod then
+      if (`Appendices).isPrefixOf mod || (`MainText).isPrefixOf mod then
         let (_, s) := ((CollectAxioms.collect n).run env).run {}
         for ax in s.axioms do
           unless allowed.contains ax do

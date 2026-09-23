@@ -124,10 +124,10 @@ private lemma betaList_eq :
     rw [eigenvalues_eq_evDesc_comp hS]
     simp [Fin.rev_rev]
 
-private lemma alphaList_nonneg (j : Fin N) : 0 ≤ alphaList S hS j := by
+lemma alphaList_nonneg (j : Fin N) : 0 ≤ alphaList S hS j := by
   rw [alphaList_eq]; exact le_max_right _ _
 
-private lemma betaList_nonneg (j : Fin N) : 0 ≤ betaList S hS j := by
+lemma betaList_nonneg (j : Fin N) : 0 ≤ betaList S hS j := by
   rw [betaList_eq]; exact le_max_right _ _
 
 end EvDesc
@@ -160,7 +160,7 @@ private lemma trace_conj_unitary (M : Matrix (Fin N) (Fin N) ℝ) :
     Matrix.one_mul]
 
 /-- For a real symmetric matrix, `‖A‖² = Σ λ_i²`. -/
-private lemma frobSq_of_isHermitian :
+lemma frobSq_of_isHermitian :
     frobSq A = ∑ i, hA.eigenvalues i ^ 2 := by
   have ht : Aᵀ = A := by
     rw [← Matrix.conjTranspose_eq_transpose_of_trivial, hA.eq]
@@ -191,7 +191,7 @@ private lemma frobSq_of_isHermitian :
 
 /-- Under the closed formulas for `α` and `β`,
 `α_j² + β_j²` summed over `j` recovers `Σ λ_i²`. -/
-private lemma sum_alpha_sq_add_beta_sq {S : Matrix (Fin N) (Fin N) ℝ}
+lemma sum_alpha_sq_add_beta_sq {S : Matrix (Fin N) (Fin N) ℝ}
     (hS : S.IsHermitian) :
     (∑ j, alphaList S hS j ^ 2) + ∑ j, betaList S hS j ^ 2
       = ∑ i, hS.eigenvalues i ^ 2 := by
@@ -353,14 +353,14 @@ section Counting
 variable {A : Matrix (Fin N) (Fin N) ℝ} (hA : A.IsHermitian)
 
 /-- The orthonormal eigenvectors of `A`, as plain vectors in `ℝ^N`. -/
-private noncomputable def evec (i : Fin N) : Fin N → ℝ :=
+noncomputable def evec (i : Fin N) : Fin N → ℝ :=
   ⇑(hA.eigenvectorBasis i)
 
-private lemma mulVec_evec (j : Fin N) :
+lemma mulVec_evec (j : Fin N) :
     A *ᵥ evec hA j = hA.eigenvalues j • evec hA j :=
   hA.mulVec_eigenvectorBasis j
 
-private lemma evec_dot (i j : Fin N) :
+lemma evec_dot (i j : Fin N) :
     evec hA i ⬝ᵥ evec hA j = if i = j then 1 else 0 := by
   have h := star_mul_self_unitary hA
   have h2 : (star (hA.eigenvectorUnitary : Matrix (Fin N) (Fin N) ℝ)
@@ -373,7 +373,7 @@ private lemma evec_dot (i j : Fin N) :
   rw [Matrix.star_apply, star_trivial]
   simp [evec]
 
-private lemma sum_smul_evec_dot (s : Finset (Fin N)) (c : {i // i ∈ s} → ℝ)
+lemma sum_smul_evec_dot (s : Finset (Fin N)) (c : {i // i ∈ s} → ℝ)
     (j : {i // i ∈ s}) :
     (∑ i : {i // i ∈ s}, c i • evec hA i) ⬝ᵥ evec hA j = c j := by
   rw [sum_dotProduct]
@@ -385,7 +385,7 @@ private lemma sum_smul_evec_dot (s : Finset (Fin N)) (c : {i // i ∈ s} → ℝ
   · intro h
     exact absurd (Finset.mem_univ j) h
 
-private lemma evec_linearIndependent (s : Finset (Fin N)) :
+lemma evec_linearIndependent (s : Finset (Fin N)) :
     LinearIndependent ℝ (fun i : {i // i ∈ s} => evec hA i) := by
   rw [linearIndependent_iff']
   intro t g hg j hj
@@ -401,16 +401,16 @@ private lemma evec_linearIndependent (s : Finset (Fin N)) :
     exact absurd hj h'
 
 /-- The span of the eigenvectors indexed by `s`. -/
-private noncomputable def eigSpan (s : Finset (Fin N)) :
+noncomputable def eigSpan (s : Finset (Fin N)) :
     Submodule ℝ (Fin N → ℝ) :=
   Submodule.span ℝ (Set.range fun i : {i // i ∈ s} => evec hA i)
 
-private lemma finrank_eigSpan (s : Finset (Fin N)) :
+lemma finrank_eigSpan (s : Finset (Fin N)) :
     Module.finrank ℝ (eigSpan hA s) = s.card := by
   rw [eigSpan, finrank_span_eq_card (evec_linearIndependent hA s)]
   exact Fintype.card_coe s
 
-private lemma mem_eigSpan_iff (s : Finset (Fin N)) (x : Fin N → ℝ) :
+lemma mem_eigSpan_iff (s : Finset (Fin N)) (x : Fin N → ℝ) :
     x ∈ eigSpan hA s
       ↔ ∃ c : {i // i ∈ s} → ℝ, x = ∑ i : {i // i ∈ s}, c i • evec hA i := by
   rw [eigSpan, Submodule.mem_span_range_iff_exists_fun]
@@ -418,14 +418,14 @@ private lemma mem_eigSpan_iff (s : Finset (Fin N)) (x : Fin N → ℝ) :
   · rintro ⟨c, hc⟩; exact ⟨c, hc.symm⟩
   · rintro ⟨c, hc⟩; exact ⟨c, hc.symm⟩
 
-private lemma dot_self_expansion (s : Finset (Fin N)) (c : {i // i ∈ s} → ℝ) :
+lemma dot_self_expansion (s : Finset (Fin N)) (c : {i // i ∈ s} → ℝ) :
     (∑ i : {i // i ∈ s}, c i • evec hA i) ⬝ᵥ (∑ i : {i // i ∈ s}, c i • evec hA i)
       = ∑ i : {i // i ∈ s}, c i ^ 2 := by
   rw [dotProduct_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [dotProduct_smul, sum_smul_evec_dot hA s c j, smul_eq_mul, sq]
 
-private lemma quadform_expansion (s : Finset (Fin N)) (c : {i // i ∈ s} → ℝ) :
+lemma quadform_expansion (s : Finset (Fin N)) (c : {i // i ∈ s} → ℝ) :
     (∑ i : {i // i ∈ s}, c i • evec hA i)
         ⬝ᵥ (A *ᵥ ∑ i : {i // i ∈ s}, c i • evec hA i)
       = ∑ i : {i // i ∈ s}, hA.eigenvalues i * c i ^ 2 := by
@@ -448,7 +448,7 @@ section Counting2
 
 variable {A : Matrix (Fin N) (Fin N) ℝ} (hA : A.IsHermitian)
 
-private lemma quadform_ge_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
+lemma quadform_ge_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
     (hs : ∀ i ∈ s, r ≤ hA.eigenvalues i) :
     ∀ x ∈ eigSpan hA s, r * (x ⬝ᵥ x) ≤ x ⬝ᵥ (A *ᵥ x) := by
   intro x hx
@@ -458,7 +458,7 @@ private lemma quadform_ge_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
   have h := hs j.1 j.2
   nlinarith [sq_nonneg (c j)]
 
-private lemma quadform_le_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
+lemma quadform_le_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
     (hs : ∀ i ∈ s, hA.eigenvalues i ≤ r) :
     ∀ x ∈ eigSpan hA s, x ⬝ᵥ (A *ᵥ x) ≤ r * (x ⬝ᵥ x) := by
   intro x hx
@@ -468,7 +468,7 @@ private lemma quadform_le_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
   have h := hs j.1 j.2
   nlinarith [sq_nonneg (c j)]
 
-private lemma quadform_lt_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
+lemma quadform_lt_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
     (hs : ∀ i ∈ s, hA.eigenvalues i < r) :
     ∀ x ∈ eigSpan hA s, x ≠ 0 → x ⬝ᵥ (A *ᵥ x) < r * (x ⬝ᵥ x) := by
   intro x hx hx0
@@ -485,7 +485,7 @@ private lemma quadform_lt_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
     have h2 : 0 < c j ^ 2 := (sq_nonneg _).lt_of_ne (Ne.symm (pow_ne_zero 2 hj))
     nlinarith
 
-private lemma quadform_gt_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
+lemma quadform_gt_on_eigSpan (s : Finset (Fin N)) (r : ℝ)
     (hs : ∀ i ∈ s, r < hA.eigenvalues i) :
     ∀ x ∈ eigSpan hA s, x ≠ 0 → r * (x ⬝ᵥ x) < x ⬝ᵥ (A *ᵥ x) := by
   intro x hx hx0

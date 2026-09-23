@@ -1,6 +1,6 @@
 name = "Appendices"
 version = "0.1.0"
-defaultTargets = ["Appendices"]
+defaultTargets = ["Appendices", "MainText"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -13,3 +13,6 @@ rev = "v4.27.0"
 
 [[lean_lib]]
 name = "Appendices"
+
+[[lean_lib]]
+name = "MainText"

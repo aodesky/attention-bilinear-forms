@@ -1,8 +1,8 @@
-# Lean formalization of the appendices
+# Lean formalization
 
-Lean 4 formalizations of the mathematical results of the appendices
-of *On attention heads and bilinear forms*, together with the
-definition and the main-text theorem on which Appendix B rests.
+Lean 4 formalizations of the mathematical results of *On attention
+heads and bilinear forms*: every numbered lemma, proposition,
+corollary and theorem of the main text and of the appendices.
 
 The [blueprint](https://aodesky.github.io/attention-bilinear-forms/blueprint/)
 presents these statements and proof outlines with links to their Lean
@@ -26,19 +26,31 @@ both.
 
 ## Layout
 
-One file per result, in folders named after the appendices.  Results
+One file per result, in `MainText/` and in folders named after the appendices.  Results
 are numbered as in the paper, where lemmas, propositions, corollaries
 and theorems are numbered in separate sequences.
 
 | File | Paper |
 |---|---|
+| **Main text** | |
+| `MainText/BiaffineDecomposition.lean` | Lemma 1 (biaffine decomposition) |
+| `MainText/RoPELike.lean` | the definition of RoPE-like attention functions and Proposition 1 |
+| `MainText/NearIdentity.lean` | Proposition 2 (transformers are near-identity) |
+| `MainText/Homogenization.lean` | the definitions of attention functions, bilinear attention functions, heads and transformers; Proposition 3 (bilinear attention recovers QKV attention) |
+| `MainText/PairingBound.lean` | the pairing score and Lemma 2 (pairing bound) |
+| `MainText/RankBalance.lean` | Lemma 3 (rank balance) |
+| `MainText/BalancedHeads.lean` | Theorem 3 (heads have balanced attention) |
+| `MainText/ProfileScale.lean` | Lemma 4 (profile scale) |
+| `MainText/ProfileInvariance.lean` | supporting facts: sorting depends only on the multiset of entries; the profile is invariant under orthogonal changes of coordinates |
+| `MainText/RankOneLocus.lean` | Proposition 4 (profiles of rank-one matrices) |
+| `MainText/Accumulation.lean` | Theorem 5 (accumulation), with the limit in `p(Θ)` and the edges it traces |
 | `Appendices/Common.lean` | Frobenius norm; symmetric and antisymmetric parts (shared definitions) |
 | `Appendices/Profile.lean` | Definition 6, the profile `π(L) = (a, b, c, d)` of a bilinear form (§5.1) |
 | **Appendix A, Random matrices** | |
 | `Appendices/RandomMatrices/EnergyIdentities.lean` | Lemma 5 (symmetric and skew energy identities) |
 | `Appendices/RandomMatrices/IidBaseline.lean` | Corollary 1 (iid square random matrix baseline) |
 | `Appendices/RandomMatrices/QKProductBaseline.lean` | Corollary 2 (random QK-product baseline) |
-| `Appendices/RandomMatrices/LowRankExpectedEnergy.lean` | Proposition 6 (expected symmetric energy for random low-rank QK products) |
+| `Appendices/RandomMatrices/LowRankExpectedEnergy.lean` | Proposition 5 (expected symmetric energy for random low-rank QK products) |
 | `Appendices/RandomMatrices/ProportionalLobes.lean` | Lemma 6, the sorted lobes of two samples become proportional |
 | **Appendix B, Balanced bimodal spectra** | |
 | `Appendices/BalancedBimodalSpectra/Defs.lean` | The pairing geometry: `Λ_m`, `λ±`, `ℐ`, `C`, `𝒫`, `ι` |
@@ -52,17 +64,18 @@ and theorems are numbered in separate sequences.
 
 ## Scope
 
-Every numbered result stated or proved in Appendices A, B and C is
-formalized: Lemmas 5 to 10, Corollaries 1 and 2, Proposition 6, and
+Every numbered result of the paper is formalized: in the main text,
+Lemmas 1 to 4, Propositions 1 to 4 and Theorems 3 to 5 (Theorems 1
+and 2 of the introduction restate Theorems 3 and 5); in the
+appendices, Lemmas 5 to 10, Corollaries 1 and 2, Proposition 5, and
 Theorem 4, whose statement is in the main text and whose proof is
-Appendix B.  Definition 6 is formalized because Theorem 4 is stated in
-its terms.
+Appendix B.  The definitions these results are stated in are
+formalized with them.
 
-Not formalized: the two remarks following Lemma 10, which are
-expository and stated without proof; and the results of the main
-text, including Theorem 5, whose proof in the main text applies
-Lemma 6.  Appendices D and E contain experiment descriptions, tables
-and figures, with no mathematical results.
+Not formalized: the two remarks of the main text (the max potential,
+and the remark following Lemma 3), which are stated without proof;
+the observations, which are experimental; and Appendices D and E,
+which contain experiment descriptions, tables and figures.
 
 Each statement is formalized as stated in the paper; where a proof
 needs a hypothesis the paper leaves implicit (a nonzero variance, a
