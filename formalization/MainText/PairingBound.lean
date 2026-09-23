@@ -13,9 +13,9 @@ Main text, §"Pairing score": the pairing score and Lemma `lemma:pairing-bound`.
 
     with equality if and only if `λ₋ = ρ λ₊`.
 
-Encoding.  The pairing score depends on the head only through `S`, and the
-lemma is stated for a symmetric `S`, so both are stated for a real symmetric
-matrix `S`.  As in `Appendices.Profile`, `λ₊` and `λ₋` are `alphaList S` and
+Encoding.  The pairing score depends on the head only through `S`, and
+the lemma is stated for a symmetric `S`, so both are stated for a real
+symmetric matrix `S`.  As in `Appendices.Profile`, `λ₊` and `λ₋` are `alphaList S` and
 `betaList S`, padded with zeros to length `N`; they are regarded as vectors of
 `EuclideanSpace ℝ (Fin N)` so that `‖·‖` and `⟨·,·⟩` are the Euclidean norm
 and inner product.  `‖S‖` is the Frobenius norm `√(frobSq S)`.  Appending
