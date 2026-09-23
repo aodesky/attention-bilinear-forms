@@ -1,3 +1,11 @@
+/* The mode being displayed, whether chosen explicitly or inherited from the OS. */
+function currentThemeMode() {
+  var explicit = document.documentElement.getAttribute('data-theme');
+  if (explicit) return explicit;
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark' : 'light';
+}
+
 'use strict';
 
 const figures = [
@@ -21,8 +29,12 @@ function showFigure(index, updateURL = true) {
   document.getElementById('figure-help').textContent = figure.help;
   document.getElementById('viewer').setAttribute('aria-labelledby', `figure-tab-${index}`);
   document.title = `${model.value} · ${figure.title}`;
-  const source = `assets/${model.value}/${figure.file}?v=profile-titles-2`;
-  document.getElementById('open-figure').href = source;
+  const source = `assets/${model.value}/${figure.file}?v=theme-5`;
+  // "Open figure" opens the file on its own, with no parent to tell it the
+  // mode, so pass it in the URL. Only the interactive figure reads it; the
+  // static images ignore the parameter harmlessly.
+  const openHref = index === 0 ? `${source}&theme=${currentThemeMode()}` : source;
+  document.getElementById('open-figure').href = openHref;
   error.hidden = true;
   frame.hidden = index !== 0;
   picture.hidden = index === 0;
@@ -73,3 +85,30 @@ picture.addEventListener('error', () => { error.hidden = false; });
 picture.addEventListener('load', () => { error.hidden = true; });
 window.addEventListener('hashchange', showHash);
 showHash();
+
+/* ---- Theme bridge to the embedded Plotly figures -------------------------
+   The figures live in a same-origin iframe but are generated with a light
+   template, so they are restyled from inside. Tell them the current mode when
+   they ask, and again whenever the visitor toggles. */
+(function () {
+  var mode = currentThemeMode;
+  function tell() {
+    var f = document.getElementById('interactive-figure');
+    if (f && f.contentWindow) {
+      try { f.contentWindow.postMessage({ type: 'theme', mode: mode() }, '*'); } catch (e) {}
+    }
+  }
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.type === 'theme-request') tell();
+  });
+  // The toggle flips the attribute; observe it rather than patching the button.
+  new MutationObserver(tell).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-theme']
+  });
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) mq.addEventListener('change', tell);
+  }
+  var f = document.getElementById('interactive-figure');
+  if (f) f.addEventListener('load', tell);
+})();

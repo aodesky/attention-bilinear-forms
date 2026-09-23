@@ -6,8 +6,30 @@
   --project-text: #000000;
   --project-link: #587abc;
   --project-muted: #4e5861;
+  --project-bg: #ffffff;
+  --project-rule: #ddd;
 }
-body { font-family: var(--project-font); color: var(--project-text); background: #fff; }
+
+/* Dark palette, matching andrewodesky.com. An explicit choice via
+   [data-theme] wins over the OS preference in both directions. */
+:root[data-theme="dark"] {
+  --project-text: #e8e6e3;
+  --project-link: #8ab0f0;
+  --project-muted: #a3adb8;
+  --project-bg: #14171a;
+  --project-rule: #2e343a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --project-text: #e8e6e3;
+    --project-link: #8ab0f0;
+    --project-muted: #a3adb8;
+    --project-bg: #14171a;
+    --project-rule: #2e343a;
+  }
+}
+body { font-family: var(--project-font); color: var(--project-text); background: var(--project-bg); }
 body h1, body h2, body h3, body h4, body h5, body h6, body .title {
   font-family: var(--project-font);
   color: var(--project-text);
@@ -25,13 +47,20 @@ body a:hover { text-decoration: underline; }
   width: 100%;
   margin: 0;
   padding: 12px 24px;
-  border-bottom: 1px solid #ddd;
-  background: #fff;
+  border-bottom: 1px solid var(--project-rule);
+  background: var(--project-bg);
   color: var(--project-text);
   font: 14px/1.5 var(--project-font);
 }
 .project-links a { display: inline-flex; align-items: center; gap: 6px; }
 .project-links .nav-icon { display: block; flex: 0 0 14px; width: 14px; height: 14px; opacity: .7; }
+/* The brand SVGs carry no fill, so they paint black. They are <img>, which
+   cannot inherit currentColor, so invert them in dark mode to keep them
+   legible against the dark bar. */
+:root[data-theme="dark"] .project-links .nav-icon { filter: invert(1); opacity: .75; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .project-links .nav-icon { filter: invert(1); opacity: .75; }
+}
 .project-links a { color: var(--project-link); text-decoration: none; white-space: nowrap; }
 .project-links .project-name { display: inline; margin-right: auto; color: var(--project-text); }
 .project-links a[aria-current="page"] { color: var(--project-text); font-weight: 600; }
@@ -49,4 +78,35 @@ body a:hover { text-decoration: underline; }
 @media (max-width: 380px) {
   .project-links { gap: 8px 12px; }
   .project-links .author-link { display: none; }
+}
+
+/* ---- Theme toggle (identical markup and styling on andrewodesky.com) ---- */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--project-rule);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--project-muted);
+  cursor: pointer;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.theme-toggle:hover { color: var(--project-text); }
+.theme-toggle:focus-visible { outline: 2px solid var(--project-link); outline-offset: 3px; }
+.theme-toggle svg { width: 15px; height: 15px; display: block; fill: currentColor; }
+.theme-toggle .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+}
+/* the toggle is the last item in the bar, and never hidden on narrow screens */
+@media (max-width: 380px) {
+  .project-links .theme-toggle { display: inline-flex; }
 }

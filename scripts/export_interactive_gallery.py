@@ -50,7 +50,8 @@ def page(tag, models):
   <title>{html.escape(tag)} · Profiles of attention heads</title>
   <meta name="description" content="Explore attention-head profiles: interactive 3-D simplex, projection to Δ, spectral distributions by parity, and clusters by layer.">
   <link rel="stylesheet" href="gallery.css?v={versions['gallery.css']}">
-  <link rel="stylesheet" href="../assets/project-nav.css?v=6">
+  <link rel="stylesheet" href="../assets/project-nav.css?v=7">
+  <script src="../assets/theme.js"></script>
   <script src="gallery.js?v={versions['gallery.js']}" defer></script>
 </head>
 <body>
@@ -126,11 +127,82 @@ def export(dataset, output):
             embed_style = '''<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 html,body { height:100%; margin:0; }
-body { display:flex; flex-direction:column; }
+body { display:flex; flex-direction:column; background:transparent; }
+/* Embedded in the gallery the page shows through; opened on its own there is
+   nothing behind it, so paint the ground to match the chosen mode. */
+:root[data-standalone][data-theme="dark"] body { background:#14171a; }
+:root[data-standalone][data-theme="light"] body { background:#ffffff; }
 body > div:not(.plot-control) { flex:1; min-height:0; }
-.plot-control { flex-wrap:wrap; padding:8px 12px; gap:8px; }
+.plot-control { flex-wrap:wrap; padding:8px 12px; gap:8px; color:#111; }
 @media(max-width:600px) { .plot-control { font-size:13px; } }
-</style>'''
+:root[data-theme="dark"] .plot-control { color:#e8e6e3; }
+</style>
+<script>
+/* The figure is generated with a light Plotly template. The gallery tells this
+   frame which mode it is being viewed in, and we restyle the plot to match:
+   transparent backgrounds so the page shows through, and legible tick, title
+   and legend text. Runs again whenever the parent toggles. */
+(function () {
+  var DARK = '#e8e6e3', LIGHT = '#111111';
+  function paint(mode) {
+    document.documentElement.setAttribute('data-theme', mode);
+    var fg = mode === 'dark' ? DARK : LIGHT;
+    var grid = mode === 'dark' ? 'rgba(232,230,227,.14)' : 'rgba(0,0,0,.12)';
+    var gd = document.querySelector('.js-plotly-plot');
+    if (!gd || !window.Plotly) return;
+    /* Leave the 3-D scene alone. Its axes, walls and grid are part of the
+       figure as generated; overriding them exposed grid lines the original
+       never showed. Only the page-level surfaces and text are themed.
+       The 2-D figures (histograms, clusters) do use these axis colors. */
+    var axis = { color: fg, gridcolor: grid, zerolinecolor: grid,
+                 linecolor: grid, tickfont: { color: fg },
+                 title: { font: { color: fg } } };
+    var update = {
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)',
+      font: { color: fg },
+      'legend.font.color': fg,
+      'title.font.color': fg,
+      xaxis: axis, yaxis: axis
+    };
+    try { window.Plotly.relayout(gd, update); } catch (e) { /* older bundle */ }
+  }
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.type === 'theme' && (e.data.mode === 'dark' || e.data.mode === 'light')) {
+      paint(e.data.mode);
+    }
+  });
+  /* Opened on its own (the gallery's "Open figure" link, or a bookmark) there
+     is no parent to ask, so fall back to ?theme=, then the stored preference,
+     then the OS setting. */
+  function standalone() {
+    var q = null;
+    try { q = new URLSearchParams(location.search).get('theme'); } catch (e) {}
+    if (q === 'dark' || q === 'light') return q;
+    try {
+      var v = localStorage.getItem('theme');
+      if (v === 'dark' || v === 'light') return v;
+    } catch (e) {}
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark' : 'light';
+  }
+
+  /* Ask the parent once the plot exists; retry briefly while Plotly boots. */
+  var tries = 0;
+  (function ready() {
+    if (document.querySelector('.js-plotly-plot') && window.Plotly) {
+      if (window.parent !== window) {
+        try { parent.postMessage({ type: 'theme-request' }, '*'); } catch (e) {}
+      } else {
+        document.documentElement.setAttribute('data-standalone', '');
+        paint(standalone());
+      }
+      return;
+    }
+    if (tries++ < 60) setTimeout(ready, 100);
+  })();
+})();
+</script>'''
             document = document.replace("</head>", embed_style + "</head>", 1)
             (destination / target).write_text(document)
         (output / f"{tag}.html").write_text(page(tag, models))

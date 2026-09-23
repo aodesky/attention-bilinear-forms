@@ -1,16 +1,22 @@
-:root { color-scheme: light; font: 15px/1.6 system-ui, -apple-system, sans-serif; color: #222; background: #fff; }
+:root { color-scheme: light dark; font: 15px/1.6 system-ui, -apple-system, sans-serif; color: var(--project-text); background: var(--project-bg); }
+/* Page-level tones that follow the theme; the palette itself is in project-nav.css. */
+:root { --site-dim: #666; --site-rule: #e5e5e5; --site-head: #222; }
+:root[data-theme="dark"] { --site-dim: #a3adb8; --site-rule: #2e343a; --site-head: #e8e6e3; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --site-dim: #a3adb8; --site-rule: #2e343a; --site-head: #e8e6e3; }
+}
 * { box-sizing: border-box; }
 body { margin: 0; }
-a { color: #1a5fb4; text-underline-offset: 3px; }
+a { color: var(--project-link); text-underline-offset: 3px; }
 main { max-width: 760px; margin: 40px auto; padding: 0 24px; }
 h1 { margin: 0; font-size: 26px; font-weight: 600; line-height: 1.3; }
 h2 { margin: 0 0 8px; font-size: 18px; font-weight: 600; }
 p { margin: 8px 0; }
-.author { color: #666; }
+.author { color: var(--site-dim); }
 section { margin-top: 32px; }
-#paper { padding-top: 20px; border-top: 1px solid #e5e5e5; color: #666; }
-#paper h2 { color: #222; }
-.skip-link { position: absolute; left: 12px; top: -100px; padding: 8px; background: #fff; }
+#paper { padding-top: 20px; border-top: 1px solid var(--site-rule); color: var(--site-dim); }
+#paper h2 { color: var(--site-head); }
+.skip-link { position: absolute; left: 12px; top: -100px; padding: 8px; background: var(--project-bg); }
 .skip-link:focus { top: 8px; }
-:focus-visible { outline: 2px solid #1a5fb4; outline-offset: 4px; }
+:focus-visible { outline: 2px solid var(--project-link); outline-offset: 4px; }
 @media (max-width: 600px) { main { margin: 28px auto; padding: 0 16px; } h1 { font-size: 23px; } }
