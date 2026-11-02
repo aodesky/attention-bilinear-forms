@@ -32,13 +32,13 @@ def project_navigation(prefix="../", current=""):
 
 
 def theme_selector():
-    """System, light, and dark preference selector."""
-    return '<select class="theme-select" aria-label="Color theme" title="Color theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>'
+    """The shared script supplies the same icon menu on every site."""
+    return '<div class="theme-picker"></div>'
 
 
 def theme_script_tag(prefix="../"):
     """The shared theme script, loaded in <head> so there is no flash."""
-    return f'<script src="{prefix}assets/theme.js?v=system-1"></script>'
+    return f'<script src="{prefix}assets/theme.js?v=polish-1"></script>'
 
 
 def add_blueprint_navigation(document: str) -> str:
@@ -48,9 +48,15 @@ def add_blueprint_navigation(document: str) -> str:
     document = re.sub(r'<nav class="project-links".*?</nav>\n?', '', document, flags=re.S)
     document = re.sub(r'<link rel="stylesheet" href="../assets/project-nav.css[^"]*">\n?', '', document)
     document = re.sub(r'<script src="../assets/theme.js[^"]*"></script>\n?', '', document)
+    document = re.sub(r'<link[^>]+href="https://andrewodesky.com/res/favicon/[^"]+"[^>]*>\n?', '', document)
+    document = re.sub(r'<link[^>]+href="../assets/theme.css[^"]*"[^>]*>\n?', '', document)
+    document = re.sub(r'<script[^>]+src="../assets/blueprint.js[^"]*"[^>]*></script>\n?', '', document)
     document = document.replace(
         '</head>',
-        '<link rel="stylesheet" href="../assets/project-nav.css?v=8">\n'
+        '<link rel="stylesheet" href="../assets/project-nav.css?v=polish-1">\n'
+        + '<link rel="stylesheet" href="../assets/theme.css?v=polish-1">\n'
+        + '<script src="../assets/blueprint.js?v=polish-1" defer></script>\n'
+        + '<link rel="icon" type="image/svg+xml" href="https://andrewodesky.com/res/favicon/favicon.svg">\n<link rel="icon" type="image/png" sizes="32x32" href="https://andrewodesky.com/res/favicon/favicon-32x32.png">\n<link rel="apple-touch-icon" href="https://andrewodesky.com/res/favicon/apple-touch-icon.png">\n'
         + theme_script_tag('../') + '\n</head>',
         1,
     )

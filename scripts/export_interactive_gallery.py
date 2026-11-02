@@ -50,8 +50,12 @@ def page(tag, models):
   <title>{html.escape(tag)} · Profiles of attention heads</title>
   <meta name="description" content="Explore attention-head profiles: interactive 3-D simplex, projection to Δ, spectral distributions by parity, and clusters by layer.">
   <link rel="stylesheet" href="gallery.css?v={versions['gallery.css']}">
-  <link rel="stylesheet" href="../assets/project-nav.css?v=8">
-  <script src="../assets/theme.js?v=system-1"></script>
+  <link rel="stylesheet" href="../assets/project-nav.css?v=polish-1">
+  <script src="../assets/theme.js?v=polish-1"></script>
+  <link rel="stylesheet" href="../assets/theme.css?v=polish-1">
+  <link rel="icon" type="image/svg+xml" href="https://andrewodesky.com/res/favicon/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://andrewodesky.com/res/favicon/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="https://andrewodesky.com/res/favicon/apple-touch-icon.png">
   <script src="gallery.js?v={versions['gallery.js']}" defer></script>
 </head>
 <body>
@@ -137,7 +141,7 @@ body > div:not(.plot-control) { flex:1; min-height:0; }
 @media(max-width:600px) { .plot-control { font-size:13px; } }
 :root[data-theme="dark"] .plot-control { color:#e8e6e3; }
 </style>
-<script src="../../../assets/theme.js?v=system-1"></script>
+<script src="../../../assets/theme.js?v=polish-1"></script>
 <script>
 /* The figure is generated with a light Plotly template. The gallery tells this
    frame which mode it is being viewed in, and we restyle the plot to match:

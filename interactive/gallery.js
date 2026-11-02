@@ -33,7 +33,7 @@ function showFigure(index, updateURL = true) {
   document.getElementById('figure-help').textContent = figure.help;
   document.getElementById('viewer').setAttribute('aria-labelledby', `figure-tab-${index}`);
   document.title = `${model.value} · ${figure.title}`;
-  const source = `assets/${model.value}/${figure.file}?v=theme-6`;
+  const source = `assets/${model.value}/${figure.file}?v=polish-1`;
   // "Open figure" opens the file on its own, with no parent to tell it the
   // preference, so pass it in the URL. Only the interactive figure reads it; the
   // static images ignore the parameter harmlessly.

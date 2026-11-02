@@ -1,5 +1,5 @@
 /* Typography and colors from aodesky/um-website, style3.css. */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600&display=swap');
 
 :root {
   --project-font: 'Noto Sans JP', sans-serif;
@@ -29,7 +29,7 @@
     --project-rule: #2e343a;
   }
 }
-body { font-family: var(--project-font); color: var(--project-text); background: var(--project-bg); }
+body { font-family: var(--project-font); font-size: 16px; font-weight: 400; color: var(--project-text); background: var(--project-bg); }
 body h1, body h2, body h3, body h4, body h5, body h6, body .title {
   font-family: var(--project-font);
   color: var(--project-text);
@@ -50,16 +50,16 @@ body a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--project-rule);
   background: var(--project-bg);
   color: var(--project-text);
-  font: 14px/1.5 var(--project-font);
+  font: 400 14px/1.5 var(--project-font);
 }
 .project-links a { display: inline-flex; align-items: center; gap: 6px; }
 .project-links .nav-icon { display: block; flex: 0 0 14px; width: 14px; height: 14px; opacity: .7; }
 /* The brand SVGs carry no fill, so they paint black. They are <img>, which
    cannot inherit currentColor, so invert them in dark mode to keep them
    legible against the dark bar. */
-:root[data-theme="dark"] .project-links .nav-icon { filter: invert(1); opacity: .75; }
+:root[data-theme="dark"] .project-links img.nav-icon { filter: invert(1); opacity: .75; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .project-links .nav-icon { filter: invert(1); opacity: .75; }
+  :root:not([data-theme="light"]) .project-links img.nav-icon { filter: invert(1); opacity: .75; }
 }
 .project-links a { color: var(--project-link); text-decoration: none; white-space: nowrap; }
 .project-links .project-name { display: inline; margin-right: auto; color: var(--project-text); }
@@ -80,22 +80,5 @@ body a:hover { text-decoration: underline; }
   .project-links .author-link { display: none; }
 }
 
-/* Theme preference: follow the system, or choose a fixed appearance. */
-.theme-select {
-  box-sizing: border-box;
-  flex: 0 0 auto;
-  max-width: 90px;
-  min-height: 30px;
-  padding: 3px 5px;
-  border: 1px solid var(--project-rule);
-  border-radius: 6px;
-  background: var(--project-bg);
-  color: var(--project-text);
-  font: inherit;
-  font-size: 13px;
-  cursor: pointer;
-}
-.theme-select:focus-visible {
-  outline: 2px solid var(--project-link);
-  outline-offset: 3px;
-}
+
+.project-links svg.nav-icon { fill: currentColor; }
