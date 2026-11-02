@@ -28,3 +28,12 @@
 .theme-option[aria-checked="true"] { color: var(--theme-text); background: var(--theme-hover); }
 .theme-option .theme-check { width: 12px; height: 12px; visibility: hidden; }
 .theme-option[aria-checked="true"] .theme-check { visibility: visible; }
+
+/* Theme menu: labels and a selected state keep each choice clear. */
+.theme-menu { width: 220px; padding: 6px; gap: 2px; border-radius: 12px; }
+.theme-option { justify-content: flex-start; gap: 12px; padding: 10px 12px; text-align: left; color: var(--theme-text); }
+.theme-option .theme-label { flex: 1; font-size: 15px; line-height: 1.35; }
+.theme-option .theme-label small { display: block; color: var(--theme-muted); font-size: 12px; }
+.theme-option[aria-checked="true"] { background: #dce7fa; }
+:root[data-theme="dark"] .theme-option[aria-checked="true"] { background: #344c70; }
+.theme-option[aria-checked="true"] .theme-check { color: var(--theme-link); }

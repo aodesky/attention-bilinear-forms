@@ -29,7 +29,7 @@
     --project-rule: #2e343a;
   }
 }
-body { font-family: var(--project-font); font-size: 16px; font-weight: 400; color: var(--project-text); background: var(--project-bg); }
+body { font-family: var(--project-font); font-size: 16px; font-weight: 300; color: var(--project-text); background: var(--project-bg); }
 body h1, body h2, body h3, body h4, body h5, body h6, body .title {
   font-family: var(--project-font);
   color: var(--project-text);
@@ -50,7 +50,7 @@ body a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--project-rule);
   background: var(--project-bg);
   color: var(--project-text);
-  font: 400 14px/1.5 var(--project-font);
+  font: 300 14px/1.5 var(--project-font);
 }
 .project-links a { display: inline-flex; align-items: center; gap: 6px; }
 .project-links .nav-icon { display: block; flex: 0 0 14px; width: 14px; height: 14px; opacity: .7; }

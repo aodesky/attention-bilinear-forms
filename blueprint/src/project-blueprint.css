@@ -63,8 +63,8 @@ nav.toc { width: 250px; max-width: 250px; flex: 0 0 250px; margin: 0; padding: 1
 nav.toc[hidden] { display: none !important; }
 nav.toc:not([hidden]) { display: flex; }
 nav.toc ul { min-width: 0; width: 100%; }
-nav.toc ul li { min-width: 0; font-weight: 400; }
-nav.toc ul a { max-width: 100%; padding: 8px 10px; font: 400 .86rem/1.45 var(--project-font); border-radius: 6px; }
+nav.toc ul li { min-width: 0; font-weight: 300; }
+nav.toc ul a { max-width: 100%; padding: 8px 10px; font: 300 .86rem/1.45 var(--project-font); border-radius: 6px; }
 nav.toc .toc_ref { margin-right: .25rem; color: var(--project-muted); }
 nav.toc .toc_entry { font: inherit; }
 nav.toc li.current > a { background: var(--bp-panel); color: var(--project-text); font-weight: 500; }

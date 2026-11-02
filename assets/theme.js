@@ -73,7 +73,7 @@
   }
 
   var ICONS = {
-    system: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+    system: '<circle cx="12" cy="12" r="9"/><path d="M12 3v18a9 9 0 0 0 0-18Z" fill="currentColor" stroke="none"/>',
     light: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
     dark: '<path d="M20.9 13.1A9 9 0 0 1 10.9 3.1 9 9 0 1 0 20.9 13.1Z"/>'
   };
@@ -108,7 +108,7 @@
         picker.innerHTML = '<button type="button" class="theme-toggle" aria-haspopup="menu" aria-expanded="false"></button><div class="theme-menu" role="menu" aria-label="Color theme" hidden></div>';
         var trigger = picker.querySelector('.theme-toggle');
         var menu = picker.querySelector('.theme-menu');
-        ['system', 'light', 'dark'].forEach(function (choice) {
+        ['light', 'system', 'dark'].forEach(function (choice) {
           var option = document.createElement('button');
           option.type = 'button';
           option.className = 'theme-option';
@@ -117,7 +117,7 @@
           option.setAttribute('aria-label', LABELS[choice]);
           option.title = LABELS[choice];
           option.tabIndex = -1;
-          option.innerHTML = icon(ICONS[choice]) + icon('<path d="m5 12 4 4L19 6"/>', 'theme-check');
+          option.innerHTML = icon(ICONS[choice]) + '<span class="theme-label">' + LABELS[choice] + (choice === 'system' ? '<small>Matches your device</small>' : '') + '</span>' + icon('<path d="m5 12 4 4L19 6"/>', 'theme-check');
           option.addEventListener('click', function () { save(choice); apply(choice); close(picker, true); });
           menu.appendChild(option);
         });
