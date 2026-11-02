@@ -50,8 +50,8 @@ def page(tag, models):
   <title>{html.escape(tag)} · Profiles of attention heads</title>
   <meta name="description" content="Explore attention-head profiles: interactive 3-D simplex, projection to Δ, spectral distributions by parity, and clusters by layer.">
   <link rel="stylesheet" href="gallery.css?v={versions['gallery.css']}">
-  <link rel="stylesheet" href="../assets/project-nav.css?v=7">
-  <script src="../assets/theme.js"></script>
+  <link rel="stylesheet" href="../assets/project-nav.css?v=8">
+  <script src="../assets/theme.js?v=system-1"></script>
   <script src="gallery.js?v={versions['gallery.js']}" defer></script>
 </head>
 <body>
@@ -137,6 +137,7 @@ body > div:not(.plot-control) { flex:1; min-height:0; }
 @media(max-width:600px) { .plot-control { font-size:13px; } }
 :root[data-theme="dark"] .plot-control { color:#e8e6e3; }
 </style>
+<script src="../../../assets/theme.js?v=system-1"></script>
 <script>
 /* The figure is generated with a light Plotly template. The gallery tells this
    frame which mode it is being viewed in, and we restyle the plot to match:
@@ -176,16 +177,17 @@ body > div:not(.plot-control) { flex:1; min-height:0; }
      is no parent to ask, so fall back to ?theme=, then the stored preference,
      then the OS setting. */
   function standalone() {
-    var q = null;
-    try { q = new URLSearchParams(location.search).get('theme'); } catch (e) {}
-    if (q === 'dark' || q === 'light') return q;
-    try {
-      var v = localStorage.getItem('theme');
-      if (v === 'dark' || v === 'light') return v;
-    } catch (e) {}
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark' : 'light';
+    return document.documentElement.getAttribute('data-theme') || 'light';
   }
+  function refreshStandalone() {
+    if (window.parent === window) paint(standalone());
+  }
+  if (window.matchMedia) {
+    var media = window.matchMedia('(prefers-color-scheme: dark)');
+    if (media.addEventListener) media.addEventListener('change', refreshStandalone);
+    else if (media.addListener) media.addListener(refreshStandalone);
+  }
+  window.addEventListener('storage', refreshStandalone);
 
   /* Ask the parent once the plot exists; retry briefly while Plotly boots. */
   var tries = 0;

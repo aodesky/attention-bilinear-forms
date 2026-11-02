@@ -6,6 +6,10 @@ function currentThemeMode() {
     ? 'dark' : 'light';
 }
 
+function currentThemePreference() {
+  return document.documentElement.getAttribute('data-theme-preference') || 'system';
+}
+
 'use strict';
 
 const figures = [
@@ -29,11 +33,11 @@ function showFigure(index, updateURL = true) {
   document.getElementById('figure-help').textContent = figure.help;
   document.getElementById('viewer').setAttribute('aria-labelledby', `figure-tab-${index}`);
   document.title = `${model.value} · ${figure.title}`;
-  const source = `assets/${model.value}/${figure.file}?v=theme-5`;
+  const source = `assets/${model.value}/${figure.file}?v=theme-6`;
   // "Open figure" opens the file on its own, with no parent to tell it the
-  // mode, so pass it in the URL. Only the interactive figure reads it; the
+  // preference, so pass it in the URL. Only the interactive figure reads it; the
   // static images ignore the parameter harmlessly.
-  const openHref = index === 0 ? `${source}&theme=${currentThemeMode()}` : source;
+  const openHref = index === 0 ? `${source}&theme=${currentThemePreference()}` : source;
   document.getElementById('open-figure').href = openHref;
   error.hidden = true;
   frame.hidden = index !== 0;
@@ -93,6 +97,12 @@ showHash();
 (function () {
   var mode = currentThemeMode;
   function tell() {
+    if (currentFigure === 0) {
+      var link = document.getElementById('open-figure');
+      var url = new URL(link.href, location.href);
+      url.searchParams.set('theme', currentThemePreference());
+      link.href = url.toString();
+    }
     var f = document.getElementById('interactive-figure');
     if (f && f.contentWindow) {
       try { f.contentWindow.postMessage({ type: 'theme', mode: mode() }, '*'); } catch (e) {}
@@ -101,9 +111,9 @@ showHash();
   window.addEventListener('message', function (e) {
     if (e.data && e.data.type === 'theme-request') tell();
   });
-  // The toggle flips the attribute; observe it rather than patching the button.
+  // Follow both changes of appearance and changes of preference.
   new MutationObserver(tell).observe(document.documentElement, {
-    attributes: true, attributeFilter: ['data-theme']
+    attributes: true, attributeFilter: ['data-theme', 'data-theme-preference']
   });
   if (window.matchMedia) {
     var mq = window.matchMedia('(prefers-color-scheme: dark)');
