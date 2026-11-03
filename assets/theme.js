@@ -117,7 +117,7 @@
           option.setAttribute('aria-label', LABELS[choice]);
           option.title = LABELS[choice];
           option.tabIndex = -1;
-          option.innerHTML = icon(ICONS[choice]) + '<span class="theme-label">' + LABELS[choice] + (choice === 'system' ? '<small>Matches your device</small>' : '') + '</span>' + icon('<path d="m5 12 4 4L19 6"/>', 'theme-check');
+          option.innerHTML = icon(ICONS[choice]) + icon('<path d="m5 12 4 4L19 6"/>', 'theme-check');
           option.addEventListener('click', function () { save(choice); apply(choice); close(picker, true); });
           menu.appendChild(option);
         });
