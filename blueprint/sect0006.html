@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style id="early-theme-style">html { background: #fff; } html[data-theme="dark"] { background: #14171a; }</style>
+<script id="early-theme">(function () {
+  var choice = null;
+  try { choice = new URLSearchParams(location.search).get('theme'); } catch (_) {}
+  if (choice !== 'system' && choice !== 'light' && choice !== 'dark') {
+    try { choice = localStorage.getItem('theme'); } catch (_) {}
+  }
+  if (choice !== 'light' && choice !== 'dark') choice = 'system';
+  var mode = choice === 'system' ? (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : choice;
+  document.documentElement.setAttribute('data-theme', mode);
+  document.documentElement.setAttribute('data-theme-preference', choice);
+  document.documentElement.style.colorScheme = mode;
+})();</script>
+
 <script>
   MathJax = { 
     tex: {
@@ -20,12 +34,12 @@
 <link rel="stylesheet" href="styles/blueprint.css" />
 <link rel="stylesheet" href="styles/project-blueprint.css?v=polish-1" />
 <link rel="stylesheet" href="../assets/project-nav.css?v=polish-1">
-<script src="../assets/theme.js?v=polish-1"></script>
+<link rel="stylesheet" href="../assets/theme.css?v=polish-1">
+<script src="../assets/blueprint.js?v=polish-1" defer></script>
 <link rel="icon" type="image/svg+xml" href="https://andrewodesky.com/res/favicon/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="https://andrewodesky.com/res/favicon/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://andrewodesky.com/res/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/theme.css?v=polish-1">
-<script src="../assets/blueprint.js?v=polish-1" defer></script>
+<script src="../assets/theme.js?v=polish-1"></script>
 </head>
 
 <body>
@@ -36,7 +50,7 @@
   <a href="https://github.com/aodesky/attention-bilinear-forms" aria-label="GitHub" title="GitHub"><img src="../assets/github.svg" class="nav-icon" width="14" height="14" alt="" aria-hidden="true"><span class="nav-label">GitHub</span></a>
   <a href="https://arxiv.org/abs/2609.22990" aria-label="arXiv" title="arXiv"><img src="../assets/arxiv.svg" class="nav-icon" width="14" height="14" alt="" aria-hidden="true"><span class="nav-label">arXiv</span></a>
   <a href="https://andrewodesky.com" class="author-link">Andrew O’Desky</a>
-  <div class="theme-picker"></div>
+<div class="theme-picker"></div>
 </nav>
 <header>
 <svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>

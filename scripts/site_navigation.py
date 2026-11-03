@@ -41,10 +41,29 @@ def theme_script_tag(prefix="../"):
     return f'<script src="{prefix}assets/theme.js?v=polish-1"></script>'
 
 
+# Set the canvas color before stylesheets or MathJax can delay the first paint.
+EARLY_THEME = """<style id="early-theme-style">html { background: #fff; } html[data-theme="dark"] { background: #14171a; }</style>
+<script id="early-theme">(function () {
+  var choice = null;
+  try { choice = new URLSearchParams(location.search).get('theme'); } catch (_) {}
+  if (choice !== 'system' && choice !== 'light' && choice !== 'dark') {
+    try { choice = localStorage.getItem('theme'); } catch (_) {}
+  }
+  if (choice !== 'light' && choice !== 'dark') choice = 'system';
+  var mode = choice === 'system' ? (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : choice;
+  document.documentElement.setAttribute('data-theme', mode);
+  document.documentElement.setAttribute('data-theme-preference', choice);
+  document.documentElement.style.colorScheme = mode;
+})();</script>
+"""
+
+
 def add_blueprint_navigation(document: str) -> str:
     """Install the top bar while preserving the renderer's own header and content."""
     if '</head>' not in document or '<body>' not in document:
         raise ValueError('Blueprint page is missing its head or body')
+    document = re.sub(r'<style id="early-theme-style">.*?</style>\s*<script id="early-theme">.*?</script>\s*', '', document, flags=re.S)
+    document = document.replace('<head>', '<head>\n' + EARLY_THEME, 1)
     document = re.sub(r'<nav class="project-links".*?</nav>\n?', '', document, flags=re.S)
     document = re.sub(r'<link rel="stylesheet" href="../assets/project-nav.css[^"]*">\n?', '', document)
     document = re.sub(r'<script src="../assets/theme.js[^"]*"></script>\n?', '', document)
