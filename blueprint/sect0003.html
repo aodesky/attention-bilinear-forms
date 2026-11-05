@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/blueprint.css" />
-<link rel="stylesheet" href="styles/project-blueprint.css?v=polish-1" />
+<link rel="stylesheet" href="styles/project-blueprint.css" />
 <link rel="stylesheet" href="../assets/project-nav.css?v=polish-1">
 <link rel="stylesheet" href="../assets/theme.css?v=polish-1">
 <script src="../assets/blueprint.js?v=polish-1" defer></script>
@@ -164,10 +164,10 @@
   </div>
   <div class="definition_thmcontent">
   <p>    For \(L\ne 0\), let \(\alpha \) and \(\beta \) be the decreasing lists of positive eigenvalues of \(S\) and absolute values of its negative eigenvalues, padded with zeros to equal length. Define \(\pi (L)=(a,b,c,d)\) by </p>
-<div class="displaymath" id="a0000000020">
+<div class="displaymath" id="a0000000021">
   \[  a=\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2},\qquad b=\frac{2\langle \alpha ,\beta \rangle }{\lVert L\rVert ^2},\qquad c=\frac{\lVert (\alpha -\beta )_+\rVert ^2}{\lVert L\rVert ^2},\qquad d=\frac{\lVert (\alpha -\beta )_-\rVert ^2}{\lVert L\rVert ^2}.  \]
 </div>
-<p> Positive and negative parts are taken entrywise. Lean pads both lists to length \(N\) and includes the denominator in each definition. </p>
+<p> Here \(x_+=\max (x,0)\) and \(x_-=\max (-x,0)\), taken entrywise. Lean pads both lists to length \(N\) and includes the denominator in each definition. </p>
 
   </div>
 </div>
@@ -187,7 +187,7 @@
 
     <a class="icon proof" href="sect0003.html#lem:profile-scale">#</a>
     
-    <a class="icon proof" href="sect0003.html#a0000000021"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0003.html#a0000000022"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -248,7 +248,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000021">
+<div class="proof_wrapper" id="a0000000022">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -256,7 +256,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Both triples are the same expressions in the eigenvalues of \(S\), divided by \(\lVert L\rVert ^2\) and by \(\lVert S\rVert ^2\) respectively, and \(\lVert S\rVert ^2/\lVert L\rVert ^2=1-\lVert T\rVert ^2/\lVert L\rVert ^2=1-a\). </p>
+  <p> The lists \(\alpha \) and \(\beta \) of \(L\) and of \(S\) are the same, since \(S\) is its own symmetric part. So \(b,c,d\) and \(b_S,c_S,d_S\) are the same expressions in \(\alpha ,\beta \), divided by \(\lVert L\rVert ^2\) and by \(\lVert S\rVert ^2\) respectively. By Lemma&#160;5, \(\lVert S\rVert ^2/\lVert L\rVert ^2=1-\lVert T\rVert ^2/\lVert L\rVert ^2=1-a\). </p>
 
   </div>
 </div>
@@ -277,7 +277,7 @@
 
     <a class="icon proof" href="sect0003.html#prop:rank-one">#</a>
     
-    <a class="icon proof" href="sect0003.html#a0000000022"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0003.html#a0000000023"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -345,14 +345,14 @@
   </div>
   <div class="proposition_thmcontent">
   <p>    If \(L\) has rank one and unit norm, then with \(t=\operatorname {tr}(L)\), </p>
-<div class="displaymath" id="a0000000023">
+<div class="displaymath" id="a0000000024">
   \[  \pi (L)=\Bigl(\frac{1-t^2}2,\frac{1-t^2}2,(t_+)^2,(t_-)^2\Bigr).  \]
 </div>
 <p> For \(N\ge 2\) the set of profiles of rank-one matrices is \(\Theta =\{ a=b,\  cd=0\} \subset \Delta _3\). (For \(N=1\) only the two vertices \(c=1\) and \(d=1\) occur, so the set statement needs \(N\ge 2\).) </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000022">
+<div class="proof_wrapper" id="a0000000023">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -360,7 +360,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Write \(L=uv^T\) with unit vectors, so \(t=\langle u,v\rangle \); the profile is invariant under orthogonal changes of coordinates. If \(u=\pm v\), bring \(u\) to the first basis vector. Otherwise \(e=(u+v)/\sqrt{2+2t}\) and \(f=(v-u)/\sqrt{2-2t}\) are orthonormal; in a basis extending them \(L\) is the block \(\tfrac 12\bigl(\begin{smallmatrix} 1+t
+  <p> Write \(L=uv^T\) with unit vectors \(u,v\). The only possible nonzero eigenvalue of \(L\) is \(\langle u,v\rangle \), with eigenvector \(u\), so \(t=\langle u,v\rangle \). The profile is unchanged by an orthogonal change of coordinates \(L\mapsto U^TLU\), so we may take \(u\) to be the first basis vector. If \(u=\pm v\), then \(L\) has a single nonzero entry \(\pm 1\), and its profile is \((0,0,1,0)\) or \((0,0,0,1)\). If \(|t|{\lt}1\), the vectors \(e=(u+v)/\sqrt{2+2t}\) and \(f=(v-u)/\sqrt{2-2t}\) are orthonormal. In an orthonormal basis that starts with \(e,f\), the matrix \(L\) is zero except for the top-left block \(\tfrac 12\bigl(\begin{smallmatrix} 1+t
 
 & \sqrt{1-t^2}
 
@@ -368,7 +368,7 @@
 
 & t-1
 
-\end{smallmatrix}\bigr)\), whose symmetric part is \(\operatorname {diag}((1+t)/2,(t-1)/2)\). Read off the profile. Every point of \(\Theta \) arises from \(u=e_1\), \(v=te_1+\sqrt{1-t^2}\, e_2\). </p>
+\end{smallmatrix}\bigr)\). Its symmetric part is \(\operatorname {diag}((1+t)/2,(t-1)/2)\), and its antisymmetric part has \(\lVert T\rVert ^2=(1-t^2)/2\), which gives the formula. The paper does not spell out the set equality. The Lean proof applies the same computation to \(s\, uv^T\) with \(s{\gt}0\), which covers every rank-one matrix, and obtains every point of \(\Theta \) from \(u=e_1\) and \(v=te_1+\sqrt{1-t^2}\, e_2\) with \(t\in [-1,1]\); this uses \(N\ge 2\). </p>
 
   </div>
 </div>
@@ -389,7 +389,7 @@
 
     <a class="icon proof" href="sect0003.html#thm:accumulation">#</a>
     
-    <a class="icon proof" href="sect0003.html#a0000000024"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0003.html#a0000000025"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -467,14 +467,14 @@
   </div>
   <div class="theorem_thmcontent">
   <p>    Let \(X{\gt}0\) have finite nonzero second moment, fix \(u,v{\gt}0\) and \(\rho =u/v\). Let \(N_n\ge 2n\) and let \(S_n\in M_{N_n}(\mathbb {R})\) be symmetric with eigenvalues \(vX_1,\ldots ,vX_n\), \(-uX'_1,\ldots ,-uX'_n\) and zeros, where the \(X_i,X'_i\) are independent copies of \(X\). Then almost surely </p>
-<div class="displaymath" id="a0000000025">
+<div class="displaymath" id="a0000000026">
   \[  \pi (S_n)\longrightarrow \frac1{1+\rho ^2}\bigl(0,\, 2\rho ,\, (1-\rho )_+^2,\, (\rho -1)_+^2\bigr)\in p(\Theta ),  \]
 </div>
 <p> where \(p(a,b,c,d)=(0,a+b,c,d)\). As \(\rho \) ranges over \((0,1]\) the limit traces the edge \(\{ d=0\} \), and over \([1,\infty )\) the edge \(\{ c=0\} \). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000024">
+<div class="proof_wrapper" id="a0000000025">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -482,7 +482,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Write \(\beta _n=\rho \alpha _n+\varepsilon _n\) for the sorted lobes; by Lemma 6, \(\delta _n=\lVert \varepsilon _n\rVert /\lVert \alpha _n\rVert \to 0\) almost surely. By Cauchy–Schwarz, the triangle inequality and the \(1\)-Lipschitz property of \(x\mapsto x_\pm \), the ratios \(\langle \alpha ,\beta \rangle /\lVert \alpha \rVert ^2\), \(\lVert \beta \rVert ^2/\lVert \alpha \rVert ^2\) and \(\lVert (\alpha -\beta )_\pm \rVert /\lVert \alpha \rVert \) lie within \(\delta _n\), \(\delta _n^2+2\rho \delta _n\) and \(\delta _n\) of \(\rho \), \(\rho ^2\) and \((1-\rho )_\pm \). Divide by \(\lVert S_n\rVert ^2/\lVert \alpha _n\rVert ^2=1+\lVert \beta _n\rVert ^2/\lVert \alpha _n\rVert ^2\). On each edge, \(b(\rho )=2\rho /(1+\rho ^2)\) is a strictly monotone bijection onto \((0,1]\). </p>
+  <p> Let \(\alpha _n\) and \(\beta _n\) be the positive eigenvalues of \(S_n\) and the absolute values of its negative eigenvalues, each in decreasing order. By Lemma&#160;6, \(\beta _n=\rho \alpha _n+\varepsilon _n\) with \(\delta _n=\lVert \varepsilon _n\rVert /\lVert \alpha _n\rVert \to 0\) almost surely. The Cauchy–Schwarz and triangle inequalities give \(|\langle \alpha _n,\beta _n\rangle /\lVert \alpha _n\rVert ^2-\rho |\le \delta _n\) and \(|\lVert \beta _n\rVert ^2/\lVert \alpha _n\rVert ^2-\rho ^2|\le \delta _n^2+2\rho \delta _n\). Since \(x\mapsto x_\pm \) is \(1\)-Lipschitz in each entry and \(((1-\rho )\alpha _n)_\pm =(1-\rho )_\pm \alpha _n\), also \(|\lVert (\alpha _n-\beta _n)_\pm \rVert /\lVert \alpha _n\rVert -(1-\rho )_\pm |\le \delta _n\). The profile does not change when \(S_n\) is rescaled, so divide numerators and the denominator \(\lVert S_n\rVert ^2=\lVert \alpha _n\rVert ^2+\lVert \beta _n\rVert ^2\) by \(\lVert \alpha _n\rVert ^2\); the ratios converge to the stated limit. The paper does not prove the remaining claims; the Lean proof does so as follows. The limit lies in \(p(\Theta )\) because its last two coordinates have product zero, and \(b(\rho )=2\rho /(1+\rho ^2)\) is a strictly increasing bijection from \((0,1]\) onto \((0,1]\) and a strictly decreasing bijection from \([1,\infty )\) onto \((0,1]\). </p>
 
   </div>
 </div>

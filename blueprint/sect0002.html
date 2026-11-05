@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/blueprint.css" />
-<link rel="stylesheet" href="styles/project-blueprint.css?v=polish-1" />
+<link rel="stylesheet" href="styles/project-blueprint.css" />
 <link rel="stylesheet" href="../assets/project-nav.css?v=polish-1">
 <link rel="stylesheet" href="../assets/theme.css?v=polish-1">
 <script src="../assets/blueprint.js?v=polish-1" defer></script>
@@ -135,7 +135,7 @@
   </div>
   <div class="definition_thmcontent">
   <p>   For \(L\in M_N(\mathbb {R})\), put </p>
-<div class="displaymath" id="a0000000015">
+<div class="displaymath" id="a0000000016">
   \[  S=\tfrac 12(L+L^T),\qquad T=\tfrac 12(L-L^T),\qquad \lVert L\rVert ^2=\operatorname {tr}(L^TL).  \]
 </div>
 <p> Then \(L=S+T\), with \(S\) symmetric and \(T\) antisymmetric. </p>
@@ -159,7 +159,7 @@
 
     <a class="icon proof" href="sect0002.html#lem:pairing-bound">#</a>
     
-    <a class="icon proof" href="sect0002.html#a0000000016"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0002.html#a0000000017"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -217,14 +217,14 @@
   </div>
   <div class="lemma_thmcontent">
   <p>    Let \(S\) be symmetric, let \(\lambda _\pm \) be its sorted positive eigenvalues and absolute values of negative eigenvalues, padded with zeros to equal length, and let \(\mathcal P=1-\lVert \lambda _+-\lambda _-\rVert /\lVert S\rVert \). If \(\lambda _+\ne 0\) and \(\rho =\lVert \lambda _-\rVert /\lVert \lambda _+\rVert \), then </p>
-<div class="displaymath" id="a0000000017">
+<div class="displaymath" id="a0000000018">
   \[  \mathcal P=1-\sqrt{1-\frac{2\langle \lambda _+,\lambda _-\rangle }{\lVert S\rVert ^2}} \le 1-\frac{|1-\rho |}{\sqrt{1+\rho ^2}},  \]
 </div>
 <p> with equality if and only if \(\lambda _-=\rho \lambda _+\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000016">
+<div class="proof_wrapper" id="a0000000017">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -232,7 +232,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Since \(\lVert S\rVert ^2=\lVert \lambda _+\rVert ^2+\lVert \lambda _-\rVert ^2\), expanding \(\lVert \lambda _+-\lambda _-\rVert ^2\) gives the equality. The triangle inequality gives \(\lVert \lambda _+-\lambda _-\rVert \ge |1-\rho |\lVert \lambda _+\rVert \), with equality if and only if one list is a nonnegative multiple of the other; divide by \(\lVert S\rVert =\sqrt{1+\rho ^2}\lVert \lambda _+\rVert \). </p>
+  <p> The entries of \(\lambda _+\) and \(\lambda _-\) are the absolute values of the eigenvalues of \(S\), padded with zeros, so \(\lVert S\rVert ^2=\lVert \lambda _+\rVert ^2+\lVert \lambda _-\rVert ^2\). Expanding gives \(\lVert \lambda _+-\lambda _-\rVert ^2=\lVert S\rVert ^2-2\langle \lambda _+,\lambda _-\rangle \), which is the equality. By the reverse triangle inequality, \(\lVert \lambda _+-\lambda _-\rVert \ge \bigl|\lVert \lambda _+\rVert -\lVert \lambda _-\rVert \bigr|=|1-\rho |\lVert \lambda _+\rVert \), with equality exactly when one list is a nonnegative multiple of the other, that is, when \(\lambda _-=\rho \lambda _+\). Dividing by \(\lVert S\rVert =\sqrt{1+\rho ^2}\, \lVert \lambda _+\rVert \) gives the inequality. </p>
 
   </div>
 </div>
@@ -252,7 +252,7 @@
 
     <a class="icon proof" href="sect0002.html#lem:rank-balance">#</a>
     
-    <a class="icon proof" href="sect0002.html#a0000000018"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0002.html#a0000000019"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -307,7 +307,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000018">
+<div class="proof_wrapper" id="a0000000019">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -315,7 +315,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> The quadratic form of \(S\) vanishes on \(\ker L\), of dimension at least \(N-n\). The span of the eigenvectors with positive eigenvalues meets \(\ker L\) only in \(0\), so its dimension \(n_+\) is at most \(n\). For \(n_-\), apply the same argument to \(-L\). </p>
+  <p> Let \(K=\ker L\), of dimension at least \(N-n\). For \(x\in K\), \(2x^TSx=x^TLx+x^TL^Tx=0\), so the quadratic form of \(S\) vanishes on \(K\). Let \(V_+\) be the span of the eigenvectors of \(S\) with positive eigenvalues; its dimension \(n_+\) is the number of positive eigenvalues. A nonzero \(x\in V_+\cap K\) would have both \(x^TSx{\gt}0\) and \(x^TSx=0\), so \(V_+\cap K=0\). Hence \(n_++(N-n)\le N\), that is, \(n_+\le n\). The same argument with the eigenvectors for negative eigenvalues gives \(n_-\le n\). </p>
 
   </div>
 </div>
@@ -336,7 +336,7 @@
 
     <a class="icon proof" href="sect0002.html#thm:balanced">#</a>
     
-    <a class="icon proof" href="sect0002.html#a0000000019"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0002.html#a0000000020"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -403,11 +403,11 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>    Let \(Q,K\colon C\to H\) with \(\dim H=n\) and \(\dim C=N\). If the stacked map \(J=(Q,K)\colon C\to H\oplus H\) is surjective, the symmetric form \(S(x,y)=\tfrac 12(\langle Kx,Qy\rangle +\langle Qx,Ky\rangle )\) has signature \((n_+,n_-,n_0)=(n,n,N-2n)\). In Lean the signature is read off the Gram matrix of \(S\) in an arbitrary basis of \(C\). </p>
+  <p>    Let \(H\) be a real inner product space of dimension \(n\), let \(\dim C=N\), and let \(Q,K\colon C\to H\) be linear. If the stacked map \(J=(Q,K)\colon C\to H\oplus H\) is surjective, the symmetric form \(S(x,y)=\tfrac 12(\langle Kx,Qy\rangle +\langle Qx,Ky\rangle )\) has signature \((n_+,n_-,n_0)=(n,n,N-2n)\). In Lean the signature is read off the Gram matrix of \(S\) in an arbitrary basis of \(C\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000019">
+<div class="proof_wrapper" id="a0000000020">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -415,7 +415,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> The Gram matrix of \(2S\) is the symmetric part of \(2K^TQ\), which has rank at most \(n\), so Lemma 3 gives \(n_\pm \le n\). The radical of \(S\) is \(\ker J\): if \(S(x,\cdot )=0\) then \(B(Jx,\cdot )\) vanishes on \(J(C)=H\oplus H\) for the nondegenerate form \(B((a,b),(a',b'))=\langle a,b'\rangle +\langle b,a'\rangle \). By surjectivity \(\dim \ker J=N-2n\), so \(S\) has rank \(2n=n_++n_-\), which forces \(n_+=n_-=n\). </p>
+  <p> Choose a basis of \(C\) and an orthonormal basis of \(H\), and write \(Q,K\) for the matrices of the two maps. The Gram matrix of \(2S\) is \(K^TQ+Q^TK\), the symmetric part of \(2K^TQ\). Since \(K^TQ\) factors through \(H\), it has rank at most \(n\), and Lemma&#160;3 gives \(n_+\le n\) and \(n_-\le n\). It remains to show that \(S\) has rank \(2n\). On \(E=H\oplus H\) the symmetric form \(B((a,b),(a',b'))=\langle a,b'\rangle +\langle b,a'\rangle \) is nondegenerate and satisfies \(B(Jx,Jy)=2S(x,y)\). So if \(S(x,\cdot )=0\), then \(B(Jx,\cdot )\) vanishes on \(J(C)=E\) and \(Jx=0\); conversely \(Jx=0\) gives \(S(x,\cdot )=0\). The radical of \(S\) is therefore \(\ker J\), which has dimension \(N-2n\) because \(J\) is surjective. Thus \(n_++n_-=2n\), and with \(n_\pm \le n\) this forces \(n_+=n_-=n\) and \(n_0=N-2n\). </p>
 
   </div>
 </div>

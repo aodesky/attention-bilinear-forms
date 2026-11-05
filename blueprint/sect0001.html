@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/blueprint.css" />
-<link rel="stylesheet" href="styles/project-blueprint.css?v=polish-1" />
+<link rel="stylesheet" href="styles/project-blueprint.css" />
 <link rel="stylesheet" href="../assets/project-nav.css?v=polish-1">
 <link rel="stylesheet" href="../assets/theme.css?v=polish-1">
 <script src="../assets/blueprint.js?v=polish-1" defer></script>
@@ -200,7 +200,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>    An attention function whose scoring function has the form \(\sigma (x)=(P_{k-1}(x_1,x_k),\ldots ,P_0(x_k,x_k))\) for polynomials \(P_d\colon C^2\to \mathbb {R}\) of bidegree at most \((1,1)\) is biaffine; it is bilinear if every \(P_d\) is a bilinear form. </p>
+  <p>    An attention function whose scoring function has the form \(\sigma (x)=(P_{k-1}(x_1,x_k),\ldots ,P_0(x_k,x_k))\) for polynomials \(P_d\colon C^2\to \mathbb {R}\) of bidegree at most \((1,1)\) (degree at most one in each argument) is biaffine; it is bilinear if every \(P_d\) is a bilinear form. </p>
 
   </div>
 </div>
@@ -269,7 +269,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p>The paper calls this elementary and gives no proof. Each monomial of bidegree at most \((1,1)\) is a product of an affine function of \(u\) and an affine function of \(v\); expanding the product shows that the four expressions are bilinear, linear, linear and constant, and they add up to \(P\). Evaluating any decomposition at \((0,0)\), \((u,0)\) and \((0,v)\) gives the formulas, hence uniqueness. </p>
+  <p>The paper calls this lemma elementary and gives no proof; this sketch follows the Lean proof. In coordinates, \(P\) is a sum of monomials \(f(u)g(v)\) in which each of \(f\) and \(g\) is either the constant \(1\) or a single coordinate function. Substituting this sum into the four formulas shows that \(B\) is bilinear, \(L\) and \(R\) are linear and \(D\) is constant, and that \(B+L+R+D=P\). For uniqueness, evaluate an arbitrary decomposition at \((0,0)\), \((u,0)\) and \((0,v)\): this recovers \(D\), then \(L\) and \(R\), and then \(B\). </p>
 
   </div>
 </div>
@@ -339,7 +339,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>    Let a bilinear attention function on a head space \(H\) have forms \(B_{k-1},\ldots ,B_0\), let \(L_j\colon H\to H^\vee \), \(L_j(v)(u)=B_j(u,v)\), assume \(B_0\) nondegenerate, and set \(T_d=L_0^{-1}L_d\). The function is RoPE-like if \(T_{d+e}=T_dT_e\) whenever \(d,e\ge 0\) and \(d+e{\lt}k\). </p>
+  <p>    Let \(H\) be a finite-dimensional real vector space (the head space), and let a bilinear attention function on \(H\) have forms \(B_{k-1},\ldots ,B_0\), let \(L_j\colon H\to H^\vee \), \(L_j(v)(u)=B_j(u,v)\), assume \(B_0\) nondegenerate, and set \(T_d=L_0^{-1}L_d\). The function is RoPE-like if \(T_{d+e}=T_dT_e\) whenever \(d,e\ge 0\) and \(d+e{\lt}k\). </p>
 
   </div>
 </div>
@@ -422,7 +422,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> The RoPE-like condition gives \(L_{d+e}=L_dL_0^{-1}L_e\), in particular \(L_{d+1}=L_dS\) with \(S=T_1\). By induction \(L_d=L_0S^d\), that is \(T_d=S^d\). Conversely \(S^{d+e}=S^dS^e\). </p>
+  <p> Suppose the function is RoPE-like and put \(S=T_1\). Since \(L_d=L_0T_d\), the relation \(T_{d+e}=T_dT_e\) reads \(L_{d+e}=L_dL_0^{-1}L_e\); with \(e=1\) it gives \(L_{d+1}=L_dS\). Induction on \(d\) gives \(L_d=L_0S^d\), that is, \(T_d=S^d\). Conversely, if \(T_d=S^d\) then \(T_{d+e}=S^{d+e}=S^dS^e=T_dT_e\). Taking \(d=1\) in \(T_d=S^d\) shows that \(S=T_1\), so \(S\) is unique. </p>
 
   </div>
 </div>
@@ -625,7 +625,7 @@
         </div>
   </div>
   <div class="proposition_thmcontent">
-  <p>    Fix a norm on \(C\) and put \(\lVert x\rVert _\infty =\max _k\lVert x_k\rVert \). If \(\lVert M(y)\rVert \le L\lVert y\rVert \) for all \(y\) and \(V=\sum _i\lVert V_i\rVert \) (operator norms), then \(\lVert T(x)-x\rVert _\infty \le (L+V+LV)\lVert x\rVert _\infty \). </p>
+  <p>    Fix a norm on \(C\) and put \(\lVert x\rVert _\infty =\max _k\lVert x_k\rVert \) for \(x\in C^\ell \). Let \(A_1,\ldots ,A_h\) be attention heads and \(V_1,\ldots ,V_h\colon C\to C\) linear maps, let \(A(x)_k=\sum _iV_i(A_i(x)_k)\) be the attention block, and let \(T=T_M\circ T_A\) with \(T_A(x)_k=x_k+A(x)_k\) and \(T_M\) as above. If \(\lVert M(y)\rVert \le L\lVert y\rVert \) for all \(y\) and \(V=\sum _i\lVert V_i\rVert \) (operator norms), then \(\lVert T(x)-x\rVert _\infty \le (L+V+LV)\lVert x\rVert _\infty \). </p>
 
   </div>
 </div>
@@ -637,7 +637,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Each component of a head is a convex combination of its inputs, so its norm is at most \(\lVert x\rVert _\infty \); the attention block is then bounded by \(V\lVert x\rVert _\infty \). The \(k\)-th component of \(T(x)-x\) is \(A(x)_k+M(x_k+A(x)_k)\), whose norm is at most \(V\lVert x\rVert _\infty +L(1+V)\lVert x\rVert _\infty \). The Lean statement assumes only that each head returns convex combinations of its inputs, which is what the proof uses. </p>
+  <p> The attention weights of each attention function lie in the simplex, so \(\lVert \sum _j\omega _jx_j\rVert \le \sum _j\omega _j\lVert x_j\rVert \le \lVert x\rVert _\infty \). Hence every component of every head \(A_i\) has norm at most \(\lVert x\rVert _\infty \), and the triangle inequality with the operator norms gives \(\lVert A(x)_k\rVert \le V\lVert x\rVert _\infty \) for the attention block. Since \(T=T_M\circ T_A\), the \(k\)-th component of \(T(x)-x\) is \(A(x)_k+M(x_k+A(x)_k)\). Its norm is at most \(V\lVert x\rVert _\infty +L(1+V)\lVert x\rVert _\infty =(L+V+LV)\lVert x\rVert _\infty \). </p>
 
   </div>
 </div>
@@ -736,7 +736,11 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Define \(\widehat B(u+\alpha e,v+\beta e)=\langle Q(v+\beta p_k),K(u+\alpha p_j)\rangle /\sqrt n\), which expands to the paper’s four-term formula. It agrees with the QKV score on the chart \(C+e\), so the weights agree there and \(\sum _j\omega _j(x_j+e)=a_k(x)+e\). Extend \(V\) and \(M\) by ignoring the new coordinate. The homogenized weights are simplex-valued on all of \(\widehat C^k\) because \(\widehat\sigma (u+\alpha e,\ldots )=\sigma (x)\) with \(x_j=u_j+(\alpha _j-1)p_j\); this also gives their smoothness. The Lean statement allows any potentials, softmax included. </p>
+  <p> For inputs at positions \(j\le k\), define a bilinear form on \(\widehat C\) by </p>
+<div class="displaymath" id="a0000000015">
+  \[  \widehat B(u+\alpha e,v+\beta e)=\tfrac 1{\sqrt n}\bigl(\langle Qv,Ku\rangle +\alpha \langle Qv,Kp_j\rangle +\beta \langle Qp_k,Ku\rangle +\alpha \beta \langle Qp_k,Kp_j\rangle \bigr).  \]
+</div>
+<p> Expanding the QKV score shows \(\widehat B(\iota x_j,\iota x_k)\) equals the score of \(x_k\) on \(x_j\), so the two heads have the same scores, hence the same attention weights \(\omega _j\), on the chart \(\iota (C)=C+e\). Since the weights sum to one, \(\widehat a_k(\iota x_1,\ldots ,\iota x_k)=\sum _j\omega _j(x_j+e)=\iota (a_k(x_1,\ldots ,x_k))\). Finally put \(\widehat V(u+\alpha e)=V(u)\) and \(\widehat M(u+\alpha e)=M(u)\); then \(\iota (x)+\widehat V(\iota z)=\iota (x+Vz)\) and \(\iota (x)+\widehat M(\iota x)=\iota (x+M(x))\), which gives \(\widehat T\circ \iota ^\ell =\iota ^\ell \circ T\). The paper leaves implicit that the homogenized weights are smooth and simplex-valued on all of \(\widehat C^k\), not only on the chart. The Lean proof checks this from the identity \(\widehat\sigma (u_1+\alpha _1e,\ldots )=\sigma (x)\) with \(x_j=u_j+(\alpha _j-1)p_j\). </p>
 
   </div>
 </div>

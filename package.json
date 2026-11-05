@@ -1,0 +1,8 @@
+{
+  "name": "blueprint-site-checks",
+  "private": true,
+  "description": "Pinned MathJax for scripts/check_math.py; keep in step with the version the pages load.",
+  "devDependencies": {
+    "mathjax": "3.2.2"
+  }
+}

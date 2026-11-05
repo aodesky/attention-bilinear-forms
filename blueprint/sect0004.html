@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
 <link rel="stylesheet" href="styles/blueprint.css" />
-<link rel="stylesheet" href="styles/project-blueprint.css?v=polish-1" />
+<link rel="stylesheet" href="styles/project-blueprint.css" />
 <link rel="stylesheet" href="../assets/project-nav.css?v=polish-1">
 <link rel="stylesheet" href="../assets/theme.css?v=polish-1">
 <script src="../assets/blueprint.js?v=polish-1" defer></script>
@@ -106,7 +106,7 @@
 
     <a class="icon proof" href="sect0004.html#lem:energy">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000026"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000027"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -164,17 +164,17 @@
   </div>
   <div class="lemma_thmcontent">
   <p>    For any \(L\in M_N(\mathbb {R})\), </p>
-<div class="displaymath" id="a0000000027">
+<div class="displaymath" id="a0000000028">
   \[  \lVert L\rVert ^2=\lVert S\rVert ^2+\lVert T\rVert ^2,\qquad \lVert S\rVert ^2=\tfrac 12\lVert L\rVert ^2+\tfrac 12\operatorname {tr}(L^2),\qquad \lVert T\rVert ^2=\tfrac 12\lVert L\rVert ^2-\tfrac 12\operatorname {tr}(L^2).  \]
 </div>
 <p> For \(L\ne 0\), division gives </p>
-<div class="displaymath" id="a0000000028">
+<div class="displaymath" id="a0000000029">
   \[  \frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}=\frac12+\frac{\operatorname {tr}(L^2)}{2\lVert L\rVert ^2}, \qquad \frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}=\frac12-\frac{\operatorname {tr}(L^2)}{2\lVert L\rVert ^2}.  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000026">
+<div class="proof_wrapper" id="a0000000027">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -182,7 +182,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Expand the squared Frobenius norms entrywise, using invariance under transpose and \(\sum _{i,j}L_{ij}L_{ji}=\operatorname {tr}(L^2)\). Adding the two identities gives the orthogonal decomposition of the energy. </p>
+  <p> Symmetric and antisymmetric matrices are orthogonal for the Frobenius inner product \(\langle X,Y\rangle =\operatorname {tr}(XY^T)\): for \(S\) symmetric and \(T\) antisymmetric, transposing and using cyclicity gives \(\operatorname {tr}(ST^T)=-\operatorname {tr}(ST)=\operatorname {tr}(TS)=\operatorname {tr}(ST)\), so \(\operatorname {tr}(ST)=0\). Since \(L=S+T\), this gives \(\lVert L\rVert ^2=\lVert S\rVert ^2+\lVert T\rVert ^2\). Expanding \(\lVert S\rVert ^2=\tfrac 14\bigl(\langle L,L\rangle +2\langle L,L^T\rangle +\langle L^T,L^T\rangle \bigr)\) and using \(\langle L,L^T\rangle =\operatorname {tr}(L^2)\) gives the formula for \(\lVert S\rVert ^2\); the formula for \(\lVert T\rVert ^2\) follows by subtraction. Dividing by \(\lVert L\rVert ^2\) gives the ratios. </p>
 
   </div>
 </div>
@@ -202,7 +202,7 @@
 
     <a class="icon proof" href="sect0004.html#cor:iid">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000029"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000030"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -264,17 +264,17 @@
   </div>
   <div class="corollary_thmcontent">
   <p>    Let the entries of \(L\in M_N(\mathbb {R})\) be independent, mean zero, and square-integrable with common variance \(\sigma ^2\). Then </p>
-<div class="displaymath" id="a0000000030">
+<div class="displaymath" id="a0000000031">
   \[  \mathbb {E}\lVert L\rVert ^2=N^2\sigma ^2,\quad \mathbb {E}\lVert S\rVert ^2=\frac{N(N+1)}2\sigma ^2,\quad \mathbb {E}\lVert T\rVert ^2=\frac{N(N-1)}2\sigma ^2.  \]
 </div>
 <p> For \(N{\gt}0\) and \(\sigma \ne 0\), the ratios to \(\mathbb {E}\lVert L\rVert ^2\) are \((N+1)/(2N)\) and \((N-1)/(2N)\) respectively. If the entries are iid nondegenerate centered Gaussian, then also </p>
-<div class="displaymath" id="a0000000031">
+<div class="displaymath" id="a0000000032">
   \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N}.  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000029">
+<div class="proof_wrapper" id="a0000000030">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -282,7 +282,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Independence and centering kill the off-diagonal cross terms, giving \(\mathbb {E}\operatorname {tr}(L^2)=N\sigma ^2\). Apply the energy identities. In the Gaussian case, symmetry of the joint law makes the expected normalized squared coordinate equal to \(1/N^2\), while sign symmetry cancels the remaining normalized cross terms. </p>
+  <p> For \(i{\lt}j\), \(S_{ij}=S_{ji}=\tfrac 12(L_{ij}+L_{ji})\) with \(L_{ij},L_{ji}\) independent of variance \(\sigma ^2\), so each of the \(N(N-1)/2\) off-diagonal pairs contributes \(\sigma ^2\) to \(\mathbb {E}\lVert S\rVert ^2\). The diagonal contributes \(\sum _i\mathbb {E}L_{ii}^2=N\sigma ^2\), so \(\mathbb {E}\lVert S\rVert ^2=N(N+1)\sigma ^2/2\). The antisymmetric part is computed in the same way, with no diagonal contribution. For iid Gaussian entries, \(L\) is an isotropic Gaussian vector in the \(N^2\)-dimensional space \(M_N(\mathbb {R})\). The symmetric and antisymmetric matrices form orthogonal subspaces of dimensions \(N(N+1)/2\) and \(N(N-1)/2\), so the expected fraction of \(\lVert L\rVert ^2\) in each is its dimension divided by \(N^2\). </p>
 
   </div>
 </div>
@@ -302,7 +302,7 @@
 
     <a class="icon proof" href="sect0004.html#cor:qk">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000032"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000033"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -362,14 +362,14 @@
   </div>
   <div class="corollary_thmcontent">
   <p>    Let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent, mean-zero, square-integrable entries, with variances \(\sigma _K^2\) and \(\sigma _Q^2\) respectively. For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000033">
+<div class="displaymath" id="a0000000034">
   \[  \mathbb {E}\lVert L\rVert ^2=nN^2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert S\rVert ^2=\frac{nN(N+1)}2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert T\rVert ^2=\frac{nN(N-1)}2\sigma _K^2\sigma _Q^2.  \]
 </div>
 <p> For positive dimensions and nonzero variances, the ratios of the last two expectations to the first are \((N+1)/(2N)\) and \((N-1)/(2N)\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000032">
+<div class="proof_wrapper" id="a0000000033">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -377,7 +377,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Expand \(L_{ab}=\sum _r(W_K)_{ra}(W_Q)_{rb}\). Independence gives \(\mathbb {E}L_{ab}^2=n\sigma _K^2\sigma _Q^2\) and \(\mathbb {E}\operatorname {tr}(L^2)=nN\sigma _K^2\sigma _Q^2\). Sum the entries and use Lemma 5. </p>
+  <p> Write \(L_{ab}=\sum _{r=1}^n(W_K)_{ra}(W_Q)_{rb}\). Independence and centering give \(\mathbb {E}L_{ab}=0\) and \(\mathbb {E}L_{ab}^2=n\sigma _K^2\sigma _Q^2\); summing over \(a,b\) gives \(\mathbb {E}\lVert L\rVert ^2\). By Lemma&#160;5, \(\mathbb {E}\lVert S\rVert ^2=\tfrac 12\mathbb {E}\lVert L\rVert ^2+\tfrac 12\mathbb {E}\operatorname {tr}(L^2)\), where \(\operatorname {tr}(L^2)=\sum _{a,b}L_{ab}L_{ba}\). For \(a\ne b\), \(\mathbb {E}(L_{ab}L_{ba})=0\) by independence and centering, and the diagonal terms give \(\mathbb {E}\operatorname {tr}(L^2)=nN\sigma _K^2\sigma _Q^2\). This gives \(\mathbb {E}\lVert S\rVert ^2\), and \(\mathbb {E}\lVert T\rVert ^2\) follows by subtraction. </p>
 
   </div>
 </div>
@@ -397,7 +397,7 @@
 
     <a class="icon proof" href="sect0004.html#prop:low-rank">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000034"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000035"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -449,14 +449,14 @@
   </div>
   <div class="proposition_thmcontent">
   <p>    Let \(1\le n\le N\) and let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent centered Gaussian entries, iid within each matrix, with respective nonzero variances \(v_K,v_Q\). For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000035">
+<div class="displaymath" id="a0000000036">
   \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N},  \]
 </div>
 <p> independently of the head dimension \(n\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000034">
+<div class="proof_wrapper" id="a0000000035">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -464,7 +464,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> First take equal variances. Sign changes and permutations of Gaussian columns preserve the joint law. Sign symmetry cancels the off-diagonal terms of \(\operatorname {tr}(L^2)/\lVert L\rVert ^2\); permutation symmetry makes the expected normalized squared entries equal. Thus its expectation is \(1/N\), and Lemma 5 gives the result. The denominator is nonzero almost surely. Rescale \(W_K\) to reduce unequal variances to the equal-variance case; the normalized energies are unchanged by this rescaling. </p>
+  <p> By Lemma&#160;5, \(\lVert S\rVert ^2/\lVert L\rVert ^2=\tfrac 12+\operatorname {tr}(L^2)/(2\lVert L\rVert ^2)\), so it suffices to show \(\mathbb {E}[\operatorname {tr}(L^2)/\lVert L\rVert ^2]=1/N\). Put \(X=L/\lVert L\rVert \), which is defined almost surely and has \(\lVert X\rVert =1\). The joint law of \(W_K,W_Q\) is invariant under permuting the columns of either matrix, so the law of \(X\) is invariant under permuting its rows and its columns. Hence all \(\mathbb {E}[X_{ij}^2]\) are equal, and since \(\sum _{i,j}X_{ij}^2=1\), each equals \(1/N^2\). For \(i\ne j\), changing the sign of the \(i\)-th column of \(W_K\) negates the \(i\)-th row of \(L\); this preserves the law and negates \(X_{ij}X_{ji}\), so \(\mathbb {E}[X_{ij}X_{ji}]=0\). Therefore \(\mathbb {E}[\operatorname {tr}(X^2)]=\sum _i\mathbb {E}[X_{ii}^2]=1/N\), and the skew identity follows from \(\lVert T\rVert ^2/\lVert L\rVert ^2=1-\lVert S\rVert ^2/\lVert L\rVert ^2\). The Lean statement allows different variances \(v_K,v_Q\); rescaling \(W_K\) reduces this to equal variances and does not change either ratio. </p>
 
   </div>
 </div>
@@ -484,7 +484,7 @@
 
     <a class="icon proof" href="sect0004.html#lem:proportional">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000036"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000037"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -534,13 +534,13 @@
   </div>
   <div class="lemma_thmcontent">
   <p>    Let \(X{\gt}0\) almost surely, with finite nonzero second moment, and fix \(u,v{\gt}0\), \(\rho =u/v\). Let \(\alpha _n\) be the decreasing sorting of \(vX_1,\ldots ,vX_n\) and \(\beta _n\) the decreasing sorting of \(uX'_1,\ldots ,uX'_n\), where the two sequences together consist of independent copies of \(X\). Then </p>
-<div class="displaymath" id="a0000000037">
+<div class="displaymath" id="a0000000038">
   \[  \frac{\lVert \beta _n-\rho \alpha _n\rVert }{\lVert \alpha _n\rVert } \longrightarrow 0\qquad \text{almost surely as }n\longrightarrow \infty .  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000036">
+<div class="proof_wrapper" id="a0000000037">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -548,7 +548,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Reduce to two samples with the same scale. For sorted nonnegative lists, a layer-cake identity expresses their inner product using the minimum of two empirical survival counts. The strong law controls these counts and the empirical second moments. Fatou’s lemma bounds the limiting inner product from below by the common second moment. Expanding the squared difference gives convergence to zero after division by \(n\); the squared denominator divided by \(n\) converges to the strictly positive second moment. Restore the scales \(u,v\). </p>
+  <p> Since \(\beta _n=\rho \alpha '_n\), where \(\alpha '_n\) is the decreasing sorting of \(vX'_1,\ldots ,vX'_n\), it suffices to show \(\lVert \alpha _n-\alpha '_n\rVert /\lVert \alpha _n\rVert \to 0\); dividing by \(v\), take \(v=1\). Let \(m_2=\mathbb {E}[X^2]\) and let \(G\) be the decreasing quantile function of \(X\), so that \(G(U)\) has the law of \(X\) for \(U\) uniform on \((0,1)\) and \(\int _0^1G^2=m_2\). The sorted sample \(x_1\ge \cdots \ge x_n\) defines the step function \(h_n(t)=x_{\lceil nt\rceil }\) on \((0,1)\). The paper shows that \(h_n\to G\) in \(L^2(0,1)\) almost surely in three steps: \(h_n(t)\to G(t)\) at every continuity point of \(G\), by the strong law applied to the empirical survival function; \(\int h_n^2=\frac1n\sum _iX_i^2\to m_2\) by the strong law; and Fatou’s lemma gives \(\liminf \int h_nG\ge m_2\), so \(\limsup \int (h_n-G)^2\le 0\). Applying this to both samples gives \(\lVert \alpha _n-\alpha '_n\rVert ^2/n\to 0\), while \(\lVert \alpha _n\rVert ^2/n\to m_2{\gt}0\). </p>
 
   </div>
 </div>

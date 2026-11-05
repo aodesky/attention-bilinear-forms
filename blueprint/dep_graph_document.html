@@ -33,7 +33,7 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">  </script>
 
 
-<link rel="stylesheet" href="styles/project-blueprint.css?v=polish-1" />
+<link rel="stylesheet" href="styles/project-blueprint.css" />
 
 <link rel="stylesheet" href="../assets/project-nav.css?v=polish-1">
 <link rel="stylesheet" href="../assets/theme.css?v=polish-1">
@@ -106,11 +106,11 @@
       </span>
       <span class="corollary_thmlabel">1</span><span class="corollary_thmtitle">Iid square random matrix baseline</span></div>
     <div class="thm_thmcontent"><p>    Let the entries of \(L\in M_N(\mathbb {R})\) be independent, mean zero, and square-integrable with common variance \(\sigma ^2\). Then </p>
-<div class="displaymath" id="a0000000030">
+<div class="displaymath" id="a0000000031">
   \[  \mathbb {E}\lVert L\rVert ^2=N^2\sigma ^2,\quad \mathbb {E}\lVert S\rVert ^2=\frac{N(N+1)}2\sigma ^2,\quad \mathbb {E}\lVert T\rVert ^2=\frac{N(N-1)}2\sigma ^2.  \]
 </div>
 <p> For \(N{\gt}0\) and \(\sigma \ne 0\), the ratios to \(\mathbb {E}\lVert L\rVert ^2\) are \((N+1)/(2N)\) and \((N-1)/(2N)\) respectively. If the entries are iid nondegenerate centered Gaussian, then also </p>
-<div class="displaymath" id="a0000000031">
+<div class="displaymath" id="a0000000032">
   \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N}.  \]
 </div>
 </div>
@@ -162,7 +162,7 @@
       </span>
       <span class="corollary_thmlabel">2</span><span class="corollary_thmtitle">Random QK-product baseline</span></div>
     <div class="thm_thmcontent"><p>    Let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent, mean-zero, square-integrable entries, with variances \(\sigma _K^2\) and \(\sigma _Q^2\) respectively. For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000033">
+<div class="displaymath" id="a0000000034">
   \[  \mathbb {E}\lVert L\rVert ^2=nN^2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert S\rVert ^2=\frac{nN(N+1)}2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert T\rVert ^2=\frac{nN(N-1)}2\sigma _K^2\sigma _Q^2.  \]
 </div>
 <p> For positive dimensions and nonzero variances, the ratios of the last two expectations to the first are \((N+1)/(2N)\) and \((N-1)/(2N)\). </p>
@@ -256,11 +256,11 @@
       </span>
       <span class="definition_thmlabel">A2</span><span class="definition_thmtitle">Pairing geometry</span></div>
     <div class="thm_thmcontent"><p>   For \(m\ge 1\), let \(\Lambda _m\) consist of the unit vectors \(\lambda _1\le \cdots \le \lambda _{2m}\) with \(\lambda _m{\lt}0{\lt}\lambda _{m+1}\). Set </p>
-<div class="displaymath" id="a0000000038">
+<div class="displaymath" id="a0000000039">
   \[  (\lambda _+)_j=\lambda _{2m+1-j},\qquad (\lambda _-)_j=-\lambda _j\quad (1\le j\le m).  \]
 </div>
 <p> Define </p>
-<div class="displaymath" id="a0000000039">
+<div class="displaymath" id="a0000000040">
   \[  \mathcal I=\lVert \lambda _+\rVert ^2-\lVert \lambda _-\rVert ^2,\quad C=\langle \lambda _+,\lambda _-\rangle ,\quad \mathcal P=1-\lVert \lambda _+-\lambda _-\rVert ,\quad (\iota \lambda )_i=-\lambda _{2m+1-i}.  \]
 </div>
 </div>
@@ -311,7 +311,7 @@
       Definition
       </span>
       <span class="definition_thmlabel">2</span><span class="definition_thmtitle">Biaffine and bilinear attention functions</span></div>
-    <div class="thm_thmcontent"><p>    An attention function whose scoring function has the form \(\sigma (x)=(P_{k-1}(x_1,x_k),\ldots ,P_0(x_k,x_k))\) for polynomials \(P_d\colon C^2\to \mathbb {R}\) of bidegree at most \((1,1)\) is biaffine; it is bilinear if every \(P_d\) is a bilinear form. </p>
+    <div class="thm_thmcontent"><p>    An attention function whose scoring function has the form \(\sigma (x)=(P_{k-1}(x_1,x_k),\ldots ,P_0(x_k,x_k))\) for polynomials \(P_d\colon C^2\to \mathbb {R}\) of bidegree at most \((1,1)\) (degree at most one in each argument) is biaffine; it is bilinear if every \(P_d\) is a bilinear form. </p>
 </div>
 
     <a class="latex_link" href="sect0001.html#def:bilinear">LaTeX</a>
@@ -372,7 +372,7 @@
       </span>
       <span class="definition_thmlabel">A3</span><span class="definition_thmtitle">Odd, even and resolvent statistics</span></div>
     <div class="thm_thmcontent"><p>   For a vector \(\lambda \) with \(|\lambda _i|{\lt}1\), define </p>
-<div class="displaymath" id="a0000000046">
+<div class="displaymath" id="a0000000047">
   \[  O(\lambda )=\sum _i\frac{\lambda _i}{1-\lambda _i^2},\qquad E(\lambda )=\sum _i\frac{\lambda _i^2}{1-\lambda _i^2},\qquad R(\lambda )=\sum _i\frac1{1-\lambda _i}.  \]
 </div>
 </div>
@@ -416,7 +416,7 @@
       </span>
       <span class="definition_thmlabel">A1</span><span class="definition_thmtitle">Symmetric and antisymmetric parts</span></div>
     <div class="thm_thmcontent"><p>   For \(L\in M_N(\mathbb {R})\), put </p>
-<div class="displaymath" id="a0000000015">
+<div class="displaymath" id="a0000000016">
   \[  S=\tfrac 12(L+L^T),\qquad T=\tfrac 12(L-L^T),\qquad \lVert L\rVert ^2=\operatorname {tr}(L^TL).  \]
 </div>
 <p> Then \(L=S+T\), with \(S\) symmetric and \(T\) antisymmetric. </p>
@@ -461,10 +461,10 @@
       </span>
       <span class="definition_thmlabel">6</span><span class="definition_thmtitle">Profile of a bilinear form</span></div>
     <div class="thm_thmcontent"><p>    For \(L\ne 0\), let \(\alpha \) and \(\beta \) be the decreasing lists of positive eigenvalues of \(S\) and absolute values of its negative eigenvalues, padded with zeros to equal length. Define \(\pi (L)=(a,b,c,d)\) by </p>
-<div class="displaymath" id="a0000000020">
+<div class="displaymath" id="a0000000021">
   \[  a=\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2},\qquad b=\frac{2\langle \alpha ,\beta \rangle }{\lVert L\rVert ^2},\qquad c=\frac{\lVert (\alpha -\beta )_+\rVert ^2}{\lVert L\rVert ^2},\qquad d=\frac{\lVert (\alpha -\beta )_-\rVert ^2}{\lVert L\rVert ^2}.  \]
 </div>
-<p> Positive and negative parts are taken entrywise. Lean pads both lists to length \(N\) and includes the denominator in each definition. </p>
+<p> Here \(x_+=\max (x,0)\) and \(x_-=\max (-x,0)\), taken entrywise. Lean pads both lists to length \(N\) and includes the denominator in each definition. </p>
 </div>
 
     <a class="latex_link" href="sect0003.html#def:profile">LaTeX</a>
@@ -513,7 +513,7 @@
       Definition
       </span>
       <span class="definition_thmlabel">3</span><span class="definition_thmtitle">RoPE-like</span></div>
-    <div class="thm_thmcontent"><p>    Let a bilinear attention function on a head space \(H\) have forms \(B_{k-1},\ldots ,B_0\), let \(L_j\colon H\to H^\vee \), \(L_j(v)(u)=B_j(u,v)\), assume \(B_0\) nondegenerate, and set \(T_d=L_0^{-1}L_d\). The function is RoPE-like if \(T_{d+e}=T_dT_e\) whenever \(d,e\ge 0\) and \(d+e{\lt}k\). </p>
+    <div class="thm_thmcontent"><p>    Let \(H\) be a finite-dimensional real vector space (the head space), and let a bilinear attention function on \(H\) have forms \(B_{k-1},\ldots ,B_0\), let \(L_j\colon H\to H^\vee \), \(L_j(v)(u)=B_j(u,v)\), assume \(B_0\) nondegenerate, and set \(T_d=L_0^{-1}L_d\). The function is RoPE-like if \(T_{d+e}=T_dT_e\) whenever \(d,e\ge 0\) and \(d+e{\lt}k\). </p>
 </div>
 
     <a class="latex_link" href="sect0001.html#def:rope-like">LaTeX</a>
@@ -634,10 +634,10 @@
       </span>
       <span class="lemma_thmlabel">7</span><span class="lemma_thmtitle">Bimodal identities</span></div>
     <div class="thm_thmcontent"><p>    For \(\lambda \in \Lambda _m\), </p>
-<div class="displaymath" id="a0000000041">
+<div class="displaymath" id="a0000000042">
   \[  \lVert \lambda _+\rVert ^2=\tfrac 12(1+\mathcal I),\qquad \lVert \lambda _-\rVert ^2=\tfrac 12(1-\mathcal I),\qquad 2\lVert \lambda _+\rVert \lVert \lambda _-\rVert =\sqrt{1-\mathcal I^2},  \]
 </div>
-<div class="displaymath" id="a0000000042">
+<div class="displaymath" id="a0000000043">
   \[  \lVert \lambda _+-\lambda _-\rVert ^2=1-2C,\qquad \mathcal P=1-\sqrt{1-2C},\qquad \sum _j((\lambda _+)_j+i(\lambda _-)_j)^2=\mathcal I+2iC.  \]
 </div>
 <p> Moreover, \(0\le 2C\le 1\) and \(0\le \mathcal P\le 1\). </p>
@@ -696,11 +696,11 @@
       </span>
       <span class="lemma_thmlabel">5</span><span class="lemma_thmtitle">Symmetric and skew energy identities</span></div>
     <div class="thm_thmcontent"><p>    For any \(L\in M_N(\mathbb {R})\), </p>
-<div class="displaymath" id="a0000000027">
+<div class="displaymath" id="a0000000028">
   \[  \lVert L\rVert ^2=\lVert S\rVert ^2+\lVert T\rVert ^2,\qquad \lVert S\rVert ^2=\tfrac 12\lVert L\rVert ^2+\tfrac 12\operatorname {tr}(L^2),\qquad \lVert T\rVert ^2=\tfrac 12\lVert L\rVert ^2-\tfrac 12\operatorname {tr}(L^2).  \]
 </div>
 <p> For \(L\ne 0\), division gives </p>
-<div class="displaymath" id="a0000000028">
+<div class="displaymath" id="a0000000029">
   \[  \frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}=\frac12+\frac{\operatorname {tr}(L^2)}{2\lVert L\rVert ^2}, \qquad \frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}=\frac12-\frac{\operatorname {tr}(L^2)}{2\lVert L\rVert ^2}.  \]
 </div>
 </div>
@@ -748,7 +748,7 @@
       </span>
       <span class="lemma_thmlabel">10</span><span class="lemma_thmtitle">Computation from the key and query matrices</span></div>
     <div class="thm_thmcontent"><p>    For \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\), set </p>
-<div class="displaymath" id="a0000000052">
+<div class="displaymath" id="a0000000053">
   \[  M=\begin{pmatrix} W_K
 
 \\ W_Q
@@ -764,11 +764,11 @@
 \end{pmatrix}.  \]
 </div>
 <p> The symmetric part of \(W_K^TW_Q\) is \(S=\tfrac 12M^TJM\). For every \(k\ge 1\), </p>
-<div class="displaymath" id="a0000000053">
+<div class="displaymath" id="a0000000054">
   \[  \operatorname {tr}(S^k)=\operatorname {tr}((\tfrac 12JG)^k),\qquad \lVert S\rVert ^2=\tfrac 14\operatorname {tr}((JG)^2).  \]
 </div>
 <p> If \(M:\mathbb {R}^N\to \mathbb {R}^{2n}\) is surjective and \(n\ge 1\), the nonzero spectrum of \(S\), with multiplicity, is the spectrum of \(\tfrac 12JG\). Its sorted normalized nonzero spectrum \(\lambda \) exists uniquely and belongs to \(\Lambda _n\). For \(H=JG/(2\lVert S\rVert )\), </p>
-<div class="displaymath" id="a0000000054">
+<div class="displaymath" id="a0000000055">
   \[  O(\lambda )=\operatorname {tr}(H(I-H^2)^{-1}),\qquad E(\lambda )=\operatorname {tr}(H^2(I-H^2)^{-1}),\qquad R(\lambda )=\operatorname {tr}((I-H)^{-1}).  \]
 </div>
 </div>
@@ -838,7 +838,7 @@
       </span>
       <span class="lemma_thmlabel">8</span><span class="lemma_thmtitle">Bimodal involution</span></div>
     <div class="thm_thmcontent"><p>    The map \(\iota \) is an orthogonal, self-adjoint linear involution, preserves \(\Lambda _m\), and exchanges \(\lambda _+\) and \(\lambda _-\). Consequently \(\mathcal I\circ \iota =-\mathcal I\), \(C\circ \iota =C\) and \(\mathcal P\circ \iota =\mathcal P\). For \(\lambda \in \Lambda _m\), </p>
-<div class="displaymath" id="a0000000044">
+<div class="displaymath" id="a0000000045">
   \[  \lVert \lambda -\iota \lambda \rVert ^2=2\lVert \lambda _+-\lambda _-\rVert ^2,\qquad \mathcal P(\lambda )=1-\frac1{\sqrt2}\lVert \lambda -\iota \lambda \rVert .  \]
 </div>
 <p> In particular, \(\mathcal P(\lambda )=1\) if and only if \(\iota \lambda =\lambda \). </p>
@@ -905,15 +905,15 @@
       </span>
       <span class="lemma_thmlabel">9</span><span class="lemma_thmtitle">Equivalent expressions for the moments</span></div>
     <div class="thm_thmcontent"><p>    Every \(\lambda \in \Lambda _m\) has \(|\lambda _i|{\lt}1\). Writing \(n=2m\), </p>
-<div class="displaymath" id="a0000000048">
+<div class="displaymath" id="a0000000049">
   \[  O(\lambda )=\sum _{r=0}^{\infty }\sum _i\lambda _i^{2r+1},\qquad E(\lambda )=\sum _{r=0}^{\infty }\sum _i\lambda _i^{2r+2},  \]
 </div>
 <p> and both series converge absolutely. Moreover, </p>
-<div class="displaymath" id="a0000000049">
+<div class="displaymath" id="a0000000050">
   \[  O=\tfrac 12(R-R\circ \iota ),\qquad n+E=\tfrac 12(R+R\circ \iota ),\qquad O\circ \iota =-O,\qquad E\circ \iota =E.  \]
 </div>
 <p> If a symmetric matrix \(A\) has spectrum \(\lambda \), with multiplicity, then </p>
-<div class="displaymath" id="a0000000050">
+<div class="displaymath" id="a0000000051">
   \[  O(\lambda )=\operatorname {tr}(A(I-A^2)^{-1}),\quad E(\lambda )=\operatorname {tr}(A^2(I-A^2)^{-1}),\quad R(\lambda )=\operatorname {tr}((I-A)^{-1}).  \]
 </div>
 </div>
@@ -975,7 +975,7 @@
       </span>
       <span class="lemma_thmlabel">2</span><span class="lemma_thmtitle">Pairing bound</span></div>
     <div class="thm_thmcontent"><p>    Let \(S\) be symmetric, let \(\lambda _\pm \) be its sorted positive eigenvalues and absolute values of negative eigenvalues, padded with zeros to equal length, and let \(\mathcal P=1-\lVert \lambda _+-\lambda _-\rVert /\lVert S\rVert \). If \(\lambda _+\ne 0\) and \(\rho =\lVert \lambda _-\rVert /\lVert \lambda _+\rVert \), then </p>
-<div class="displaymath" id="a0000000017">
+<div class="displaymath" id="a0000000018">
   \[  \mathcal P=1-\sqrt{1-\frac{2\langle \lambda _+,\lambda _-\rangle }{\lVert S\rVert ^2}} \le 1-\frac{|1-\rho |}{\sqrt{1+\rho ^2}},  \]
 </div>
 <p> with equality if and only if \(\lambda _-=\rho \lambda _+\). </p>
@@ -1065,7 +1065,7 @@
       </span>
       <span class="lemma_thmlabel">6</span><span class="lemma_thmtitle">Proportional lobes</span></div>
     <div class="thm_thmcontent"><p>    Let \(X{\gt}0\) almost surely, with finite nonzero second moment, and fix \(u,v{\gt}0\), \(\rho =u/v\). Let \(\alpha _n\) be the decreasing sorting of \(vX_1,\ldots ,vX_n\) and \(\beta _n\) the decreasing sorting of \(uX'_1,\ldots ,uX'_n\), where the two sequences together consist of independent copies of \(X\). Then </p>
-<div class="displaymath" id="a0000000037">
+<div class="displaymath" id="a0000000038">
   \[  \frac{\lVert \beta _n-\rho \alpha _n\rVert }{\lVert \alpha _n\rVert } \longrightarrow 0\qquad \text{almost surely as }n\longrightarrow \infty .  \]
 </div>
 </div>
@@ -1188,7 +1188,7 @@
       </span>
       <span class="proposition_thmlabel">5</span><span class="proposition_thmtitle">Expected symmetric energy for random low-rank QK products</span></div>
     <div class="thm_thmcontent"><p>    Let \(1\le n\le N\) and let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent centered Gaussian entries, iid within each matrix, with respective nonzero variances \(v_K,v_Q\). For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000035">
+<div class="displaymath" id="a0000000036">
   \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N},  \]
 </div>
 <p> independently of the head dimension \(n\). </p>
@@ -1230,7 +1230,7 @@
       Proposition
       </span>
       <span class="proposition_thmlabel">2</span><span class="proposition_thmtitle">Transformers are near-identity</span></div>
-    <div class="thm_thmcontent"><p>    Fix a norm on \(C\) and put \(\lVert x\rVert _\infty =\max _k\lVert x_k\rVert \). If \(\lVert M(y)\rVert \le L\lVert y\rVert \) for all \(y\) and \(V=\sum _i\lVert V_i\rVert \) (operator norms), then \(\lVert T(x)-x\rVert _\infty \le (L+V+LV)\lVert x\rVert _\infty \). </p>
+    <div class="thm_thmcontent"><p>    Fix a norm on \(C\) and put \(\lVert x\rVert _\infty =\max _k\lVert x_k\rVert \) for \(x\in C^\ell \). Let \(A_1,\ldots ,A_h\) be attention heads and \(V_1,\ldots ,V_h\colon C\to C\) linear maps, let \(A(x)_k=\sum _iV_i(A_i(x)_k)\) be the attention block, and let \(T=T_M\circ T_A\) with \(T_A(x)_k=x_k+A(x)_k\) and \(T_M\) as above. If \(\lVert M(y)\rVert \le L\lVert y\rVert \) for all \(y\) and \(V=\sum _i\lVert V_i\rVert \) (operator norms), then \(\lVert T(x)-x\rVert _\infty \le (L+V+LV)\lVert x\rVert _\infty \). </p>
 </div>
 
     <a class="latex_link" href="sect0001.html#prop:near-identity">LaTeX</a>
@@ -1274,7 +1274,7 @@
       </span>
       <span class="proposition_thmlabel">4</span><span class="proposition_thmtitle">Profiles of rank-one matrices</span></div>
     <div class="thm_thmcontent"><p>    If \(L\) has rank one and unit norm, then with \(t=\operatorname {tr}(L)\), </p>
-<div class="displaymath" id="a0000000023">
+<div class="displaymath" id="a0000000024">
   \[  \pi (L)=\Bigl(\frac{1-t^2}2,\frac{1-t^2}2,(t_+)^2,(t_-)^2\Bigr).  \]
 </div>
 <p> For \(N\ge 2\) the set of profiles of rank-one matrices is \(\Theta =\{ a=b,\  cd=0\} \subset \Delta _3\). (For \(N=1\) only the two vertices \(c=1\) and \(d=1\) occur, so the set statement needs \(N\ge 2\).) </p>
@@ -1368,7 +1368,7 @@
       </span>
       <span class="theorem_thmlabel">5</span><span class="theorem_thmtitle">Accumulation</span></div>
     <div class="thm_thmcontent"><p>    Let \(X{\gt}0\) have finite nonzero second moment, fix \(u,v{\gt}0\) and \(\rho =u/v\). Let \(N_n\ge 2n\) and let \(S_n\in M_{N_n}(\mathbb {R})\) be symmetric with eigenvalues \(vX_1,\ldots ,vX_n\), \(-uX'_1,\ldots ,-uX'_n\) and zeros, where the \(X_i,X'_i\) are independent copies of \(X\). Then almost surely </p>
-<div class="displaymath" id="a0000000025">
+<div class="displaymath" id="a0000000026">
   \[  \pi (S_n)\longrightarrow \frac1{1+\rho ^2}\bigl(0,\, 2\rho ,\, (1-\rho )_+^2,\, (\rho -1)_+^2\bigr)\in p(\Theta ),  \]
 </div>
 <p> where \(p(a,b,c,d)=(0,a+b,c,d)\). As \(\rho \) ranges over \((0,1]\) the limit traces the edge \(\{ d=0\} \), and over \([1,\infty )\) the edge \(\{ c=0\} \). </p>
@@ -1432,7 +1432,7 @@
       Theorem
       </span>
       <span class="theorem_thmlabel">3</span><span class="theorem_thmtitle">Heads have balanced attention</span></div>
-    <div class="thm_thmcontent"><p>    Let \(Q,K\colon C\to H\) with \(\dim H=n\) and \(\dim C=N\). If the stacked map \(J=(Q,K)\colon C\to H\oplus H\) is surjective, the symmetric form \(S(x,y)=\tfrac 12(\langle Kx,Qy\rangle +\langle Qx,Ky\rangle )\) has signature \((n_+,n_-,n_0)=(n,n,N-2n)\). In Lean the signature is read off the Gram matrix of \(S\) in an arbitrary basis of \(C\). </p>
+    <div class="thm_thmcontent"><p>    Let \(H\) be a real inner product space of dimension \(n\), let \(\dim C=N\), and let \(Q,K\colon C\to H\) be linear. If the stacked map \(J=(Q,K)\colon C\to H\oplus H\) is surjective, the symmetric form \(S(x,y)=\tfrac 12(\langle Kx,Qy\rangle +\langle Qx,Ky\rangle )\) has signature \((n_+,n_-,n_0)=(n,n,N-2n)\). In Lean the signature is read off the Gram matrix of \(S\) in an arbitrary basis of \(C\). </p>
 </div>
 
     <a class="latex_link" href="sect0002.html#thm:balanced">LaTeX</a>
@@ -1570,7 +1570,7 @@ graphContainer.graphviz({useWorker: true})
     .width(width)
     .height(height)
     .fit(true)
-    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	"lem:moment-identities"	[color=green,		fillcolor="#1CAC78",		label="moment-identities",		shape=ellipse,		style=filled];	"lem:gram"	[color=green,		fillcolor="#1CAC78",		label=gram,		shape=ellipse,		style=filled];	"lem:moment-identities" -> "lem:gram";	"def:bilinear"	[color=green,		fillcolor="#B0ECA3",		label=bilinear,		shape=box,		style=filled];	"prop:homogenization"	[color=green,		fillcolor="#1CAC78",		label=homogenization,		shape=ellipse,		style=filled];	"def:bilinear" -> "prop:homogenization"	[style=dashed];	"def:rope-like"	[color=green,		fillcolor="#B0ECA3",		label="rope-like",		shape=box,		style=filled];	"def:bilinear" -> "def:rope-like"	[style=dashed];	"prop:rope-like"	[color=green,		fillcolor="#1CAC78",		label="rope-like",		shape=ellipse,		style=filled];	"def:rope-like" -> "prop:rope-like"	[style=dashed];	"def:moment-statistics"	[color=green,		fillcolor="#B0ECA3",		label="moment-statistics",		shape=box,		style=filled];	"def:moment-statistics" -> "lem:moment-identities"	[style=dashed];	"thm:balanced"	[color=green,		fillcolor="#1CAC78",		label=balanced,		shape=ellipse,		style=filled];	"cor:qk"	[color=green,		fillcolor="#1CAC78",		label=qk,		shape=ellipse,		style=filled];	"lem:biaffine-decomposition"	[color=green,		fillcolor="#1CAC78",		label="biaffine-decomposition",		shape=ellipse,		style=filled];	"cor:iid"	[color=green,		fillcolor="#1CAC78",		label=iid,		shape=ellipse,		style=filled];	"def:balanced"	[color=green,		fillcolor="#B0ECA3",		label=balanced,		shape=box,		style=filled];	"lem:involution"	[color=green,		fillcolor="#1CAC78",		label=involution,		shape=ellipse,		style=filled];	"def:balanced" -> "lem:involution"	[style=dashed];	"lem:bimodal"	[color=green,		fillcolor="#1CAC78",		label=bimodal,		shape=ellipse,		style=filled];	"def:balanced" -> "lem:bimodal"	[style=dashed];	"lem:involution" -> "lem:moment-identities";	"thm:faces"	[color=green,		fillcolor="#1CAC78",		label=faces,		shape=ellipse,		style=filled];	"lem:energy"	[color=green,		fillcolor="#1CAC78",		label=energy,		shape=ellipse,		style=filled];	"lem:energy" -> "cor:qk";	"lem:energy" -> "cor:iid";	"lem:energy" -> "thm:faces";	"prop:low-rank"	[color=green,		fillcolor="#1CAC78",		label="low-rank",		shape=ellipse,		style=filled];	"lem:energy" -> "prop:low-rank";	"lem:profile-scale"	[color=green,		fillcolor="#1CAC78",		label="profile-scale",		shape=ellipse,		style=filled];	"lem:energy" -> "lem:profile-scale"	[style=dashed];	"prop:rank-one"	[color=green,		fillcolor="#1CAC78",		label="rank-one",		shape=ellipse,		style=filled];	"lem:energy" -> "prop:rank-one"	[style=dashed];	"thm:accumulation"	[color=green,		fillcolor="#1CAC78",		label=accumulation,		shape=ellipse,		style=filled];	"prop:rank-one" -> "thm:accumulation"	[style=dashed];	"def:attention-function"	[color=green,		fillcolor="#B0ECA3",		label="attention-function",		shape=box,		style=filled];	"def:attention-function" -> "def:bilinear"	[style=dashed];	"def:head"	[color=green,		fillcolor="#B0ECA3",		label=head,		shape=box,		style=filled];	"def:attention-function" -> "def:head"	[style=dashed];	"def:transformer"	[color=green,		fillcolor="#B0ECA3",		label=transformer,		shape=box,		style=filled];	"def:head" -> "def:transformer"	[style=dashed];	"def:transformer" -> "prop:homogenization"	[style=dashed];	"prop:near-identity"	[color=green,		fillcolor="#1CAC78",		label="near-identity",		shape=ellipse,		style=filled];	"def:transformer" -> "prop:near-identity"	[style=dashed];	"def:parts"	[color=green,		fillcolor="#B0ECA3",		label=parts,		shape=box,		style=filled];	"def:parts" -> "lem:gram"	[style=dashed];	"def:parts" -> "lem:energy"	[style=dashed];	"lem:pairing-bound"	[color=green,		fillcolor="#1CAC78",		label="pairing-bound",		shape=ellipse,		style=filled];	"def:parts" -> "lem:pairing-bound"	[style=dashed];	"lem:rank-balance"	[color=green,		fillcolor="#1CAC78",		label="rank-balance",		shape=ellipse,		style=filled];	"def:parts" -> "lem:rank-balance"	[style=dashed];	"def:profile"	[color=green,		fillcolor="#B0ECA3",		label=profile,		shape=box,		style=filled];	"def:parts" -> "def:profile"	[style=dashed];	"lem:rank-balance" -> "thm:balanced"	[style=dashed];	"def:profile" -> "thm:faces"	[style=dashed];	"def:profile" -> "lem:profile-scale"	[style=dashed];	"def:profile" -> "prop:rank-one"	[style=dashed];	"lem:proportional"	[color=green,		fillcolor="#1CAC78",		label=proportional,		shape=ellipse,		style=filled];	"def:profile" -> "lem:proportional"	[style=dashed];	"lem:proportional" -> "thm:accumulation"	[style=dashed];}`)
+    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	"lem:profile-scale"	[color=green,		fillcolor="#1CAC78",		label="profile-scale",		shape=ellipse,		style=filled];	"lem:gram"	[color=green,		fillcolor="#1CAC78",		label=gram,		shape=ellipse,		style=filled];	"thm:balanced"	[color=green,		fillcolor="#1CAC78",		label=balanced,		shape=ellipse,		style=filled];	"lem:moment-identities"	[color=green,		fillcolor="#1CAC78",		label="moment-identities",		shape=ellipse,		style=filled];	"lem:moment-identities" -> "lem:gram";	"def:bilinear"	[color=green,		fillcolor="#B0ECA3",		label=bilinear,		shape=box,		style=filled];	"def:rope-like"	[color=green,		fillcolor="#B0ECA3",		label="rope-like",		shape=box,		style=filled];	"def:bilinear" -> "def:rope-like"	[style=dashed];	"prop:homogenization"	[color=green,		fillcolor="#1CAC78",		label=homogenization,		shape=ellipse,		style=filled];	"def:bilinear" -> "prop:homogenization"	[style=dashed];	"prop:rope-like"	[color=green,		fillcolor="#1CAC78",		label="rope-like",		shape=ellipse,		style=filled];	"def:rope-like" -> "prop:rope-like"	[style=dashed];	"def:profile"	[color=green,		fillcolor="#B0ECA3",		label=profile,		shape=box,		style=filled];	"def:profile" -> "lem:profile-scale"	[style=dashed];	"lem:proportional"	[color=green,		fillcolor="#1CAC78",		label=proportional,		shape=ellipse,		style=filled];	"def:profile" -> "lem:proportional"	[style=dashed];	"prop:rank-one"	[color=green,		fillcolor="#1CAC78",		label="rank-one",		shape=ellipse,		style=filled];	"def:profile" -> "prop:rank-one"	[style=dashed];	"thm:faces"	[color=green,		fillcolor="#1CAC78",		label=faces,		shape=ellipse,		style=filled];	"def:profile" -> "thm:faces"	[style=dashed];	"thm:accumulation"	[color=green,		fillcolor="#1CAC78",		label=accumulation,		shape=ellipse,		style=filled];	"lem:proportional" -> "thm:accumulation"	[style=dashed];	"prop:rank-one" -> "thm:accumulation"	[style=dashed];	"def:moment-statistics"	[color=green,		fillcolor="#B0ECA3",		label="moment-statistics",		shape=box,		style=filled];	"def:moment-statistics" -> "lem:moment-identities"	[style=dashed];	"lem:pairing-bound"	[color=green,		fillcolor="#1CAC78",		label="pairing-bound",		shape=ellipse,		style=filled];	"lem:bimodal"	[color=green,		fillcolor="#1CAC78",		label=bimodal,		shape=ellipse,		style=filled];	"prop:near-identity"	[color=green,		fillcolor="#1CAC78",		label="near-identity",		shape=ellipse,		style=filled];	"def:parts"	[color=green,		fillcolor="#B0ECA3",		label=parts,		shape=box,		style=filled];	"def:parts" -> "lem:gram"	[style=dashed];	"def:parts" -> "def:profile"	[style=dashed];	"def:parts" -> "lem:pairing-bound"	[style=dashed];	"lem:rank-balance"	[color=green,		fillcolor="#1CAC78",		label="rank-balance",		shape=ellipse,		style=filled];	"def:parts" -> "lem:rank-balance"	[style=dashed];	"lem:energy"	[color=green,		fillcolor="#1CAC78",		label=energy,		shape=ellipse,		style=filled];	"def:parts" -> "lem:energy"	[style=dashed];	"lem:rank-balance" -> "thm:balanced"	[style=dashed];	"lem:energy" -> "lem:profile-scale"	[style=dashed];	"lem:energy" -> "prop:rank-one"	[style=dashed];	"lem:energy" -> "thm:faces";	"cor:iid"	[color=green,		fillcolor="#1CAC78",		label=iid,		shape=ellipse,		style=filled];	"lem:energy" -> "cor:iid";	"prop:low-rank"	[color=green,		fillcolor="#1CAC78",		label="low-rank",		shape=ellipse,		style=filled];	"lem:energy" -> "prop:low-rank";	"cor:qk"	[color=green,		fillcolor="#1CAC78",		label=qk,		shape=ellipse,		style=filled];	"lem:energy" -> "cor:qk";	"def:balanced"	[color=green,		fillcolor="#B0ECA3",		label=balanced,		shape=box,		style=filled];	"def:balanced" -> "lem:bimodal"	[style=dashed];	"lem:involution"	[color=green,		fillcolor="#1CAC78",		label=involution,		shape=ellipse,		style=filled];	"def:balanced" -> "lem:involution"	[style=dashed];	"lem:involution" -> "lem:moment-identities";	"lem:biaffine-decomposition"	[color=green,		fillcolor="#1CAC78",		label="biaffine-decomposition",		shape=ellipse,		style=filled];	"def:attention-function"	[color=green,		fillcolor="#B0ECA3",		label="attention-function",		shape=box,		style=filled];	"def:attention-function" -> "def:bilinear"	[style=dashed];	"def:head"	[color=green,		fillcolor="#B0ECA3",		label=head,		shape=box,		style=filled];	"def:attention-function" -> "def:head"	[style=dashed];	"def:transformer"	[color=green,		fillcolor="#B0ECA3",		label=transformer,		shape=box,		style=filled];	"def:head" -> "def:transformer"	[style=dashed];	"def:transformer" -> "prop:homogenization"	[style=dashed];	"def:transformer" -> "prop:near-identity"	[style=dashed];}`)
     .on("end", interactive);
 
 latexLabelEscaper = function(label) {

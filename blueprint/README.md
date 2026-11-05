@@ -7,7 +7,9 @@ Theorems 3–5), plus auxiliary definitions A1–A3.
 The dependency graph records mathematical dependencies between these nodes.
 
 Edit `src/content.tex` to change statements, proof outlines, declaration
-links (`\lean`) or dependencies (`\uses`). The `\leanok` markers indicate
+links (`\lean`) or dependencies (`\uses`). Each proof outline is written
+from the paper's proof and follows its order; where the paper gives no
+proof, the outline follows the Lean proof and says so. The `\leanok` markers indicate
 completed formal statements and proofs. The theorem numbering follows the
 arXiv version,
 [arXiv:2609.22990v1](https://arxiv.org/abs/2609.22990v1); the auxiliary
@@ -23,6 +25,18 @@ python3 -m venv .venv-blueprint
 .venv-blueprint/bin/pip install -r blueprint/requirements.txt
 python3 scripts/build_blueprint.py --plastex .venv-blueprint/bin/plastex
 ```
+
+Then check that every formula renders. This needs Node.js and the pinned
+MathJax (`npm ci` from the repository root, once):
+
+```sh
+python3 scripts/check_math.py
+```
+
+It typesets every math span of `index.html` and `blueprint/*.html` with the
+MathJax version and configuration the pages load, and fails on TeX errors,
+undefined macros, unbalanced braces, and TeX left in the visible text. Keep
+`package.json` at the MathJax version the pages load.
 
 The Lean toolchain is pinned in `formalization/lean-toolchain`. On a new
 checkout, first run `lake exe cache get` from `formalization/` to download

@@ -38,8 +38,9 @@ one whose components are polynomials in the coordinates of $x_1,\ldots,x_k$.
 \uses{def:attention-function}
 An attention function whose scoring function has the form
 $\sigma(x)=(P_{k-1}(x_1,x_k),\ldots,P_0(x_k,x_k))$ for polynomials
-$P_d\colon C^2\to\R$ of bidegree at most $(1,1)$ is biaffine; it is bilinear
-if every $P_d$ is a bilinear form.
+$P_d\colon C^2\to\R$ of bidegree at most $(1,1)$ (degree at most one in
+each argument) is biaffine; it is bilinear if every $P_d$ is a bilinear
+form.
 \end{definition}
 
 \begin{lemma}[Biaffine decomposition]
@@ -58,12 +59,14 @@ linear and $D\in\R$, namely
 \end{lemma}
 \begin{proof}
 \leanok
-The paper calls this elementary and gives no proof. Each monomial of
-bidegree at most $(1,1)$ is a product of an affine function of $u$ and an
-affine function of $v$; expanding the product shows that the four
-expressions are bilinear, linear, linear and constant, and they add up to
-$P$. Evaluating any decomposition at $(0,0)$, $(u,0)$ and $(0,v)$ gives the
-formulas, hence uniqueness.
+The paper calls this lemma elementary and gives no proof; this sketch
+follows the Lean proof. In coordinates, $P$ is a sum of monomials
+$f(u)g(v)$ in which each of $f$ and $g$ is either the constant $1$ or a
+single coordinate function. Substituting this sum into the four formulas
+shows that $B$ is bilinear, $L$ and $R$ are linear and $D$ is constant, and
+that $B+L+R+D=P$. For uniqueness, evaluate an arbitrary decomposition at
+$(0,0)$, $(u,0)$ and $(0,v)$: this recovers $D$, then $L$ and $R$, and
+then $B$.
 \end{proof}
 
 \begin{definition}[RoPE-like]
@@ -71,7 +74,8 @@ formulas, hence uniqueness.
 \lean{Appendices.MainText.ropeL, Appendices.MainText.ropeL0Equiv, Appendices.MainText.ropeT, Appendices.MainText.IsRoPELike}
 \leanok
 \uses{def:bilinear}
-Let a bilinear attention function on a head space $H$ have forms
+Let $H$ be a finite-dimensional real vector space (the head space), and let
+a bilinear attention function on $H$ have forms
 $B_{k-1},\ldots,B_0$, let $L_j\colon H\to H^\vee$, $L_j(v)(u)=B_j(u,v)$,
 assume $B_0$ nondegenerate, and set $T_d=L_0^{-1}L_d$. The function is
 RoPE-like if $T_{d+e}=T_dT_e$ whenever $d,e\ge0$ and $d+e<k$.
@@ -89,9 +93,12 @@ exists it is $T_1=L_0^{-1}L_1$.
 \begin{proof}
 \leanok
 \uses{def:rope-like}
-The RoPE-like condition gives $L_{d+e}=L_dL_0^{-1}L_e$, in particular
-$L_{d+1}=L_dS$ with $S=T_1$. By induction $L_d=L_0S^d$, that is
-$T_d=S^d$. Conversely $S^{d+e}=S^dS^e$.
+Suppose the function is RoPE-like and put $S=T_1$. Since
+$L_d=L_0T_d$, the relation $T_{d+e}=T_dT_e$ reads
+$L_{d+e}=L_dL_0^{-1}L_e$; with $e=1$ it gives $L_{d+1}=L_dS$. Induction
+on $d$ gives $L_d=L_0S^d$, that is, $T_d=S^d$. Conversely, if $T_d=S^d$
+then $T_{d+e}=S^{d+e}=S^dS^e=T_dT_e$. Taking $d=1$ in $T_d=S^d$ shows
+that $S=T_1$, so $S$ is unique.
 \end{proof}
 
 \begin{definition}[Attention head]
@@ -119,20 +126,25 @@ $T_A(x)_i=x_i+V(A(x)_i)$ and $T_M(y)_i=y_i+M(y_i)$.
 \lean{Appendices.MainText.IsAttentionOutput, Appendices.MainText.attentionBlock, Appendices.MainText.norm_attentionBlock_le, Appendices.MainText.near_identity}
 \leanok
 \uses{def:transformer}
-Fix a norm on $C$ and put $\norm{x}_\infty=\max_k\norm{x_k}$. If
+Fix a norm on $C$ and put $\norm{x}_\infty=\max_k\norm{x_k}$ for
+$x\in C^\ell$. Let $A_1,\ldots,A_h$ be attention heads and
+$V_1,\ldots,V_h\colon C\to C$ linear maps, let
+$A(x)_k=\sum_iV_i(A_i(x)_k)$ be the attention block, and let
+$T=T_M\circ T_A$ with $T_A(x)_k=x_k+A(x)_k$ and $T_M$ as above. If
 $\norm{M(y)}\le L\norm y$ for all $y$ and $V=\sum_i\norm{V_i}$ (operator
 norms), then $\norm{T(x)-x}_\infty\le(L+V+LV)\norm{x}_\infty$.
 \end{proposition}
 \begin{proof}
 \leanok
 \uses{def:transformer}
-Each component of a head is a convex combination of its inputs, so its norm
-is at most $\norm x_\infty$; the attention block is then bounded by
-$V\norm x_\infty$. The $k$-th component of $T(x)-x$ is
-$A(x)_k+M(x_k+A(x)_k)$, whose norm is at most
-$V\norm x_\infty+L(1+V)\norm x_\infty$. The Lean statement assumes only that
-each head returns convex combinations of its inputs, which is what the proof
-uses.
+The attention weights of each attention function lie in the simplex, so
+$\norm{\sum_j\omega_jx_j}\le\sum_j\omega_j\norm{x_j}\le\norm x_\infty$.
+Hence every component of every head $A_i$ has norm at most
+$\norm x_\infty$, and the triangle inequality with the operator norms
+gives $\norm{A(x)_k}\le V\norm x_\infty$ for the attention block. Since
+$T=T_M\circ T_A$, the $k$-th component of $T(x)-x$ is
+$A(x)_k+M(x_k+A(x)_k)$. Its norm is at most
+$V\norm x_\infty+L(1+V)\norm x_\infty=(L+V+LV)\norm x_\infty$.
 \end{proof}
 
 \begin{proposition}[Bilinear attention recovers QKV attention]
@@ -149,15 +161,25 @@ such that $\widehat T(\iota x_1,\ldots,\iota x_\ell)=\iota^\ell(T(x_1,\ldots,x_\
 \begin{proof}
 \leanok
 \uses{def:bilinear,def:transformer}
-Define
-$\widehat B(u+\alpha e,v+\beta e)=\langle Q(v+\beta p_k),K(u+\alpha p_j)\rangle/\sqrt n$,
-which expands to the paper's four-term formula. It agrees with the QKV score
-on the chart $C+e$, so the weights agree there and
-$\sum_j\omega_j(x_j+e)=a_k(x)+e$. Extend $V$ and $M$ by ignoring the new
-coordinate. The homogenized weights are simplex-valued on all of
-$\widehat C^k$ because $\widehat\sigma(u+\alpha e,\ldots)=\sigma(x)$ with
-$x_j=u_j+(\alpha_j-1)p_j$; this also gives their smoothness. The Lean
-statement allows any potentials, softmax included.
+For inputs at positions $j\le k$, define a bilinear form on $\widehat C$ by
+\[
+ \widehat B(u+\alpha e,v+\beta e)=\tfrac1{\sqrt n}\bigl(\langle Qv,Ku\rangle
+ +\alpha\langle Qv,Kp_j\rangle+\beta\langle Qp_k,Ku\rangle
+ +\alpha\beta\langle Qp_k,Kp_j\rangle\bigr).
+\]
+Expanding the QKV score shows $\widehat B(\iota x_j,\iota x_k)$ equals the
+score of $x_k$ on $x_j$, so the two heads have the same scores, hence the
+same attention weights $\omega_j$, on the chart $\iota(C)=C+e$. Since the
+weights sum to one,
+$\widehat a_k(\iota x_1,\ldots,\iota x_k)=\sum_j\omega_j(x_j+e)=\iota(a_k(x_1,\ldots,x_k))$.
+Finally put $\widehat V(u+\alpha e)=V(u)$ and $\widehat M(u+\alpha e)=M(u)$;
+then $\iota(x)+\widehat V(\iota z)=\iota(x+Vz)$ and
+$\iota(x)+\widehat M(\iota x)=\iota(x+M(x))$, which gives
+$\widehat T\circ\iota^\ell=\iota^\ell\circ T$. The paper leaves implicit
+that the homogenized weights are smooth and simplex-valued on all of
+$\widehat C^k$, not only on the chart. The Lean proof checks this from the
+identity $\widehat\sigma(u_1+\alpha_1e,\ldots)=\sigma(x)$ with
+$x_j=u_j+(\alpha_j-1)p_j$.
 \end{proof}
 
 \chapter{Pairing and balance}
@@ -195,11 +217,15 @@ with equality if and only if $\lambda_-=\rho\lambda_+$.
 \begin{proof}
 \leanok
 \uses{def:parts}
-Since $\norm S^2=\norm{\lambda_+}^2+\norm{\lambda_-}^2$, expanding
-$\norm{\lambda_+-\lambda_-}^2$ gives the equality. The triangle inequality
-gives $\norm{\lambda_+-\lambda_-}\ge|1-\rho|\norm{\lambda_+}$, with equality
-if and only if one list is a nonnegative multiple of the other; divide by
-$\norm S=\sqrt{1+\rho^2}\norm{\lambda_+}$.
+The entries of $\lambda_+$ and $\lambda_-$ are the absolute values of the
+eigenvalues of $S$, padded with zeros, so
+$\norm S^2=\norm{\lambda_+}^2+\norm{\lambda_-}^2$. Expanding gives
+$\norm{\lambda_+-\lambda_-}^2=\norm S^2-2\langle\lambda_+,\lambda_-\rangle$,
+which is the equality. By the reverse triangle inequality,
+$\norm{\lambda_+-\lambda_-}\ge\bigl|\norm{\lambda_+}-\norm{\lambda_-}\bigr|=|1-\rho|\norm{\lambda_+}$,
+with equality exactly when one list is a nonnegative multiple of the
+other, that is, when $\lambda_-=\rho\lambda_+$. Dividing by
+$\norm S=\sqrt{1+\rho^2}\,\norm{\lambda_+}$ gives the inequality.
 \end{proof}
 
 \begin{lemma}[Rank balance]
@@ -214,10 +240,13 @@ multiplicity.
 \begin{proof}
 \leanok
 \uses{def:parts}
-The quadratic form of $S$ vanishes on $\ker L$, of dimension at least
-$N-n$. The span of the eigenvectors with positive eigenvalues meets
-$\ker L$ only in $0$, so its dimension $n_+$ is at most $n$. For $n_-$,
-apply the same argument to $-L$.
+Let $K=\ker L$, of dimension at least $N-n$. For $x\in K$,
+$2x^TSx=x^TLx+x^TL^Tx=0$, so the quadratic form of $S$ vanishes on $K$.
+Let $V_+$ be the span of the eigenvectors of $S$ with positive eigenvalues;
+its dimension $n_+$ is the number of positive eigenvalues. A nonzero
+$x\in V_+\cap K$ would have both $x^TSx>0$ and $x^TSx=0$, so
+$V_+\cap K=0$. Hence $n_++(N-n)\le N$, that is, $n_+\le n$. The same
+argument with the eigenvectors for negative eigenvalues gives $n_-\le n$.
 \end{proof}
 
 \setcounter{theorem}{2}
@@ -226,7 +255,8 @@ apply the same argument to $-L$.
 \lean{Appendices.MainText.stacked, Appendices.MainText.Nondegenerate, Appendices.MainText.headForm, Appendices.MainText.radical_eq_ker, Appendices.MainText.finrank_radical, Appendices.MainText.gram, Appendices.MainText.signature, Appendices.MainText.gram_eq_symPart, Appendices.MainText.ker_gram_eq_map, Appendices.MainText.heads_have_balanced_attention}
 \leanok
 \uses{lem:rank-balance}
-Let $Q,K\colon C\to H$ with $\dim H=n$ and $\dim C=N$. If the stacked map
+Let $H$ be a real inner product space of dimension $n$, let $\dim C=N$, and
+let $Q,K\colon C\to H$ be linear. If the stacked map
 $J=(Q,K)\colon C\to H\oplus H$ is surjective, the symmetric form
 $S(x,y)=\tfrac12(\langle Kx,Qy\rangle+\langle Qx,Ky\rangle)$ has signature
 $(n_+,n_-,n_0)=(n,n,N-2n)$. In Lean the signature is read off the Gram
@@ -235,12 +265,17 @@ matrix of $S$ in an arbitrary basis of $C$.
 \begin{proof}
 \leanok
 \uses{lem:rank-balance}
-The Gram matrix of $2S$ is the symmetric part of $2K^TQ$, which has rank at
-most $n$, so Lemma 3 gives $n_\pm\le n$. The radical of $S$ is $\ker J$:
-if $S(x,\cdot)=0$ then $B(Jx,\cdot)$ vanishes on $J(C)=H\oplus H$ for the
-nondegenerate form $B((a,b),(a',b'))=\langle a,b'\rangle+\langle b,a'\rangle$.
-By surjectivity $\dim\ker J=N-2n$, so $S$ has rank $2n=n_++n_-$, which
-forces $n_+=n_-=n$.
+Choose a basis of $C$ and an orthonormal basis of $H$, and write $Q,K$ for
+the matrices of the two maps. The Gram matrix of $2S$ is $K^TQ+Q^TK$, the
+symmetric part of $2K^TQ$. Since $K^TQ$ factors through $H$, it has rank at
+most $n$, and Lemma~3 gives $n_+\le n$ and $n_-\le n$. It remains to show
+that $S$ has rank $2n$. On $E=H\oplus H$ the symmetric form
+$B((a,b),(a',b'))=\langle a,b'\rangle+\langle b,a'\rangle$ is
+nondegenerate and satisfies $B(Jx,Jy)=2S(x,y)$. So if $S(x,\cdot)=0$, then
+$B(Jx,\cdot)$ vanishes on $J(C)=E$ and $Jx=0$; conversely $Jx=0$ gives
+$S(x,\cdot)=0$. The radical of $S$ is therefore $\ker J$, which has
+dimension $N-2n$ because $J$ is surjective. Thus $n_++n_-=2n$, and with
+$n_\pm\le n$ this forces $n_+=n_-=n$ and $n_0=N-2n$.
 \end{proof}
 
 \chapter{Profiles of bilinear forms}
@@ -263,7 +298,7 @@ padded with zeros to equal length. Define $\pi(L)=(a,b,c,d)$ by
  c=\frac{\norm{(\alpha-\beta)_+}^2}{\norm{L}^2},\qquad
  d=\frac{\norm{(\alpha-\beta)_-}^2}{\norm{L}^2}.
 \]
-Positive and negative parts are taken entrywise. Lean pads both lists
+Here $x_+=\max(x,0)$ and $x_-=\max(-x,0)$, taken entrywise. Lean pads both lists
 to length $N$ and includes the denominator in each definition.
 \end{definition}
 
@@ -278,8 +313,10 @@ $\pi(S)=(0,b_S,c_S,d_S)$, then $(b,c,d)=(1-a)(b_S,c_S,d_S)$.
 \begin{proof}
 \leanok
 \uses{def:profile,lem:energy}
-Both triples are the same expressions in the eigenvalues of $S$, divided by
-$\norm L^2$ and by $\norm S^2$ respectively, and
+The lists $\alpha$ and $\beta$ of $L$ and of $S$ are the same, since $S$ is
+its own symmetric part. So $b,c,d$ and $b_S,c_S,d_S$ are the same
+expressions in $\alpha,\beta$, divided by $\norm L^2$ and by $\norm S^2$
+respectively. By Lemma~5,
 $\norm S^2/\norm L^2=1-\norm T^2/\norm L^2=1-a$.
 \end{proof}
 
@@ -300,14 +337,22 @@ $c=1$ and $d=1$ occur, so the set statement needs $N\ge2$.)
 \begin{proof}
 \leanok
 \uses{def:profile,lem:energy}
-Write $L=uv^T$ with unit vectors, so $t=\langle u,v\rangle$; the profile is
-invariant under orthogonal changes of coordinates. If $u=\pm v$, bring $u$
-to the first basis vector. Otherwise $e=(u+v)/\sqrt{2+2t}$ and
-$f=(v-u)/\sqrt{2-2t}$ are orthonormal; in a basis extending them $L$ is the
-block $\tfrac12\bigl(\begin{smallmatrix}1+t&\sqrt{1-t^2}\\-\sqrt{1-t^2}&t-1\end{smallmatrix}\bigr)$,
-whose symmetric part is $\operatorname{diag}((1+t)/2,(t-1)/2)$. Read off
-the profile. Every point of $\Theta$ arises from $u=e_1$,
-$v=te_1+\sqrt{1-t^2}\,e_2$.
+Write $L=uv^T$ with unit vectors $u,v$. The only possible nonzero
+eigenvalue of $L$ is $\langle u,v\rangle$, with eigenvector $u$, so
+$t=\langle u,v\rangle$. The profile is unchanged by an orthogonal change
+of coordinates $L\mapsto U^TLU$, so we may take $u$ to be the first basis
+vector. If $u=\pm v$, then $L$ has a single nonzero entry $\pm1$, and its
+profile is $(0,0,1,0)$ or $(0,0,0,1)$. If $|t|<1$, the vectors
+$e=(u+v)/\sqrt{2+2t}$ and $f=(v-u)/\sqrt{2-2t}$ are orthonormal. In an
+orthonormal basis that starts with $e,f$, the matrix $L$ is zero except for
+the top-left block
+$\tfrac12\bigl(\begin{smallmatrix}1+t&\sqrt{1-t^2}\\-\sqrt{1-t^2}&t-1\end{smallmatrix}\bigr)$.
+Its symmetric part is $\operatorname{diag}((1+t)/2,(t-1)/2)$, and its
+antisymmetric part has $\norm T^2=(1-t^2)/2$, which gives the formula. The
+paper does not spell out the set equality. The Lean proof applies the same
+computation to $s\,uv^T$ with $s>0$, which covers every rank-one matrix,
+and obtains every point of $\Theta$ from $u=e_1$ and
+$v=te_1+\sqrt{1-t^2}\,e_2$ with $t\in[-1,1]$; this uses $N\ge2$.
 \end{proof}
 
 \setcounter{theorem}{4}
@@ -329,16 +374,24 @@ traces the edge $\{d=0\}$, and over $[1,\infty)$ the edge $\{c=0\}$.
 \begin{proof}
 \leanok
 \uses{lem:proportional,prop:rank-one}
-Write $\beta_n=\rho\alpha_n+\varepsilon_n$ for the sorted lobes; by Lemma 6,
-$\delta_n=\norm{\varepsilon_n}/\norm{\alpha_n}\to0$ almost surely. By
-Cauchy--Schwarz, the triangle inequality and the $1$-Lipschitz property of
-$x\mapsto x_\pm$, the ratios $\langle\alpha,\beta\rangle/\norm\alpha^2$,
-$\norm\beta^2/\norm\alpha^2$ and $\norm{(\alpha-\beta)_\pm}/\norm\alpha$ lie
-within $\delta_n$, $\delta_n^2+2\rho\delta_n$ and $\delta_n$ of $\rho$,
-$\rho^2$ and $(1-\rho)_\pm$. Divide by
-$\norm{S_n}^2/\norm{\alpha_n}^2=1+\norm{\beta_n}^2/\norm{\alpha_n}^2$. On
-each edge, $b(\rho)=2\rho/(1+\rho^2)$ is a strictly monotone bijection onto
-$(0,1]$.
+Let $\alpha_n$ and $\beta_n$ be the positive eigenvalues of $S_n$ and the
+absolute values of its negative eigenvalues, each in decreasing order. By
+Lemma~6, $\beta_n=\rho\alpha_n+\varepsilon_n$ with
+$\delta_n=\norm{\varepsilon_n}/\norm{\alpha_n}\to0$ almost surely. The
+Cauchy--Schwarz and triangle inequalities give
+$|\langle\alpha_n,\beta_n\rangle/\norm{\alpha_n}^2-\rho|\le\delta_n$ and
+$|\norm{\beta_n}^2/\norm{\alpha_n}^2-\rho^2|\le\delta_n^2+2\rho\delta_n$.
+Since $x\mapsto x_\pm$ is $1$-Lipschitz in each entry and
+$((1-\rho)\alpha_n)_\pm=(1-\rho)_\pm\alpha_n$, also
+$|\norm{(\alpha_n-\beta_n)_\pm}/\norm{\alpha_n}-(1-\rho)_\pm|\le\delta_n$.
+The profile does not change when $S_n$ is rescaled, so divide numerators
+and the denominator $\norm{S_n}^2=\norm{\alpha_n}^2+\norm{\beta_n}^2$ by
+$\norm{\alpha_n}^2$; the ratios converge to the stated limit. The paper
+does not prove the remaining claims; the Lean proof does so as follows.
+The limit lies in $p(\Theta)$ because its last two coordinates have
+product zero, and $b(\rho)=2\rho/(1+\rho^2)$ is a strictly increasing
+bijection from $(0,1]$ onto $(0,1]$ and a strictly decreasing bijection
+from $[1,\infty)$ onto $(0,1]$.
 \end{proof}
 
 \chapter{Appendix A: Random matrices}
@@ -368,9 +421,15 @@ For $L\ne0$, division gives
 \begin{proof}
 \leanok
 \uses{def:parts}
-Expand the squared Frobenius norms entrywise, using invariance under
-transpose and $\sum_{i,j}L_{ij}L_{ji}=\tr(L^2)$. Adding the two
-identities gives the orthogonal decomposition of the energy.
+Symmetric and antisymmetric matrices are orthogonal for the Frobenius
+inner product $\langle X,Y\rangle=\tr(XY^T)$: for $S$ symmetric and $T$
+antisymmetric, transposing and using cyclicity gives
+$\tr(ST^T)=-\tr(ST)=\tr(TS)=\tr(ST)$, so $\tr(ST)=0$. Since $L=S+T$, this
+gives $\norm L^2=\norm S^2+\norm T^2$. Expanding
+$\norm S^2=\tfrac14\bigl(\langle L,L\rangle+2\langle L,L^T\rangle+\langle L^T,L^T\rangle\bigr)$
+and using $\langle L,L^T\rangle=\tr(L^2)$ gives the formula for
+$\norm S^2$; the formula for $\norm T^2$ follows by subtraction. Dividing
+by $\norm L^2$ gives the ratios.
 \end{proof}
 
 \begin{corollary}[Iid square random matrix baseline]
@@ -397,11 +456,16 @@ nondegenerate centered Gaussian, then also
 \begin{proof}
 \leanok
 \uses{lem:energy}
-Independence and centering kill the off-diagonal cross terms, giving
-$\E\tr(L^2)=N\sigma^2$. Apply the energy identities. In the Gaussian
-case, symmetry of the joint law makes the expected normalized squared
-coordinate equal to $1/N^2$, while sign symmetry cancels the remaining
-normalized cross terms.
+For $i<j$, $S_{ij}=S_{ji}=\tfrac12(L_{ij}+L_{ji})$ with $L_{ij},L_{ji}$
+independent of variance $\sigma^2$, so each of the $N(N-1)/2$
+off-diagonal pairs contributes $\sigma^2$ to $\E\norm S^2$. The diagonal
+contributes $\sum_i\E L_{ii}^2=N\sigma^2$, so
+$\E\norm S^2=N(N+1)\sigma^2/2$. The antisymmetric part is computed in the
+same way, with no diagonal contribution. For iid Gaussian entries, $L$ is
+an isotropic Gaussian vector in the $N^2$-dimensional space $M_N(\R)$. The
+symmetric and antisymmetric matrices form orthogonal subspaces of
+dimensions $N(N+1)/2$ and $N(N-1)/2$, so the expected fraction of
+$\norm L^2$ in each is its dimension divided by $N^2$.
 \end{proof}
 
 \begin{corollary}[Random QK-product baseline]
@@ -423,9 +487,14 @@ two expectations to the first are $(N+1)/(2N)$ and $(N-1)/(2N)$.
 \begin{proof}
 \leanok
 \uses{lem:energy}
-Expand $L_{ab}=\sum_r(W_K)_{ra}(W_Q)_{rb}$. Independence gives
-$\E L_{ab}^2=n\sigma_K^2\sigma_Q^2$ and
-$\E\tr(L^2)=nN\sigma_K^2\sigma_Q^2$. Sum the entries and use Lemma 5.
+Write $L_{ab}=\sum_{r=1}^n(W_K)_{ra}(W_Q)_{rb}$. Independence and centering
+give $\E L_{ab}=0$ and $\E L_{ab}^2=n\sigma_K^2\sigma_Q^2$; summing over
+$a,b$ gives $\E\norm L^2$. By Lemma~5,
+$\E\norm S^2=\tfrac12\E\norm L^2+\tfrac12\E\tr(L^2)$, where
+$\tr(L^2)=\sum_{a,b}L_{ab}L_{ba}$. For $a\ne b$,
+$\E(L_{ab}L_{ba})=0$ by independence and centering, and the diagonal terms
+give $\E\tr(L^2)=nN\sigma_K^2\sigma_Q^2$. This gives $\E\norm S^2$, and
+$\E\norm T^2$ follows by subtraction.
 \end{proof}
 
 \begin{proposition}[Expected symmetric energy for random low-rank QK products]
@@ -446,13 +515,19 @@ independently of the head dimension $n$.
 \begin{proof}
 \leanok
 \uses{lem:energy}
-First take equal variances. Sign changes and permutations of Gaussian
-columns preserve the joint law. Sign symmetry cancels the off-diagonal
-terms of $\tr(L^2)/\norm{L}^2$; permutation symmetry makes the expected
-normalized squared entries equal. Thus its expectation is $1/N$, and
-Lemma 5 gives the result. The denominator is nonzero almost surely.
-Rescale $W_K$ to reduce unequal variances to the equal-variance case;
-the normalized energies are unchanged by this rescaling.
+By Lemma~5, $\norm S^2/\norm L^2=\tfrac12+\tr(L^2)/(2\norm L^2)$, so it
+suffices to show $\E[\tr(L^2)/\norm L^2]=1/N$. Put $X=L/\norm L$, which is
+defined almost surely and has $\norm X=1$. The joint law of $W_K,W_Q$ is
+invariant under permuting the columns of either matrix, so the law of $X$
+is invariant under permuting its rows and its columns. Hence all
+$\E[X_{ij}^2]$ are equal, and since $\sum_{i,j}X_{ij}^2=1$, each equals
+$1/N^2$. For $i\ne j$, changing the sign of the $i$-th column of $W_K$
+negates the $i$-th row of $L$; this preserves the law and negates
+$X_{ij}X_{ji}$, so $\E[X_{ij}X_{ji}]=0$. Therefore
+$\E[\tr(X^2)]=\sum_i\E[X_{ii}^2]=1/N$, and the skew identity follows from
+$\norm T^2/\norm L^2=1-\norm S^2/\norm L^2$. The Lean statement allows
+different variances $v_K,v_Q$; rescaling $W_K$ reduces this to equal
+variances and does not change either ratio.
 \end{proof}
 
 \begin{lemma}[Proportional lobes]
@@ -473,14 +548,20 @@ independent copies of $X$. Then
 \begin{proof}
 \leanok
 \uses{def:profile}
-Reduce to two samples with the same scale. For sorted nonnegative
-lists, a layer-cake identity expresses their inner product using the
-minimum of two empirical survival counts. The strong law controls
-these counts and the empirical second moments. Fatou's lemma bounds
-the limiting inner product from below by the common second moment.
-Expanding the squared difference gives convergence to zero after
-division by $n$; the squared denominator divided by $n$ converges to
-the strictly positive second moment. Restore the scales $u,v$.
+Since $\beta_n=\rho\alpha'_n$, where $\alpha'_n$ is the decreasing sorting
+of $vX'_1,\ldots,vX'_n$, it suffices to show
+$\norm{\alpha_n-\alpha'_n}/\norm{\alpha_n}\to0$; dividing by $v$, take
+$v=1$. Let $m_2=\E[X^2]$ and let $G$ be the decreasing quantile function
+of $X$, so that $G(U)$ has the law of $X$ for $U$ uniform on $(0,1)$ and
+$\int_0^1G^2=m_2$. The sorted sample $x_1\ge\cdots\ge x_n$ defines the
+step function $h_n(t)=x_{\lceil nt\rceil}$ on $(0,1)$. The paper shows that
+$h_n\to G$ in $L^2(0,1)$ almost surely in three steps: $h_n(t)\to G(t)$
+at every continuity point of $G$, by the strong law applied to the
+empirical survival function; $\int h_n^2=\frac1n\sum_iX_i^2\to m_2$ by
+the strong law; and Fatou's lemma gives $\liminf\int h_nG\ge m_2$, so
+$\limsup\int(h_n-G)^2\le0$. Applying this to both samples gives
+$\norm{\alpha_n-\alpha'_n}^2/n\to0$, while
+$\norm{\alpha_n}^2/n\to m_2>0$.
 \end{proof}
 
 \chapter{Appendix B: Balanced bimodal spectra and simplex faces}
@@ -528,10 +609,17 @@ Moreover, $0\le2C\le1$ and $0\le\mathcal P\le1$.
 \begin{proof}
 \leanok
 \uses{def:balanced}
-The two lobes partition a unit vector, so their squared norms sum to
-one. Combine this with their difference $\mathcal I$, expand the
-squared difference and the complex square, and use nonnegativity of
-the lobe entries and of squared norms for the bounds.
+The entries of $\lambda_+$ and $\lambda_-$ are the absolute values of the
+entries of $\lambda$, so $\norm{\lambda_+}^2+\norm{\lambda_-}^2=\norm\lambda^2=1$.
+Together with the definition of $\mathcal I$ this gives the first two
+identities, and multiplying them gives the third. Expanding
+$\norm{\lambda_+-\lambda_-}^2=\norm{\lambda_+}^2+\norm{\lambda_-}^2-2\langle\lambda_+,\lambda_-\rangle$
+gives $1-2C$ and hence the formula for $\mathcal P$. In the complex sum,
+the real part is $\norm{\lambda_+}^2-\norm{\lambda_-}^2=\mathcal I$ and the
+imaginary part is $2\langle\lambda_+,\lambda_-\rangle=2C$. Finally
+$C\ge0$ because the entries of $\lambda_\pm$ are nonnegative, and
+$1-2C=\norm{\lambda_+-\lambda_-}^2\ge0$; these give the bounds on $C$ and
+$\mathcal P$.
 \end{proof}
 
 \begin{lemma}[Bimodal involution]
@@ -552,11 +640,19 @@ In particular, $\mathcal P(\lambda)=1$ if and only if $\iota\lambda=\lambda$.
 \begin{proof}
 \leanok
 \uses{def:balanced}
-Reversing the coordinates twice gives the identity; reversing and
-negating preserves inner products and the ordering and sign pattern
-defining $\Lambda_m$. Reindex the finite sums to obtain the
-transformation rules. Split the displacement sum into its two halves
-to identify both with the squared distance between the lobes.
+The matrix of $\iota$ has entries $-\delta_{j,2m+1-i}$; it is symmetric
+and orthogonal, and $\iota^2$ is the identity. If $\lambda$ is
+nondecreasing then so is $\iota\lambda$, and the entries of
+$\iota\lambda$ are those of $-\lambda$, so $\iota$ preserves $\Lambda_m$.
+The positive entries of $\iota\lambda$ are
+$-\lambda_1\ge\cdots\ge-\lambda_m$, so $\lambda_+(\iota\lambda)=\lambda_-(\lambda)$,
+and symmetrically $\lambda_-(\iota\lambda)=\lambda_+(\lambda)$; the rules
+for $\mathcal I$, $C$ and $\mathcal P$ follow. For the displacement, the
+$j$-th and $(2m+1-j)$-th coordinates of $\lambda-\iota\lambda$ both equal
+$\lambda_j+\lambda_{2m+1-j}=(\lambda_+)_j-(\lambda_-)_j$ up to sign, so
+$\norm{\lambda-\iota\lambda}^2=2\norm{\lambda_+-\lambda_-}^2$. The last
+claim follows from Lemma~7, since $\mathcal P(\lambda)=1$ exactly when
+$\lambda_+=\lambda_-$.
 \end{proof}
 
 \setcounter{theorem}{3}
@@ -588,17 +684,30 @@ positive semidefinite.
 \begin{proof}
 \leanok
 \uses{def:profile,lem:energy}
-The spectral theorem and the energy partition give nonnegativity and
-sum one. Vanishing squared norms characterize the $a$ face and the
-coordinatewise inequalities for $c,d$. The lobe inner product vanishes
-exactly when one lobe is zero, giving the $b$ face. When
-$\alpha\ge\beta$, pair positive and negative eigenvectors to construct
-$H$ with paired eigenvalues; the remainder $P$ is positive semidefinite.
-Both are diagonal in an eigenbasis of $S$, giving commutation and the
-norm formula. Conversely, adding a positive semidefinite matrix
-increases the ordered eigenvalues, so comparison with the paired
-spectrum of $H$ gives lobe dominance. Apply the argument to $-L$ for
-the other face. The vertices follow from the partition of one.
+Rescale so that $\norm L=1$. \emph{Partition:}
+$\norm\alpha^2+\norm\beta^2=\norm S^2$, and expanding
+$\norm{\alpha-\beta}^2=\norm{(\alpha-\beta)_+}^2+\norm{(\alpha-\beta)_-}^2$
+gives $b+c+d=\norm S^2$; Lemma~5 adds $a=\norm T^2$ to make $1$.
+\emph{Facets:} $a=0$ exactly when $T=0$. If $S$ is indefinite then
+$\langle\alpha,\beta\rangle\ge\alpha_1\beta_1>0$, so $b=0$ exactly when
+$S$ is semidefinite. $d=0$ exactly when $\alpha_j\ge\beta_j$ for all $j$;
+then pair orthonormal eigenvectors $v_j$ (eigenvalue $\alpha_j$) and $w_j$
+(eigenvalue $-\beta_j$), and put
+$H=\sum_j\beta_j(v_jv_j^T-w_jw_j^T)$ and
+$P=S-H=\sum_j(\alpha_j-\beta_j)v_jv_j^T$. Then $H$ has spectrum
+symmetric about zero, $P$ is positive semidefinite with
+$\norm P^2=\norm{(\alpha-\beta)_+}^2=c$, and all three matrices are
+diagonal in one eigenbasis. Conversely, if $S=H+P$, the Courant--Fischer
+min-max theorem gives $\lambda_k(S)\ge\lambda_k(H)$ for the $k$-th largest
+eigenvalues. With the symmetry of the spectrum of $H$, this shows that
+for every $t>0$, $S$ has at most as many eigenvalues below $-t$ as above
+$t$. If $\alpha_j<t<\beta_j$ for some $j$, at least $j$ eigenvalues lie
+below $-t$ and at most $j-1$ lie above $t$, a contradiction. The $c$ face
+follows by applying the $d$ face to $-L$, which exchanges $\alpha$ with
+$\beta$ and $c$ with $d$. \emph{Vertices:} each vertex is the set where
+the other three coordinates vanish, so it follows from the facets; for
+example, $c=1$ forces $a=b=d=0$, so $L$ is symmetric, $S$ is
+semidefinite, and $S$ cannot be negative semidefinite since then $d=1$.
 \end{proof}
 
 \chapter{Appendix C: Moments and the Gram form}
@@ -641,12 +750,19 @@ If a symmetric matrix $A$ has spectrum $\lambda$, with multiplicity, then
 \begin{proof}
 \leanok
 \uses{def:balanced,def:moment-statistics,lem:involution}
-The unit-norm condition and the presence of both signs force each
-coordinate to have absolute value below one. Sum the convergent
-geometric series coordinatewise. Partial fractions and reversal of
-the coordinates give the identities involving $\iota$. For the trace
-formulas, diagonalize $A$ orthogonally and evaluate the rational
-functions on its eigenvalues.
+Since $\norm\lambda=1$, each $|\lambda_i|\le1$; equality would force all
+other entries to vanish, but $\lambda$ has both a negative and a positive
+entry. For the series, apply
+$\sum_{r\ge0}t^{2r+1}=t/(1-t^2)$ and $\sum_{r\ge0}t^{2r+2}=t^2/(1-t^2)$,
+valid for $|t|<1$, to each entry. By Lemma~8 the entries of
+$\iota\lambda$ are those of $-\lambda$, so
+$R(\iota\lambda)=\sum_i(1+\lambda_i)^{-1}$; the identities for $O$ and
+$n+E$ follow from the partial fractions
+$\tfrac12\bigl(\tfrac1{1-t}-\tfrac1{1+t}\bigr)=\tfrac t{1-t^2}$ and
+$\tfrac12\bigl(\tfrac1{1-t}+\tfrac1{1+t}\bigr)=1+\tfrac{t^2}{1-t^2}$, and
+the parity statements follow since $\iota^2$ is the identity. The trace
+formulas are $\tr f(A)=\sum_if(\lambda_i)$ for
+$f(t)=t/(1-t^2)$, $t^2/(1-t^2)$ and $1/(1-t)$.
 \end{proof}
 
 \begin{lemma}[Computation from the key and query matrices]
@@ -678,12 +794,16 @@ belongs to $\Lambda_n$. For $H=JG/(2\norm{S})$,
 \begin{proof}
 \leanok
 \uses{def:parts,def:balanced,def:moment-statistics,lem:moment-identities}
-Block multiplication gives the factorization of $S$; cyclicity of
-trace gives the power identities. Under surjectivity, $G$ is positive
-definite. The characteristic-polynomial identity for rectangular
-products identifies the nonzero spectrum, including multiplicities.
-Congruence with $J$ gives exactly $n$ eigenvalues of each sign, so
-sorting and normalization yield a vector in $\Lambda_n$. The matrix
-$JG$ is similar to the symmetric matrix $G^{1/2}JG^{1/2}$; evaluate
-the three rational functions on its real eigenvalues and take traces.
+Block multiplication gives $M^TJM=W_K^TW_Q+W_Q^TW_K=2S$, and cyclicity of
+the trace gives $\tr((M^TJM)^k)=\tr((JG)^k)$. The nonzero eigenvalues of
+$AB$ and $BA$ agree with multiplicity; applied to $A=M^T$ and
+$B=\tfrac12JM$, this identifies the nonzero spectrum of $S$ with that of
+$\tfrac12JG$. If $M$ is surjective, $G$ is positive definite, and
+$G^{1/2}JG^{1/2}$ is symmetric and congruent to $J$. By Sylvester's law of
+inertia it has $n$ positive and $n$ negative eigenvalues, and
+$JG=G^{-1/2}(G^{1/2}JG^{1/2})G^{1/2}$ is similar to it. So the sorted
+normalized nonzero spectrum $\lambda$ lies in $\Lambda_n$, and by Lemma~9
+its entries have absolute value less than one. Finally $H$ is
+diagonalizable with spectrum $\lambda$, so the trace of each rational
+function of $H$ is the sum of its values at the entries of $\lambda$.
 \end{proof}
