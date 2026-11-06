@@ -38,7 +38,7 @@ and theorems are numbered in separate sequences.
 | `MainText/BiaffineDecomposition.lean` | Lemma 1 (biaffine decomposition) |
 | `MainText/RoPELike.lean` | the definition of RoPE-like attention functions and Proposition 1 |
 | `MainText/NearIdentity.lean` | Proposition 2 (transformers are near-identity) |
-| `MainText/Homogenization.lean` | the definitions of attention functions, bilinear attention functions, heads and transformers; Proposition 3 (bilinear attention recovers QKV attention) |
+| `MainText/Homogenization.lean` | the definitions of attention functions, bilinear attention functions, heads, attention blocks and transformers; Proposition 3 (bilinear attention recovers QKV attention) |
 | `MainText/PairingBound.lean` | the pairing score and Lemma 2 (pairing bound) |
 | `MainText/RankBalance.lean` | Lemma 3 (rank balance) |
 | `MainText/BalancedHeads.lean` | Theorem 3 (heads have balanced attention) |
@@ -96,6 +96,11 @@ conventions are documented in the module docstring of each file.
   is a nonzero scalar, and only the two vertices `c = 1` and `d = 1`
   of `Θ` occur.  The hypothesis will be added to the statement in the
   next version of the paper.
+- Proposition 1: the uniqueness of `S` (`S = T_1`, from taking `d = 1`
+  in `T_d = S^d`) requires `k ≥ 2`; for `k = 1` every `S` works.  The
+  Lean statement `eq_ropeT_one_of_forall` assumes `2 ≤ k`.  The local
+  TeX has been corrected ("when `k ≥ 2` and `S` exists, it is unique");
+  arXiv v1 omits the hypothesis.
 - Corollary 1: the ratio statements divide by `E‖L‖² = N²σ²` and
   assume `σ ≠ 0` and `N > 0`; the Gaussian statements likewise assume
   a nonzero variance and `N > 0`.
@@ -120,8 +125,6 @@ are more general than the paper's, which they imply.
 - Proposition 1: `H` is a finite-dimensional real vector space; its
   inner product plays no role.  Being RoPE-like is a condition on the
   bilinear forms `B_d` alone, and the statement is made for them.
-- Proposition 2: each head is assumed only to return, componentwise,
-  a convex combination of its inputs.
 - Theorem 3: the head enters only through its query and key maps `Q`,
   `K` and the nondegeneracy condition, so the theorem is stated for
   `Q` and `K`.  The signature of `S` is that of its Gram matrix in any
@@ -133,8 +136,27 @@ are more general than the paper's, which they imply.
   `M̂ = M ∘ pr_C`, so any regularity of `M` stable under composition
   with linear maps passes to `M̂`.
 
-**Proofs.**  The proofs follow the paper's.  Two steps the paper
-omits are supplied: in Proposition 3, that the homogenized attention
-weights are simplex-valued on all of `Ĉ^k`, not only on the chart
-`C + e` (`homScore_eq`); and Lemma 1, which the paper calls elementary
-and does not prove.
+**Proofs.**  The proofs follow the paper's: each principal step of a
+paper proof is a Lean declaration named in the docstring of the file
+concerned.  Steps the paper omits or quotes are supplied:
+
+- Proposition 3: the homogenized attention weights are simplex-valued on
+  all of `Ĉ^k`, not only on the chart `C + e` (`homScore_eq`).
+- Lemma 1, which the paper calls elementary and does not prove.
+- Corollary 1, Gaussian part: the paper quotes that the expected fraction
+  of the squared norm of an isotropic Gaussian vector in a subspace is its
+  dimension over the total dimension.  Lean proves it
+  (`integral_sum_sq_proj_div`) from the invariance of the law under
+  coordinate permutations and the sign change of one coordinate, which
+  give `E[xᵢxⱼ/‖x‖²] = δᵢⱼ/n`, and `tr P = dim W` for the orthogonal
+  projection `P` onto `W`.  The dimensions of the symmetric and
+  antisymmetric subspaces are computed as traces of the projections
+  `L ↦ S`, `L ↦ T`.
+- Lemma 6, first step: arXiv v1 applies the strong law at each fixed
+  `t`, which does not give convergence at almost every `t` for almost
+  every outcome.  The Lean proof follows the corrected text (applied to
+  the local TeX with the author's approval on 2026-11-05): the strong law
+  at the countably many rational thresholds `x > 0`, then the upper bound
+  via `t' < t` with `G(t') < G(t) + ε` and the lower bound via
+  `⌈nt⌉/n < t + 1/n`.  In the lower bound the rational `x` is also taken
+  positive, which is possible since `G(t) > 0`.

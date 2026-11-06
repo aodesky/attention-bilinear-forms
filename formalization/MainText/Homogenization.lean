@@ -19,11 +19,14 @@ Definitions, as in the paper.
     bilinear form (`IsBilinearScore`).
   * (Attention head.)  `A(x₁, …, x_ℓ) = (x₁, a₂(x₁, x₂), …, a_ℓ(x₁, …, x_ℓ))`
     (`head`).
-  * (Transformer, single head.)  `T = T_M ∘ T_A` with `T_A = id + (V ⊗ id) ∘ A`
-    and `T_M = id + M ⊗ id` (`transformer`).
+  * (Attention block.)  `A = ∑ᵢ (Vᵢ ⊗ id) ∘ Aᵢ` for heads `Aᵢ` and linear
+    value maps `Vᵢ` (`attentionBlock`).
+  * (Transformer.)  `T = T_M ∘ T_A` with `T_A = id ⊗ id + A` and
+    `T_M = id ⊗ id + M ⊗ id` (`transformer`, `attnComponent`, `nnComponent`).
+    A single-head transformer is one whose attention block has `h = 1`.
   * (QKV attention, §"QKV attention".)  The score of `x_k` on `x_j` is
     `⟨Q(x_k + p_k), K(x_j + p_j)⟩/√n` with `n = dim H` (`qkvScore`).  A
-    single-head QKV transformer is a single-head transformer whose attention
+    single-head QKV transformer is a single-head transformer whose head's attention
     functions `a_k` (`k = 2, …, ℓ`) are attention functions with these
     scoring functions.
 
@@ -101,11 +104,30 @@ here `a m` has length `m + 1`. -/
 def head (ℓ : ℕ) (a : (m : ℕ) → (Fin (m + 1) → C) → C) (x : Fin ℓ → C) (i : Fin ℓ) : C :=
   if (i : ℕ) = 0 then x i else a i (fun j : Fin ((i : ℕ) + 1) => x (Fin.castLE i.2 j))
 
-/-- **Definition (transformer), single head.**  `T = T_M ∘ T_A` with
-`T_A(x)_i = x_i + V(A(x)_i)` and `T_M(y)_i = y_i + M(y_i)`. -/
-def transformer {ℓ : ℕ} (A : (Fin ℓ → C) → Fin ℓ → C) (V : C →ₗ[ℝ] C) (M : C → C)
-    (x : Fin ℓ → C) (i : Fin ℓ) : C :=
-  (x i + V (A x i)) + M (x i + V (A x i))
+/-- **Attention block.**  `A = ∑ᵢ (Vᵢ ⊗ id) ∘ Aᵢ` for attention heads `A₁, …, A_h`
+and value maps `V₁, …, V_h`: `A(x)_k = ∑ᵢ Vᵢ(Aᵢ(x)_k)`. -/
+def attentionBlock {ℓ h : ℕ} (A : Fin h → (Fin ℓ → C) → Fin ℓ → C) (V : Fin h → C →ₗ[ℝ] C)
+    (x : Fin ℓ → C) : Fin ℓ → C :=
+  fun k => ∑ i, V i (A i x k)
+
+/-- The attention component `T_A = id ⊗ id + A`. -/
+def attnComponent {ℓ : ℕ} (A : (Fin ℓ → C) → Fin ℓ → C) (x : Fin ℓ → C) : Fin ℓ → C :=
+  x + A x
+
+/-- The neural network component `T_M = id ⊗ id + M ⊗ id`:
+`T_M(y)_k = y_k + M(y_k)`. -/
+def nnComponent {ℓ : ℕ} (M : C → C) (y : Fin ℓ → C) : Fin ℓ → C :=
+  fun k => y k + M (y k)
+
+/-- **Definition (transformer).**  The transformer associated with an attention
+block `A` and a neural network `M` is `T = T_M ∘ T_A`. -/
+def transformer {ℓ : ℕ} (A : (Fin ℓ → C) → Fin ℓ → C) (M : C → C) : (Fin ℓ → C) → Fin ℓ → C :=
+  nnComponent M ∘ attnComponent A
+
+omit [NormedSpace ℝ C] [FiniteDimensional ℝ C] in
+/-- The `k`-th component of `T(x)`: `x_k + A(x)_k + M(x_k + A(x)_k)`. -/
+lemma transformer_apply {ℓ : ℕ} (A : (Fin ℓ → C) → Fin ℓ → C) (M : C → C) (x : Fin ℓ → C)
+    (k : Fin ℓ) : transformer A M x k = (x k + A x k) + M (x k + A x k) := rfl
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℝ H] [FiniteDimensional ℝ H]
 
@@ -236,8 +258,10 @@ theorem qkv_homogenizes_to_bilinear {ℓ : ℕ} (Q K : C →ₗ[ℝ] H) (p : ℕ
         IsAttentionFunction (ah m) (wh m) (φ m) (sh m) ∧ IsBilinearScore (sh m)) ∧
       (∀ y, Vh y = (V y.1, 0)) ∧ (∀ y, Mh y = (M y.1, 0)) ∧
       ∀ x : Fin ℓ → C,
-        transformer (head ℓ ah) Vh Mh (fun i => (x i, 1))
-          = fun i => (transformer (head ℓ a) V M x i, 1) := by
+        transformer (attentionBlock (fun _ : Fin 1 => head ℓ ah) fun _ => Vh) Mh
+            (fun i => (x i, 1))
+          = fun i => (transformer (attentionBlock (fun _ : Fin 1 => head ℓ a) fun _ => V) M x i,
+              1) := by
   -- the homogenized weights and attention functions
   let wh : (m : ℕ) → (Fin (m + 1) → C × ℝ) → EuclideanSpace ℝ (Fin (m + 1)) :=
     fun m y => w m (dehom p m y)
@@ -276,8 +300,9 @@ theorem qkv_homogenizes_to_bilinear {ℓ : ℕ} (Q K : C →ₗ[ℝ] H) (p : ℕ
         · simp [Prod.fst_sum]
         · simp [Prod.snd_sum, hsum]
     funext i
-    simp only [transformer, hhead, LinearMap.comp_apply, LinearMap.fst_apply,
-      LinearMap.inl_apply, Prod.mk_add_mk, add_zero]
+    simp only [transformer_apply, attentionBlock, Finset.univ_unique, Finset.sum_singleton,
+      hhead, LinearMap.comp_apply, LinearMap.fst_apply, LinearMap.inl_apply, Prod.mk_add_mk,
+      add_zero]
 
 end Homog
 

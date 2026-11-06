@@ -21,14 +21,33 @@ Encoding choices (documented in the theorem docstring):
   `α_n` are the first `n` terms of the sequence `X` (this is the
   setting of the strong law of large numbers used in the paper's
   proof);
-* norms are written out as `√(∑ …²)`.
+* norms are written out as `√(∑ …²)`;
+* `U` uniform on `[0,1]` is Lebesgue measure on `(0,1)` (`vol01`).
 
-The proof follows the paper's three steps (pointwise convergence of the
-sorted lists, the strong law of large numbers for the second moment,
-and Fatou's lemma), with the first and third steps combined: a
-layer-cake identity writes `⟨α_n, α_n'⟩ / n` as an integral over
-`(0,∞)²` of the minimum of two empirical survival counts, whose liminf
-Fatou's lemma bounds below by the second moment of `γ`.
+The proof follows the paper's (in the revised wording of its first step,
+author-approved 2026-11-05; see `README.md`).
+* `F̄(x) = P(X > x)` (`survival`) and the decreasing generalized inverse
+  `G(t) = inf {x > 0 : F̄(x) ≤ t}` (`quantile`), with
+  `G(t) > x ↔ t < F̄(x)` (`lt_quantile_iff`); `G(U)` has the law of `X`
+  (`map_quantile`), so `∫₀¹ G² = m₂` (`lintegral_quantile_sq`).
+* The step function `h_n(t) = x_{⌈nt⌉}` of the sorted samples (`stepFn`),
+  with `∫₀¹ h_n² = (1/n) ∑ xᵢ²` (`integral_stepFn`) and
+  `h_n(t) > x ↔ F̄_n(x) ≥ ⌈nt⌉/n` (`lt_stepFn_iff`).
+* First step: almost surely `F̄_n(x) → F̄(x)` for every rational `x > 0`
+  (strong law at countably many thresholds); on such an outcome
+  `h_n(t) → G(t)` at every continuity point `t` of `G`, by the paper's
+  upper bound (via `t' < t` with `G(t') < G(t) + ε` and a rational
+  `x ∈ (G(t'), G(t) + ε)`) and lower bound (via a rational
+  `x ∈ (G(t) - ε, G(t))` and `⌈nt⌉/n < t + 1/n`)
+  (`tendsto_stepFn_of_continuousWithinAt`); hence for almost every `t`
+  (`ae_tendsto_stepFn`).  The lower bound takes `x > 0`, which is
+  possible because `G(t) > 0`.
+* Second step: `∫₀¹ h_n² → m₂` by the strong law (`tendsto_integral_stepFn_sq`).
+* Third step: expanding `∫(h_n - G)²` and applying Fatou's lemma to
+  `h_n G` gives `∫(h_n - G)² → 0` (`tendsto_integral_stepFn_sub_quantile_sq`).
+* Conclusion: `‖α_n - α_n'‖²/n = ∫(g_n - g_n')² ≤ 2∫(g_n - G)² + 2∫(g_n' - G)²`
+  and `‖α_n‖²/n → m₂ > 0` (`tendsto_sortDesc_diff_div_of_seq`); the
+  reduction to `v = 1` and `β_n = ρ α_n'` is in `proportional_lobes`.
 -/
 import Appendices.Common
 import Appendices.Profile
@@ -39,18 +58,216 @@ open scoped ENNReal NNReal Topology
 
 namespace Appendices
 
-/-! ### Counting above thresholds in an antitone tuple
+/-! ### The quantile function
 
-For antitone tuples the index sets `{i | s < a i}` are initial
-segments, so the count of indices where two antitone tuples both
-exceed thresholds is the minimum of the two separate counts.  This is
-the combinatorial heart of the layer-cake identity for
-`∑ i, a i * b i` below. -/
+For the law `γ` of `X`, `F̄(x) = P(X > x)` is `survival γ x` and the
+decreasing generalized inverse `G(t) = inf {x > 0 : F̄(x) ≤ t}` is
+`quantile γ t`.  The defining property is `G(t) > x ↔ t < F̄(x)` for
+`t ∈ (0,1)` (`lt_quantile_iff`). -/
 
-section Counting
+section Quantile
+
+variable (γ : Measure ℝ)
+
+/-- `F̄(x) = P(X > x)`. -/
+noncomputable def survival (x : ℝ) : ℝ := γ.real (Ioi x)
+
+/-- The decreasing generalized inverse `G(t) = inf {x > 0 : F̄(x) ≤ t}`. -/
+noncomputable def quantile (t : ℝ) : ℝ := sInf {x | 0 < x ∧ survival γ x ≤ t}
+
+variable {γ} [IsProbabilityMeasure γ]
+
+lemma survival_eq_one_sub_cdf (x : ℝ) : survival γ x = 1 - cdf γ x := by
+  rw [survival, cdf_eq_real, ← Set.compl_Iic, probReal_compl_eq_one_sub measurableSet_Iic]
+
+lemma survival_antitone : Antitone (survival γ) := fun _ _ h => by
+  simp only [survival_eq_one_sub_cdf]; linarith [monotone_cdf γ h]
+
+lemma survival_of_nonpos (hγ : γ (Iic 0) = 0) {x : ℝ} (hx : x ≤ 0) : survival γ x = 1 := by
+  have h0 : survival γ 0 = 1 := by
+    rw [survival, ← Set.compl_Iic, probReal_compl_eq_one_sub measurableSet_Iic,
+      measureReal_def, hγ]
+    simp
+  have h1 : survival γ x ≤ 1 := by
+    rw [survival_eq_one_sub_cdf]; linarith [cdf_nonneg γ x]
+  linarith [survival_antitone (γ := γ) hx]
+
+/-- `G(t) > x` if and only if `t < F̄(x)`, for `t ∈ (0,1)`. -/
+lemma lt_quantile_iff (hγ : γ (Iic 0) = 0) {t : ℝ} (ht : t ∈ Ioo (0:ℝ) 1) (x : ℝ) :
+    x < quantile γ t ↔ t < survival γ x := by
+  set S := {x | 0 < x ∧ survival γ x ≤ t} with hS
+  have hbdd : BddBelow S := ⟨0, fun y hy => hy.1.le⟩
+  have hne : S.Nonempty := by
+    have hlim : Tendsto (survival γ) atTop (𝓝 0) := by
+      have := (tendsto_cdf_atTop (μ := γ)).const_sub 1
+      simp only [sub_self] at this
+      exact this.congr fun y => (survival_eq_one_sub_cdf y).symm
+    obtain ⟨y, hy⟩ := ((hlim.eventually (gt_mem_nhds ht.1)).and (eventually_gt_atTop 0)).exists
+    exact ⟨y, hy.2, hy.1.le⟩
+  constructor
+  · intro hx
+    by_contra hle
+    push_neg at hle
+    rcases le_or_gt x 0 with h0 | h0
+    · rw [survival_of_nonpos hγ h0] at hle; linarith [ht.2]
+    · exact absurd (csInf_le hbdd ⟨h0, hle⟩) (not_le.mpr hx)
+  · intro hx
+    -- right-continuity of `F̄` at `x`
+    have hrc : ∀ᶠ y in 𝓝[>] x, t < survival γ y := by
+      have h := ((cdf γ).right_continuous x).mono_left (nhdsWithin_mono _ Set.Ioi_subset_Ici_self)
+      have h' : Tendsto (survival γ) (𝓝[>] x) (𝓝 (survival γ x)) := by
+        have := h.const_sub 1
+        simp only [← survival_eq_one_sub_cdf] at this
+        exact this
+      exact h'.eventually (lt_mem_nhds hx)
+    obtain ⟨y, hyt, hyx⟩ := (hrc.and self_mem_nhdsWithin).exists
+    refine lt_of_lt_of_le hyx (le_csInf hne fun s hs => ?_)
+    by_contra hsy
+    push_neg at hsy
+    linarith [hs.2, survival_antitone (γ := γ) hsy.le]
+
+lemma quantile_pos (hγ : γ (Iic 0) = 0) {t : ℝ} (ht : t ∈ Ioo (0:ℝ) 1) : 0 < quantile γ t := by
+  rw [lt_quantile_iff hγ ht, survival_of_nonpos hγ le_rfl]; exact ht.2
+
+lemma quantile_antitoneOn (hγ : γ (Iic 0) = 0) : AntitoneOn (quantile γ) (Ioo 0 1) := by
+  intro t ht t' ht' htt'
+  by_contra hlt
+  push_neg at hlt
+  obtain ⟨x, hx1, hx2⟩ := exists_between hlt
+  have h1 := (lt_quantile_iff hγ ht' x).mp hx2
+  have h2 : survival γ x ≤ t := not_lt.mp fun h => (not_lt.mpr hx1.le) ((lt_quantile_iff hγ ht x).mpr h)
+  linarith
+
+/-- Lebesgue measure on `(0,1)`, the law of a uniform random variable `U`. -/
+noncomputable abbrev vol01 : Measure ℝ := volume.restrict (Ioo (0:ℝ) 1)
+
+instance : IsProbabilityMeasure vol01 :=
+  ⟨by simp [Measure.restrict_apply MeasurableSet.univ, Real.volume_Ioo]⟩
+
+lemma aemeasurable_quantile (hγ : γ (Iic 0) = 0) : AEMeasurable (quantile γ) vol01 :=
+  aemeasurable_restrict_of_antitoneOn measurableSet_Ioo (quantile_antitoneOn hγ)
+
+/-- `G(U)` has the law of `X`: `P(G(U) > x) = P(U < F̄(x)) = F̄(x)`. -/
+lemma map_quantile (hγ : γ (Iic 0) = 0) : vol01.map (quantile γ) = γ := by
+  have hm := aemeasurable_quantile (γ := γ) hγ
+  haveI : IsProbabilityMeasure (vol01.map (quantile γ)) := Measure.isProbabilityMeasure_map hm
+  have hIoi : ∀ x, (vol01.map (quantile γ)).real (Ioi x) = survival γ x := by
+    intro x
+    have hset : quantile γ ⁻¹' Ioi x ∩ Ioo 0 1 = Ioo 0 (survival γ x) ∩ Ioo 0 1 := by
+      ext t
+      simp only [Set.mem_inter_iff, Set.mem_preimage, Set.mem_Ioi, Set.mem_Ioo]
+      constructor
+      · rintro ⟨h, h0, h1⟩; exact ⟨⟨h0, (lt_quantile_iff hγ ⟨h0, h1⟩ x).mp h⟩, h0, h1⟩
+      · rintro ⟨⟨_, h⟩, h0, h1⟩; exact ⟨(lt_quantile_iff hγ ⟨h0, h1⟩ x).mpr h, h0, h1⟩
+    have hle : survival γ x ≤ 1 := by
+      rw [survival_eq_one_sub_cdf]; linarith [cdf_nonneg γ x]
+    rw [measureReal_def, Measure.map_apply_of_aemeasurable hm measurableSet_Ioi,
+      Measure.restrict_apply' measurableSet_Ioo, hset, Set.inter_eq_left.mpr
+        (Set.Ioo_subset_Ioo_right hle), Real.volume_Ioo, sub_zero,
+      ENNReal.toReal_ofReal (by rw [survival]; exact measureReal_nonneg)]
+  refine Measure.eq_of_cdf _ _ ?_
+  ext x
+  have h1 := survival_eq_one_sub_cdf (γ := vol01.map (quantile γ)) x
+  have h2 := survival_eq_one_sub_cdf (γ := γ) x
+  rw [survival, hIoi] at h1
+  linarith
+
+/-- `∫₀¹ G(t)² dt = m₂`. -/
+lemma lintegral_quantile_sq (hγ : γ (Iic 0) = 0) :
+    ∫⁻ t, ENNReal.ofReal (quantile γ t ^ 2) ∂vol01 = ∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ := by
+  conv_rhs => rw [← map_quantile hγ]
+  rw [lintegral_map' (by fun_prop) (aemeasurable_quantile hγ)]
+
+end Quantile
+
+/-! ### Step functions of sorted samples
+
+For a list `a = (a₁ ≥ ⋯ ≥ a_n)` the step function is `h(t) = a_{⌈nt⌉}` on
+`(0,1)` (`stepFn`; Lean indexes from `0`, so this is `a ⟨⌈nt⌉ - 1, _⟩`).
+Then `∫₀¹ f(h_a, h_b) = (1/n) ∑ᵢ f(aᵢ, bᵢ)` (`integral_stepFn`), and
+`h(t) > x` exactly when `#{i : aᵢ > x}/n ≥ ⌈nt⌉/n` (`lt_stepFn_iff`). -/
+
+section StepFunction
 
 variable {n : ℕ}
 
+/-- The step function `h(t) = a_{⌈nt⌉}` (and `0` where `⌈nt⌉ ∉ [1, n]`). -/
+noncomputable def stepFn (a : Fin n → ℝ) (t : ℝ) : ℝ :=
+  if h : ⌈(n:ℝ) * t⌉₊ - 1 < n then a ⟨⌈(n:ℝ) * t⌉₊ - 1, h⟩ else 0
+
+lemma measurable_stepFn (a : Fin n → ℝ) : Measurable (stepFn a) := by
+  have h : stepFn a = (fun k : ℕ => if h : k - 1 < n then a ⟨k - 1, h⟩ else 0)
+      ∘ (fun t : ℝ => ⌈(n:ℝ) * t⌉₊) := rfl
+  rw [h]
+  exact measurable_from_nat.comp (measurable_const_mul _).nat_ceil
+
+lemma abs_stepFn_le (a : Fin n → ℝ) (t : ℝ) : |stepFn a t| ≤ ∑ i, |a i| := by
+  have h0 : 0 ≤ ∑ i, |a i| := Finset.sum_nonneg fun i _ => abs_nonneg _
+  unfold stepFn
+  split_ifs with h
+  · exact Finset.single_le_sum (f := fun i => |a i|) (fun i _ => abs_nonneg _)
+      (Finset.mem_univ _)
+  · simp only [abs_zero]; exact h0
+
+lemma memLp_stepFn (a : Fin n → ℝ) : MemLp (stepFn a) 2 vol01 :=
+  MemLp.of_bound (measurable_stepFn a).aestronglyMeasurable (∑ i, |a i|)
+    (ae_of_all _ fun t => by rw [Real.norm_eq_abs]; exact abs_stepFn_le a t)
+
+lemma stepFn_nonneg {a : Fin n → ℝ} (ha : ∀ i, 0 ≤ a i) (t : ℝ) : 0 ≤ stepFn a t := by
+  unfold stepFn; split_ifs <;> simp [ha]
+
+/-- On `(i/n, (i+1)/n]` the step function is `aᵢ` (`0`-indexed). -/
+lemma stepFn_of_mem (a : Fin n → ℝ) (i : Fin n) {t : ℝ}
+    (ht : t ∈ Ioc ((i:ℝ) / n) (((i:ℝ) + 1) / n)) : stepFn a t = a i := by
+  have hn : (0:ℝ) < n := Nat.cast_pos.mpr (Nat.zero_lt_of_lt i.2)
+  have hceil : ⌈(n:ℝ) * t⌉₊ = (i:ℕ) + 1 := by
+    rw [Nat.ceil_eq_iff (Nat.succ_ne_zero _)]
+    push_cast
+    constructor
+    · have := ht.1; rw [div_lt_iff₀ hn] at this; linarith
+    · have := ht.2; rw [le_div_iff₀ hn] at this; linarith
+  have hi : ⌈(n:ℝ) * t⌉₊ - 1 < n := by rw [hceil]; simp
+  simp only [stepFn, dif_pos hi]
+  congr 1
+  ext
+  simp [hceil]
+
+/-- `∫₀¹ f(h_a(t), h_b(t)) dt = (1/n) ∑ᵢ f(aᵢ, bᵢ)`. -/
+lemma integral_stepFn (hn : 0 < n) (f : ℝ → ℝ → ℝ) (a b : Fin n → ℝ) :
+    ∫ t, f (stepFn a t) (stepFn b t) ∂vol01 = (∑ i, f (a i) (b i)) / n := by
+  have hn' : (0:ℝ) < n := Nat.cast_pos.mpr hn
+  set c : ℕ → ℝ := fun k => (k:ℝ) / n with hc
+  have hpiece : ∀ i : Fin n, ∀ t ∈ Ioc (c i) (c (i + 1)),
+      f (stepFn a t) (stepFn b t) = f (a i) (b i) := by
+    intro i t ht
+    have ht' : t ∈ Ioc ((i:ℝ) / n) (((i:ℝ) + 1) / n) := by simpa [hc] using ht
+    rw [stepFn_of_mem a i ht', stepFn_of_mem b i ht']
+  have hle : ∀ k, c k ≤ c (k + 1) := fun k => by
+    simp only [hc]; gcongr; simp
+  have hint : ∀ k < n, IntervalIntegrable (fun t => f (stepFn a t) (stepFn b t)) volume
+      (c k) (c (k + 1)) := by
+    intro k hk
+    rw [intervalIntegrable_iff_integrableOn_Ioc_of_le (hle k)]
+    refine (integrableOn_const (C := f (a ⟨k, hk⟩) (b ⟨k, hk⟩))
+      (by simp [Real.volume_Ioc])).congr_fun (fun t ht => ?_) measurableSet_Ioc
+    exact (hpiece ⟨k, hk⟩ t ht).symm
+  have hsum := intervalIntegral.sum_integral_adjacent_intervals hint
+  have hc0 : c 0 = 0 := by simp [hc]
+  have hcn : c n = 1 := by simp [hc, hn'.ne']
+  rw [hc0, hcn, intervalIntegral.integral_of_le zero_le_one, integral_Ioc_eq_integral_Ioo]
+    at hsum
+  rw [← hsum, ← Fin.sum_univ_eq_sum_range (fun k => ∫ t in c k..c (k + 1),
+    f (stepFn a t) (stepFn b t)), Finset.sum_div]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [intervalIntegral.integral_of_le (hle i),
+    setIntegral_congr_fun measurableSet_Ioc (hpiece i), setIntegral_const, smul_eq_mul,
+    measureReal_def, Real.volume_Ioc, ENNReal.toReal_ofReal (sub_nonneg.mpr (hle i))]
+  simp only [hc]
+  push_cast
+  field_simp
+  ring
+
+/-- For antitone tuples the index sets `{i | s < a i}` are initial segments. -/
 private lemma mem_iff_val_lt_card_of_initial {S : Finset (Fin n)}
     (hS : ∀ ⦃i j : Fin n⦄, j ≤ i → i ∈ S → j ∈ S) {i : Fin n} :
     i ∈ S ↔ (i : ℕ) < S.card := by
@@ -72,120 +289,38 @@ private lemma mem_iff_val_lt_card_of_initial {S : Finset (Fin n)}
     rw [Fin.card_Iio] at h2
     omega
 
-private lemma card_eq_of_val_lt_iff {c d : ℕ} (hc : c ≤ n) (hd : d ≤ n)
-    (h : ∀ i : Fin n, (i : ℕ) < c ↔ (i : ℕ) < d) : c = d := by
-  by_contra hne
-  rcases Nat.lt_or_ge c d with hlt | hge
-  · exact absurd ((h ⟨c, lt_of_lt_of_le hlt hd⟩).mpr hlt) (by simp)
-  · have hlt : d < c := lt_of_le_of_ne hge (Ne.symm hne)
-    exact absurd ((h ⟨d, lt_of_lt_of_le hlt hc⟩).mp hlt) (by simp)
-
-/-- For antitone tuples `a`, `b`, the number of indices where `s < a i`
-and `t < b i` simultaneously is the minimum of the two counts. -/
-private lemma card_filter_and_eq_min {a b : Fin n → ℝ}
-    (ha : Antitone a) (hb : Antitone b) (s t : ℝ) :
-    (univ.filter fun i => s < a i ∧ t < b i).card
-      = min (univ.filter fun i => s < a i).card
-          (univ.filter fun i => t < b i).card := by
-  have hA : ∀ ⦃i j : Fin n⦄, j ≤ i → i ∈ univ.filter (fun i => s < a i) →
-      j ∈ univ.filter (fun i => s < a i) := by
+/-- `h(t) > x` exactly when `#{i : aᵢ > x}/n ≥ ⌈nt⌉/n`, for antitone `a` and
+`t ∈ (0,1)`. -/
+lemma lt_stepFn_iff (hn : 0 < n) {a : Fin n → ℝ} (ha : Antitone a) {t : ℝ}
+    (ht : t ∈ Ioo (0:ℝ) 1) (x : ℝ) :
+    x < stepFn a t ↔
+      (⌈(n:ℝ) * t⌉₊ : ℝ) / n ≤ ((univ.filter fun i => x < a i).card : ℝ) / n := by
+  have hn' : (0:ℝ) < n := Nat.cast_pos.mpr hn
+  have hk1 : 1 ≤ ⌈(n:ℝ) * t⌉₊ := Nat.one_le_iff_ne_zero.mpr
+    (Nat.ceil_pos.mpr (mul_pos hn' ht.1)).ne'
+  have hkn : ⌈(n:ℝ) * t⌉₊ ≤ n := Nat.ceil_le.mpr (by nlinarith [ht.2])
+  have hi : ⌈(n:ℝ) * t⌉₊ - 1 < n := by omega
+  have hS : ∀ ⦃i j : Fin n⦄, j ≤ i → i ∈ univ.filter (fun i => x < a i) →
+      j ∈ univ.filter (fun i => x < a i) := by
     intro i j hij hi
     simp only [Finset.mem_filter_univ] at hi ⊢
     exact lt_of_lt_of_le hi (ha hij)
-  have hB : ∀ ⦃i j : Fin n⦄, j ≤ i → i ∈ univ.filter (fun i => t < b i) →
-      j ∈ univ.filter (fun i => t < b i) := by
-    intro i j hij hi
-    simp only [Finset.mem_filter_univ] at hi ⊢
-    exact lt_of_lt_of_le hi (hb hij)
-  have hAB : ∀ ⦃i j : Fin n⦄, j ≤ i →
-      i ∈ univ.filter (fun i => s < a i ∧ t < b i) →
-      j ∈ univ.filter (fun i => s < a i ∧ t < b i) := by
-    intro i j hij hi
-    simp only [Finset.mem_filter_univ] at hi ⊢
-    exact ⟨lt_of_lt_of_le hi.1 (ha hij), lt_of_lt_of_le hi.2 (hb hij)⟩
-  have hle : ∀ (p : Fin n → Prop) (_ : DecidablePred p),
-      (univ.filter p).card ≤ n := fun p _ =>
-    le_trans (Finset.card_filter_le _ _)
-      (le_of_eq (Finset.card_univ.trans (Fintype.card_fin n)))
-  refine card_eq_of_val_lt_iff (hle _ _)
-    (le_trans (Nat.min_le_left _ _) (hle _ _)) fun i => ?_
-  rw [← mem_iff_val_lt_card_of_initial hAB, Nat.lt_min,
-    ← mem_iff_val_lt_card_of_initial hA, ← mem_iff_val_lt_card_of_initial hB]
-  simp only [Finset.mem_filter_univ]
+  rw [div_le_div_iff_of_pos_right hn', Nat.cast_le, stepFn, dif_pos hi]
+  have := mem_iff_val_lt_card_of_initial hS (i := ⟨⌈(n:ℝ) * t⌉₊ - 1, hi⟩)
+  simp only [Finset.mem_filter_univ] at this
+  rw [this]
+  omega
 
-end Counting
+end StepFunction
 
-/-! ### A layer-cake identity for `∑ i, a i * b i`
+/-! ### Step 1: pointwise convergence of the step functions
 
-For nonnegative antitone tuples `a`, `b`,
-
-    ∑ i, a i * b i = ∫₀^∞ ∫₀^∞ min #{i | s < a i} #{i | t < b i} dt ds.
-
-This identity, its counterpart for the second moment of a law on
-`[0,∞)`, and Fatou's lemma drive the almost-sure convergence below. -/
-
-section LayerCake
-
-variable {n : ℕ}
-
-private lemma lintegral_ite_lt (c : ℝ) :
-    ∫⁻ s in Ioi (0:ℝ), (if s < c then (1:ℝ≥0∞) else 0) = ENNReal.ofReal c := by
-  have h : ∀ s : ℝ, (if s < c then (1:ℝ≥0∞) else 0)
-      = (Iio c).indicator (fun _ => (1:ℝ≥0∞)) s := by
-    intro s; rw [Set.indicator_apply]; simp
-  simp_rw [h]
-  rw [lintegral_indicator measurableSet_Iio, setLIntegral_one,
-    Measure.restrict_apply measurableSet_Iio, Set.Iio_inter_Ioi,
-    Real.volume_Ioo, sub_zero]
-
-private lemma measurable_ite_lt (c : ℝ) :
-    Measurable (fun s : ℝ => if s < c then (1:ℝ≥0∞) else 0) := by
-  apply Measurable.ite measurableSet_Iio <;> exact measurable_const
-
-/-- Layer-cake identity for a finite sum of products of nonnegative
-entries. -/
-private lemma ofReal_sum_mul_eq_lintegral_card {a b : Fin n → ℝ}
-    (ha0 : ∀ i, 0 ≤ a i) (hb0 : ∀ i, 0 ≤ b i) :
-    ENNReal.ofReal (∑ i, a i * b i)
-      = ∫⁻ s in Ioi (0:ℝ), ∫⁻ t in Ioi (0:ℝ),
-          ((univ.filter fun i => s < a i ∧ t < b i).card : ℝ≥0∞) := by
-  have hcard : ∀ s t : ℝ,
-      ((univ.filter fun i => s < a i ∧ t < b i).card : ℝ≥0∞)
-        = ∑ i, (if s < a i then (1:ℝ≥0∞) else 0) * (if t < b i then (1:ℝ≥0∞) else 0) := by
-    intro s t
-    rw [Finset.card_filter]
-    push_cast
-    refine Finset.sum_congr rfl fun i _ => ?_
-    by_cases h1 : s < a i <;> by_cases h2 : t < b i <;> simp [h1, h2]
-  simp_rw [hcard]
-  rw [lintegral_congr_ae (ae_of_all _ fun s => lintegral_finset_sum univ
-    (fun i _ => ((measurable_ite_lt (b i)).const_mul _)))]
-  have hinner : ∀ (i : Fin n) (s : ℝ),
-      (∫⁻ t in Ioi (0:ℝ), (if s < a i then (1:ℝ≥0∞) else 0)
-          * (if t < b i then (1:ℝ≥0∞) else 0))
-        = (if s < a i then (1:ℝ≥0∞) else 0) * ENNReal.ofReal (b i) := by
-    intro i s
-    rw [lintegral_const_mul _ (measurable_ite_lt (b i)), lintegral_ite_lt]
-  simp_rw [hinner]
-  rw [lintegral_finset_sum univ (fun i _ => (measurable_ite_lt (a i)).mul_const _)]
-  have houter : ∀ i : Fin n,
-      (∫⁻ s in Ioi (0:ℝ), (if s < a i then (1:ℝ≥0∞) else 0) * ENNReal.ofReal (b i))
-        = ENNReal.ofReal (a i) * ENNReal.ofReal (b i) := by
-    intro i
-    rw [lintegral_mul_const _ (measurable_ite_lt (a i)), lintegral_ite_lt]
-  simp_rw [houter]
-  rw [ENNReal.ofReal_sum_of_nonneg (fun i _ => mul_nonneg (ha0 i) (hb0 i))]
-  exact Finset.sum_congr rfl fun i _ => ENNReal.ofReal_mul (ha0 i)
-
-end LayerCake
-
-/-! ### Empirical survival counts
-
-`(range n).filter (s < X · ω) |>.card / n` is the fraction of the
-first `n` samples exceeding `s`.  The strong law of large numbers
-gives its almost-sure convergence to `P(X₀ > s)` for each fixed `s`;
-monotonicity in `s` and density of the rationals upgrade this to the
-liminf lower bound at every real threshold simultaneously. -/
+`F̄_n(x) = #{i < n : Xᵢ > x}/n` is the empirical survival function.  By the
+strong law of large numbers at each of the countably many rational `x > 0`,
+almost surely `F̄_n(x) → F̄(x)` for every rational `x > 0`.  On such an
+outcome `h_n(t) → G(t)` at every `t ∈ (0,1)` at which `G` is continuous
+(`tendsto_stepFn_of_continuousWithinAt`), hence for almost every `t`
+(`ae_tendsto_stepFn`). -/
 
 section Empirical
 
@@ -231,76 +366,9 @@ private lemma tendsto_empirical_survival {X : ℕ → Ω → ℝ}
   push_cast
   rfl
 
-/-- Deterministic upgrade: if the empirical survival fractions of a
-sample path converge at every rational threshold, then at every real
-threshold `s` the liminf (in `ℝ≥0∞`) dominates `γ (Ioi s)`. -/
-private lemma le_liminf_empirical_of_rat {x : ℕ → ℝ} {γ : Measure ℝ}
-    [IsFiniteMeasure γ]
-    (h : ∀ q : ℚ, Tendsto
-      (fun n => (((Finset.range n).filter (fun i => (q:ℝ) < x i)).card : ℝ) / n)
-      atTop (𝓝 (γ.real (Set.Ioi (q:ℝ))))) (s : ℝ) :
-    γ (Set.Ioi s) ≤ atTop.liminf
-      (fun n => ENNReal.ofReal
-        ((((Finset.range n).filter (fun i => s < x i)).card : ℝ) / n)) := by
-  -- reduce to rational thresholds above `s`
-  have key : ∀ q : ℚ, s < (q:ℝ) → γ (Set.Ioi (q:ℝ)) ≤ atTop.liminf
-      (fun n => ENNReal.ofReal
-        ((((Finset.range n).filter (fun i => s < x i)).card : ℝ) / n)) := by
-    intro q hq
-    have hmono : ∀ n, ENNReal.ofReal
-        ((((Finset.range n).filter (fun i => (q:ℝ) < x i)).card : ℝ) / n)
-        ≤ ENNReal.ofReal
-        ((((Finset.range n).filter (fun i => s < x i)).card : ℝ) / n) := by
-      intro n
-      apply ENNReal.ofReal_le_ofReal
-      apply div_le_div_of_nonneg_right _ (Nat.cast_nonneg n)
-      exact_mod_cast Finset.card_le_card
-        (Finset.monotone_filter_right _ fun i _ hi => lt_trans hq hi)
-    have hlim : Tendsto (fun n => ENNReal.ofReal
-        ((((Finset.range n).filter (fun i => (q:ℝ) < x i)).card : ℝ) / n))
-        atTop (𝓝 (γ (Set.Ioi (q:ℝ)))) := by
-      have := ENNReal.tendsto_ofReal (h q)
-      rwa [measureReal_def, ENNReal.ofReal_toReal (measure_ne_top _ _)] at this
-    rw [← hlim.liminf_eq]
-    exact liminf_le_liminf (Eventually.of_forall hmono)
-  -- continuity from below along the rational thresholds above `s`
-  have hU : Set.Ioi s = ⋃ q : {q : ℚ // s < (q:ℝ)}, Set.Ioi ((q.1 : ℚ) : ℝ) := by
-    ext y
-    simp only [Set.mem_Ioi, Set.mem_iUnion]
-    constructor
-    · intro hy
-      obtain ⟨q, hq1, hq2⟩ := exists_rat_btwn hy
-      exact ⟨⟨q, hq1⟩, hq2⟩
-    · rintro ⟨q, hq⟩
-      exact lt_trans q.2 hq
-  have hdir : Directed (· ⊆ ·)
-      (fun q : {q : ℚ // s < (q:ℝ)} => Set.Ioi ((q.1 : ℚ) : ℝ)) := by
-    intro q₁ q₂
-    refine ⟨⟨min q₁.1 q₂.1, ?_⟩, Set.Ioi_subset_Ioi ?_, Set.Ioi_subset_Ioi ?_⟩
-    · rw [Rat.cast_min]; exact lt_min q₁.2 q₂.2
-    · rw [Rat.cast_min]; exact min_le_left _ _
-    · rw [Rat.cast_min]; exact min_le_right _ _
-  rw [hU, hdir.measure_iUnion]
-  exact iSup_le fun q => key q.1 q.2
-
 end Empirical
 
-/-! ### Fatou's lemma and the second moment
-
-Write `vol2` for Lebesgue measure on `(0,∞) × (0,∞)`.  The layer-cake
-identity expresses `∑ i, a i * b i` as the `vol2`-integral of
-`min #{i | s < a i} #{i | t < b i}`; the second moment of a law `γ`
-on `(0,∞)` is the `vol2`-integral of `min (γ (Ioi s)) (γ (Ioi t))`.
-Fatou's lemma then bounds the liminf of the normalized inner products
-`⟨α_n, α_n'⟩ / n` from below by the second moment. -/
-
-section Fatou
-
-variable {n : ℕ}
-
-/-- Lebesgue measure on `(0,∞) × (0,∞)`. -/
-private noncomputable abbrev vol2 : Measure (ℝ × ℝ) :=
-  (volume.restrict (Set.Ioi (0:ℝ))).prod (volume.restrict (Set.Ioi (0:ℝ)))
+section StepOne
 
 private lemma card_filter_comp_equiv {α β : Type*} [Fintype α] [Fintype β]
     [DecidableEq α] [DecidableEq β] (σ : α ≃ β) (p : β → Prop)
@@ -325,139 +393,125 @@ private lemma sortDesc_pos {x : ℕ → ℝ} (hx : ∀ i, 0 < x i) (n : ℕ) (j 
     0 < sortDesc (fun i : Fin n => x i) j := by
   rw [sortDesc_eq_comp_perm]; exact hx _
 
-private lemma measurable_card_filter_lt (a : Fin n → ℝ) :
-    Measurable (fun s : ℝ => ((univ.filter fun i => s < a i).card : ℝ≥0∞)) := by
-  have h : ∀ s : ℝ, ((univ.filter fun i => s < a i).card : ℝ≥0∞)
-      = ∑ i, if s < a i then (1:ℝ≥0∞) else 0 := by
-    intro s
-    rw [Finset.card_filter]
-    push_cast
-    rfl
-  simp_rw [h]
-  exact Finset.measurable_sum _ fun i _ => measurable_ite_lt (a i)
+/-- On a sample path along which `F̄_n(x) → F̄(x)` for every rational `x > 0`,
+`h_n(t) → G(t)` at every `t ∈ (0,1)` at which `G` is continuous. -/
+lemma tendsto_stepFn_of_continuousWithinAt {γ : Measure ℝ} [IsProbabilityMeasure γ]
+    (hγ : γ (Iic 0) = 0) {x : ℕ → ℝ}
+    (hemp : ∀ q : ℚ, 0 < q → Tendsto
+      (fun n => (((range n).filter fun i => (q:ℝ) < x i).card : ℝ) / n)
+      atTop (𝓝 (survival γ q)))
+    {t : ℝ} (ht : t ∈ Ioo (0:ℝ) 1) (hc : ContinuousWithinAt (quantile γ) (Ioo 0 1) t) :
+    Tendsto (fun n => stepFn (sortDesc (fun i : Fin n => x i)) t) atTop
+      (𝓝 (quantile γ t)) := by
+  -- `h_n(t) > q` exactly when `F̄_n(q) ≥ ⌈nt⌉/n`
+  have hiff : ∀ n, 0 < n → ∀ q : ℝ, q < stepFn (sortDesc (fun i : Fin n => x i)) t ↔
+      (⌈(n:ℝ) * t⌉₊ : ℝ) / n ≤ (((range n).filter fun i => q < x i).card : ℝ) / n := by
+    intro n hn q
+    rw [lt_stepFn_iff hn (sortDesc_antitone _) ht, card_filter_sortDesc_lt]
+  rw [tendsto_order]
+  constructor
+  · -- lower bound: a rational `q` with `G(t) - ε < q < G(t)` has `F̄(q) > t`
+    intro b hb
+    obtain ⟨q, hq1, hq2⟩ := exists_rat_btwn (max_lt hb (quantile_pos hγ ht))
+    have hq0 : (0:ℝ) < q := lt_of_le_of_lt (le_max_right _ _) hq1
+    have hFq : t < survival γ q := (lt_quantile_iff hγ ht q).mp hq2
+    -- `⌈nt⌉/n < t + 1/n`, and eventually `F̄_n(q) ≥ t + 1/n`
+    have hlim : Tendsto (fun n : ℕ => t + 1 / (n:ℝ)) atTop (𝓝 t) := by
+      have h1 : Tendsto (fun n : ℕ => 1 / (n:ℝ)) atTop (𝓝 0) :=
+        tendsto_one_div_atTop_nhds_zero_nat
+      simpa using (tendsto_const_nhds (x := t)).add h1
+    have hev : ∀ᶠ n : ℕ in atTop, t + 1 / (n:ℝ) <
+        (((range n).filter fun i => (q:ℝ) < x i).card : ℝ) / n :=
+      (hlim.eventually (gt_mem_nhds (by linarith : t < (t + survival γ q) / 2))).and
+        ((hemp q (by exact_mod_cast hq0)).eventually
+          (lt_mem_nhds (by linarith : (t + survival γ q) / 2 < survival γ q)))
+        |>.mono fun n h => h.1.trans h.2
+    filter_upwards [hev, eventually_gt_atTop 0] with n hn hn0
+    have hn' : (0:ℝ) < n := Nat.cast_pos.mpr hn0
+    have hceil : (⌈(n:ℝ) * t⌉₊ : ℝ) / n < t + 1 / n := by
+      rw [div_lt_iff₀ hn', add_mul, one_div_mul_cancel hn'.ne']
+      linarith [Nat.ceil_lt_add_one (mul_pos hn' ht.1).le]
+    exact lt_of_le_of_lt (le_max_left _ _)
+      (lt_trans hq1 ((hiff n hn0 q).mpr (hceil.trans hn).le))
+  · -- upper bound: continuity gives `t' < t` with `G(t') < b`; take a rational
+    -- `q ∈ (G(t'), b)`, so that `F̄(q) ≤ t' < t`
+    intro b hb
+    obtain ⟨δ, hδ, hδG⟩ := Metric.continuousWithinAt_iff.mp hc (b - quantile γ t)
+      (by linarith)
+    set t' := max (t / 2) (t - δ / 2) with ht'
+    have ht'lt : t' < t := max_lt (by linarith [ht.1]) (by linarith)
+    have ht'mem : t' ∈ Ioo (0:ℝ) 1 :=
+      ⟨lt_of_lt_of_le (by linarith [ht.1]) (le_max_left _ _), ht'lt.trans ht.2⟩
+    have hdist : dist t' t < δ := by
+      rw [Real.dist_eq, abs_sub_lt_iff]
+      constructor
+      · linarith
+      · linarith [le_max_right (t / 2) (t - δ / 2)]
+    have hGt' : quantile γ t' < b := by
+      have := hδG ht'mem hdist
+      rw [Real.dist_eq, abs_sub_lt_iff] at this
+      linarith [this.1]
+    obtain ⟨q, hq1, hq2⟩ := exists_rat_btwn hGt'
+    have hq0 : (0:ℝ) < q := (quantile_pos hγ ht'mem).trans hq1
+    have hFq : survival γ q ≤ t' :=
+      not_lt.mp fun h => (not_lt.mpr hq1.le) ((lt_quantile_iff hγ ht'mem q).mpr h)
+    have hev : ∀ᶠ n : ℕ in atTop,
+        (((range n).filter fun i => (q:ℝ) < x i).card : ℝ) / n < t :=
+      (hemp q (by exact_mod_cast hq0)).eventually (gt_mem_nhds (by linarith))
+    filter_upwards [hev, eventually_gt_atTop 0] with n hn hn0
+    have hn' : (0:ℝ) < n := Nat.cast_pos.mpr hn0
+    have hceil : t ≤ (⌈(n:ℝ) * t⌉₊ : ℝ) / n := by
+      rw [le_div_iff₀ hn', mul_comm]; exact Nat.le_ceil _
+    have hle : stepFn (sortDesc (fun i : Fin n => x i)) t ≤ q :=
+      not_lt.mp fun h => absurd ((hiff n hn0 q).mp h) (not_le.mpr (hn.trans_le hceil))
+    exact hle.trans_lt hq2
 
-private lemma measurable_ofReal_card_div (x : ℕ → ℝ) (n : ℕ) :
-    Measurable (fun s : ℝ =>
-      ENNReal.ofReal ((((range n).filter fun i => s < x i).card : ℝ) / n)) := by
-  refine Measurable.ennreal_ofReal (Measurable.div_const ?_ _)
-  have h : (fun s : ℝ => (((range n).filter fun i => s < x i).card : ℝ))
-      = fun s => ∑ i ∈ range n, if s < x i then (1:ℝ) else 0 := by
-    funext s
-    rw [Finset.card_filter]
-    push_cast
-    rfl
-  rw [h]
-  exact Finset.measurable_sum _ fun i _ =>
-    Measurable.ite measurableSet_Iio measurable_const measurable_const
+/-- On such a sample path, `h_n(t) → G(t)` for almost every `t ∈ (0,1)`: the
+discontinuities of the monotone function `G` are countable. -/
+lemma ae_tendsto_stepFn {γ : Measure ℝ} [IsProbabilityMeasure γ]
+    (hγ : γ (Iic 0) = 0) {x : ℕ → ℝ}
+    (hemp : ∀ q : ℚ, 0 < q → Tendsto
+      (fun n => (((range n).filter fun i => (q:ℝ) < x i).card : ℝ) / n)
+      atTop (𝓝 (survival γ q))) :
+    ∀ᵐ t ∂vol01, Tendsto (fun n => stepFn (sortDesc (fun i : Fin n => x i)) t) atTop
+      (𝓝 (quantile γ t)) := by
+  have hcount := (quantile_antitoneOn (γ := γ) hγ).countable_not_continuousWithinAt
+  have hnull : ∀ᵐ t ∂(volume : Measure ℝ),
+      t ∉ {t | t ∈ Ioo (0:ℝ) 1 ∧ ¬ContinuousWithinAt (quantile γ) (Ioo 0 1) t} :=
+    measure_eq_zero_iff_ae_notMem.mp (hcount.measure_zero volume)
+  rw [ae_restrict_iff' measurableSet_Ioo]
+  filter_upwards [hnull] with t hnot ht
+  have hc : ContinuousWithinAt (quantile γ) (Ioo 0 1) t := by
+    by_contra h; exact hnot ⟨ht, h⟩
+  exact tendsto_stepFn_of_continuousWithinAt hγ hemp ht hc
 
-/-- Layer-cake identity over `vol2`, for antitone nonnegative tuples. -/
-private lemma ofReal_sum_mul_eq_lintegral_min {a b : Fin n → ℝ}
-    (ha : Antitone a) (hb : Antitone b) (ha0 : ∀ i, 0 ≤ a i) (hb0 : ∀ i, 0 ≤ b i) :
-    ENNReal.ofReal (∑ i, a i * b i)
-      = ∫⁻ p, min ((univ.filter fun i => p.1 < a i).card : ℝ≥0∞)
-          ((univ.filter fun i => p.2 < b i).card : ℝ≥0∞) ∂vol2 := by
-  have hmeas : Measurable (fun p : ℝ × ℝ =>
-      ((univ.filter fun i => p.1 < a i ∧ p.2 < b i).card : ℝ≥0∞)) := by
-    have h : (fun p : ℝ × ℝ =>
-          ((univ.filter fun i => p.1 < a i ∧ p.2 < b i).card : ℝ≥0∞))
-        = fun p => min ((univ.filter fun i => p.1 < a i).card : ℝ≥0∞)
-            ((univ.filter fun i => p.2 < b i).card : ℝ≥0∞) := by
-      funext p
-      rw [card_filter_and_eq_min ha hb, (Nat.mono_cast (α := ℝ≥0∞)).map_min]
-    rw [h]
-    exact ((measurable_card_filter_lt a).comp measurable_fst).min
-      ((measurable_card_filter_lt b).comp measurable_snd)
-  rw [ofReal_sum_mul_eq_lintegral_card ha0 hb0, ← lintegral_prod _ hmeas.aemeasurable]
-  refine lintegral_congr fun p => ?_
-  rw [card_filter_and_eq_min ha hb, (Nat.mono_cast (α := ℝ≥0∞)).map_min]
+end StepOne
 
-private lemma ofReal_div_natCast_eq (c n : ℕ) :
-    ENNReal.ofReal ((c : ℝ) / n) = ENNReal.ofReal (n:ℝ)⁻¹ * c := by
-  rw [div_eq_inv_mul, ENNReal.ofReal_mul (inv_nonneg.mpr (Nat.cast_nonneg n)),
-    ENNReal.ofReal_natCast]
+/-! ### Steps 2 and 3: `h_n → G` in `L²(0,1)`
 
-/-- The normalized inner product of the two sorted lists as a `vol2`-integral
-of the normalized survival counts. -/
-private lemma lintegral_min_ofReal_div_eq {x x' : ℕ → ℝ}
-    (hx : ∀ i, 0 < x i) (hx' : ∀ i, 0 < x' i) (n : ℕ) :
-    ∫⁻ p, min (ENNReal.ofReal ((((range n).filter fun i => p.1 < x i).card : ℝ) / n))
-        (ENNReal.ofReal ((((range n).filter fun i => p.2 < x' i).card : ℝ) / n)) ∂vol2
-      = ENNReal.ofReal ((∑ i : Fin n,
-          sortDesc (fun i : Fin n => x i) i * sortDesc (fun i : Fin n => x' i) i) / n) := by
-  simp_rw [ofReal_div_natCast_eq, ← card_filter_sortDesc_lt, ← mul_min]
-  rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top,
-    ← ofReal_sum_mul_eq_lintegral_min (sortDesc_antitone _) (sortDesc_antitone _)
-      (fun i => (sortDesc_pos hx n i).le) (fun i => (sortDesc_pos hx' n i).le),
-    div_eq_inv_mul, ENNReal.ofReal_mul (inv_nonneg.mpr (Nat.cast_nonneg n))]
+Second, `∫₀¹ h_n² = (1/n) ∑ᵢ Xᵢ² → m₂ = ∫₀¹ G²` by the strong law of large
+numbers.  Third, `∫ (h_n - G)² = ∫ h_n² + ∫ G² - 2 ∫ h_n G`, and Fatou's
+lemma applied to the nonnegative functions `h_n G`, which converge to `G²`
+almost everywhere by the first step, gives `liminf ∫ h_n G ≥ ∫ G²`; hence
+`limsup ∫ (h_n - G)² ≤ m₂ + m₂ - 2m₂ = 0`. -/
 
-/-- Fatou's lemma for the `vol2`-integrals of minima. -/
-private lemma lintegral_min_le_liminf {γ : Measure ℝ} {u v : ℕ → ℝ → ℝ≥0∞}
-    (hu : ∀ n, Measurable (u n)) (hv : ∀ n, Measurable (v n))
-    (hlu : ∀ s, γ (Set.Ioi s) ≤ atTop.liminf (fun n => u n s))
-    (hlv : ∀ t, γ (Set.Ioi t) ≤ atTop.liminf (fun n => v n t)) :
-    ∫⁻ p, min (γ (Set.Ioi p.1)) (γ (Set.Ioi p.2)) ∂vol2
-      ≤ atTop.liminf (fun n => ∫⁻ p, min (u n p.1) (v n p.2) ∂vol2) := by
-  refine le_trans (lintegral_mono fun p => ?_)
-    (lintegral_liminf_le fun n => ((hu n).comp measurable_fst).min ((hv n).comp measurable_snd))
-  rw [liminf_min]
-  exact min_le_min (hlu p.1) (hlv p.2)
+section StepThree
 
-/-- The second moment of a law on `(0,∞)` as a `vol2`-integral. -/
-private lemma lintegral_min_measure_Ioi {γ : Measure ℝ} [IsFiniteMeasure γ]
-    (hγ : γ (Set.Iic 0) = 0) :
-    ∫⁻ p, min (γ (Set.Ioi p.1)) (γ (Set.Ioi p.2)) ∂vol2
-      = ∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ := by
-  have hSm : MeasurableSet {q : (ℝ × ℝ) × ℝ | max q.1.1 q.1.2 < q.2} :=
-    measurableSet_lt (measurable_fst.fst.max measurable_fst.snd) measurable_snd
-  have h1 : ∀ p : ℝ × ℝ, min (γ (Set.Ioi p.1)) (γ (Set.Ioi p.2))
-      = γ (Prod.mk p ⁻¹' {q : (ℝ × ℝ) × ℝ | max q.1.1 q.1.2 < q.2}) := by
-    intro p
-    have hpre : Prod.mk p ⁻¹' {q : (ℝ × ℝ) × ℝ | max q.1.1 q.1.2 < q.2}
-        = Set.Ioi (max p.1 p.2) := by
-      ext y; simp
-    rw [hpre]
-    rcases le_total p.1 p.2 with h | h
-    · rw [max_eq_right h, min_eq_right (measure_mono (Set.Ioi_subset_Ioi h))]
-    · rw [max_eq_left h, min_eq_left (measure_mono (Set.Ioi_subset_Ioi h))]
-  have h2 : ∀ y : ℝ,
-      (fun p : ℝ × ℝ => (p, y)) ⁻¹' {q : (ℝ × ℝ) × ℝ | max q.1.1 q.1.2 < q.2}
-      = Set.Iio y ×ˢ Set.Iio y := by
-    intro y; ext p; simp
-  simp_rw [h1]
-  rw [← Measure.prod_apply hSm, Measure.prod_apply_symm hSm]
-  simp_rw [h2, Measure.prod_prod, Measure.restrict_apply measurableSet_Iio, Set.Iio_inter_Ioi,
-    Real.volume_Ioo, sub_zero]
-  refine lintegral_congr_ae ?_
-  have hpos : ∀ᵐ y ∂γ, 0 < y := by
-    rw [ae_iff]
-    convert hγ using 2
-    ext y; simp [not_lt]
-  filter_upwards [hpos] with y hy
-  rw [← ENNReal.ofReal_mul hy.le, sq]
+variable {γ : Measure ℝ} [IsProbabilityMeasure γ]
 
-/-- Deterministic core of the argument: along a sample path whose
-empirical survival fractions dominate `γ (Ioi s)` in the liminf at every
-threshold, the liminf of the normalized inner product of the two sorted
-lists dominates the second moment of `γ`. -/
-private lemma le_liminf_ofReal_sum_mul {γ : Measure ℝ} [IsFiniteMeasure γ]
-    (hγ : γ (Set.Iic 0) = 0) {x x' : ℕ → ℝ} (hx : ∀ i, 0 < x i) (hx' : ∀ i, 0 < x' i)
-    (hl : ∀ s, γ (Set.Ioi s) ≤ atTop.liminf (fun n => ENNReal.ofReal
-      ((((range n).filter fun i => s < x i).card : ℝ) / n)))
-    (hl' : ∀ t, γ (Set.Ioi t) ≤ atTop.liminf (fun n => ENNReal.ofReal
-      ((((range n).filter fun i => t < x' i).card : ℝ) / n))) :
-    ∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ ≤ atTop.liminf (fun n => ENNReal.ofReal
-      ((∑ i : Fin n, sortDesc (fun i : Fin n => x i) i * sortDesc (fun i : Fin n => x' i) i)
-        / n)) := by
-  rw [← lintegral_min_measure_Ioi hγ]
-  refine le_trans (lintegral_min_le_liminf (measurable_ofReal_card_div x)
-    (measurable_ofReal_card_div x') hl hl') (le_of_eq ?_)
-  exact liminf_congr (Eventually.of_forall fun n => lintegral_min_ofReal_div_eq hx hx' n)
+lemma memLp_quantile (hγ : γ (Iic 0) = 0) (hM : ∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ ≠ ⊤) :
+    MemLp (quantile γ) 2 vol01 := by
+  have hae := (aemeasurable_quantile hγ).aestronglyMeasurable
+  rw [memLp_two_iff_integrable_sq hae]
+  refine ⟨hae.pow 2, ?_⟩
+  rw [hasFiniteIntegral_iff_ofReal (ae_of_all _ fun t => sq_nonneg _),
+    lintegral_quantile_sq hγ]
+  exact hM.lt_top
 
-end Fatou
-
-/-! ### Assembly -/
-
-section Assembly
+lemma integral_quantile_sq (hγ : γ (Iic 0) = 0) :
+    ∫ t, quantile γ t ^ 2 ∂vol01 = (∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ).toReal := by
+  rw [integral_eq_lintegral_of_nonneg_ae (ae_of_all _ fun t => sq_nonneg _)
+    ((aemeasurable_quantile hγ).pow_const 2).aestronglyMeasurable, lintegral_quantile_sq hγ]
 
 /-- If `A_n → m`, `A'_n → m`, and `liminf C_n ≥ m` (in `ℝ≥0∞`), then
 `A_n + A'_n − 2 C_n → 0` provided it is nonnegative. -/
@@ -493,16 +547,101 @@ private lemma tendsto_sqrt_div_sqrt {D A : ℕ → ℝ} {m : ℝ} (hm : 0 < m)
   have := h1.div h2 (Real.sqrt_pos.mpr hm).ne'
   simpa using this
 
+/-- Second step: `∫₀¹ h_n² = (1/n) ∑ᵢ Xᵢ²`, which tends to `m₂`. -/
+lemma tendsto_integral_stepFn_sq {x : ℕ → ℝ} {m : ℝ}
+    (hsq : Tendsto (fun n => (∑ i ∈ range n, x i ^ 2) / n) atTop (𝓝 m)) :
+    Tendsto (fun n => ∫ t, stepFn (sortDesc (fun i : Fin n => x i)) t ^ 2 ∂vol01) atTop
+      (𝓝 m) := by
+  refine hsq.congr' ?_
+  filter_upwards [eventually_gt_atTop 0] with n hn
+  rw [integral_stepFn hn (fun a _ => a ^ 2) _ (sortDesc (fun i : Fin n => x i)),
+    sum_comp_sortDesc (fun i : Fin n => x i) (fun y => y ^ 2),
+    Fin.sum_univ_eq_sum_range (fun i => x i ^ 2) n]
+
+/-- Third step: along a sample path as in the first and second steps,
+`∫₀¹ (h_n - G)² → 0`. -/
+lemma tendsto_integral_stepFn_sub_quantile_sq (hγ : γ (Iic 0) = 0)
+    (hM : ∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ ≠ ⊤)
+    (hMpos : 0 < ∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ)
+    {x : ℕ → ℝ} (hx : ∀ i, 0 < x i)
+    (hemp : ∀ q : ℚ, 0 < q → Tendsto
+      (fun n => (((range n).filter fun i => (q:ℝ) < x i).card : ℝ) / n)
+      atTop (𝓝 (survival γ q)))
+    (hsq : Tendsto (fun n => (∑ i ∈ range n, x i ^ 2) / n) atTop
+      (𝓝 (∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ).toReal)) :
+    Tendsto (fun n => ∫ t, (stepFn (sortDesc (fun i : Fin n => x i)) t - quantile γ t) ^ 2
+      ∂vol01) atTop (𝓝 0) := by
+  set m := (∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ).toReal with hm
+  have hmpos : 0 < m := ENNReal.toReal_pos hMpos.ne' hM
+  set h : ℕ → ℝ → ℝ := fun n => stepFn (sortDesc (fun i : Fin n => x i)) with hh
+  set G := quantile γ with hGdef
+  have hG2 : MemLp G 2 vol01 := memLp_quantile hγ hM
+  have hh2 : ∀ n, MemLp (h n) 2 vol01 := fun n => memLp_stepFn _
+  have hint : ∀ n, Integrable (fun t => h n t * G t) vol01 := fun n => (hh2 n).integrable_mul hG2
+  -- `h_n G ≥ 0` on `(0,1)`
+  have hnn : ∀ n, 0 ≤ᵐ[vol01] fun t => h n t * G t := by
+    intro n
+    filter_upwards [ae_restrict_mem measurableSet_Ioo] with t ht
+    exact mul_nonneg (stepFn_nonneg (fun i => (sortDesc_pos hx n i).le) t)
+      (quantile_pos hγ ht).le
+  -- Fatou: `liminf ∫ h_n G ≥ ∫ G² = m₂`
+  have hC : ENNReal.ofReal m ≤ atTop.liminf (fun n => ENNReal.ofReal (∫ t, h n t * G t ∂vol01)) := by
+    have hlim := ae_tendsto_stepFn hγ hemp
+    calc ENNReal.ofReal m = ∫⁻ t, ENNReal.ofReal (G t ^ 2) ∂vol01 := by
+          rw [hm, ENNReal.ofReal_toReal hM, hGdef, lintegral_quantile_sq hγ]
+      _ = ∫⁻ t, atTop.liminf (fun n => ENNReal.ofReal (h n t * G t)) ∂vol01 := by
+          refine lintegral_congr_ae ?_
+          filter_upwards [hlim] with t ht
+          have := (ENNReal.tendsto_ofReal (ht.mul_const (G t)))
+          rw [this.liminf_eq, sq]
+      _ ≤ atTop.liminf (fun n => ∫⁻ t, ENNReal.ofReal (h n t * G t) ∂vol01) :=
+          lintegral_liminf_le' fun n =>
+            ((measurable_stepFn _).aemeasurable.mul (aemeasurable_quantile hγ)).ennreal_ofReal
+      _ = atTop.liminf (fun n => ENNReal.ofReal (∫ t, h n t * G t ∂vol01)) := by
+          congr 1
+          funext n
+          exact (ofReal_integral_eq_lintegral_ofReal (hint n) (hnn n)).symm
+  -- expand `∫ (h_n - G)² = ∫ h_n² + ∫ G² - 2 ∫ h_n G`
+  have hexp : ∀ n, ∫ t, (h n t - G t) ^ 2 ∂vol01
+      = ∫ t, h n t ^ 2 ∂vol01 + m - 2 * ∫ t, h n t * G t ∂vol01 := by
+    intro n
+    have hpt : ∀ t, (h n t - G t) ^ 2 = h n t ^ 2 + G t ^ 2 - 2 * (h n t * G t) :=
+      fun t => by ring
+    simp_rw [hpt]
+    rw [integral_sub (f := fun t => h n t ^ 2 + G t ^ 2)
+        ((hh2 n).integrable_sq.add hG2.integrable_sq) ((hint n).const_mul 2),
+      integral_add (hh2 n).integrable_sq hG2.integrable_sq, integral_const_mul, hGdef,
+      integral_quantile_sq hγ]
+  have hD0 : ∀ n, 0 ≤ ∫ t, h n t ^ 2 ∂vol01 + m - 2 * ∫ t, h n t * G t ∂vol01 := by
+    intro n
+    rw [← hexp n]
+    exact integral_nonneg fun t => sq_nonneg _
+  have := tendsto_of_liminf_ofReal hmpos (tendsto_integral_stepFn_sq hsq) tendsto_const_nhds
+    hC hD0
+  exact this.congr fun n => (hexp n).symm
+
+end StepThree
+
+/-! ### Assembly
+
+With `g_n`, `g_n'` the step functions of the two samples,
+`‖α_n - α_n'‖²/n = ∫₀¹ (g_n - g_n')² ≤ 2 ∫₀¹ (g_n - G)² + 2 ∫₀¹ (g_n' - G)² → 0`
+and `‖α_n‖²/n = ∫₀¹ g_n² → m₂ > 0`. -/
+
+section Assembly
+
 /-- Deterministic assembly along one sample path. -/
-private lemma tendsto_sortDesc_diff_div_of_seq {γ : Measure ℝ} [IsFiniteMeasure γ]
-    (hγ : γ (Set.Iic 0) = 0)
+private lemma tendsto_sortDesc_diff_div_of_seq {γ : Measure ℝ} [IsProbabilityMeasure γ]
+    (hγ : γ (Iic 0) = 0)
     (hM : ∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ ≠ ⊤)
     (hMpos : 0 < ∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ)
     {x x' : ℕ → ℝ} (hx : ∀ i, 0 < x i) (hx' : ∀ i, 0 < x' i)
-    (hl : ∀ s, γ (Set.Ioi s) ≤ atTop.liminf (fun n => ENNReal.ofReal
-      ((((range n).filter fun i => s < x i).card : ℝ) / n)))
-    (hl' : ∀ t, γ (Set.Ioi t) ≤ atTop.liminf (fun n => ENNReal.ofReal
-      ((((range n).filter fun i => t < x' i).card : ℝ) / n)))
+    (hemp : ∀ q : ℚ, 0 < q → Tendsto
+      (fun n => (((range n).filter fun i => (q:ℝ) < x i).card : ℝ) / n)
+      atTop (𝓝 (survival γ q)))
+    (hemp' : ∀ q : ℚ, 0 < q → Tendsto
+      (fun n => (((range n).filter fun i => (q:ℝ) < x' i).card : ℝ) / n)
+      atTop (𝓝 (survival γ q)))
     (hsq : Tendsto (fun n => (∑ i ∈ range n, x i ^ 2) / n) atTop
       (𝓝 (∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ).toReal))
     (hsq' : Tendsto (fun n => (∑ i ∈ range n, x' i ^ 2) / n) atTop
@@ -513,50 +652,42 @@ private lemma tendsto_sortDesc_diff_div_of_seq {γ : Measure ℝ} [IsFiniteMeasu
           / √(∑ i : Fin n, (sortDesc (fun i : Fin n => x i) i) ^ 2)) atTop (𝓝 0) := by
   have hmpos : 0 < (∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ).toReal :=
     ENNReal.toReal_pos hMpos.ne' hM
-  have hsum : ∀ n, ∑ i : Fin n, (sortDesc (fun i : Fin n => x i) i) ^ 2
-      = ∑ i ∈ range n, x i ^ 2 := fun n =>
-    (sum_comp_sortDesc (fun i : Fin n => x i) (fun y => y ^ 2)).trans
-      (Fin.sum_univ_eq_sum_range (fun i => x i ^ 2) n)
-  have hsum' : ∀ n, ∑ i : Fin n, (sortDesc (fun i : Fin n => x' i) i) ^ 2
-      = ∑ i ∈ range n, x' i ^ 2 := fun n =>
-    (sum_comp_sortDesc (fun i : Fin n => x' i) (fun y => y ^ 2)).trans
-      (Fin.sum_univ_eq_sum_range (fun i => x' i ^ 2) n)
-  have hA : Tendsto (fun n => (∑ i : Fin n, (sortDesc (fun i : Fin n => x i) i) ^ 2) / n)
+  set g : ℕ → ℝ → ℝ := fun n => stepFn (sortDesc (fun i : Fin n => x i)) with hg
+  set g' : ℕ → ℝ → ℝ := fun n => stepFn (sortDesc (fun i : Fin n => x' i)) with hg'
+  have hL2 := tendsto_integral_stepFn_sub_quantile_sq hγ hM hMpos hx hemp hsq
+  have hL2' := tendsto_integral_stepFn_sub_quantile_sq hγ hM hMpos hx' hemp' hsq'
+  -- `‖α_n - α_n'‖²/n = ∫ (g_n - g_n')² ≤ 2 ∫ (g_n - G)² + 2 ∫ (g_n' - G)²`
+  have hle : ∀ n, 0 < n → (∑ i : Fin n,
+        (sortDesc (fun i : Fin n => x' i) i - sortDesc (fun i : Fin n => x i) i) ^ 2) / n
+      ≤ 2 * ∫ t, (g n t - quantile γ t) ^ 2 ∂vol01
+        + 2 * ∫ t, (g' n t - quantile γ t) ^ 2 ∂vol01 := by
+    intro n hn
+    have hG2 := memLp_quantile hγ hM
+    rw [← integral_stepFn hn (fun a b => (b - a) ^ 2), ← integral_const_mul,
+      ← integral_const_mul, ← integral_add]
+    · refine integral_mono (((memLp_stepFn _).sub (memLp_stepFn _)).integrable_sq)
+        ((((memLp_stepFn _).sub hG2).integrable_sq.const_mul 2).add
+          (((memLp_stepFn _).sub hG2).integrable_sq.const_mul 2)) fun t => ?_
+      simp only [hg, hg']
+      nlinarith [sq_nonneg (stepFn (sortDesc (fun i : Fin n => x i)) t
+        + stepFn (sortDesc (fun i : Fin n => x' i)) t - 2 * quantile γ t)]
+    · exact ((memLp_stepFn _).sub hG2).integrable_sq.const_mul 2
+    · exact ((memLp_stepFn _).sub hG2).integrable_sq.const_mul 2
+  have hD : Tendsto (fun n : ℕ => (∑ i : Fin n,
+        (sortDesc (fun i : Fin n => x' i) i - sortDesc (fun i : Fin n => x i) i) ^ 2) / n)
+      atTop (𝓝 0) := by
+    have hup := (hL2.const_mul 2).add (hL2'.const_mul 2)
+    simp only [mul_zero, add_zero] at hup
+    refine tendsto_of_tendsto_of_tendsto_of_le_of_le' tendsto_const_nhds hup
+      (Eventually.of_forall fun n => by positivity) ?_
+    filter_upwards [eventually_gt_atTop 0] with n hn
+    exact hle n hn
+  have hA : Tendsto (fun n : ℕ => (∑ i : Fin n, (sortDesc (fun i : Fin n => x i) i) ^ 2) / n)
       atTop (𝓝 (∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ).toReal) :=
-    hsq.congr fun n => by rw [hsum n]
-  have hA' : Tendsto (fun n => (∑ i : Fin n, (sortDesc (fun i : Fin n => x' i) i) ^ 2) / n)
-      atTop (𝓝 (∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ).toReal) :=
-    hsq'.congr fun n => by rw [hsum' n]
-  have hC : ENNReal.ofReal (∫⁻ y, ENNReal.ofReal (y ^ 2) ∂γ).toReal
-      ≤ atTop.liminf (fun n => ENNReal.ofReal ((∑ i : Fin n,
-          sortDesc (fun i : Fin n => x i) i * sortDesc (fun i : Fin n => x' i) i) / n)) := by
-    rw [ENNReal.ofReal_toReal hM]
-    exact le_liminf_ofReal_sum_mul hγ hx hx' hl hl'
-  have hexp : ∀ n, (∑ i : Fin n, (sortDesc (fun i : Fin n => x i) i) ^ 2) / n
-      + (∑ i : Fin n, (sortDesc (fun i : Fin n => x' i) i) ^ 2) / n
-      - 2 * ((∑ i : Fin n,
-          sortDesc (fun i : Fin n => x i) i * sortDesc (fun i : Fin n => x' i) i) / n)
-      = (∑ i : Fin n,
-          (sortDesc (fun i : Fin n => x' i) i - sortDesc (fun i : Fin n => x i) i) ^ 2) / n := by
-    intro n
-    have h : ∀ i : Fin n,
-        (sortDesc (fun i : Fin n => x' i) i - sortDesc (fun i : Fin n => x i) i) ^ 2
-        = (sortDesc (fun i : Fin n => x i) i) ^ 2 + (sortDesc (fun i : Fin n => x' i) i) ^ 2
-          - 2 * (sortDesc (fun i : Fin n => x i) i * sortDesc (fun i : Fin n => x' i) i) :=
-      fun i => by ring
-    simp_rw [h]
-    rw [Finset.sum_sub_distrib, Finset.sum_add_distrib, ← Finset.mul_sum]
-    ring
-  have hD0 : ∀ n, 0 ≤ (∑ i : Fin n, (sortDesc (fun i : Fin n => x i) i) ^ 2) / n
-      + (∑ i : Fin n, (sortDesc (fun i : Fin n => x' i) i) ^ 2) / n
-      - 2 * ((∑ i : Fin n,
-          sortDesc (fun i : Fin n => x i) i * sortDesc (fun i : Fin n => x' i) i) / n) := by
-    intro n
-    rw [hexp n]
-    positivity
-  have hDlim := tendsto_of_liminf_ofReal hmpos hA hA' hC hD0
-  simp_rw [hexp] at hDlim
-  refine (tendsto_sqrt_div_sqrt hmpos hDlim hA).congr' ?_
+    hsq.congr fun n => by
+      rw [sum_comp_sortDesc (fun i : Fin n => x i) (fun y => y ^ 2),
+        Fin.sum_univ_eq_sum_range (fun i => x i ^ 2) n]
+  refine (tendsto_sqrt_div_sqrt hmpos hD hA).congr' ?_
   filter_upwards [eventually_gt_atTop 0] with n hn
   rw [Real.sqrt_div' _ (Nat.cast_nonneg n), Real.sqrt_div' _ (Nat.cast_nonneg n),
     div_div_div_cancel_right₀ (Real.sqrt_pos.mpr (Nat.cast_pos.mpr hn)).ne']
@@ -629,27 +760,28 @@ private theorem tendsto_sortDesc_diff_div_of_iid {X X' : ℕ → Ω → ℝ}
     ae_all_iff.mpr fun i => ae_pos_of_map_eq (hX i) (hXl i) hγ0
   have hpos' : ∀ᵐ ω ∂P, ∀ i, 0 < X' i ω :=
     ae_all_iff.mpr fun i => ae_pos_of_map_eq (hX' i) (hX'l i) hγ0
-  have hemp : ∀ᵐ ω ∂P, ∀ q : ℚ, Tendsto
+  -- the strong law at each of the countably many rational thresholds
+  have hemp : ∀ᵐ ω ∂P, ∀ q : ℚ, 0 < q → Tendsto
       (fun n => (((range n).filter fun i => (q:ℝ) < X i ω).card : ℝ) / n)
-      atTop (𝓝 (γ.real (Set.Ioi (q:ℝ)))) := by
+      atTop (𝓝 (survival γ q)) := by
     rw [ae_all_iff]
     intro q
     have h := tendsto_empirical_survival hX hXi (fun i => by rw [hXl i, hXl 0]) (q:ℝ)
-    rwa [hXl 0] at h
-  have hemp' : ∀ᵐ ω ∂P, ∀ q : ℚ, Tendsto
+    rw [hXl 0] at h
+    exact h.mono fun ω hω _ => hω
+  have hemp' : ∀ᵐ ω ∂P, ∀ q : ℚ, 0 < q → Tendsto
       (fun n => (((range n).filter fun i => (q:ℝ) < X' i ω).card : ℝ) / n)
-      atTop (𝓝 (γ.real (Set.Ioi (q:ℝ)))) := by
+      atTop (𝓝 (survival γ q)) := by
     rw [ae_all_iff]
     intro q
     have h := tendsto_empirical_survival hX' hX'i (fun i => by rw [hX'l i, hX'l 0]) (q:ℝ)
-    rwa [hX'l 0] at h
+    rw [hX'l 0] at h
+    exact h.mono fun ω hω _ => hω
   have hsq := tendsto_mean_sq hX hXi hXl hM
   have hsq' := tendsto_mean_sq hX' hX'i hX'l hM
   filter_upwards [hpos, hpos', hemp, hemp', hsq, hsq'] with ω hpos hpos' hemp hemp' hsq hsq'
-  have hdet := tendsto_sortDesc_diff_div_of_seq (x := fun i => X i ω) (x' := fun i => X' i ω)
-    hγ0 hM hMpos hpos hpos'
-    (le_liminf_empirical_of_rat hemp) (le_liminf_empirical_of_rat hemp') hsq hsq'
-  exact hdet
+  exact tendsto_sortDesc_diff_div_of_seq (x := fun i => X i ω) (x' := fun i => X' i ω)
+    hγ0 hM hMpos hpos hpos' hemp hemp' hsq hsq'
 
 end Assembly
 
