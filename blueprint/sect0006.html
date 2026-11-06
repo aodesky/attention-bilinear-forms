@@ -133,7 +133,7 @@
   </div>
   <div class="definition_thmcontent">
   <p>   For a vector \(\lambda \) with \(|\lambda _i|{\lt}1\), define </p>
-<div class="displaymath" id="a0000000048">
+<div class="displaymath" id="a0000000050">
   \[  O(\lambda )=\sum _i\frac{\lambda _i}{1-\lambda _i^2},\qquad E(\lambda )=\sum _i\frac{\lambda _i^2}{1-\lambda _i^2},\qquad R(\lambda )=\sum _i\frac1{1-\lambda _i}.  \]
 </div>
 
@@ -155,7 +155,7 @@
 
     <a class="icon proof" href="sect0006.html#lem:moment-identities">#</a>
     
-    <a class="icon proof" href="sect0006.html#a0000000049"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0006.html#a0000000051"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -233,21 +233,21 @@
   </div>
   <div class="lemma_thmcontent">
   <p>    Every \(\lambda \in \Lambda _m\) has \(|\lambda _i|{\lt}1\). Writing \(n=2m\), </p>
-<div class="displaymath" id="a0000000050">
+<div class="displaymath" id="a0000000052">
   \[  O(\lambda )=\sum _{r=0}^{\infty }\sum _i\lambda _i^{2r+1},\qquad E(\lambda )=\sum _{r=0}^{\infty }\sum _i\lambda _i^{2r+2},  \]
 </div>
 <p> and both series converge absolutely. Moreover, </p>
-<div class="displaymath" id="a0000000051">
+<div class="displaymath" id="a0000000053">
   \[  O=\tfrac 12(R-R\circ \iota ),\qquad n+E=\tfrac 12(R+R\circ \iota ),\qquad O\circ \iota =-O,\qquad E\circ \iota =E.  \]
 </div>
 <p> If a symmetric matrix \(A\) has spectrum \(\lambda \), with multiplicity, then </p>
-<div class="displaymath" id="a0000000052">
+<div class="displaymath" id="a0000000054">
   \[  O(\lambda )=\operatorname {tr}(A(I-A^2)^{-1}),\quad E(\lambda )=\operatorname {tr}(A^2(I-A^2)^{-1}),\quad R(\lambda )=\operatorname {tr}((I-A)^{-1}).  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000049">
+<div class="proof_wrapper" id="a0000000051">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -255,7 +255,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Since \(\lVert \lambda \rVert =1\), each \(|\lambda _i|\le 1\); equality would force all other entries to vanish, but \(\lambda \) has both a negative and a positive entry. For the series, apply \(\sum _{r\ge 0}t^{2r+1}=t/(1-t^2)\) and \(\sum _{r\ge 0}t^{2r+2}=t^2/(1-t^2)\), valid for \(|t|{\lt}1\), to each entry. By Lemma&#160;8 the entries of \(\iota \lambda \) are those of \(-\lambda \), so \(R(\iota \lambda )=\sum _i(1+\lambda _i)^{-1}\); the identities for \(O\) and \(n+E\) follow from the partial fractions \(\tfrac 12\bigl(\tfrac 1{1-t}-\tfrac 1{1+t}\bigr)=\tfrac t{1-t^2}\) and \(\tfrac 12\bigl(\tfrac 1{1-t}+\tfrac 1{1+t}\bigr)=1+\tfrac {t^2}{1-t^2}\), and the parity statements follow since \(\iota ^2\) is the identity. The trace formulas are \(\operatorname {tr}f(A)=\sum _if(\lambda _i)\) for \(f(t)=t/(1-t^2)\), \(t^2/(1-t^2)\) and \(1/(1-t)\). </p>
+  <p> Each identity is a scalar identity in one variable, applied to every entry of \(\lambda \). Since \(\lVert \lambda \rVert =1\), each \(|\lambda _i|\le 1\); equality would force all other entries to vanish, but \(\lambda \) has both a negative and a positive entry. For the series, apply \(\sum _{r\ge 0}t^{2r+1}=t/(1-t^2)\) and \(\sum _{r\ge 0}t^{2r+2}=t^2/(1-t^2)\), valid for \(|t|{\lt}1\), to each entry. By Lemma&#160;8 the entries of \(\iota \lambda \) are those of \(-\lambda \), so \(R(\iota \lambda )=\sum _i(1+\lambda _i)^{-1}\); the identities for \(O\) and \(n+E\) follow from the partial fractions \(\tfrac 12\bigl(\tfrac 1{1-t}-\tfrac 1{1+t}\bigr)=\tfrac t{1-t^2}\) and \(\tfrac 12\bigl(\tfrac 1{1-t}+\tfrac 1{1+t}\bigr)=1+\tfrac {t^2}{1-t^2}\), and the parity statements follow since \(\iota ^2\) is the identity. The trace formulas are \(\operatorname {tr}f(A)=\sum _if(\lambda _i)\) for \(f(t)=t/(1-t^2)\), \(t^2/(1-t^2)\) and \(1/(1-t)\). </p>
 
   </div>
 </div>
@@ -275,7 +275,7 @@
 
     <a class="icon proof" href="sect0006.html#lem:gram">#</a>
     
-    <a class="icon proof" href="sect0006.html#a0000000053"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0006.html#a0000000055"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -365,7 +365,7 @@
   </div>
   <div class="lemma_thmcontent">
   <p>    For \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\), set </p>
-<div class="displaymath" id="a0000000054">
+<div class="displaymath" id="a0000000056">
   \[  M=\begin{pmatrix} W_K
 
 \\ W_Q
@@ -381,17 +381,17 @@
 \end{pmatrix}.  \]
 </div>
 <p> The symmetric part of \(W_K^TW_Q\) is \(S=\tfrac 12M^TJM\). For every \(k\ge 1\), </p>
-<div class="displaymath" id="a0000000055">
+<div class="displaymath" id="a0000000057">
   \[  \operatorname {tr}(S^k)=\operatorname {tr}((\tfrac 12JG)^k),\qquad \lVert S\rVert ^2=\tfrac 14\operatorname {tr}((JG)^2).  \]
 </div>
 <p> If \(M:\mathbb {R}^N\to \mathbb {R}^{2n}\) is surjective and \(n\ge 1\), the nonzero spectrum of \(S\), with multiplicity, is the spectrum of \(\tfrac 12JG\). Its sorted normalized nonzero spectrum \(\lambda \) exists uniquely and belongs to \(\Lambda _n\). For \(H=JG/(2\lVert S\rVert )\), </p>
-<div class="displaymath" id="a0000000056">
+<div class="displaymath" id="a0000000058">
   \[  O(\lambda )=\operatorname {tr}(H(I-H^2)^{-1}),\qquad E(\lambda )=\operatorname {tr}(H^2(I-H^2)^{-1}),\qquad R(\lambda )=\operatorname {tr}((I-H)^{-1}).  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000053">
+<div class="proof_wrapper" id="a0000000055">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -399,7 +399,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Block multiplication gives \(M^TJM=W_K^TW_Q+W_Q^TW_K=2S\), and cyclicity of the trace gives \(\operatorname {tr}((M^TJM)^k)=\operatorname {tr}((JG)^k)\). The nonzero eigenvalues of \(AB\) and \(BA\) agree with multiplicity; applied to \(A=M^T\) and \(B=\tfrac 12JM\), this identifies the nonzero spectrum of \(S\) with that of \(\tfrac 12JG\). If \(M\) is surjective, \(G\) is positive definite, and \(G^{1/2}JG^{1/2}\) is symmetric and congruent to \(J\). By Sylvester’s law of inertia it has \(n\) positive and \(n\) negative eigenvalues, and \(JG=G^{-1/2}(G^{1/2}JG^{1/2})G^{1/2}\) is similar to it. So the sorted normalized nonzero spectrum \(\lambda \) lies in \(\Lambda _n\), and by Lemma&#160;9 its entries have absolute value less than one. Finally \(H\) is diagonalizable with spectrum \(\lambda \), so the trace of each rational function of \(H\) is the sum of its values at the entries of \(\lambda \). </p>
+  <p> The matrices \(S=M^T(\tfrac 12JM)\) and \(\tfrac 12JG=(\tfrac 12JM)M^T\) are products of the same two matrices in opposite orders, so they have the same nonzero eigenvalues, and Sylvester’s law of inertia shows that there are \(n\) of each sign. Block multiplication gives \(M^TJM=W_K^TW_Q+W_Q^TW_K=2S\), and cyclicity of the trace gives \(\operatorname {tr}((M^TJM)^k)=\operatorname {tr}((JG)^k)\). Since the nonzero eigenvalues of \(AB\) and \(BA\) agree with multiplicity, \(S\) and \(\tfrac 12JG\) have the same nonzero spectrum. If \(M\) is surjective, \(G\) is positive definite, and \(G^{1/2}JG^{1/2}\) is symmetric and congruent to \(J\). By Sylvester’s law of inertia it has \(n\) positive and \(n\) negative eigenvalues, and \(JG=G^{-1/2}(G^{1/2}JG^{1/2})G^{1/2}\) is similar to it. So the sorted normalized nonzero spectrum \(\lambda \) lies in \(\Lambda _n\), and by Lemma&#160;9 its entries have absolute value less than one. Finally \(H\) is diagonalizable with spectrum \(\lambda \), so the trace of each rational function of \(H\) is the sum of its values at the entries of \(\lambda \). </p>
 
   </div>
 </div>

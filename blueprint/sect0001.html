@@ -269,7 +269,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p>The paper calls this lemma elementary and gives no proof; this sketch follows the Lean proof. In coordinates, \(P\) is a sum of monomials \(f(u)g(v)\) in which each of \(f\) and \(g\) is either the constant \(1\) or a single coordinate function. Substituting this sum into the four formulas shows that \(B\) is bilinear, \(L\) and \(R\) are linear and \(D\) is constant, and that \(B+L+R+D=P\). For uniqueness, evaluate an arbitrary decomposition at \((0,0)\), \((u,0)\) and \((0,v)\): this recovers \(D\), then \(L\) and \(R\), and then \(B\). </p>
+  <p>The paper calls this lemma elementary and gives no proof; this outline follows the Lean proof. In coordinates, \(P\) is a sum of monomials \(f(u)g(v)\) in which each of \(f\) and \(g\) is either \(1\) or a single coordinate. Substituting this sum into the four formulas shows that \(B\) is bilinear, \(L\) and \(R\) are linear, and \(B+L+R+D=P\). For uniqueness, evaluating any decomposition at \((0,0)\), \((u,0)\) and \((0,v)\) recovers \(D\), then \(L\) and \(R\), and then \(B\). </p>
 
   </div>
 </div>
@@ -410,7 +410,7 @@
         </div>
   </div>
   <div class="proposition_thmcontent">
-  <p>    With \(B_0\) nondegenerate, the function is RoPE-like if and only if there is \(S\in \operatorname {End}(H)\) with \(T_d=S^d\) for all \(0\le d{\lt}k\). When \(S\) exists it is \(T_1=L_0^{-1}L_1\). </p>
+  <p>    With \(B_0\) nondegenerate, the function is RoPE-like if and only if there is \(S\in \operatorname {End}(H)\) with \(T_d=S^d\) for all \(0\le d{\lt}k\). When \(k\ge 2\) and \(S\) exists, it is unique and equal to \(T_1=L_0^{-1}L_1\). </p>
 
   </div>
 </div>
@@ -422,7 +422,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Suppose the function is RoPE-like and put \(S=T_1\). Since \(L_d=L_0T_d\), the relation \(T_{d+e}=T_dT_e\) reads \(L_{d+e}=L_dL_0^{-1}L_e\); with \(e=1\) it gives \(L_{d+1}=L_dS\). Induction on \(d\) gives \(L_d=L_0S^d\), that is, \(T_d=S^d\). Conversely, if \(T_d=S^d\) then \(T_{d+e}=S^{d+e}=S^dS^e=T_dT_e\). Taking \(d=1\) in \(T_d=S^d\) shows that \(S=T_1\), so \(S\) is unique. </p>
+  <p> The RoPE-like relation with \(e=1\) makes each \(T_d\) a power of \(T_1\). Suppose the function is RoPE-like and put \(S=T_1\). Since \(L_d=L_0T_d\), the relation \(T_{d+e}=T_dT_e\) reads \(L_{d+e}=L_dL_0^{-1}L_e\); with \(e=1\) it gives \(L_{d+1}=L_dS\), and induction on \(d\) gives \(L_d=L_0S^d\), that is, \(T_d=S^d\). Conversely, if \(T_d=S^d\) then \(T_{d+e}=S^{d+e}=S^dS^e=T_dT_e\). When \(k\ge 2\), taking \(d=1\) in \(T_d=S^d\) gives \(S=T_1\). </p>
 
   </div>
 </div>
@@ -643,7 +643,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> An attention function returns an average of its inputs, so the attention block has norm at most \(V\lVert x\rVert _\infty \), and the bound follows from the form of \(T\). Since the attention weights lie in the simplex, \(\lVert \sum _j\omega _jx_j\rVert \le \sum _j\omega _j\lVert x_j\rVert \le \max _j\lVert x_j\rVert \). So every component of a head \(A_i\) has norm at most \(\lVert x\rVert _\infty \) (the first component is \(x_1\) itself), and \(\lVert A(x)_k\rVert \le \sum _i\lVert V_i\rVert \lVert x\rVert _\infty =V\lVert x\rVert _\infty \). The \(k\)-th component of \(T(x)-x\) is \(A(x)_k+M(x_k+A(x)_k)\), whose norm is at most \(V\lVert x\rVert _\infty +L(1+V)\lVert x\rVert _\infty =(L+V+LV)\lVert x\rVert _\infty \). </p>
+  <p> An attention function returns a weighted average of its inputs, so each component of the attention block has norm at most \(V\lVert x\rVert _\infty \); the bound then follows from the form of \(T\). Since the attention weights lie in the simplex, \(\lVert \sum _j\omega _jx_j\rVert \le \sum _j\omega _j\lVert x_j\rVert \le \max _j\lVert x_j\rVert \). So every component of a head \(A_i\) has norm at most \(\lVert x\rVert _\infty \) (the first component is \(x_1\) itself), and \(\lVert A(x)_k\rVert \le \sum _i\lVert V_i\rVert \lVert x\rVert _\infty =V\lVert x\rVert _\infty \). The \(k\)-th component of \(T(x)-x\) is \(A(x)_k+M(x_k+A(x)_k)\), whose norm is at most \(V\lVert x\rVert _\infty +L(1+V)\lVert x\rVert _\infty =(L+V+LV)\lVert x\rVert _\infty \). </p>
 
   </div>
 </div>
@@ -744,10 +744,10 @@
   <div class="proof_content">
   <p> The new coordinate \(e\) carries the position vectors: on the chart \(\iota (C)=C+e\) the QKV scores become bilinear forms, and everything else is extended by ignoring the new coordinate. For the score of position \(k\) on position \(j\le k\), define a bilinear form on \(\widehat C\) by </p>
 <div class="displaymath" id="a0000000015">
-  \[  \widehat B(u+\alpha e,v+\beta e)=\tfrac 1{\sqrt n}\bigl(\langle Qv,Ku\rangle +\alpha \langle Qv,Kp_j\rangle +\beta \langle Qp_k,Ku\rangle +\alpha \beta \langle Qp_k,Kp_j\rangle \bigr).  \]
+  \[  \begin{aligned}  \widehat B(u+\alpha e,v+\beta e)=\tfrac 1{\sqrt n}\bigl(& \langle Qv,Ku\rangle +\alpha \langle Qv,Kp_j\rangle \\ & +\beta \langle Qp_k,Ku\rangle +\alpha \beta \langle Qp_k,Kp_j\rangle \bigr). \end{aligned}  \]
 </div>
 <p> Expanding the QKV score shows that \(\widehat B(\iota x_j,\iota x_k)\) is the score of \(x_k\) on \(x_j\). So on the chart the two heads have the same scores, hence the same attention weights \(\omega _j\), and since the weights sum to one, \(\widehat a_k(\iota x_1,\ldots ,\iota x_k)=\sum _j\omega _j(x_j+e)=\iota (a_k(x_1,\ldots ,x_k))\). Put \(\widehat V(u+\alpha e)=V(u)\) and \(\widehat M(u+\alpha e)=M(u)\). Then \(\iota (x)+\widehat V(\iota z)=\iota (x+Vz)\) and \(\iota (x)+\widehat M(\iota x)=\iota (x+M(x))\), which give \(\widehat T\circ \iota ^\ell =\iota ^\ell \circ T\). </p>
-<p>The paper leaves implicit that the new attention weights are smooth and lie in the simplex on all of \(\widehat C^k\), not only on the chart. The Lean proof checks this using \(\widehat\sigma (u_1+\alpha _1e,\ldots ,u_k+\alpha _ke)=\sigma (x)\) with \(x_j=u_j+(\alpha _j-1)p_j\). </p>
+<p>Off the chart, the new attention weights must still be smooth and lie in the simplex; the paper leaves this implicit, and the Lean proof checks it using \(\widehat\sigma (u_1+\alpha _1e,\ldots ,u_k+\alpha _ke)=\sigma (x)\) with \(x_j=u_j+(\alpha _j-1)p_j\). </p>
 
   </div>
 </div>

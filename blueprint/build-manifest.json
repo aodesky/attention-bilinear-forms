@@ -8,7 +8,7 @@
     "all blueprint declarations exist",
     "standard axioms only"
   ],
-  "source_sha256": "8f4fce84a07806bf2657a9c33b203eac4872364a2e0dc72fcbba5331d1a0e070",
+  "source_sha256": "1b497bdfdd684c5537f42533649fa2282fb99f778764adb415e222765ddf8aa4",
   "source_links": {
     "Appendices.GramForm.G": "https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L78",
     "Appendices.GramForm.IsSortedNormalizedNonzeroSpectrum": "https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L770",

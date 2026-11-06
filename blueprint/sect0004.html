@@ -169,10 +169,13 @@
   <div class="lemma_thmcontent">
   <p>    For any \(L\in M_N(\mathbb {R})\), </p>
 <div class="displaymath" id="a0000000028">
-  \[  \lVert L\rVert ^2=\lVert S\rVert ^2+\lVert T\rVert ^2,\qquad \lVert S\rVert ^2=\tfrac 12\lVert L\rVert ^2+\tfrac 12\operatorname {tr}(L^2),\qquad \lVert T\rVert ^2=\tfrac 12\lVert L\rVert ^2-\tfrac 12\operatorname {tr}(L^2).  \]
+  \[  \lVert L\rVert ^2=\lVert S\rVert ^2+\lVert T\rVert ^2,  \]
+</div>
+<div class="displaymath" id="a0000000029">
+  \[  \lVert S\rVert ^2=\tfrac 12\lVert L\rVert ^2+\tfrac 12\operatorname {tr}(L^2),\qquad \lVert T\rVert ^2=\tfrac 12\lVert L\rVert ^2-\tfrac 12\operatorname {tr}(L^2).  \]
 </div>
 <p> For \(L\ne 0\), division gives </p>
-<div class="displaymath" id="a0000000029">
+<div class="displaymath" id="a0000000030">
   \[  \frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}=\frac12+\frac{\operatorname {tr}(L^2)}{2\lVert L\rVert ^2}, \qquad \frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}=\frac12-\frac{\operatorname {tr}(L^2)}{2\lVert L\rVert ^2}.  \]
 </div>
 
@@ -187,8 +190,8 @@
   </div>
   <div class="proof_content">
   <p> Symmetric and antisymmetric matrices are orthogonal for the Frobenius inner product \(\langle X,Y\rangle =\operatorname {tr}(XY^T)\), so the first identity is Pythagoras’ theorem for \(L=S+T\). Orthogonality: for \(S\) symmetric and \(T\) antisymmetric, </p>
-<div class="displaymath" id="a0000000030">
-  \[  \langle S,T\rangle =\operatorname {tr}(ST^T)=-\operatorname {tr}(ST)=-\operatorname {tr}\bigl((ST)^T\bigr)=-\operatorname {tr}(T^TS^T)=\operatorname {tr}(TS)=\operatorname {tr}(ST),  \]
+<div class="displaymath" id="a0000000031">
+  \[  \begin{aligned}  \langle S,T\rangle =\operatorname {tr}(ST^T)& =-\operatorname {tr}(ST)=-\operatorname {tr}\bigl((ST)^T\bigr)\\ & =-\operatorname {tr}(T^TS^T)=\operatorname {tr}(TS)=\operatorname {tr}(ST), \end{aligned}  \]
 </div>
 <p> so \(\operatorname {tr}(ST)=0\) and \(\langle S,T\rangle =0\). Expanding \(\lVert S\rVert ^2=\tfrac 14\bigl(\langle L,L\rangle +2\langle L,L^T\rangle +\langle L^T,L^T\rangle \bigr)\) with \(\langle L,L\rangle =\langle L^T,L^T\rangle =\lVert L\rVert ^2\) and \(\langle L,L^T\rangle =\operatorname {tr}(L^2)\) gives the formula for \(\lVert S\rVert ^2\). Subtracting it from \(\lVert L\rVert ^2\) gives the formula for \(\lVert T\rVert ^2\), and dividing by \(\lVert L\rVert ^2\) gives the ratios. </p>
 
@@ -210,7 +213,7 @@
 
     <a class="icon proof" href="sect0004.html#cor:iid">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000031"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000032"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -284,17 +287,17 @@
   </div>
   <div class="corollary_thmcontent">
   <p>    Let the entries of \(L\in M_N(\mathbb {R})\) be independent, mean zero, and square-integrable with common variance \(\sigma ^2\). Then </p>
-<div class="displaymath" id="a0000000032">
+<div class="displaymath" id="a0000000033">
   \[  \mathbb {E}\lVert L\rVert ^2=N^2\sigma ^2,\quad \mathbb {E}\lVert S\rVert ^2=\frac{N(N+1)}2\sigma ^2,\quad \mathbb {E}\lVert T\rVert ^2=\frac{N(N-1)}2\sigma ^2.  \]
 </div>
 <p> For \(N{\gt}0\) and \(\sigma \ne 0\), the ratios to \(\mathbb {E}\lVert L\rVert ^2\) are \((N+1)/(2N)\) and \((N-1)/(2N)\) respectively. If the entries are iid nondegenerate centered Gaussian, then also </p>
-<div class="displaymath" id="a0000000033">
+<div class="displaymath" id="a0000000034">
   \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N}.  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000031">
+<div class="proof_wrapper" id="a0000000032">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -304,8 +307,8 @@
   <div class="proof_content">
   <p> The expectations are computed entry by entry; for Gaussian entries, \(S\) and \(T\) are the orthogonal projections of an isotropic Gaussian vector onto two subspaces, and the expected fraction of \(\lVert L\rVert ^2\) in each is its dimension divided by \(N^2\). </p>
 <p>For \(i{\lt}j\), \(S_{ij}=S_{ji}=\tfrac 12(L_{ij}+L_{ji})\) with \(L_{ij},L_{ji}\) independent of variance \(\sigma ^2\), so \(\mathbb {E}S_{ij}^2=\tfrac 12\sigma ^2\) and each of the \(N(N-1)/2\) off-diagonal pairs contributes \(\sigma ^2\). The diagonal contributes \(\sum _i\mathbb {E}S_{ii}^2=\sum _i\mathbb {E}L_{ii}^2=N\sigma ^2\), so \(\mathbb {E}\lVert S\rVert ^2=N(N+1)\sigma ^2/2\). The antisymmetric part is the same, with no diagonal contribution. </p>
-<p>For iid Gaussian entries, \(L\) is an isotropic Gaussian vector in the \(N^2\)-dimensional space \(M_N(\mathbb {R})\). By Lemma&#160;5 the symmetric and antisymmetric matrices form orthogonal subspaces, of dimensions \(N(N+1)/2\) and \(N(N-1)/2\), and \(S\) and \(T\) are the orthogonal projections of \(L\) onto them. </p>
-<p>The paper quotes, without proof, that for an isotropic Gaussian vector \(x\in \mathbb {R}^n\) and the orthogonal projection \(P\) onto a subspace \(W\), \(\mathbb {E}[\lVert Px\rVert ^2/\lVert x\rVert ^2]=\dim W/n\). The Lean proof supplies this step: write \(\lVert Px\rVert ^2=\langle x,Px\rangle =\sum _{i,j}P_{ij}x_ix_j\). The law of \(x\) does not change when the coordinates are permuted or one of them changes sign, which gives \(\mathbb {E}[x_ix_j/\lVert x\rVert ^2]=\delta _{ij}/n\), so the expected fraction is \(\operatorname {tr}(P)/n=\dim W/n\). </p>
+<p>For iid Gaussian entries, \(L\) is an isotropic Gaussian vector in the \(N^2\)-dimensional space \(M_N(\mathbb {R})\), and by Lemma&#160;5 \(S\) and \(T\) are its projections onto orthogonal subspaces of dimensions \(N(N+1)/2\) and \(N(N-1)/2\). </p>
+<p>The paper uses without proof that for an isotropic Gaussian vector \(x\in \mathbb {R}^n\) and the orthogonal projection \(P\) onto a subspace \(W\), \(\mathbb {E}[\lVert Px\rVert ^2/\lVert x\rVert ^2]=\dim W/n\). The Lean proof supplies this step: write \(\lVert Px\rVert ^2=\langle x,Px\rangle =\sum _{i,j}P_{ij}x_ix_j\). The law of \(x\) does not change when the coordinates are permuted or one of them changes sign, which gives \(\mathbb {E}[x_ix_j/\lVert x\rVert ^2]=\delta _{ij}/n\), so the expected fraction is \(\operatorname {tr}(P)/n=\dim W/n\). </p>
 
   </div>
 </div>
@@ -325,7 +328,7 @@
 
     <a class="icon proof" href="sect0004.html#cor:qk">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000034"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000035"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -385,14 +388,17 @@
   </div>
   <div class="corollary_thmcontent">
   <p>    Let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent, mean-zero, square-integrable entries, with variances \(\sigma _K^2\) and \(\sigma _Q^2\) respectively. For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000035">
-  \[  \mathbb {E}\lVert L\rVert ^2=nN^2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert S\rVert ^2=\frac{nN(N+1)}2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert T\rVert ^2=\frac{nN(N-1)}2\sigma _K^2\sigma _Q^2.  \]
+<div class="displaymath" id="a0000000036">
+  \[  \mathbb {E}\lVert L\rVert ^2=nN^2\sigma _K^2\sigma _Q^2,  \]
+</div>
+<div class="displaymath" id="a0000000037">
+  \[  \mathbb {E}\lVert S\rVert ^2=\frac{nN(N+1)}2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert T\rVert ^2=\frac{nN(N-1)}2\sigma _K^2\sigma _Q^2.  \]
 </div>
 <p> For positive dimensions and nonzero variances, the ratios of the last two expectations to the first are \((N+1)/(2N)\) and \((N-1)/(2N)\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000034">
+<div class="proof_wrapper" id="a0000000035">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -400,7 +406,7 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Write \(L_{ab}=\sum _{r=1}^n(W_K)_{ra}(W_Q)_{rb}\). Independence and centering give \(\mathbb {E}L_{ab}=0\) and \(\mathbb {E}L_{ab}^2=n\sigma _K^2\sigma _Q^2\); summing over \(a,b\) gives \(\mathbb {E}\lVert L\rVert ^2\). By Lemma&#160;5, \(\mathbb {E}\lVert S\rVert ^2=\tfrac 12\mathbb {E}\lVert L\rVert ^2+\tfrac 12\mathbb {E}\operatorname {tr}(L^2)\), where \(\operatorname {tr}(L^2)=\sum _{a,b}L_{ab}L_{ba}\). For \(a\ne b\), \(\mathbb {E}(L_{ab}L_{ba})=0\) by independence and centering, and the diagonal terms give \(\mathbb {E}\operatorname {tr}(L^2)=nN\sigma _K^2\sigma _Q^2\). This gives \(\mathbb {E}\lVert S\rVert ^2\), and \(\mathbb {E}\lVert T\rVert ^2\) follows by subtraction. </p>
+  <p> \(\mathbb {E}\lVert L\rVert ^2\) is computed entry by entry, and \(\mathbb {E}\lVert S\rVert ^2\) from Lemma&#160;5, in which only the diagonal terms of \(\operatorname {tr}(L^2)\) have nonzero mean. Write \(L_{ab}=\sum _{r=1}^n(W_K)_{ra}(W_Q)_{rb}\). Independence and centering give \(\mathbb {E}L_{ab}=0\) and \(\mathbb {E}L_{ab}^2=n\sigma _K^2\sigma _Q^2\); summing over \(a,b\) gives \(\mathbb {E}\lVert L\rVert ^2\). By Lemma&#160;5, \(\mathbb {E}\lVert S\rVert ^2=\tfrac 12\mathbb {E}\lVert L\rVert ^2+\tfrac 12\mathbb {E}\operatorname {tr}(L^2)\), where \(\operatorname {tr}(L^2)=\sum _{a,b}L_{ab}L_{ba}\). For \(a\ne b\), \(\mathbb {E}(L_{ab}L_{ba})=0\) by independence and centering, and the diagonal terms give \(\mathbb {E}\operatorname {tr}(L^2)=nN\sigma _K^2\sigma _Q^2\). This gives \(\mathbb {E}\lVert S\rVert ^2\), and \(\mathbb {E}\lVert T\rVert ^2\) follows by subtraction. </p>
 
   </div>
 </div>
@@ -420,7 +426,7 @@
 
     <a class="icon proof" href="sect0004.html#prop:low-rank">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000036"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000038"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -472,14 +478,14 @@
   </div>
   <div class="proposition_thmcontent">
   <p>    Let \(1\le n\le N\) and let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent centered Gaussian entries, iid within each matrix, with respective nonzero variances \(v_K,v_Q\). For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000037">
+<div class="displaymath" id="a0000000039">
   \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N},  \]
 </div>
 <p> independently of the head dimension \(n\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000036">
+<div class="proof_wrapper" id="a0000000038">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -487,7 +493,8 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> By Lemma&#160;5, \(\lVert S\rVert ^2/\lVert L\rVert ^2=\tfrac 12+\operatorname {tr}(L^2)/(2\lVert L\rVert ^2)\), so it suffices to show \(\mathbb {E}[\operatorname {tr}(L^2)/\lVert L\rVert ^2]=1/N\). Put \(X=L/\lVert L\rVert \), which is defined almost surely and has \(\lVert X\rVert =1\). The joint law of \(W_K,W_Q\) is invariant under permuting the columns of either matrix, so the law of \(X\) is invariant under permuting its rows and its columns. Hence all \(\mathbb {E}[X_{ij}^2]\) are equal, and since \(\sum _{i,j}X_{ij}^2=1\), each equals \(1/N^2\). For \(i\ne j\), changing the sign of the \(i\)-th column of \(W_K\) negates the \(i\)-th row of \(L\); this preserves the law and negates \(X_{ij}X_{ji}\), so \(\mathbb {E}[X_{ij}X_{ji}]=0\). Therefore \(\mathbb {E}[\operatorname {tr}(X^2)]=\sum _i\mathbb {E}[X_{ii}^2]=1/N\), and the skew identity follows from \(\lVert T\rVert ^2/\lVert L\rVert ^2=1-\lVert S\rVert ^2/\lVert L\rVert ^2\). The Lean statement allows different variances \(v_K,v_Q\); rescaling \(W_K\) reduces this to equal variances and does not change either ratio. </p>
+  <p> By Lemma&#160;5, \(\lVert S\rVert ^2/\lVert L\rVert ^2=\tfrac 12+\operatorname {tr}(L^2)/(2\lVert L\rVert ^2)\), so it suffices to show \(\mathbb {E}[\operatorname {tr}(L^2)/\lVert L\rVert ^2]=1/N\). This follows from two symmetries of the Gaussian law: permuting columns and changing the sign of a column. Put \(X=L/\lVert L\rVert \), which is defined almost surely and has \(\lVert X\rVert =1\). The joint law of \(W_K,W_Q\) is invariant under permuting the columns of either matrix, so the law of \(X\) is invariant under permuting its rows and its columns. Hence all \(\mathbb {E}[X_{ij}^2]\) are equal, and since \(\sum _{i,j}X_{ij}^2=1\), each equals \(1/N^2\). For \(i\ne j\), changing the sign of the \(i\)-th column of \(W_K\) negates the \(i\)-th row of \(L\); this preserves the law and negates \(X_{ij}X_{ji}\), so \(\mathbb {E}[X_{ij}X_{ji}]=0\). Therefore \(\mathbb {E}[\operatorname {tr}(X^2)]=\sum _i\mathbb {E}[X_{ii}^2]=1/N\), and the skew identity follows from \(\lVert T\rVert ^2/\lVert L\rVert ^2=1-\lVert S\rVert ^2/\lVert L\rVert ^2\). </p>
+<p>The Lean proof first treats \(v_K=v_Q\) and rescales \(W_K\) for the general case; neither ratio changes. </p>
 
   </div>
 </div>
@@ -507,7 +514,7 @@
 
     <a class="icon proof" href="sect0004.html#lem:proportional">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000038"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000040"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -583,13 +590,13 @@
   </div>
   <div class="lemma_thmcontent">
   <p>    Let \(X{\gt}0\) almost surely, with finite nonzero second moment, and fix \(u,v{\gt}0\), \(\rho =u/v\). Let \(\alpha _n\) be the decreasing sorting of \(vX_1,\ldots ,vX_n\) and \(\beta _n\) the decreasing sorting of \(uX'_1,\ldots ,uX'_n\), where the two sequences together consist of independent copies of \(X\). Then </p>
-<div class="displaymath" id="a0000000039">
+<div class="displaymath" id="a0000000041">
   \[  \frac{\lVert \beta _n-\rho \alpha _n\rVert }{\lVert \alpha _n\rVert } \longrightarrow 0\qquad \text{almost surely as }n\longrightarrow \infty .  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000038">
+<div class="proof_wrapper" id="a0000000040">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -598,9 +605,9 @@
   </div>
   <div class="proof_content">
   <p> A sorted sample, read as a step function on \((0,1)\), converges in \(L^2\) to the decreasing quantile function of \(X\). Two independent samples therefore converge to the same function, so their sorted lists become close. </p>
-<p>Write \(\beta _n=\rho \alpha '_n\), where \(\alpha '_n\) is the decreasing sorting of \(vX'_1,\ldots ,vX'_n\); it suffices to show \(\lVert \alpha _n-\alpha '_n\rVert /\lVert \alpha _n\rVert \to 0\), and dividing by \(v\) we may take \(v=1\). Let \(m_2=\mathbb {E}[X^2]\), \(\overline F(x)=\mathbf P(X{\gt}x)\) and \(G(t)=\inf \{ x{\gt}0:\overline F(x)\le t\} \) for \(t\in (0,1)\), so that \(G(t){\gt}x\) exactly when \(t{\lt}\overline F(x)\). For \(U\) uniform on \((0,1)\), \(G(U)\) has the law of \(X\), so \(\int _0^1G^2=m_2\). The sorted sample \(x_1\ge \cdots \ge x_n\) of \(X_1,\ldots ,X_n\) defines the step function \(h_n(t)=x_{\lceil nt\rceil }\) on \((0,1)\), with \(\int _0^1h_n^2=\frac1n\sum _ix_i^2\). The paper shows that \(h_n\to G\) in \(L^2(0,1)\) almost surely, in three steps. </p>
+<p>Write \(\beta _n=\rho \alpha '_n\), where \(\alpha '_n\) is the decreasing sorting of \(vX'_1,\ldots ,vX'_n\); it suffices to show \(\lVert \alpha _n-\alpha '_n\rVert /\lVert \alpha _n\rVert \to 0\), and dividing by \(v\) we may take \(v=1\). Let \(m_2=\mathbb {E}[X^2]\), \(\overline F(x)=\mathbf P(X{\gt}x)\) and \(G(t)=\inf \{ x{\gt}0:\overline F(x)\le t\} \) for \(t\in (0,1)\), so that \(G(t){\gt}x\) exactly when \(t{\lt}\overline F(x)\). For \(U\) uniform on \((0,1)\), \(G(U)\) has the law of \(X\), so \(\int _0^1G^2=m_2\). The sorted sample \(x_1\ge \cdots \ge x_n\) of \(X_1,\ldots ,X_n\) defines the step function \(h_n(t)=x_{\lceil nt\rceil }\) on \((0,1)\), with \(\int _0^1h_n^2=\frac1n\sum _ix_i^2\). Then \(h_n\to G\) in \(L^2(0,1)\) almost surely, by three steps. </p>
 <ol class="enumerate">
-  <li><p>Almost surely, \(h_n(t)\to G(t)\) at every point \(t\) where \(G\) is continuous, so for almost every \(t\). Let \(\overline F_n(x)=\frac1n\# \{ i:X_i{\gt}x\} \), so that \(h_n(t){\gt}x\) exactly when \(\overline F_n(x)\ge \lceil nt\rceil /n\). By the strong law of large numbers, almost surely \(\overline F_n(x)\to \overline F(x)\) for every rational \(x{\gt}0\). Comparing \(\overline F_n\) at rational \(x\) slightly above and slightly below \(G(t)\) with \(\lceil nt\rceil /n\to t\) gives \(G(t)-\varepsilon {\lt}h_n(t){\lt}G(t)+\varepsilon \) for all large \(n\). </p>
+  <li><p>Almost surely, \(h_n(t)\to G(t)\) at every point \(t\) where \(G\) is continuous, so for almost every \(t\). Let \(\overline F_n(x)=\frac1n\# \{ i:X_i{\gt}x\} \), so that \(h_n(t){\gt}x\) exactly when \(\overline F_n(x)\ge \lceil nt\rceil /n\). By the strong law of large numbers, almost surely \(\overline F_n(x)\to \overline F(x)\) for every rational \(x{\gt}0\). Fix \(\varepsilon {\gt}0\). For the upper bound, continuity of \(G\) at \(t\) gives \(t'{\lt}t\) and a rational \(x\) with \(G(t'){\lt}x{\lt}G(t)+\varepsilon \); then \(\overline F(x)\le t'{\lt}t\), so eventually \(\overline F_n(x){\lt}t\le \lceil nt\rceil /n\) and \(h_n(t)\le x\). For the lower bound, a rational \(x\in (G(t)-\varepsilon ,G(t))\) has \(\overline F(x){\gt}t\), and \(\lceil nt\rceil /n{\lt}t+1/n\), so eventually \(h_n(t){\gt}x\). </p>
 </li>
   <li><p>By the strong law, \(\int _0^1h_n^2=\frac1n\sum _iX_i^2\to m_2=\int _0^1G^2\) almost surely. </p>
 </li>
