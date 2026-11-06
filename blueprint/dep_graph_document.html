@@ -106,11 +106,11 @@
       </span>
       <span class="corollary_thmlabel">1</span><span class="corollary_thmtitle">Iid square random matrix baseline</span></div>
     <div class="thm_thmcontent"><p>    Let the entries of \(L\in M_N(\mathbb {R})\) be independent, mean zero, and square-integrable with common variance \(\sigma ^2\). Then </p>
-<div class="displaymath" id="a0000000031">
+<div class="displaymath" id="a0000000032">
   \[  \mathbb {E}\lVert L\rVert ^2=N^2\sigma ^2,\quad \mathbb {E}\lVert S\rVert ^2=\frac{N(N+1)}2\sigma ^2,\quad \mathbb {E}\lVert T\rVert ^2=\frac{N(N-1)}2\sigma ^2.  \]
 </div>
 <p> For \(N{\gt}0\) and \(\sigma \ne 0\), the ratios to \(\mathbb {E}\lVert L\rVert ^2\) are \((N+1)/(2N)\) and \((N-1)/(2N)\) respectively. If the entries are iid nondegenerate centered Gaussian, then also </p>
-<div class="displaymath" id="a0000000032">
+<div class="displaymath" id="a0000000033">
   \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N}.  \]
 </div>
 </div>
@@ -122,19 +122,31 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L86" class="lean_decl">Appendices.integral_frobSq_iid</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L120" class="lean_decl">Appendices.integral_symPart_sq_of_ne</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L130" class="lean_decl">Appendices.integral_frobSq_symPart_iid</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L132" class="lean_decl">Appendices.integral_skewPart_sq_of_ne</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L144" class="lean_decl">Appendices.integral_frobSq_skewPart_iid</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L182" class="lean_decl">Appendices.integral_frobSq_iid</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L159" class="lean_decl">Appendices.integral_frobSq_symPart_div_integral_frobSq_iid</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L193" class="lean_decl">Appendices.integral_frobSq_symPart_iid</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L170" class="lean_decl">Appendices.integral_frobSq_skewPart_div_integral_frobSq_iid</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L212" class="lean_decl">Appendices.integral_frobSq_skewPart_iid</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L442" class="lean_decl">Appendices.integral_frobSq_symPart_div_frobSq_gaussian</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L231" class="lean_decl">Appendices.integral_frobSq_symPart_div_integral_frobSq_iid</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L500" class="lean_decl">Appendices.integral_frobSq_skewPart_div_frobSq_gaussian</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L242" class="lean_decl">Appendices.integral_frobSq_skewPart_div_integral_frobSq_iid</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L269" class="lean_decl">Appendices.gaussPi</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L423" class="lean_decl">Appendices.integral_sum_sq_proj_div</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L607" class="lean_decl">Appendices.finrank_symSub</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L617" class="lean_decl">Appendices.finrank_skewSub</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L669" class="lean_decl">Appendices.integral_frobSq_symPart_div_frobSq_gaussian</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L685" class="lean_decl">Appendices.integral_frobSq_skewPart_div_frobSq_gaussian</a></li>
         
       </ul>
   </div>
@@ -162,7 +174,7 @@
       </span>
       <span class="corollary_thmlabel">2</span><span class="corollary_thmtitle">Random QK-product baseline</span></div>
     <div class="thm_thmcontent"><p>    Let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent, mean-zero, square-integrable entries, with variances \(\sigma _K^2\) and \(\sigma _Q^2\) respectively. For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000034">
+<div class="displaymath" id="a0000000035">
   \[  \mathbb {E}\lVert L\rVert ^2=nN^2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert S\rVert ^2=\frac{nN(N+1)}2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert T\rVert ^2=\frac{nN(N-1)}2\sigma _K^2\sigma _Q^2.  \]
 </div>
 <p> For positive dimensions and nonzero variances, the ratios of the last two expectations to the first are \((N+1)/(2N)\) and \((N-1)/(2N)\). </p>
@@ -175,17 +187,17 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L218" class="lean_decl">Appendices.integral_frobSq_qk</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L218" class="lean_decl">Appendices.integral_frobSq_qk</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L239" class="lean_decl">Appendices.integral_trace_mul_self_qk</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L239" class="lean_decl">Appendices.integral_trace_mul_self_qk</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L268" class="lean_decl">Appendices.integral_frobSq_symPart_qk</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L268" class="lean_decl">Appendices.integral_frobSq_symPart_qk</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L293" class="lean_decl">Appendices.integral_frobSq_skewPart_qk</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L293" class="lean_decl">Appendices.integral_frobSq_skewPart_qk</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L319" class="lean_decl">Appendices.integral_frobSq_symPart_div_integral_frobSq_qk</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L319" class="lean_decl">Appendices.integral_frobSq_symPart_div_integral_frobSq_qk</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L332" class="lean_decl">Appendices.integral_frobSq_skewPart_div_integral_frobSq_qk</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L332" class="lean_decl">Appendices.integral_frobSq_skewPart_div_integral_frobSq_qk</a></li>
         
       </ul>
   </div>
@@ -226,9 +238,9 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L74" class="lean_decl">Appendices.MainText.IsPolyFun</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L77" class="lean_decl">Appendices.MainText.IsPolyFun</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L80" class="lean_decl">Appendices.MainText.IsAttentionFunction</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L83" class="lean_decl">Appendices.MainText.IsAttentionFunction</a></li>
         
       </ul>
   </div>
@@ -256,11 +268,11 @@
       </span>
       <span class="definition_thmlabel">A2</span><span class="definition_thmtitle">Pairing geometry</span></div>
     <div class="thm_thmcontent"><p>   For \(m\ge 1\), let \(\Lambda _m\) consist of the unit vectors \(\lambda _1\le \cdots \le \lambda _{2m}\) with \(\lambda _m{\lt}0{\lt}\lambda _{m+1}\). Set </p>
-<div class="displaymath" id="a0000000039">
+<div class="displaymath" id="a0000000040">
   \[  (\lambda _+)_j=\lambda _{2m+1-j},\qquad (\lambda _-)_j=-\lambda _j\quad (1\le j\le m).  \]
 </div>
 <p> Define </p>
-<div class="displaymath" id="a0000000040">
+<div class="displaymath" id="a0000000041">
   \[  \mathcal I=\lVert \lambda _+\rVert ^2-\lVert \lambda _-\rVert ^2,\quad C=\langle \lambda _+,\lambda _-\rangle ,\quad \mathcal P=1-\lVert \lambda _+-\lambda _-\rVert ,\quad (\iota \lambda )_i=-\lambda _{2m+1-i}.  \]
 </div>
 </div>
@@ -272,19 +284,19 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L30" class="lean_decl">Appendices.MemLambdaSet</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L30" class="lean_decl">Appendices.MemLambdaSet</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L45" class="lean_decl">Appendices.lamPlus</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L45" class="lean_decl">Appendices.lamPlus</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L50" class="lean_decl">Appendices.lamMinus</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L50" class="lean_decl">Appendices.lamMinus</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L54" class="lean_decl">Appendices.imbalance</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L54" class="lean_decl">Appendices.imbalance</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L58" class="lean_decl">Appendices.statC</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L58" class="lean_decl">Appendices.statC</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L62" class="lean_decl">Appendices.pairingScore</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L62" class="lean_decl">Appendices.pairingScore</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L67" class="lean_decl">Appendices.iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/Defs.lean#L67" class="lean_decl">Appendices.iotaMap</a></li>
         
       </ul>
   </div>
@@ -317,7 +329,7 @@
     <a class="latex_link" href="sect0001.html#def:bilinear">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L95">Lean</a>
+  <a class="lean_link lean_decl" href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L98">Lean</a>
     
     
   
@@ -347,7 +359,7 @@
     <a class="latex_link" href="sect0001.html#def:head">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L101">Lean</a>
+  <a class="lean_link lean_decl" href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L104">Lean</a>
     
     
   
@@ -372,7 +384,7 @@
       </span>
       <span class="definition_thmlabel">A3</span><span class="definition_thmtitle">Odd, even and resolvent statistics</span></div>
     <div class="thm_thmcontent"><p>   For a vector \(\lambda \) with \(|\lambda _i|{\lt}1\), define </p>
-<div class="displaymath" id="a0000000047">
+<div class="displaymath" id="a0000000048">
   \[  O(\lambda )=\sum _i\frac{\lambda _i}{1-\lambda _i^2},\qquad E(\lambda )=\sum _i\frac{\lambda _i^2}{1-\lambda _i^2},\qquad R(\lambda )=\sum _i\frac1{1-\lambda _i}.  \]
 </div>
 </div>
@@ -384,11 +396,11 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/Defs.lean#L20" class="lean_decl">Appendices.statO</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/Defs.lean#L20" class="lean_decl">Appendices.statO</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/Defs.lean#L24" class="lean_decl">Appendices.statE</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/Defs.lean#L24" class="lean_decl">Appendices.statE</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/Defs.lean#L28" class="lean_decl">Appendices.statR</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/Defs.lean#L28" class="lean_decl">Appendices.statR</a></li>
         
       </ul>
   </div>
@@ -429,11 +441,11 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Common.lean#L21" class="lean_decl">Appendices.frobSq</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Common.lean#L21" class="lean_decl">Appendices.frobSq</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Common.lean#L25" class="lean_decl">Appendices.symPart</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Common.lean#L25" class="lean_decl">Appendices.symPart</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Common.lean#L29" class="lean_decl">Appendices.skewPart</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Common.lean#L29" class="lean_decl">Appendices.skewPart</a></li>
         
       </ul>
   </div>
@@ -474,19 +486,19 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Profile.lean#L32" class="lean_decl">Appendices.sortDesc</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Profile.lean#L32" class="lean_decl">Appendices.sortDesc</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Profile.lean#L62" class="lean_decl">Appendices.alphaList</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Profile.lean#L62" class="lean_decl">Appendices.alphaList</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Profile.lean#L69" class="lean_decl">Appendices.betaList</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Profile.lean#L69" class="lean_decl">Appendices.betaList</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Profile.lean#L74" class="lean_decl">Appendices.profileA</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Profile.lean#L74" class="lean_decl">Appendices.profileA</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Profile.lean#L79" class="lean_decl">Appendices.profileB</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Profile.lean#L79" class="lean_decl">Appendices.profileB</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Profile.lean#L84" class="lean_decl">Appendices.profileC</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Profile.lean#L84" class="lean_decl">Appendices.profileC</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Profile.lean#L89" class="lean_decl">Appendices.profileD</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Profile.lean#L89" class="lean_decl">Appendices.profileD</a></li>
         
       </ul>
   </div>
@@ -523,13 +535,13 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RoPELike.lean#L45" class="lean_decl">Appendices.MainText.ropeL</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RoPELike.lean#L45" class="lean_decl">Appendices.MainText.ropeL</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RoPELike.lean#L49" class="lean_decl">Appendices.MainText.ropeL0Equiv</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RoPELike.lean#L49" class="lean_decl">Appendices.MainText.ropeL0Equiv</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RoPELike.lean#L57" class="lean_decl">Appendices.MainText.ropeT</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RoPELike.lean#L57" class="lean_decl">Appendices.MainText.ropeT</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RoPELike.lean#L63" class="lean_decl">Appendices.MainText.IsRoPELike</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RoPELike.lean#L63" class="lean_decl">Appendices.MainText.IsRoPELike</a></li>
         
       </ul>
   </div>
@@ -556,13 +568,26 @@
       Definition
       </span>
       <span class="definition_thmlabel">5</span><span class="definition_thmtitle">Transformer</span></div>
-    <div class="thm_thmcontent"><p>    For a head \(A\), a linear value map \(V\colon C\to C\) and a map \(M\colon C\to C\), the single-head transformer is \(T=T_M\circ T_A\) with \(T_A(x)_i=x_i+V(A(x)_i)\) and \(T_M(y)_i=y_i+M(y_i)\). </p>
+    <div class="thm_thmcontent"><p>    Let \(A_1,\ldots ,A_h\) be attention heads and \(V_1,\ldots ,V_h\colon C\to C\) linear maps, the value maps. The attention block is \(A=\sum _{i=1}^h(V_i\otimes \mathrm{id})\circ A_i\), that is, \(A(x)_k=\sum _iV_i(A_i(x)_k)\). For a map \(M\colon C\to C\), the transformer associated with \(A\) and \(M\) is \(T=T_M\circ T_A\), where \(T_A(x)_k=x_k+A(x)_k\) and \(T_M(y)_k=y_k+M(y_k)\). A single-head transformer is one with \(h=1\). </p>
 </div>
 
     <a class="latex_link" href="sect0001.html#def:transformer">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L106">Lean</a>
+  <div class="tooltip">
+      <span class="lean_link">Lean</span>
+      <ul class="tooltip_list">
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L109" class="lean_decl">Appendices.MainText.attentionBlock</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L114" class="lean_decl">Appendices.MainText.attnComponent</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L119" class="lean_decl">Appendices.MainText.nnComponent</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L124" class="lean_decl">Appendices.MainText.transformer</a></li>
+        
+      </ul>
+  </div>
     
     
   
@@ -602,11 +627,11 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BiaffineDecomposition.lean#L43" class="lean_decl">Appendices.MainText.IsPolyBidegreeLeOneOne</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BiaffineDecomposition.lean#L43" class="lean_decl">Appendices.MainText.IsPolyBidegreeLeOneOne</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BiaffineDecomposition.lean#L102" class="lean_decl">Appendices.MainText.biaffine_components</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BiaffineDecomposition.lean#L102" class="lean_decl">Appendices.MainText.biaffine_components</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BiaffineDecomposition.lean#L115" class="lean_decl">Appendices.MainText.biaffine_decomposition</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BiaffineDecomposition.lean#L115" class="lean_decl">Appendices.MainText.biaffine_decomposition</a></li>
         
       </ul>
   </div>
@@ -634,10 +659,10 @@
       </span>
       <span class="lemma_thmlabel">7</span><span class="lemma_thmtitle">Bimodal identities</span></div>
     <div class="thm_thmcontent"><p>    For \(\lambda \in \Lambda _m\), </p>
-<div class="displaymath" id="a0000000042">
+<div class="displaymath" id="a0000000043">
   \[  \lVert \lambda _+\rVert ^2=\tfrac 12(1+\mathcal I),\qquad \lVert \lambda _-\rVert ^2=\tfrac 12(1-\mathcal I),\qquad 2\lVert \lambda _+\rVert \lVert \lambda _-\rVert =\sqrt{1-\mathcal I^2},  \]
 </div>
-<div class="displaymath" id="a0000000043">
+<div class="displaymath" id="a0000000044">
   \[  \lVert \lambda _+-\lambda _-\rVert ^2=1-2C,\qquad \mathcal P=1-\sqrt{1-2C},\qquad \sum _j((\lambda _+)_j+i(\lambda _-)_j)^2=\mathcal I+2iC.  \]
 </div>
 <p> Moreover, \(0\le 2C\le 1\) and \(0\le \mathcal P\le 1\). </p>
@@ -650,25 +675,25 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L98" class="lean_decl">Appendices.sum_sq_lamPlus_eq</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L98" class="lean_decl">Appendices.sum_sq_lamPlus_eq</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L106" class="lean_decl">Appendices.sum_sq_lamMinus_eq</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L106" class="lean_decl">Appendices.sum_sq_lamMinus_eq</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L114" class="lean_decl">Appendices.two_mul_norm_lamPlus_mul_norm_lamMinus</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L114" class="lean_decl">Appendices.two_mul_norm_lamPlus_mul_norm_lamMinus</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L139" class="lean_decl">Appendices.sum_sq_lamPlus_sub_lamMinus</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L139" class="lean_decl">Appendices.sum_sq_lamPlus_sub_lamMinus</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L151" class="lean_decl">Appendices.pairingScore_eq</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L151" class="lean_decl">Appendices.pairingScore_eq</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L158" class="lean_decl">Appendices.sum_sq_complex</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L158" class="lean_decl">Appendices.sum_sq_complex</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L185" class="lean_decl">Appendices.statC_nonneg</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L185" class="lean_decl">Appendices.statC_nonneg</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L190" class="lean_decl">Appendices.two_mul_statC_le_one</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L190" class="lean_decl">Appendices.two_mul_statC_le_one</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L197" class="lean_decl">Appendices.pairingScore_nonneg</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L197" class="lean_decl">Appendices.pairingScore_nonneg</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L206" class="lean_decl">Appendices.pairingScore_le_one</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalIdentities.lean#L206" class="lean_decl">Appendices.pairingScore_le_one</a></li>
         
       </ul>
   </div>
@@ -712,15 +737,19 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L69" class="lean_decl">Appendices.frobSq_eq_frobSq_symPart_add_frobSq_skewPart</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L39" class="lean_decl">Appendices.frobInner</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L34" class="lean_decl">Appendices.frobSq_symPart</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L69" class="lean_decl">Appendices.frobInner_eq_zero_of_isSymm_of_transpose_eq_neg</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L51" class="lean_decl">Appendices.frobSq_skewPart</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L86" class="lean_decl">Appendices.frobSq_eq_frobSq_symPart_add_frobSq_skewPart</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L74" class="lean_decl">Appendices.frobSq_symPart_div</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L97" class="lean_decl">Appendices.frobSq_symPart</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L82" class="lean_decl">Appendices.frobSq_skewPart_div</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L113" class="lean_decl">Appendices.frobSq_skewPart</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L120" class="lean_decl">Appendices.frobSq_symPart_div</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L128" class="lean_decl">Appendices.frobSq_skewPart_div</a></li>
         
       </ul>
   </div>
@@ -748,7 +777,7 @@
       </span>
       <span class="lemma_thmlabel">10</span><span class="lemma_thmtitle">Computation from the key and query matrices</span></div>
     <div class="thm_thmcontent"><p>    For \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\), set </p>
-<div class="displaymath" id="a0000000053">
+<div class="displaymath" id="a0000000054">
   \[  M=\begin{pmatrix} W_K
 
 \\ W_Q
@@ -764,11 +793,11 @@
 \end{pmatrix}.  \]
 </div>
 <p> The symmetric part of \(W_K^TW_Q\) is \(S=\tfrac 12M^TJM\). For every \(k\ge 1\), </p>
-<div class="displaymath" id="a0000000054">
+<div class="displaymath" id="a0000000055">
   \[  \operatorname {tr}(S^k)=\operatorname {tr}((\tfrac 12JG)^k),\qquad \lVert S\rVert ^2=\tfrac 14\operatorname {tr}((JG)^2).  \]
 </div>
 <p> If \(M:\mathbb {R}^N\to \mathbb {R}^{2n}\) is surjective and \(n\ge 1\), the nonzero spectrum of \(S\), with multiplicity, is the spectrum of \(\tfrac 12JG\). Its sorted normalized nonzero spectrum \(\lambda \) exists uniquely and belongs to \(\Lambda _n\). For \(H=JG/(2\lVert S\rVert )\), </p>
-<div class="displaymath" id="a0000000055">
+<div class="displaymath" id="a0000000056">
   \[  O(\lambda )=\operatorname {tr}(H(I-H^2)^{-1}),\qquad E(\lambda )=\operatorname {tr}(H^2(I-H^2)^{-1}),\qquad R(\lambda )=\operatorname {tr}((I-H)^{-1}).  \]
 </div>
 </div>
@@ -780,37 +809,37 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L69" class="lean_decl">Appendices.GramForm.M</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L69" class="lean_decl">Appendices.GramForm.M</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L73" class="lean_decl">Appendices.GramForm.J</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L73" class="lean_decl">Appendices.GramForm.J</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L78" class="lean_decl">Appendices.GramForm.G</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L78" class="lean_decl">Appendices.GramForm.G</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L91" class="lean_decl">Appendices.GramForm.symPart_eq_half_conj</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L91" class="lean_decl">Appendices.GramForm.symPart_eq_half_conj</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L112" class="lean_decl">Appendices.GramForm.trace_pow_symPart</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L112" class="lean_decl">Appendices.GramForm.trace_pow_symPart</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L123" class="lean_decl">Appendices.GramForm.frobSq_symPart_eq_quarter_trace</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L123" class="lean_decl">Appendices.GramForm.frobSq_symPart_eq_quarter_trace</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L700" class="lean_decl">Appendices.GramForm.charpoly_roots_filter_ne_zero</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L700" class="lean_decl">Appendices.GramForm.charpoly_roots_filter_ne_zero</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L735" class="lean_decl">Appendices.GramForm.card_charpoly_roots_symPart</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L735" class="lean_decl">Appendices.GramForm.card_charpoly_roots_symPart</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L743" class="lean_decl">Appendices.GramForm.card_charpoly_roots_half_JG</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L743" class="lean_decl">Appendices.GramForm.card_charpoly_roots_half_JG</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L770" class="lean_decl">Appendices.GramForm.IsSortedNormalizedNonzeroSpectrum</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L770" class="lean_decl">Appendices.GramForm.IsSortedNormalizedNonzeroSpectrum</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L787" class="lean_decl">Appendices.GramForm.exists_isSortedNormalizedNonzeroSpectrum</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L787" class="lean_decl">Appendices.GramForm.exists_isSortedNormalizedNonzeroSpectrum</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L778" class="lean_decl">Appendices.GramForm.isSortedNormalizedNonzeroSpectrum_unique</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L778" class="lean_decl">Appendices.GramForm.isSortedNormalizedNonzeroSpectrum_unique</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L876" class="lean_decl">Appendices.GramForm.memLambdaSet_of_isSortedNormalizedNonzeroSpectrum</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L876" class="lean_decl">Appendices.GramForm.memLambdaSet_of_isSortedNormalizedNonzeroSpectrum</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L897" class="lean_decl">Appendices.GramForm.statO_eq_trace</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L897" class="lean_decl">Appendices.GramForm.statO_eq_trace</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L924" class="lean_decl">Appendices.GramForm.statE_eq_trace</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L924" class="lean_decl">Appendices.GramForm.statE_eq_trace</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/GramForm.lean#L951" class="lean_decl">Appendices.GramForm.statR_eq_trace</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/GramForm.lean#L951" class="lean_decl">Appendices.GramForm.statR_eq_trace</a></li>
         
       </ul>
   </div>
@@ -838,7 +867,7 @@
       </span>
       <span class="lemma_thmlabel">8</span><span class="lemma_thmtitle">Bimodal involution</span></div>
     <div class="thm_thmcontent"><p>    The map \(\iota \) is an orthogonal, self-adjoint linear involution, preserves \(\Lambda _m\), and exchanges \(\lambda _+\) and \(\lambda _-\). Consequently \(\mathcal I\circ \iota =-\mathcal I\), \(C\circ \iota =C\) and \(\mathcal P\circ \iota =\mathcal P\). For \(\lambda \in \Lambda _m\), </p>
-<div class="displaymath" id="a0000000045">
+<div class="displaymath" id="a0000000046">
   \[  \lVert \lambda -\iota \lambda \rVert ^2=2\lVert \lambda _+-\lambda _-\rVert ^2,\qquad \mathcal P(\lambda )=1-\frac1{\sqrt2}\lVert \lambda -\iota \lambda \rVert .  \]
 </div>
 <p> In particular, \(\mathcal P(\lambda )=1\) if and only if \(\iota \lambda =\lambda \). </p>
@@ -851,33 +880,33 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L35" class="lean_decl">Appendices.iotaMap_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L35" class="lean_decl">Appendices.iotaMap_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L41" class="lean_decl">Appendices.iotaMap_add</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L41" class="lean_decl">Appendices.iotaMap_add</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L48" class="lean_decl">Appendices.iotaMap_smul</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L48" class="lean_decl">Appendices.iotaMap_smul</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L54" class="lean_decl">Appendices.sum_iotaMap_mul_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L54" class="lean_decl">Appendices.sum_iotaMap_mul_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L60" class="lean_decl">Appendices.sum_iotaMap_mul</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L60" class="lean_decl">Appendices.sum_iotaMap_mul</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L110" class="lean_decl">Appendices.memLambdaSet_iotaMap_iff</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L110" class="lean_decl">Appendices.memLambdaSet_iotaMap_iff</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L69" class="lean_decl">Appendices.lamPlus_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L69" class="lean_decl">Appendices.lamPlus_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L75" class="lean_decl">Appendices.lamMinus_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L75" class="lean_decl">Appendices.lamMinus_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L117" class="lean_decl">Appendices.imbalance_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L117" class="lean_decl">Appendices.imbalance_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L123" class="lean_decl">Appendices.statC_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L123" class="lean_decl">Appendices.statC_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L129" class="lean_decl">Appendices.pairingScore_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L129" class="lean_decl">Appendices.pairingScore_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L155" class="lean_decl">Appendices.sum_sq_sub_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L155" class="lean_decl">Appendices.sum_sq_sub_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L175" class="lean_decl">Appendices.pairingScore_eq_dist_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L175" class="lean_decl">Appendices.pairingScore_eq_dist_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L183" class="lean_decl">Appendices.pairingScore_eq_one_iff</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/BimodalInvolution.lean#L183" class="lean_decl">Appendices.pairingScore_eq_one_iff</a></li>
         
       </ul>
   </div>
@@ -905,15 +934,15 @@
       </span>
       <span class="lemma_thmlabel">9</span><span class="lemma_thmtitle">Equivalent expressions for the moments</span></div>
     <div class="thm_thmcontent"><p>    Every \(\lambda \in \Lambda _m\) has \(|\lambda _i|{\lt}1\). Writing \(n=2m\), </p>
-<div class="displaymath" id="a0000000049">
+<div class="displaymath" id="a0000000050">
   \[  O(\lambda )=\sum _{r=0}^{\infty }\sum _i\lambda _i^{2r+1},\qquad E(\lambda )=\sum _{r=0}^{\infty }\sum _i\lambda _i^{2r+2},  \]
 </div>
 <p> and both series converge absolutely. Moreover, </p>
-<div class="displaymath" id="a0000000050">
+<div class="displaymath" id="a0000000051">
   \[  O=\tfrac 12(R-R\circ \iota ),\qquad n+E=\tfrac 12(R+R\circ \iota ),\qquad O\circ \iota =-O,\qquad E\circ \iota =E.  \]
 </div>
 <p> If a symmetric matrix \(A\) has spectrum \(\lambda \), with multiplicity, then </p>
-<div class="displaymath" id="a0000000051">
+<div class="displaymath" id="a0000000052">
   \[  O(\lambda )=\operatorname {tr}(A(I-A^2)^{-1}),\quad E(\lambda )=\operatorname {tr}(A^2(I-A^2)^{-1}),\quad R(\lambda )=\operatorname {tr}((I-A)^{-1}).  \]
 </div>
 </div>
@@ -925,29 +954,29 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L37" class="lean_decl">Appendices.MemLambdaSet.abs_entry_lt_one</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L37" class="lean_decl">Appendices.MemLambdaSet.abs_entry_lt_one</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L97" class="lean_decl">Appendices.statO_eq_tsum_odd_moments</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L97" class="lean_decl">Appendices.statO_eq_tsum_odd_moments</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L109" class="lean_decl">Appendices.statE_eq_tsum_even_moments</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L109" class="lean_decl">Appendices.statE_eq_tsum_even_moments</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L130" class="lean_decl">Appendices.summable_abs_odd_moments</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L130" class="lean_decl">Appendices.summable_abs_odd_moments</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L136" class="lean_decl">Appendices.summable_abs_even_moments</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L136" class="lean_decl">Appendices.summable_abs_even_moments</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L150" class="lean_decl">Appendices.statO_eq_half_statR_sub</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L150" class="lean_decl">Appendices.statO_eq_half_statR_sub</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L165" class="lean_decl">Appendices.statE_add_card_eq_half_statR_add</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L165" class="lean_decl">Appendices.statE_add_card_eq_half_statR_add</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L183" class="lean_decl">Appendices.statO_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L183" class="lean_decl">Appendices.statO_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L198" class="lean_decl">Appendices.statE_iotaMap</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L198" class="lean_decl">Appendices.statE_iotaMap</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L283" class="lean_decl">Appendices.trace_eq_statO</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L283" class="lean_decl">Appendices.trace_eq_statO</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L315" class="lean_decl">Appendices.trace_eq_statE</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L315" class="lean_decl">Appendices.trace_eq_statE</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/Moments/OEEquivalences.lean#L347" class="lean_decl">Appendices.trace_eq_statR</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/Moments/OEEquivalences.lean#L347" class="lean_decl">Appendices.trace_eq_statR</a></li>
         
       </ul>
   </div>
@@ -988,15 +1017,15 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/PairingBound.lean#L42" class="lean_decl">Appendices.MainText.lamPlusVec</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/PairingBound.lean#L42" class="lean_decl">Appendices.MainText.lamPlusVec</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/PairingBound.lean#L48" class="lean_decl">Appendices.MainText.lamMinusVec</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/PairingBound.lean#L48" class="lean_decl">Appendices.MainText.lamMinusVec</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/PairingBound.lean#L53" class="lean_decl">Appendices.MainText.pairingScoreSym</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/PairingBound.lean#L53" class="lean_decl">Appendices.MainText.pairingScoreSym</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/PairingBound.lean#L62" class="lean_decl">Appendices.MainText.frobSq_eq_norm_sq_add_norm_sq</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/PairingBound.lean#L62" class="lean_decl">Appendices.MainText.frobSq_eq_norm_sq_add_norm_sq</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/PairingBound.lean#L120" class="lean_decl">Appendices.MainText.pairing_bound</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/PairingBound.lean#L120" class="lean_decl">Appendices.MainText.pairing_bound</a></li>
         
       </ul>
   </div>
@@ -1033,11 +1062,11 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/ProfileScale.lean#L54" class="lean_decl">Appendices.MainText.profileA_symPart</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/ProfileScale.lean#L54" class="lean_decl">Appendices.MainText.profileA_symPart</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/ProfileScale.lean#L60" class="lean_decl">Appendices.MainText.one_sub_profileA</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/ProfileScale.lean#L60" class="lean_decl">Appendices.MainText.one_sub_profileA</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/ProfileScale.lean#L70" class="lean_decl">Appendices.MainText.profile_scale</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/ProfileScale.lean#L70" class="lean_decl">Appendices.MainText.profile_scale</a></li>
         
       </ul>
   </div>
@@ -1065,7 +1094,7 @@
       </span>
       <span class="lemma_thmlabel">6</span><span class="lemma_thmtitle">Proportional lobes</span></div>
     <div class="thm_thmcontent"><p>    Let \(X{\gt}0\) almost surely, with finite nonzero second moment, and fix \(u,v{\gt}0\), \(\rho =u/v\). Let \(\alpha _n\) be the decreasing sorting of \(vX_1,\ldots ,vX_n\) and \(\beta _n\) the decreasing sorting of \(uX'_1,\ldots ,uX'_n\), where the two sequences together consist of independent copies of \(X\). Then </p>
-<div class="displaymath" id="a0000000038">
+<div class="displaymath" id="a0000000039">
   \[  \frac{\lVert \beta _n-\rho \alpha _n\rVert }{\lVert \alpha _n\rVert } \longrightarrow 0\qquad \text{almost surely as }n\longrightarrow \infty .  \]
 </div>
 </div>
@@ -1073,7 +1102,40 @@
     <a class="latex_link" href="sect0004.html#lem:proportional">LaTeX</a>
     
     
-  <a class="lean_link lean_decl" href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L705">Lean</a>
+  <div class="tooltip">
+      <span class="lean_link">Lean</span>
+      <ul class="tooltip_list">
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L73" class="lean_decl">Appendices.survival</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L76" class="lean_decl">Appendices.quantile</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L96" class="lean_decl">Appendices.lt_quantile_iff</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L142" class="lean_decl">Appendices.vol01</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L151" class="lean_decl">Appendices.map_quantile</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L176" class="lean_decl">Appendices.lintegral_quantile_sq</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L195" class="lean_decl">Appendices.stepFn</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L236" class="lean_decl">Appendices.integral_stepFn</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L294" class="lean_decl">Appendices.lt_stepFn_iff</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L398" class="lean_decl">Appendices.tendsto_stepFn_of_continuousWithinAt</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L471" class="lean_decl">Appendices.ae_tendsto_stepFn</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L551" class="lean_decl">Appendices.tendsto_integral_stepFn_sq</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L563" class="lean_decl">Appendices.tendsto_integral_stepFn_sub_quantile_sq</a></li>
+        
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L837" class="lean_decl">Appendices.proportional_lobes</a></li>
+        
+      </ul>
+  </div>
     
     
   
@@ -1107,9 +1169,9 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RankBalance.lean#L69" class="lean_decl">Appendices.MainText.finrank_le_of_posDefOn</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RankBalance.lean#L69" class="lean_decl">Appendices.MainText.finrank_le_of_posDefOn</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RankBalance.lean#L88" class="lean_decl">Appendices.MainText.rank_balance</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RankBalance.lean#L88" class="lean_decl">Appendices.MainText.rank_balance</a></li>
         
       </ul>
   </div>
@@ -1146,21 +1208,21 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L114" class="lean_decl">Appendices.MainText.qkvScore</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L136" class="lean_decl">Appendices.MainText.qkvScore</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L160" class="lean_decl">Appendices.MainText.homForm</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L182" class="lean_decl">Appendices.MainText.homForm</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L167" class="lean_decl">Appendices.MainText.homForm_apply</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L189" class="lean_decl">Appendices.MainText.homForm_apply</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L179" class="lean_decl">Appendices.MainText.homScore</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L201" class="lean_decl">Appendices.MainText.homScore</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L185" class="lean_decl">Appendices.MainText.dehom</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L207" class="lean_decl">Appendices.MainText.dehom</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L190" class="lean_decl">Appendices.MainText.homScore_eq</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L212" class="lean_decl">Appendices.MainText.homScore_eq</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L128" class="lean_decl">Appendices.MainText.isPolyFun_bilinear</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L150" class="lean_decl">Appendices.MainText.isPolyFun_bilinear</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Homogenization.lean#L225" class="lean_decl">Appendices.MainText.qkv_homogenizes_to_bilinear</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Homogenization.lean#L247" class="lean_decl">Appendices.MainText.qkv_homogenizes_to_bilinear</a></li>
         
       </ul>
   </div>
@@ -1188,7 +1250,7 @@
       </span>
       <span class="proposition_thmlabel">5</span><span class="proposition_thmtitle">Expected symmetric energy for random low-rank QK products</span></div>
     <div class="thm_thmcontent"><p>    Let \(1\le n\le N\) and let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent centered Gaussian entries, iid within each matrix, with respective nonzero variances \(v_K,v_Q\). For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000036">
+<div class="displaymath" id="a0000000037">
   \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N},  \]
 </div>
 <p> independently of the head dimension \(n\). </p>
@@ -1201,9 +1263,9 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/LowRankExpectedEnergy.lean#L719" class="lean_decl">Appendices.expected_symmetric_energy_low_rank_qk</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/LowRankExpectedEnergy.lean#L719" class="lean_decl">Appendices.expected_symmetric_energy_low_rank_qk</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/LowRankExpectedEnergy.lean#L749" class="lean_decl">Appendices.expected_skew_energy_low_rank_qk</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/LowRankExpectedEnergy.lean#L749" class="lean_decl">Appendices.expected_skew_energy_low_rank_qk</a></li>
         
       </ul>
   </div>
@@ -1230,7 +1292,7 @@
       Proposition
       </span>
       <span class="proposition_thmlabel">2</span><span class="proposition_thmtitle">Transformers are near-identity</span></div>
-    <div class="thm_thmcontent"><p>    Fix a norm on \(C\) and put \(\lVert x\rVert _\infty =\max _k\lVert x_k\rVert \) for \(x\in C^\ell \). Let \(A_1,\ldots ,A_h\) be attention heads and \(V_1,\ldots ,V_h\colon C\to C\) linear maps, let \(A(x)_k=\sum _iV_i(A_i(x)_k)\) be the attention block, and let \(T=T_M\circ T_A\) with \(T_A(x)_k=x_k+A(x)_k\) and \(T_M\) as above. If \(\lVert M(y)\rVert \le L\lVert y\rVert \) for all \(y\) and \(V=\sum _i\lVert V_i\rVert \) (operator norms), then \(\lVert T(x)-x\rVert _\infty \le (L+V+LV)\lVert x\rVert _\infty \). </p>
+    <div class="thm_thmcontent"><p>    Fix a norm on \(C\) and put \(\lVert x\rVert _\infty =\max _k\lVert x_k\rVert \) for \(x\in C^\ell \). Let \(T\) be the transformer associated with an attention block \(A=\sum _i(V_i\otimes \mathrm{id})\circ A_i\) and a map \(M\) with \(\lVert M(y)\rVert \le L\lVert y\rVert \) for all \(y\in C\), and put \(V=\sum _i\lVert V_i\rVert \) (operator norms). Then \(\lVert T(x)-x\rVert _\infty \le (L+V+LV)\lVert x\rVert _\infty \) for all \(x\in C^\ell \). </p>
 </div>
 
     <a class="latex_link" href="sect0001.html#prop:near-identity">LaTeX</a>
@@ -1240,13 +1302,13 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/NearIdentity.lean#L43" class="lean_decl">Appendices.MainText.IsAttentionOutput</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/NearIdentity.lean#L38" class="lean_decl">Appendices.MainText.norm_le_of_isAttentionFunction</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/NearIdentity.lean#L73" class="lean_decl">Appendices.MainText.attentionBlock</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/NearIdentity.lean#L54" class="lean_decl">Appendices.MainText.norm_head_le</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/NearIdentity.lean#L79" class="lean_decl">Appendices.MainText.norm_attentionBlock_le</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/NearIdentity.lean#L66" class="lean_decl">Appendices.MainText.norm_attentionBlock_le</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/NearIdentity.lean#L97" class="lean_decl">Appendices.MainText.near_identity</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/NearIdentity.lean#L84" class="lean_decl">Appendices.MainText.near_identity</a></li>
         
       </ul>
   </div>
@@ -1287,21 +1349,21 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RankOneLocus.lean#L50" class="lean_decl">Appendices.MainText.profile</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RankOneLocus.lean#L50" class="lean_decl">Appendices.MainText.profile</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RankOneLocus.lean#L54" class="lean_decl">Appendices.MainText.Theta</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RankOneLocus.lean#L54" class="lean_decl">Appendices.MainText.Theta</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/ProfileInvariance.lean#L163" class="lean_decl">Appendices.MainText.profile_conj</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/ProfileInvariance.lean#L163" class="lean_decl">Appendices.MainText.profile_conj</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RankOneLocus.lean#L62" class="lean_decl">Appendices.MainText.exists_orthogonal_cols</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RankOneLocus.lean#L62" class="lean_decl">Appendices.MainText.exists_orthogonal_cols</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RankOneLocus.lean#L182" class="lean_decl">Appendices.MainText.profile_smul_vecMulVec</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RankOneLocus.lean#L182" class="lean_decl">Appendices.MainText.profile_smul_vecMulVec</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RankOneLocus.lean#L371" class="lean_decl">Appendices.MainText.exists_smul_vecMulVec_of_rank_eq_one</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RankOneLocus.lean#L371" class="lean_decl">Appendices.MainText.exists_smul_vecMulVec_of_rank_eq_one</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RankOneLocus.lean#L416" class="lean_decl">Appendices.MainText.profile_rank_one</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RankOneLocus.lean#L416" class="lean_decl">Appendices.MainText.profile_rank_one</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RankOneLocus.lean#L440" class="lean_decl">Appendices.MainText.profiles_rank_one_eq_Theta</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RankOneLocus.lean#L440" class="lean_decl">Appendices.MainText.profiles_rank_one_eq_Theta</a></li>
         
       </ul>
   </div>
@@ -1338,9 +1400,9 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RoPELike.lean#L76" class="lean_decl">Appendices.MainText.isRoPELike_iff</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RoPELike.lean#L76" class="lean_decl">Appendices.MainText.isRoPELike_iff</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/RoPELike.lean#L109" class="lean_decl">Appendices.MainText.eq_ropeT_one_of_forall</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/RoPELike.lean#L109" class="lean_decl">Appendices.MainText.eq_ropeT_one_of_forall</a></li>
         
       </ul>
   </div>
@@ -1381,31 +1443,31 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L258" class="lean_decl">Appendices.MainText.profile_of_spectrum</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L258" class="lean_decl">Appendices.MainText.profile_of_spectrum</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L179" class="lean_decl">Appendices.MainText.accumulation_estimates</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L179" class="lean_decl">Appendices.MainText.accumulation_estimates</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L306" class="lean_decl">Appendices.MainText.accumulation</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L306" class="lean_decl">Appendices.MainText.accumulation</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L415" class="lean_decl">Appendices.MainText.limitProfile</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L415" class="lean_decl">Appendices.MainText.limitProfile</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L419" class="lean_decl">Appendices.MainText.projP</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L419" class="lean_decl">Appendices.MainText.projP</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L428" class="lean_decl">Appendices.MainText.limitProfile_mem_projP_Theta</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L428" class="lean_decl">Appendices.MainText.limitProfile_mem_projP_Theta</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L448" class="lean_decl">Appendices.MainText.limitB</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L448" class="lean_decl">Appendices.MainText.limitB</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L454" class="lean_decl">Appendices.MainText.limitProfile_edge_d</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L454" class="lean_decl">Appendices.MainText.limitProfile_edge_d</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L465" class="lean_decl">Appendices.MainText.limitProfile_edge_c</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L465" class="lean_decl">Appendices.MainText.limitProfile_edge_c</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L480" class="lean_decl">Appendices.MainText.limitB_strictMonoOn</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L480" class="lean_decl">Appendices.MainText.limitB_strictMonoOn</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L489" class="lean_decl">Appendices.MainText.limitB_strictAntiOn</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L489" class="lean_decl">Appendices.MainText.limitB_strictAntiOn</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L500" class="lean_decl">Appendices.MainText.limitB_image_Ioc</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L500" class="lean_decl">Appendices.MainText.limitB_image_Ioc</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/Accumulation.lean#L523" class="lean_decl">Appendices.MainText.limitB_image_Ici</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/Accumulation.lean#L523" class="lean_decl">Appendices.MainText.limitB_image_Ici</a></li>
         
       </ul>
   </div>
@@ -1442,25 +1504,25 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BalancedHeads.lean#L49" class="lean_decl">Appendices.MainText.stacked</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BalancedHeads.lean#L49" class="lean_decl">Appendices.MainText.stacked</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BalancedHeads.lean#L52" class="lean_decl">Appendices.MainText.Nondegenerate</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BalancedHeads.lean#L52" class="lean_decl">Appendices.MainText.Nondegenerate</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BalancedHeads.lean#L55" class="lean_decl">Appendices.MainText.headForm</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BalancedHeads.lean#L55" class="lean_decl">Appendices.MainText.headForm</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BalancedHeads.lean#L91" class="lean_decl">Appendices.MainText.radical_eq_ker</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BalancedHeads.lean#L91" class="lean_decl">Appendices.MainText.radical_eq_ker</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BalancedHeads.lean#L111" class="lean_decl">Appendices.MainText.finrank_radical</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BalancedHeads.lean#L111" class="lean_decl">Appendices.MainText.finrank_radical</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BalancedHeads.lean#L132" class="lean_decl">Appendices.MainText.gram</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BalancedHeads.lean#L132" class="lean_decl">Appendices.MainText.gram</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BalancedHeads.lean#L144" class="lean_decl">Appendices.MainText.signature</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BalancedHeads.lean#L144" class="lean_decl">Appendices.MainText.signature</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BalancedHeads.lean#L158" class="lean_decl">Appendices.MainText.gram_eq_symPart</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BalancedHeads.lean#L158" class="lean_decl">Appendices.MainText.gram_eq_symPart</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BalancedHeads.lean#L183" class="lean_decl">Appendices.MainText.ker_gram_eq_map</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BalancedHeads.lean#L183" class="lean_decl">Appendices.MainText.ker_gram_eq_map</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/MainText/BalancedHeads.lean#L212" class="lean_decl">Appendices.MainText.heads_have_balanced_attention</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/MainText/BalancedHeads.lean#L212" class="lean_decl">Appendices.MainText.heads_have_balanced_attention</a></li>
         
       </ul>
   </div>
@@ -1507,39 +1569,39 @@
       <span class="lean_link">Lean</span>
       <ul class="tooltip_list">
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L219" class="lean_decl">Appendices.profileA_nonneg</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L219" class="lean_decl">Appendices.profileA_nonneg</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L222" class="lean_decl">Appendices.profileB_nonneg</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L222" class="lean_decl">Appendices.profileB_nonneg</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L229" class="lean_decl">Appendices.profileC_nonneg</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L229" class="lean_decl">Appendices.profileC_nonneg</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L232" class="lean_decl">Appendices.profileD_nonneg</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L232" class="lean_decl">Appendices.profileD_nonneg</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L236" class="lean_decl">Appendices.profile_sum_eq_one</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L236" class="lean_decl">Appendices.profile_sum_eq_one</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L273" class="lean_decl">Appendices.profileA_eq_zero_iff</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L273" class="lean_decl">Appendices.profileA_eq_zero_iff</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L288" class="lean_decl">Appendices.profileA_eq_one_iff</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L288" class="lean_decl">Appendices.profileA_eq_one_iff</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1085" class="lean_decl">Appendices.profileB_eq_zero_iff</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1085" class="lean_decl">Appendices.profileB_eq_zero_iff</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1123" class="lean_decl">Appendices.profileB_eq_one_iff</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1123" class="lean_decl">Appendices.profileB_eq_one_iff</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1053" class="lean_decl">Appendices.profileD_eq_zero_iff_forall</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1053" class="lean_decl">Appendices.profileD_eq_zero_iff_forall</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1179" class="lean_decl">Appendices.profileD_eq_zero_iff_decomp</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1179" class="lean_decl">Appendices.profileD_eq_zero_iff_decomp</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1151" class="lean_decl">Appendices.profileD_eq_zero_decomp_commute</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1151" class="lean_decl">Appendices.profileD_eq_zero_decomp_commute</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1243" class="lean_decl">Appendices.profileD_eq_one_iff</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1243" class="lean_decl">Appendices.profileD_eq_one_iff</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1069" class="lean_decl">Appendices.profileC_eq_zero_iff_forall</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1069" class="lean_decl">Appendices.profileC_eq_zero_iff_forall</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1225" class="lean_decl">Appendices.profileC_eq_zero_iff_decomp</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1225" class="lean_decl">Appendices.profileC_eq_zero_iff_decomp</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1198" class="lean_decl">Appendices.profileC_eq_zero_decomp_commute</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1198" class="lean_decl">Appendices.profileC_eq_zero_decomp_commute</a></li>
         
-           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1283" class="lean_decl">Appendices.profileC_eq_one_iff</a></li>
+           <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/BalancedBimodalSpectra/SimplexFaces.lean#L1283" class="lean_decl">Appendices.profileC_eq_one_iff</a></li>
         
       </ul>
   </div>
@@ -1570,7 +1632,7 @@ graphContainer.graphviz({useWorker: true})
     .width(width)
     .height(height)
     .fit(true)
-    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	"lem:profile-scale"	[color=green,		fillcolor="#1CAC78",		label="profile-scale",		shape=ellipse,		style=filled];	"lem:gram"	[color=green,		fillcolor="#1CAC78",		label=gram,		shape=ellipse,		style=filled];	"thm:balanced"	[color=green,		fillcolor="#1CAC78",		label=balanced,		shape=ellipse,		style=filled];	"lem:moment-identities"	[color=green,		fillcolor="#1CAC78",		label="moment-identities",		shape=ellipse,		style=filled];	"lem:moment-identities" -> "lem:gram";	"def:bilinear"	[color=green,		fillcolor="#B0ECA3",		label=bilinear,		shape=box,		style=filled];	"def:rope-like"	[color=green,		fillcolor="#B0ECA3",		label="rope-like",		shape=box,		style=filled];	"def:bilinear" -> "def:rope-like"	[style=dashed];	"prop:homogenization"	[color=green,		fillcolor="#1CAC78",		label=homogenization,		shape=ellipse,		style=filled];	"def:bilinear" -> "prop:homogenization"	[style=dashed];	"prop:rope-like"	[color=green,		fillcolor="#1CAC78",		label="rope-like",		shape=ellipse,		style=filled];	"def:rope-like" -> "prop:rope-like"	[style=dashed];	"def:profile"	[color=green,		fillcolor="#B0ECA3",		label=profile,		shape=box,		style=filled];	"def:profile" -> "lem:profile-scale"	[style=dashed];	"lem:proportional"	[color=green,		fillcolor="#1CAC78",		label=proportional,		shape=ellipse,		style=filled];	"def:profile" -> "lem:proportional"	[style=dashed];	"prop:rank-one"	[color=green,		fillcolor="#1CAC78",		label="rank-one",		shape=ellipse,		style=filled];	"def:profile" -> "prop:rank-one"	[style=dashed];	"thm:faces"	[color=green,		fillcolor="#1CAC78",		label=faces,		shape=ellipse,		style=filled];	"def:profile" -> "thm:faces"	[style=dashed];	"thm:accumulation"	[color=green,		fillcolor="#1CAC78",		label=accumulation,		shape=ellipse,		style=filled];	"lem:proportional" -> "thm:accumulation"	[style=dashed];	"prop:rank-one" -> "thm:accumulation"	[style=dashed];	"def:moment-statistics"	[color=green,		fillcolor="#B0ECA3",		label="moment-statistics",		shape=box,		style=filled];	"def:moment-statistics" -> "lem:moment-identities"	[style=dashed];	"lem:pairing-bound"	[color=green,		fillcolor="#1CAC78",		label="pairing-bound",		shape=ellipse,		style=filled];	"lem:bimodal"	[color=green,		fillcolor="#1CAC78",		label=bimodal,		shape=ellipse,		style=filled];	"prop:near-identity"	[color=green,		fillcolor="#1CAC78",		label="near-identity",		shape=ellipse,		style=filled];	"def:parts"	[color=green,		fillcolor="#B0ECA3",		label=parts,		shape=box,		style=filled];	"def:parts" -> "lem:gram"	[style=dashed];	"def:parts" -> "def:profile"	[style=dashed];	"def:parts" -> "lem:pairing-bound"	[style=dashed];	"lem:rank-balance"	[color=green,		fillcolor="#1CAC78",		label="rank-balance",		shape=ellipse,		style=filled];	"def:parts" -> "lem:rank-balance"	[style=dashed];	"lem:energy"	[color=green,		fillcolor="#1CAC78",		label=energy,		shape=ellipse,		style=filled];	"def:parts" -> "lem:energy"	[style=dashed];	"lem:rank-balance" -> "thm:balanced"	[style=dashed];	"lem:energy" -> "lem:profile-scale"	[style=dashed];	"lem:energy" -> "prop:rank-one"	[style=dashed];	"lem:energy" -> "thm:faces";	"cor:iid"	[color=green,		fillcolor="#1CAC78",		label=iid,		shape=ellipse,		style=filled];	"lem:energy" -> "cor:iid";	"prop:low-rank"	[color=green,		fillcolor="#1CAC78",		label="low-rank",		shape=ellipse,		style=filled];	"lem:energy" -> "prop:low-rank";	"cor:qk"	[color=green,		fillcolor="#1CAC78",		label=qk,		shape=ellipse,		style=filled];	"lem:energy" -> "cor:qk";	"def:balanced"	[color=green,		fillcolor="#B0ECA3",		label=balanced,		shape=box,		style=filled];	"def:balanced" -> "lem:bimodal"	[style=dashed];	"lem:involution"	[color=green,		fillcolor="#1CAC78",		label=involution,		shape=ellipse,		style=filled];	"def:balanced" -> "lem:involution"	[style=dashed];	"lem:involution" -> "lem:moment-identities";	"lem:biaffine-decomposition"	[color=green,		fillcolor="#1CAC78",		label="biaffine-decomposition",		shape=ellipse,		style=filled];	"def:attention-function"	[color=green,		fillcolor="#B0ECA3",		label="attention-function",		shape=box,		style=filled];	"def:attention-function" -> "def:bilinear"	[style=dashed];	"def:head"	[color=green,		fillcolor="#B0ECA3",		label=head,		shape=box,		style=filled];	"def:attention-function" -> "def:head"	[style=dashed];	"def:transformer"	[color=green,		fillcolor="#B0ECA3",		label=transformer,		shape=box,		style=filled];	"def:head" -> "def:transformer"	[style=dashed];	"def:transformer" -> "prop:homogenization"	[style=dashed];	"def:transformer" -> "prop:near-identity"	[style=dashed];}`)
+    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	"lem:proportional"	[color=green,		fillcolor="#1CAC78",		label=proportional,		shape=ellipse,		style=filled];	"thm:accumulation"	[color=green,		fillcolor="#1CAC78",		label=accumulation,		shape=ellipse,		style=filled];	"lem:proportional" -> "thm:accumulation"	[style=dashed];	"def:bilinear"	[color=green,		fillcolor="#B0ECA3",		label=bilinear,		shape=box,		style=filled];	"prop:homogenization"	[color=green,		fillcolor="#1CAC78",		label=homogenization,		shape=ellipse,		style=filled];	"def:bilinear" -> "prop:homogenization"	[style=dashed];	"def:rope-like"	[color=green,		fillcolor="#B0ECA3",		label="rope-like",		shape=box,		style=filled];	"def:bilinear" -> "def:rope-like"	[style=dashed];	"prop:rope-like"	[color=green,		fillcolor="#1CAC78",		label="rope-like",		shape=ellipse,		style=filled];	"def:rope-like" -> "prop:rope-like"	[style=dashed];	"lem:pairing-bound"	[color=green,		fillcolor="#1CAC78",		label="pairing-bound",		shape=ellipse,		style=filled];	"lem:bimodal"	[color=green,		fillcolor="#1CAC78",		label=bimodal,		shape=ellipse,		style=filled];	"prop:near-identity"	[color=green,		fillcolor="#1CAC78",		label="near-identity",		shape=ellipse,		style=filled];	"thm:faces"	[color=green,		fillcolor="#1CAC78",		label=faces,		shape=ellipse,		style=filled];	"cor:qk"	[color=green,		fillcolor="#1CAC78",		label=qk,		shape=ellipse,		style=filled];	"lem:biaffine-decomposition"	[color=green,		fillcolor="#1CAC78",		label="biaffine-decomposition",		shape=ellipse,		style=filled];	"thm:balanced"	[color=green,		fillcolor="#1CAC78",		label=balanced,		shape=ellipse,		style=filled];	"lem:profile-scale"	[color=green,		fillcolor="#1CAC78",		label="profile-scale",		shape=ellipse,		style=filled];	"def:parts"	[color=green,		fillcolor="#B0ECA3",		label=parts,		shape=box,		style=filled];	"def:parts" -> "lem:pairing-bound"	[style=dashed];	"def:profile"	[color=green,		fillcolor="#B0ECA3",		label=profile,		shape=box,		style=filled];	"def:parts" -> "def:profile"	[style=dashed];	"lem:gram"	[color=green,		fillcolor="#1CAC78",		label=gram,		shape=ellipse,		style=filled];	"def:parts" -> "lem:gram"	[style=dashed];	"lem:energy"	[color=green,		fillcolor="#1CAC78",		label=energy,		shape=ellipse,		style=filled];	"def:parts" -> "lem:energy"	[style=dashed];	"lem:rank-balance"	[color=green,		fillcolor="#1CAC78",		label="rank-balance",		shape=ellipse,		style=filled];	"def:parts" -> "lem:rank-balance"	[style=dashed];	"def:profile" -> "lem:proportional"	[style=dashed];	"def:profile" -> "thm:faces"	[style=dashed];	"def:profile" -> "lem:profile-scale"	[style=dashed];	"prop:rank-one"	[color=green,		fillcolor="#1CAC78",		label="rank-one",		shape=ellipse,		style=filled];	"def:profile" -> "prop:rank-one"	[style=dashed];	"lem:energy" -> "thm:faces";	"lem:energy" -> "cor:qk";	"lem:energy" -> "lem:profile-scale"	[style=dashed];	"lem:energy" -> "prop:rank-one"	[style=dashed];	"prop:low-rank"	[color=green,		fillcolor="#1CAC78",		label="low-rank",		shape=ellipse,		style=filled];	"lem:energy" -> "prop:low-rank";	"cor:iid"	[color=green,		fillcolor="#1CAC78",		label=iid,		shape=ellipse,		style=filled];	"lem:energy" -> "cor:iid";	"lem:rank-balance" -> "thm:balanced"	[style=dashed];	"prop:rank-one" -> "thm:accumulation"	[style=dashed];	"def:attention-function"	[color=green,		fillcolor="#B0ECA3",		label="attention-function",		shape=box,		style=filled];	"def:attention-function" -> "def:bilinear"	[style=dashed];	"def:head"	[color=green,		fillcolor="#B0ECA3",		label=head,		shape=box,		style=filled];	"def:attention-function" -> "def:head"	[style=dashed];	"def:transformer"	[color=green,		fillcolor="#B0ECA3",		label=transformer,		shape=box,		style=filled];	"def:head" -> "def:transformer"	[style=dashed];	"def:transformer" -> "prop:homogenization"	[style=dashed];	"def:transformer" -> "prop:near-identity"	[style=dashed];	"def:moment-statistics"	[color=green,		fillcolor="#B0ECA3",		label="moment-statistics",		shape=box,		style=filled];	"lem:moment-identities"	[color=green,		fillcolor="#1CAC78",		label="moment-identities",		shape=ellipse,		style=filled];	"def:moment-statistics" -> "lem:moment-identities"	[style=dashed];	"lem:moment-identities" -> "lem:gram";	"def:balanced"	[color=green,		fillcolor="#B0ECA3",		label=balanced,		shape=box,		style=filled];	"def:balanced" -> "lem:bimodal"	[style=dashed];	"lem:involution"	[color=green,		fillcolor="#1CAC78",		label=involution,		shape=ellipse,		style=filled];	"def:balanced" -> "lem:involution"	[style=dashed];	"lem:involution" -> "lem:moment-identities";}`)
     .on("end", interactive);
 
 latexLabelEscaper = function(label) {

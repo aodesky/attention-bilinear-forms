@@ -113,38 +113,42 @@ $A(x_1,\ldots,x_\ell)=(x_1,a_2(x_1,x_2),\ldots,a_\ell(x_1,\ldots,x_\ell))$.
 
 \begin{definition}[Transformer]
 \label{def:transformer}
-\lean{Appendices.MainText.transformer}
+\lean{Appendices.MainText.attentionBlock, Appendices.MainText.attnComponent, Appendices.MainText.nnComponent, Appendices.MainText.transformer}
 \leanok
 \uses{def:head}
-For a head $A$, a linear value map $V\colon C\to C$ and a map
-$M\colon C\to C$, the single-head transformer is $T=T_M\circ T_A$ with
-$T_A(x)_i=x_i+V(A(x)_i)$ and $T_M(y)_i=y_i+M(y_i)$.
+Let $A_1,\ldots,A_h$ be attention heads and $V_1,\ldots,V_h\colon C\to C$
+linear maps, the value maps. The attention block is
+$A=\sum_{i=1}^h(V_i\otimes\mathrm{id})\circ A_i$, that is,
+$A(x)_k=\sum_iV_i(A_i(x)_k)$. For a map $M\colon C\to C$, the transformer
+associated with $A$ and $M$ is $T=T_M\circ T_A$, where
+$T_A(x)_k=x_k+A(x)_k$ and $T_M(y)_k=y_k+M(y_k)$. A single-head
+transformer is one with $h=1$.
 \end{definition}
 
 \begin{proposition}[Transformers are near-identity]
 \label{prop:near-identity}
-\lean{Appendices.MainText.IsAttentionOutput, Appendices.MainText.attentionBlock, Appendices.MainText.norm_attentionBlock_le, Appendices.MainText.near_identity}
+\lean{Appendices.MainText.norm_le_of_isAttentionFunction, Appendices.MainText.norm_head_le, Appendices.MainText.norm_attentionBlock_le, Appendices.MainText.near_identity}
 \leanok
 \uses{def:transformer}
 Fix a norm on $C$ and put $\norm{x}_\infty=\max_k\norm{x_k}$ for
-$x\in C^\ell$. Let $A_1,\ldots,A_h$ be attention heads and
-$V_1,\ldots,V_h\colon C\to C$ linear maps, let
-$A(x)_k=\sum_iV_i(A_i(x)_k)$ be the attention block, and let
-$T=T_M\circ T_A$ with $T_A(x)_k=x_k+A(x)_k$ and $T_M$ as above. If
-$\norm{M(y)}\le L\norm y$ for all $y$ and $V=\sum_i\norm{V_i}$ (operator
-norms), then $\norm{T(x)-x}_\infty\le(L+V+LV)\norm{x}_\infty$.
+$x\in C^\ell$. Let $T$ be the transformer associated with an attention
+block $A=\sum_i(V_i\otimes\mathrm{id})\circ A_i$ and a map $M$ with
+$\norm{M(y)}\le L\norm y$ for all $y\in C$, and put $V=\sum_i\norm{V_i}$
+(operator norms). Then $\norm{T(x)-x}_\infty\le(L+V+LV)\norm{x}_\infty$
+for all $x\in C^\ell$.
 \end{proposition}
 \begin{proof}
 \leanok
 \uses{def:transformer}
-The attention weights of each attention function lie in the simplex, so
-$\norm{\sum_j\omega_jx_j}\le\sum_j\omega_j\norm{x_j}\le\norm x_\infty$.
-Hence every component of every head $A_i$ has norm at most
-$\norm x_\infty$, and the triangle inequality with the operator norms
-gives $\norm{A(x)_k}\le V\norm x_\infty$ for the attention block. Since
-$T=T_M\circ T_A$, the $k$-th component of $T(x)-x$ is
-$A(x)_k+M(x_k+A(x)_k)$. Its norm is at most
-$V\norm x_\infty+L(1+V)\norm x_\infty=(L+V+LV)\norm x_\infty$.
+An attention function returns an average of its inputs, so the attention
+block has norm at most $V\norm x_\infty$, and the bound follows from the
+form of $T$. Since the attention weights lie in the simplex,
+$\norm{\sum_j\omega_jx_j}\le\sum_j\omega_j\norm{x_j}\le\max_j\norm{x_j}$.
+So every component of a head $A_i$ has norm at most $\norm x_\infty$
+(the first component is $x_1$ itself), and
+$\norm{A(x)_k}\le\sum_i\norm{V_i}\norm x_\infty=V\norm x_\infty$. The
+$k$-th component of $T(x)-x$ is $A(x)_k+M(x_k+A(x)_k)$, whose norm is at
+most $V\norm x_\infty+L(1+V)\norm x_\infty=(L+V+LV)\norm x_\infty$.
 \end{proof}
 
 \begin{proposition}[Bilinear attention recovers QKV attention]
@@ -161,24 +165,29 @@ such that $\widehat T(\iota x_1,\ldots,\iota x_\ell)=\iota^\ell(T(x_1,\ldots,x_\
 \begin{proof}
 \leanok
 \uses{def:bilinear,def:transformer}
-For inputs at positions $j\le k$, define a bilinear form on $\widehat C$ by
+The new coordinate $e$ carries the position vectors: on the chart
+$\iota(C)=C+e$ the QKV scores become bilinear forms, and everything else is
+extended by ignoring the new coordinate. For the score of position $k$ on
+position $j\le k$, define a bilinear form on $\widehat C$ by
 \[
  \widehat B(u+\alpha e,v+\beta e)=\tfrac1{\sqrt n}\bigl(\langle Qv,Ku\rangle
  +\alpha\langle Qv,Kp_j\rangle+\beta\langle Qp_k,Ku\rangle
  +\alpha\beta\langle Qp_k,Kp_j\rangle\bigr).
 \]
-Expanding the QKV score shows $\widehat B(\iota x_j,\iota x_k)$ equals the
-score of $x_k$ on $x_j$, so the two heads have the same scores, hence the
-same attention weights $\omega_j$, on the chart $\iota(C)=C+e$. Since the
-weights sum to one,
+Expanding the QKV score shows that $\widehat B(\iota x_j,\iota x_k)$ is the
+score of $x_k$ on $x_j$. So on the chart the two heads have the same
+scores, hence the same attention weights $\omega_j$, and since the weights
+sum to one,
 $\widehat a_k(\iota x_1,\ldots,\iota x_k)=\sum_j\omega_j(x_j+e)=\iota(a_k(x_1,\ldots,x_k))$.
-Finally put $\widehat V(u+\alpha e)=V(u)$ and $\widehat M(u+\alpha e)=M(u)$;
-then $\iota(x)+\widehat V(\iota z)=\iota(x+Vz)$ and
-$\iota(x)+\widehat M(\iota x)=\iota(x+M(x))$, which gives
-$\widehat T\circ\iota^\ell=\iota^\ell\circ T$. The paper leaves implicit
-that the homogenized weights are smooth and simplex-valued on all of
-$\widehat C^k$, not only on the chart. The Lean proof checks this from the
-identity $\widehat\sigma(u_1+\alpha_1e,\ldots)=\sigma(x)$ with
+Put $\widehat V(u+\alpha e)=V(u)$ and $\widehat M(u+\alpha e)=M(u)$. Then
+$\iota(x)+\widehat V(\iota z)=\iota(x+Vz)$ and
+$\iota(x)+\widehat M(\iota x)=\iota(x+M(x))$, which give
+$\widehat T\circ\iota^\ell=\iota^\ell\circ T$.
+
+The paper leaves implicit that the new attention weights are smooth and
+lie in the simplex on all of $\widehat C^k$, not only on the chart. The
+Lean proof checks this using
+$\widehat\sigma(u_1+\alpha_1e,\ldots,u_k+\alpha_ke)=\sigma(x)$ with
 $x_j=u_j+(\alpha_j-1)p_j$.
 \end{proof}
 
@@ -402,7 +411,7 @@ the expectation of a ratio matters: the latter uses Gaussian symmetry.
 
 \begin{lemma}[Symmetric and skew energy identities]
 \label{lem:energy}
-\lean{Appendices.frobSq_eq_frobSq_symPart_add_frobSq_skewPart, Appendices.frobSq_symPart, Appendices.frobSq_skewPart, Appendices.frobSq_symPart_div, Appendices.frobSq_skewPart_div}
+\lean{Appendices.frobInner, Appendices.frobInner_eq_zero_of_isSymm_of_transpose_eq_neg, Appendices.frobSq_eq_frobSq_symPart_add_frobSq_skewPart, Appendices.frobSq_symPart, Appendices.frobSq_skewPart, Appendices.frobSq_symPart_div, Appendices.frobSq_skewPart_div}
 \leanok
 \uses{def:parts}
 For any $L\in M_N(\R)$,
@@ -422,19 +431,23 @@ For $L\ne0$, division gives
 \leanok
 \uses{def:parts}
 Symmetric and antisymmetric matrices are orthogonal for the Frobenius
-inner product $\langle X,Y\rangle=\tr(XY^T)$: for $S$ symmetric and $T$
-antisymmetric, transposing and using cyclicity gives
-$\tr(ST^T)=-\tr(ST)=\tr(TS)=\tr(ST)$, so $\tr(ST)=0$. Since $L=S+T$, this
-gives $\norm L^2=\norm S^2+\norm T^2$. Expanding
+inner product $\langle X,Y\rangle=\tr(XY^T)$, so the first identity is
+Pythagoras' theorem for $L=S+T$. Orthogonality: for $S$ symmetric and $T$
+antisymmetric,
+\[
+ \langle S,T\rangle=\tr(ST^T)=-\tr(ST)=-\tr\bigl((ST)^T\bigr)=-\tr(T^TS^T)=\tr(TS)=\tr(ST),
+\]
+so $\tr(ST)=0$ and $\langle S,T\rangle=0$. Expanding
 $\norm S^2=\tfrac14\bigl(\langle L,L\rangle+2\langle L,L^T\rangle+\langle L^T,L^T\rangle\bigr)$
-and using $\langle L,L^T\rangle=\tr(L^2)$ gives the formula for
-$\norm S^2$; the formula for $\norm T^2$ follows by subtraction. Dividing
-by $\norm L^2$ gives the ratios.
+with $\langle L,L\rangle=\langle L^T,L^T\rangle=\norm L^2$ and
+$\langle L,L^T\rangle=\tr(L^2)$ gives the formula for $\norm S^2$.
+Subtracting it from $\norm L^2$ gives the formula for $\norm T^2$, and
+dividing by $\norm L^2$ gives the ratios.
 \end{proof}
 
 \begin{corollary}[Iid square random matrix baseline]
 \label{cor:iid}
-\lean{Appendices.integral_frobSq_iid, Appendices.integral_frobSq_symPart_iid, Appendices.integral_frobSq_skewPart_iid, Appendices.integral_frobSq_symPart_div_integral_frobSq_iid, Appendices.integral_frobSq_skewPart_div_integral_frobSq_iid, Appendices.integral_frobSq_symPart_div_frobSq_gaussian, Appendices.integral_frobSq_skewPart_div_frobSq_gaussian}
+\lean{Appendices.integral_symPart_sq_of_ne, Appendices.integral_skewPart_sq_of_ne, Appendices.integral_frobSq_iid, Appendices.integral_frobSq_symPart_iid, Appendices.integral_frobSq_skewPart_iid, Appendices.integral_frobSq_symPart_div_integral_frobSq_iid, Appendices.integral_frobSq_skewPart_div_integral_frobSq_iid, Appendices.gaussPi, Appendices.integral_sum_sq_proj_div, Appendices.finrank_symSub, Appendices.finrank_skewSub, Appendices.integral_frobSq_symPart_div_frobSq_gaussian, Appendices.integral_frobSq_skewPart_div_frobSq_gaussian}
 \leanok
 \uses{def:parts}
 Let the entries of $L\in M_N(\R)$ be independent, mean zero, and
@@ -456,16 +469,31 @@ nondegenerate centered Gaussian, then also
 \begin{proof}
 \leanok
 \uses{lem:energy}
+The expectations are computed entry by entry; for Gaussian entries, $S$
+and $T$ are the orthogonal projections of an isotropic Gaussian vector
+onto two subspaces, and the expected fraction of $\norm L^2$ in each is
+its dimension divided by $N^2$.
+
 For $i<j$, $S_{ij}=S_{ji}=\tfrac12(L_{ij}+L_{ji})$ with $L_{ij},L_{ji}$
-independent of variance $\sigma^2$, so each of the $N(N-1)/2$
-off-diagonal pairs contributes $\sigma^2$ to $\E\norm S^2$. The diagonal
-contributes $\sum_i\E L_{ii}^2=N\sigma^2$, so
-$\E\norm S^2=N(N+1)\sigma^2/2$. The antisymmetric part is computed in the
-same way, with no diagonal contribution. For iid Gaussian entries, $L$ is
-an isotropic Gaussian vector in the $N^2$-dimensional space $M_N(\R)$. The
-symmetric and antisymmetric matrices form orthogonal subspaces of
-dimensions $N(N+1)/2$ and $N(N-1)/2$, so the expected fraction of
-$\norm L^2$ in each is its dimension divided by $N^2$.
+independent of variance $\sigma^2$, so $\E S_{ij}^2=\tfrac12\sigma^2$ and
+each of the $N(N-1)/2$ off-diagonal pairs contributes $\sigma^2$. The
+diagonal contributes $\sum_i\E S_{ii}^2=\sum_i\E L_{ii}^2=N\sigma^2$, so
+$\E\norm S^2=N(N+1)\sigma^2/2$. The antisymmetric part is the same, with
+no diagonal contribution.
+
+For iid Gaussian entries, $L$ is an isotropic Gaussian vector in the
+$N^2$-dimensional space $M_N(\R)$. By Lemma~5 the symmetric and
+antisymmetric matrices form orthogonal subspaces, of dimensions
+$N(N+1)/2$ and $N(N-1)/2$, and $S$ and $T$ are the orthogonal projections
+of $L$ onto them.
+
+The paper quotes, without proof, that for an isotropic Gaussian vector
+$x\in\R^n$ and the orthogonal projection $P$ onto a subspace $W$,
+$\E[\norm{Px}^2/\norm x^2]=\dim W/n$. The Lean proof supplies this step:
+write $\norm{Px}^2=\langle x,Px\rangle=\sum_{i,j}P_{ij}x_ix_j$. The law of
+$x$ does not change when the coordinates are permuted or one of them
+changes sign, which gives $\E[x_ix_j/\norm x^2]=\delta_{ij}/n$, so the
+expected fraction is $\tr(P)/n=\dim W/n$.
 \end{proof}
 
 \begin{corollary}[Random QK-product baseline]
@@ -532,7 +560,7 @@ variances and does not change either ratio.
 
 \begin{lemma}[Proportional lobes]
 \label{lem:proportional}
-\lean{Appendices.proportional_lobes}
+\lean{Appendices.survival, Appendices.quantile, Appendices.lt_quantile_iff, Appendices.vol01, Appendices.map_quantile, Appendices.lintegral_quantile_sq, Appendices.stepFn, Appendices.integral_stepFn, Appendices.lt_stepFn_iff, Appendices.tendsto_stepFn_of_continuousWithinAt, Appendices.ae_tendsto_stepFn, Appendices.tendsto_integral_stepFn_sq, Appendices.tendsto_integral_stepFn_sub_quantile_sq, Appendices.proportional_lobes}
 \leanok
 \uses{def:profile}
 Let $X>0$ almost surely, with finite nonzero second moment, and fix
@@ -548,20 +576,42 @@ independent copies of $X$. Then
 \begin{proof}
 \leanok
 \uses{def:profile}
-Since $\beta_n=\rho\alpha'_n$, where $\alpha'_n$ is the decreasing sorting
-of $vX'_1,\ldots,vX'_n$, it suffices to show
-$\norm{\alpha_n-\alpha'_n}/\norm{\alpha_n}\to0$; dividing by $v$, take
-$v=1$. Let $m_2=\E[X^2]$ and let $G$ be the decreasing quantile function
-of $X$, so that $G(U)$ has the law of $X$ for $U$ uniform on $(0,1)$ and
-$\int_0^1G^2=m_2$. The sorted sample $x_1\ge\cdots\ge x_n$ defines the
-step function $h_n(t)=x_{\lceil nt\rceil}$ on $(0,1)$. The paper shows that
-$h_n\to G$ in $L^2(0,1)$ almost surely in three steps: $h_n(t)\to G(t)$
-at every continuity point of $G$, by the strong law applied to the
-empirical survival function; $\int h_n^2=\frac1n\sum_iX_i^2\to m_2$ by
-the strong law; and Fatou's lemma gives $\liminf\int h_nG\ge m_2$, so
-$\limsup\int(h_n-G)^2\le0$. Applying this to both samples gives
-$\norm{\alpha_n-\alpha'_n}^2/n\to0$, while
-$\norm{\alpha_n}^2/n\to m_2>0$.
+A sorted sample, read as a step function on $(0,1)$, converges in $L^2$
+to the decreasing quantile function of $X$. Two independent samples
+therefore converge to the same function, so their sorted lists become
+close.
+
+Write $\beta_n=\rho\alpha'_n$, where $\alpha'_n$ is the decreasing sorting
+of $vX'_1,\ldots,vX'_n$; it suffices to show
+$\norm{\alpha_n-\alpha'_n}/\norm{\alpha_n}\to0$, and dividing by $v$ we
+may take $v=1$. Let $m_2=\E[X^2]$, $\overline F(x)=\mathbf P(X>x)$ and
+$G(t)=\inf\{x>0:\overline F(x)\le t\}$ for $t\in(0,1)$, so that
+$G(t)>x$ exactly when $t<\overline F(x)$. For $U$ uniform on $(0,1)$,
+$G(U)$ has the law of $X$, so $\int_0^1G^2=m_2$. The sorted sample
+$x_1\ge\cdots\ge x_n$ of $X_1,\ldots,X_n$ defines the step function
+$h_n(t)=x_{\lceil nt\rceil}$ on $(0,1)$, with
+$\int_0^1h_n^2=\frac1n\sum_ix_i^2$. The paper shows that $h_n\to G$ in
+$L^2(0,1)$ almost surely, in three steps.
+\begin{enumerate}
+\item Almost surely, $h_n(t)\to G(t)$ at every point $t$ where $G$ is
+continuous, so for almost every $t$. Let
+$\overline F_n(x)=\frac1n\#\{i:X_i>x\}$, so that $h_n(t)>x$ exactly when
+$\overline F_n(x)\ge\lceil nt\rceil/n$. By the strong law of large
+numbers, almost surely $\overline F_n(x)\to\overline F(x)$ for every
+rational $x>0$. Comparing $\overline F_n$ at rational $x$ slightly above
+and slightly below $G(t)$ with $\lceil nt\rceil/n\to t$ gives
+$G(t)-\varepsilon<h_n(t)<G(t)+\varepsilon$ for all large $n$.
+\item By the strong law,
+$\int_0^1h_n^2=\frac1n\sum_iX_i^2\to m_2=\int_0^1G^2$ almost surely.
+\item Fatou's lemma, applied to the nonnegative functions $h_nG$, which
+converge to $G^2$ almost everywhere by step 1, gives
+$\liminf\int h_nG\ge m_2$. Expanding
+$\int(h_n-G)^2=\int h_n^2+\int G^2-2\int h_nG$ then gives
+$\limsup\int(h_n-G)^2\le0$.
+\end{enumerate}
+Let $g_n$ and $g'_n$ be the step functions of the two samples. Then
+$\norm{\alpha_n-\alpha'_n}^2/n=\int(g_n-g'_n)^2\le2\int(g_n-G)^2+2\int(g'_n-G)^2\to0$,
+while $\norm{\alpha_n}^2/n=\int g_n^2\to m_2>0$.
 \end{proof}
 
 \chapter{Appendix B: Balanced bimodal spectra and simplex faces}

@@ -144,15 +144,19 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L69" class="lean_decl">Appendices.frobSq_eq_frobSq_symPart_add_frobSq_skewPart</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L39" class="lean_decl">Appendices.frobInner</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L34" class="lean_decl">Appendices.frobSq_symPart</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L69" class="lean_decl">Appendices.frobInner_eq_zero_of_isSymm_of_transpose_eq_neg</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L51" class="lean_decl">Appendices.frobSq_skewPart</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L86" class="lean_decl">Appendices.frobSq_eq_frobSq_symPart_add_frobSq_skewPart</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L74" class="lean_decl">Appendices.frobSq_symPart_div</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L97" class="lean_decl">Appendices.frobSq_symPart</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L82" class="lean_decl">Appendices.frobSq_skewPart_div</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L113" class="lean_decl">Appendices.frobSq_skewPart</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L120" class="lean_decl">Appendices.frobSq_symPart_div</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/EnergyIdentities.lean#L128" class="lean_decl">Appendices.frobSq_skewPart_div</a></li>
           
         </ul>
     
@@ -182,7 +186,11 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Symmetric and antisymmetric matrices are orthogonal for the Frobenius inner product \(\langle X,Y\rangle =\operatorname {tr}(XY^T)\): for \(S\) symmetric and \(T\) antisymmetric, transposing and using cyclicity gives \(\operatorname {tr}(ST^T)=-\operatorname {tr}(ST)=\operatorname {tr}(TS)=\operatorname {tr}(ST)\), so \(\operatorname {tr}(ST)=0\). Since \(L=S+T\), this gives \(\lVert L\rVert ^2=\lVert S\rVert ^2+\lVert T\rVert ^2\). Expanding \(\lVert S\rVert ^2=\tfrac 14\bigl(\langle L,L\rangle +2\langle L,L^T\rangle +\langle L^T,L^T\rangle \bigr)\) and using \(\langle L,L^T\rangle =\operatorname {tr}(L^2)\) gives the formula for \(\lVert S\rVert ^2\); the formula for \(\lVert T\rVert ^2\) follows by subtraction. Dividing by \(\lVert L\rVert ^2\) gives the ratios. </p>
+  <p> Symmetric and antisymmetric matrices are orthogonal for the Frobenius inner product \(\langle X,Y\rangle =\operatorname {tr}(XY^T)\), so the first identity is Pythagoras’ theorem for \(L=S+T\). Orthogonality: for \(S\) symmetric and \(T\) antisymmetric, </p>
+<div class="displaymath" id="a0000000030">
+  \[  \langle S,T\rangle =\operatorname {tr}(ST^T)=-\operatorname {tr}(ST)=-\operatorname {tr}\bigl((ST)^T\bigr)=-\operatorname {tr}(T^TS^T)=\operatorname {tr}(TS)=\operatorname {tr}(ST),  \]
+</div>
+<p> so \(\operatorname {tr}(ST)=0\) and \(\langle S,T\rangle =0\). Expanding \(\lVert S\rVert ^2=\tfrac 14\bigl(\langle L,L\rangle +2\langle L,L^T\rangle +\langle L^T,L^T\rangle \bigr)\) with \(\langle L,L\rangle =\langle L^T,L^T\rangle =\lVert L\rVert ^2\) and \(\langle L,L^T\rangle =\operatorname {tr}(L^2)\) gives the formula for \(\lVert S\rVert ^2\). Subtracting it from \(\lVert L\rVert ^2\) gives the formula for \(\lVert T\rVert ^2\), and dividing by \(\lVert L\rVert ^2\) gives the ratios. </p>
 
   </div>
 </div>
@@ -202,7 +210,7 @@
 
     <a class="icon proof" href="sect0004.html#cor:iid">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000030"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000031"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -240,19 +248,31 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L86" class="lean_decl">Appendices.integral_frobSq_iid</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L120" class="lean_decl">Appendices.integral_symPart_sq_of_ne</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L130" class="lean_decl">Appendices.integral_frobSq_symPart_iid</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L132" class="lean_decl">Appendices.integral_skewPart_sq_of_ne</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L144" class="lean_decl">Appendices.integral_frobSq_skewPart_iid</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L182" class="lean_decl">Appendices.integral_frobSq_iid</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L159" class="lean_decl">Appendices.integral_frobSq_symPart_div_integral_frobSq_iid</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L193" class="lean_decl">Appendices.integral_frobSq_symPart_iid</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L170" class="lean_decl">Appendices.integral_frobSq_skewPart_div_integral_frobSq_iid</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L212" class="lean_decl">Appendices.integral_frobSq_skewPart_iid</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L442" class="lean_decl">Appendices.integral_frobSq_symPart_div_frobSq_gaussian</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L231" class="lean_decl">Appendices.integral_frobSq_symPart_div_integral_frobSq_iid</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/IidBaseline.lean#L500" class="lean_decl">Appendices.integral_frobSq_skewPart_div_frobSq_gaussian</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L242" class="lean_decl">Appendices.integral_frobSq_skewPart_div_integral_frobSq_iid</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L269" class="lean_decl">Appendices.gaussPi</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L423" class="lean_decl">Appendices.integral_sum_sq_proj_div</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L607" class="lean_decl">Appendices.finrank_symSub</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L617" class="lean_decl">Appendices.finrank_skewSub</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L669" class="lean_decl">Appendices.integral_frobSq_symPart_div_frobSq_gaussian</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/IidBaseline.lean#L685" class="lean_decl">Appendices.integral_frobSq_skewPart_div_frobSq_gaussian</a></li>
           
         </ul>
     
@@ -264,17 +284,17 @@
   </div>
   <div class="corollary_thmcontent">
   <p>    Let the entries of \(L\in M_N(\mathbb {R})\) be independent, mean zero, and square-integrable with common variance \(\sigma ^2\). Then </p>
-<div class="displaymath" id="a0000000031">
+<div class="displaymath" id="a0000000032">
   \[  \mathbb {E}\lVert L\rVert ^2=N^2\sigma ^2,\quad \mathbb {E}\lVert S\rVert ^2=\frac{N(N+1)}2\sigma ^2,\quad \mathbb {E}\lVert T\rVert ^2=\frac{N(N-1)}2\sigma ^2.  \]
 </div>
 <p> For \(N{\gt}0\) and \(\sigma \ne 0\), the ratios to \(\mathbb {E}\lVert L\rVert ^2\) are \((N+1)/(2N)\) and \((N-1)/(2N)\) respectively. If the entries are iid nondegenerate centered Gaussian, then also </p>
-<div class="displaymath" id="a0000000032">
+<div class="displaymath" id="a0000000033">
   \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N}.  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000030">
+<div class="proof_wrapper" id="a0000000031">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -282,7 +302,10 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> For \(i{\lt}j\), \(S_{ij}=S_{ji}=\tfrac 12(L_{ij}+L_{ji})\) with \(L_{ij},L_{ji}\) independent of variance \(\sigma ^2\), so each of the \(N(N-1)/2\) off-diagonal pairs contributes \(\sigma ^2\) to \(\mathbb {E}\lVert S\rVert ^2\). The diagonal contributes \(\sum _i\mathbb {E}L_{ii}^2=N\sigma ^2\), so \(\mathbb {E}\lVert S\rVert ^2=N(N+1)\sigma ^2/2\). The antisymmetric part is computed in the same way, with no diagonal contribution. For iid Gaussian entries, \(L\) is an isotropic Gaussian vector in the \(N^2\)-dimensional space \(M_N(\mathbb {R})\). The symmetric and antisymmetric matrices form orthogonal subspaces of dimensions \(N(N+1)/2\) and \(N(N-1)/2\), so the expected fraction of \(\lVert L\rVert ^2\) in each is its dimension divided by \(N^2\). </p>
+  <p> The expectations are computed entry by entry; for Gaussian entries, \(S\) and \(T\) are the orthogonal projections of an isotropic Gaussian vector onto two subspaces, and the expected fraction of \(\lVert L\rVert ^2\) in each is its dimension divided by \(N^2\). </p>
+<p>For \(i{\lt}j\), \(S_{ij}=S_{ji}=\tfrac 12(L_{ij}+L_{ji})\) with \(L_{ij},L_{ji}\) independent of variance \(\sigma ^2\), so \(\mathbb {E}S_{ij}^2=\tfrac 12\sigma ^2\) and each of the \(N(N-1)/2\) off-diagonal pairs contributes \(\sigma ^2\). The diagonal contributes \(\sum _i\mathbb {E}S_{ii}^2=\sum _i\mathbb {E}L_{ii}^2=N\sigma ^2\), so \(\mathbb {E}\lVert S\rVert ^2=N(N+1)\sigma ^2/2\). The antisymmetric part is the same, with no diagonal contribution. </p>
+<p>For iid Gaussian entries, \(L\) is an isotropic Gaussian vector in the \(N^2\)-dimensional space \(M_N(\mathbb {R})\). By Lemma&#160;5 the symmetric and antisymmetric matrices form orthogonal subspaces, of dimensions \(N(N+1)/2\) and \(N(N-1)/2\), and \(S\) and \(T\) are the orthogonal projections of \(L\) onto them. </p>
+<p>The paper quotes, without proof, that for an isotropic Gaussian vector \(x\in \mathbb {R}^n\) and the orthogonal projection \(P\) onto a subspace \(W\), \(\mathbb {E}[\lVert Px\rVert ^2/\lVert x\rVert ^2]=\dim W/n\). The Lean proof supplies this step: write \(\lVert Px\rVert ^2=\langle x,Px\rangle =\sum _{i,j}P_{ij}x_ix_j\). The law of \(x\) does not change when the coordinates are permuted or one of them changes sign, which gives \(\mathbb {E}[x_ix_j/\lVert x\rVert ^2]=\delta _{ij}/n\), so the expected fraction is \(\operatorname {tr}(P)/n=\dim W/n\). </p>
 
   </div>
 </div>
@@ -302,7 +325,7 @@
 
     <a class="icon proof" href="sect0004.html#cor:qk">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000033"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000034"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -340,17 +363,17 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L218" class="lean_decl">Appendices.integral_frobSq_qk</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L218" class="lean_decl">Appendices.integral_frobSq_qk</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L239" class="lean_decl">Appendices.integral_trace_mul_self_qk</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L239" class="lean_decl">Appendices.integral_trace_mul_self_qk</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L268" class="lean_decl">Appendices.integral_frobSq_symPart_qk</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L268" class="lean_decl">Appendices.integral_frobSq_symPart_qk</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L293" class="lean_decl">Appendices.integral_frobSq_skewPart_qk</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L293" class="lean_decl">Appendices.integral_frobSq_skewPart_qk</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L319" class="lean_decl">Appendices.integral_frobSq_symPart_div_integral_frobSq_qk</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L319" class="lean_decl">Appendices.integral_frobSq_symPart_div_integral_frobSq_qk</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L332" class="lean_decl">Appendices.integral_frobSq_skewPart_div_integral_frobSq_qk</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/QKProductBaseline.lean#L332" class="lean_decl">Appendices.integral_frobSq_skewPart_div_integral_frobSq_qk</a></li>
           
         </ul>
     
@@ -362,14 +385,14 @@
   </div>
   <div class="corollary_thmcontent">
   <p>    Let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent, mean-zero, square-integrable entries, with variances \(\sigma _K^2\) and \(\sigma _Q^2\) respectively. For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000034">
+<div class="displaymath" id="a0000000035">
   \[  \mathbb {E}\lVert L\rVert ^2=nN^2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert S\rVert ^2=\frac{nN(N+1)}2\sigma _K^2\sigma _Q^2,\qquad \mathbb {E}\lVert T\rVert ^2=\frac{nN(N-1)}2\sigma _K^2\sigma _Q^2.  \]
 </div>
 <p> For positive dimensions and nonzero variances, the ratios of the last two expectations to the first are \((N+1)/(2N)\) and \((N-1)/(2N)\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000033">
+<div class="proof_wrapper" id="a0000000034">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -397,7 +420,7 @@
 
     <a class="icon proof" href="sect0004.html#prop:low-rank">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000035"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000036"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -435,9 +458,9 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/LowRankExpectedEnergy.lean#L719" class="lean_decl">Appendices.expected_symmetric_energy_low_rank_qk</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/LowRankExpectedEnergy.lean#L719" class="lean_decl">Appendices.expected_symmetric_energy_low_rank_qk</a></li>
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/LowRankExpectedEnergy.lean#L749" class="lean_decl">Appendices.expected_skew_energy_low_rank_qk</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/LowRankExpectedEnergy.lean#L749" class="lean_decl">Appendices.expected_skew_energy_low_rank_qk</a></li>
           
         </ul>
     
@@ -449,14 +472,14 @@
   </div>
   <div class="proposition_thmcontent">
   <p>    Let \(1\le n\le N\) and let \(W_K,W_Q\in M_{n\times N}(\mathbb {R})\) have jointly independent centered Gaussian entries, iid within each matrix, with respective nonzero variances \(v_K,v_Q\). For \(L=W_K^TW_Q\), </p>
-<div class="displaymath" id="a0000000036">
+<div class="displaymath" id="a0000000037">
   \[  \mathbb {E}\left[\frac{\lVert S\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N+1}{2N}, \qquad \mathbb {E}\left[\frac{\lVert T\rVert ^2}{\lVert L\rVert ^2}\right]=\frac{N-1}{2N},  \]
 </div>
 <p> independently of the head dimension \(n\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000035">
+<div class="proof_wrapper" id="a0000000036">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -484,7 +507,7 @@
 
     <a class="icon proof" href="sect0004.html#lem:proportional">#</a>
     
-    <a class="icon proof" href="sect0004.html#a0000000037"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0004.html#a0000000038"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -522,7 +545,33 @@
         
         <ul class="uses">
           
-          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/fd559964987d2f02c44ccece905ed619c6d02d03/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L705" class="lean_decl">Appendices.proportional_lobes</a></li>
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L73" class="lean_decl">Appendices.survival</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L76" class="lean_decl">Appendices.quantile</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L96" class="lean_decl">Appendices.lt_quantile_iff</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L142" class="lean_decl">Appendices.vol01</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L151" class="lean_decl">Appendices.map_quantile</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L176" class="lean_decl">Appendices.lintegral_quantile_sq</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L195" class="lean_decl">Appendices.stepFn</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L236" class="lean_decl">Appendices.integral_stepFn</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L294" class="lean_decl">Appendices.lt_stepFn_iff</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L398" class="lean_decl">Appendices.tendsto_stepFn_of_continuousWithinAt</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L471" class="lean_decl">Appendices.ae_tendsto_stepFn</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L551" class="lean_decl">Appendices.tendsto_integral_stepFn_sq</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L563" class="lean_decl">Appendices.tendsto_integral_stepFn_sub_quantile_sq</a></li>
+          
+          <li><a href="https://github.com/aodesky/attention-bilinear-forms/blob/cc3293c874a95d3279a986b07dc1ae5d82733841/formalization/Appendices/RandomMatrices/ProportionalLobes.lean#L837" class="lean_decl">Appendices.proportional_lobes</a></li>
           
         </ul>
     
@@ -534,13 +583,13 @@
   </div>
   <div class="lemma_thmcontent">
   <p>    Let \(X{\gt}0\) almost surely, with finite nonzero second moment, and fix \(u,v{\gt}0\), \(\rho =u/v\). Let \(\alpha _n\) be the decreasing sorting of \(vX_1,\ldots ,vX_n\) and \(\beta _n\) the decreasing sorting of \(uX'_1,\ldots ,uX'_n\), where the two sequences together consist of independent copies of \(X\). Then </p>
-<div class="displaymath" id="a0000000038">
+<div class="displaymath" id="a0000000039">
   \[  \frac{\lVert \beta _n-\rho \alpha _n\rVert }{\lVert \alpha _n\rVert } \longrightarrow 0\qquad \text{almost surely as }n\longrightarrow \infty .  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000037">
+<div class="proof_wrapper" id="a0000000038">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -548,7 +597,17 @@
     <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Since \(\beta _n=\rho \alpha '_n\), where \(\alpha '_n\) is the decreasing sorting of \(vX'_1,\ldots ,vX'_n\), it suffices to show \(\lVert \alpha _n-\alpha '_n\rVert /\lVert \alpha _n\rVert \to 0\); dividing by \(v\), take \(v=1\). Let \(m_2=\mathbb {E}[X^2]\) and let \(G\) be the decreasing quantile function of \(X\), so that \(G(U)\) has the law of \(X\) for \(U\) uniform on \((0,1)\) and \(\int _0^1G^2=m_2\). The sorted sample \(x_1\ge \cdots \ge x_n\) defines the step function \(h_n(t)=x_{\lceil nt\rceil }\) on \((0,1)\). The paper shows that \(h_n\to G\) in \(L^2(0,1)\) almost surely in three steps: \(h_n(t)\to G(t)\) at every continuity point of \(G\), by the strong law applied to the empirical survival function; \(\int h_n^2=\frac1n\sum _iX_i^2\to m_2\) by the strong law; and Fatou’s lemma gives \(\liminf \int h_nG\ge m_2\), so \(\limsup \int (h_n-G)^2\le 0\). Applying this to both samples gives \(\lVert \alpha _n-\alpha '_n\rVert ^2/n\to 0\), while \(\lVert \alpha _n\rVert ^2/n\to m_2{\gt}0\). </p>
+  <p> A sorted sample, read as a step function on \((0,1)\), converges in \(L^2\) to the decreasing quantile function of \(X\). Two independent samples therefore converge to the same function, so their sorted lists become close. </p>
+<p>Write \(\beta _n=\rho \alpha '_n\), where \(\alpha '_n\) is the decreasing sorting of \(vX'_1,\ldots ,vX'_n\); it suffices to show \(\lVert \alpha _n-\alpha '_n\rVert /\lVert \alpha _n\rVert \to 0\), and dividing by \(v\) we may take \(v=1\). Let \(m_2=\mathbb {E}[X^2]\), \(\overline F(x)=\mathbf P(X{\gt}x)\) and \(G(t)=\inf \{ x{\gt}0:\overline F(x)\le t\} \) for \(t\in (0,1)\), so that \(G(t){\gt}x\) exactly when \(t{\lt}\overline F(x)\). For \(U\) uniform on \((0,1)\), \(G(U)\) has the law of \(X\), so \(\int _0^1G^2=m_2\). The sorted sample \(x_1\ge \cdots \ge x_n\) of \(X_1,\ldots ,X_n\) defines the step function \(h_n(t)=x_{\lceil nt\rceil }\) on \((0,1)\), with \(\int _0^1h_n^2=\frac1n\sum _ix_i^2\). The paper shows that \(h_n\to G\) in \(L^2(0,1)\) almost surely, in three steps. </p>
+<ol class="enumerate">
+  <li><p>Almost surely, \(h_n(t)\to G(t)\) at every point \(t\) where \(G\) is continuous, so for almost every \(t\). Let \(\overline F_n(x)=\frac1n\# \{ i:X_i{\gt}x\} \), so that \(h_n(t){\gt}x\) exactly when \(\overline F_n(x)\ge \lceil nt\rceil /n\). By the strong law of large numbers, almost surely \(\overline F_n(x)\to \overline F(x)\) for every rational \(x{\gt}0\). Comparing \(\overline F_n\) at rational \(x\) slightly above and slightly below \(G(t)\) with \(\lceil nt\rceil /n\to t\) gives \(G(t)-\varepsilon {\lt}h_n(t){\lt}G(t)+\varepsilon \) for all large \(n\). </p>
+</li>
+  <li><p>By the strong law, \(\int _0^1h_n^2=\frac1n\sum _iX_i^2\to m_2=\int _0^1G^2\) almost surely. </p>
+</li>
+  <li><p>Fatou’s lemma, applied to the nonnegative functions \(h_nG\), which converge to \(G^2\) almost everywhere by step 1, gives \(\liminf \int h_nG\ge m_2\). Expanding \(\int (h_n-G)^2=\int h_n^2+\int G^2-2\int h_nG\) then gives \(\limsup \int (h_n-G)^2\le 0\). </p>
+</li>
+</ol>
+<p> Let \(g_n\) and \(g'_n\) be the step functions of the two samples. Then \(\lVert \alpha _n-\alpha '_n\rVert ^2/n=\int (g_n-g'_n)^2\le 2\int (g_n-G)^2+2\int (g'_n-G)^2\to 0\), while \(\lVert \alpha _n\rVert ^2/n=\int g_n^2\to m_2{\gt}0\). </p>
 
   </div>
 </div>
