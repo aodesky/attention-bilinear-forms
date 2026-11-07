@@ -2,8 +2,8 @@
 """The simplex Delta^3 of weights, with its faces labeled by the fibers
 of the profile map.
 
-A reference picture for the introduction: no data and no accumulation
-family, only the tetrahedron, its four vertices, and its edges, each labeled
+A reference picture for the introduction: the accumulation family Theta,
+the tetrahedron, its four vertices, and its edges, each labeled
 by the fiber of π over it, as an equation in the decomposition
 L = S + T (the theorem on the faces of the simplex).  The facets carry
 no labels; the caption in attention.tex describes them.
@@ -37,6 +37,9 @@ from pathlib import Path
 
 import numpy as np
 import matplotlib as mpl
+
+mpl.use("Agg")
+
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
 
@@ -79,7 +82,9 @@ def project(P):
                      + P[:, 2] * np.cos(ELEVATION)], axis=1)
 
 
-VA, VB, VC, VD = project(_vertices())
+# Spread the tetrahedron out without changing the label fonts or their
+# perpendicular offsets from the corresponding edges.
+VA, VB, VC, VD = 1.12 * project(_vertices())
 
 
 def edge_angle(p, q):
@@ -94,7 +99,7 @@ def edge_angle(p, q):
     return ang
 
 
-def edge_label(ax, p, q, text, side, at=0.5, dist=0.05, fontsize=10):
+def edge_label(ax, p, q, text, side, at=0.5, dist=0.05, fontsize=20):
     """Label the edge pq with the text set along the edge.
 
     The label is placed at the fraction `at` of the way from p to q and
@@ -128,30 +133,42 @@ def main() -> None:
     for v in (VA, VB, VC, VD):
         ax.plot(*v, marker="o", markersize=4, color="black", zorder=3)
 
+    # Theta = {a = b, cd = 0}, with the same red branches as Figure 2.
+    midpoint = 0.5 * (VA + VB)
+    family_color = "#d62728"
+    for vertex in (VC, VD):
+        ax.plot([midpoint[0], vertex[0]], [midpoint[1], vertex[1]],
+                color=family_color, linewidth=1.1, zorder=2,
+                solid_capstyle="round")
+    ax.plot(*midpoint, marker="o", markersize=3, color=family_color, zorder=2)
+    label = 0.40 * VD + 0.60 * midpoint
+    ax.text(label[0] - 0.04, label[1], r"$\Theta$", color=family_color,
+            ha="right", va="center", fontsize=20)
+
     # vertices, each labeled by the fiber of π over it.  At a vertex
     # T = 0 except at a = 1, so the label is an equation for L itself.
-    ax.text(VD[0], VD[1] + 0.035,
+    ax.text(VD[0], VD[1] + 0.08,
             r"$d = 1$: negative semidefinite, $L = -P$",
-            ha="center", va="bottom", fontsize=11)
-    ax.text(VB[0], VB[1] - 0.045,
+            ha="center", va="bottom", fontsize=20)
+    ax.text(VB[0], VB[1] - 0.08,
             r"$b = 1$: $L=H$",
-            ha="center", va="top", fontsize=11)
-    ax.text(VA[0] - 0.035, VA[1],
+            ha="center", va="top", fontsize=20)
+    ax.text(VA[0] - 0.08, VA[1],
             r"$a = 1$: antisymmetric, $L = T$",
-            ha="right", va="center", fontsize=11)
-    ax.text(VC[0] + 0.035, VC[1],
+            ha="right", va="center", fontsize=20)
+    ax.text(VC[0] + 0.08, VC[1],
             r"$c = 1$: positive semidefinite, $L = P$",
-            ha="left", va="center", fontsize=11)
+            ha="left", va="center", fontsize=20)
 
     # edges.  The three edges through the b = 1 vertex B lie in
     # {a = 0} except BA itself, so their labels are equations for L.
     # BD is {a = c = 0}, BC is {a = d = 0}, AB is {c = d = 0}.
-    edge_label(ax, VB, VD, r"$L = H - P$", side=-1, at=0.5, dist=0.035)
-    edge_label(ax, VA, VB, r"$S = H$", side=-1, at=0.5)
-    edge_label(ax, VB, VC, r"$L = H + P$", side=+1, at=0.5)
+    edge_label(ax, VB, VD, r"$L = H - P$", side=-1, at=0.5, dist=0.075)
+    edge_label(ax, VA, VB, r"$S = H$", side=-1, at=0.5, dist=0.08)
+    edge_label(ax, VB, VC, r"$L = H + P$", side=+1, at=0.5, dist=0.08)
     # AD is {b = c = 0} and AC is {b = d = 0}, both through a = 1.
-    edge_label(ax, VA, VD, r"$S = -P$", side=-1, at=0.5)
-    edge_label(ax, VA, VC, r"$S = P$", side=+1, at=0.5, dist=0.03)
+    edge_label(ax, VA, VD, r"$S = -P$", side=-1, at=0.5, dist=0.08)
+    edge_label(ax, VA, VC, r"$S = P$", side=+1, at=0.5, dist=0.075)
 
     ax.set_aspect("equal")
     ax.axis("off")

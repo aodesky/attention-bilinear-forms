@@ -97,8 +97,10 @@ def heatmap_figure(df: pd.DataFrame, column: str, path: Path, *,
                            random_baseline(info, rng, baseline), info))
 
     rows, cols = grid(len(panels))
+    # constrained layout, so that the titles clear the axis labels of the
+    # row above and the colorbar is placed without overlapping the panels
     fig, axes = plt.subplots(rows, cols, figsize=(3.1 * cols, 2.5 * rows),
-                             squeeze=False)
+                             squeeze=False, layout="constrained")
     values = np.concatenate([v for _, v, _ in panels])
     lo, hi = float(values.min()), float(values.max())
     if centre is not None and lo < centre < hi:
@@ -114,7 +116,7 @@ def heatmap_figure(df: pd.DataFrame, column: str, path: Path, *,
         image = values_.reshape(info.n_layers, info.n_heads)
         im = ax.imshow(image, aspect="auto", cmap=CMAP, norm=norm,
                        vmin=lo, vmax=hi)
-        ax.set_title(rf"\texttt{{{title}}}", fontsize=8)
+        ax.set_title(rf"\texttt{{{title}}}", fontsize=8, pad=3)
         ax.set_xlabel("head", fontsize=7)
         ax.set_ylabel("layer", fontsize=7)
         ax.tick_params(labelsize=6)
@@ -170,6 +172,21 @@ def print_balance_summary(df: pd.DataFrame) -> None:
         print(f"  {tag:26s} {balanced}/{len(rows)} heads")
 
 
+def print_symmetric_bias_summary(df: pd.DataFrame) -> None:
+    """Report the quantity in Observation 4: the share of heads whose
+    symmetric energy exceeds the random baseline (N + 1) / (2N)."""
+    print("Symmetric energy above the random baseline (N + 1) / (2N)")
+    shares = {}
+    for info in ms.all_model_info():
+        rows = df[df.model == info.tag]
+        baseline = (info.d_model + 1) / (2 * info.d_model)
+        shares[info.tag] = float((rows.symmetric_energy > baseline).mean())
+        print(f"{info.tag:26s} {len(rows):6d} heads  N={info.d_model:5d}  "
+              f"baseline {baseline:.4f}  share above {100 * shares[info.tag]:5.1f}%")
+    print(f"per-model share above the baseline: {100 * min(shares.values()):.0f}% "
+          f"to {100 * max(shares.values()):.0f}%")
+
+
 def print_pairing_summary(df: pd.DataFrame) -> None:
     """Report the quantities in Observation 5 and the proportional-lobes discussion."""
     columns = ("lobe_departure", "pairing_gap", "pairing")
@@ -193,24 +210,48 @@ def print_pairing_summary(df: pd.DataFrame) -> None:
         print(f"  {column}: {medians.min():.3f} to {medians.max():.3f}")
 
 
-def main() -> None:
-    if not STATS.exists():
-        raise FileNotFoundError(
-            f"{STATS} not found; run head_statistics.py first")
-    df = pd.read_csv(STATS)
-    missing = set(ms.TAGS) - set(df.model.unique())
-    if missing:
-        raise ValueError(f"head statistics are missing for {sorted(missing)}")
+class ScoreSurvey:
+    """Shared score data and plots used by Observations 1, 4, and 5."""
 
-    heatmap_figure(df, "symmetric_energy",
-                   OUT / "combined_qk_diagnostics.pdf",
-                   centre=0.5, label=r"$\mathscr{S}$",
-                   baseline="symmetric_energy")
-    print_balance_summary(df)
-    print_pairing_summary(df)
-    heatmap_figure(df, "pairing", OUT / "combined_qk_diagnostics_random.pdf",
-                   centre=0.5, label=r"$\mathscr{P}$", baseline="pairing")
-    histogram_figure(df, OUT / "pairing_score_histogram.pdf")
+    def __init__(self, stats: Path = STATS, output: Path = OUT) -> None:
+        if not stats.exists():
+            raise FileNotFoundError(
+                f"{stats} not found; run head_statistics.py first")
+        self.df = pd.read_csv(stats)
+        self.output = output
+        missing = set(ms.TAGS) - set(self.df.model.unique())
+        if missing:
+            raise ValueError(
+                f"head statistics are missing for {sorted(missing)}")
+
+    def balance(self) -> None:
+        print_balance_summary(self.df)
+
+    def symmetric_bias(self) -> None:
+        print_symmetric_bias_summary(self.df)
+        heatmap_figure(
+            self.df, "symmetric_energy",
+            self.output / "combined_qk_diagnostics.pdf",
+            centre=0.5, label=r"$\mathscr{S}$",
+            baseline="symmetric_energy")
+
+    def pairing(self) -> None:
+        print_pairing_summary(self.df)
+        heatmap_figure(
+            self.df, "pairing",
+            self.output / "combined_qk_diagnostics_random.pdf",
+            centre=0.5, label=r"$\mathscr{P}$", baseline="pairing")
+        histogram_figure(self.df,
+                         self.output / "pairing_score_histogram.pdf")
+
+    def run(self) -> None:
+        self.symmetric_bias()
+        self.balance()
+        self.pairing()
+
+
+def main() -> None:
+    ScoreSurvey().run()
 
 
 if __name__ == "__main__":

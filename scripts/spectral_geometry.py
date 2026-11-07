@@ -182,10 +182,15 @@ class SpectralGeometry:
         if metric not in self.LABELS:
             raise ValueError(f"unknown spectral-geometry metric {metric!r}")
         df = self.data()
-        values = df.dropna(subset=[metric])
         if metric in {"mode_ratio", "shape_ratio"}:
+            # Both comparisons use the heads whose three fitted
+            # distributions have interior modes, as the paper states.
+            values = df.dropna(subset=["mode_ratio", metric])
             dropped = len(df) - len(values)
-            print(f"excluded for want of an interior mode: {dropped}")
+            print(f"excluded for want of an interior mode: {dropped} "
+                  f"of {len(df)} heads; {len(values)} retained")
+        else:
+            values = df.dropna(subset=[metric])
         medians = values.groupby("model")[metric].median()
         precision = 3 if metric == "sigma_lambda_correlation" else 2
         print(f"{self.LABELS[metric]}: per-model median in "

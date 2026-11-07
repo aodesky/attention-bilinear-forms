@@ -92,10 +92,15 @@ class LayerSpec:
     k_name: str | None
     q_shard: str
     k_shard: str | None
+    # Further tensors a layout needs, as (role, tensor name, shard).  The
+    # MLA layout composes the key from the latent projection, its RMSNorm
+    # gain and the per-head up-projection.
+    extra: tuple[tuple[str, str, str], ...] = ()
 
     @property
     def shards(self) -> tuple[str, ...]:
-        return tuple(dict.fromkeys(x for x in (self.q_shard, self.k_shard) if x))
+        names = [self.q_shard, self.k_shard, *(shard for _, _, shard in self.extra)]
+        return tuple(dict.fromkeys(x for x in names if x))
 
 
 @dataclass(frozen=True)
@@ -114,6 +119,16 @@ class Architecture:
     rope_theta: float | None
     rope_partial_factor: float
     rope_style: str | None
+    # Trailing multi-token-prediction layers (DeepSeek-V3, GLM-4.5) carry
+    # attention weights of their own but are not part of the main stack.
+    n_mtp_layers: int
+    # Multi-head latent attention (DeepSeek-V2/V3, Moonlight): the head
+    # dimension is qk_nope_head_dim + qk_rope_head_dim and the key is
+    # W_UK (diag(gamma) W_DKV x) for the content part, W_KR x for the shared
+    # rotary part.  None for every other layout.
+    qk_nope_head_dim: int | None
+    qk_rope_head_dim: int | None
+    kv_lora_rank: int | None
 
 
 def utc_now() -> str:
@@ -318,15 +333,34 @@ def architecture_from_config(config: Mapping[str, Any]) -> Architecture:
     n_heads = config_int(config, "num_attention_heads", "n_head", "n_heads")
     n_layers = config_int(config, "num_hidden_layers", "n_layer", "n_layers")
     n_kv_heads = int(config.get("num_key_value_heads", n_heads))
-    if d_model % n_heads:
+    mla_types = {"deepseek_v2", "deepseek_v3"}
+    qk_nope_head_dim = qk_rope_head_dim = kv_lora_rank = None
+    if model_type in mla_types:
+        if config.get("q_lora_rank") is not None:
+            raise ValueError(
+                "MLA with a low-rank query projection (q_lora_rank set) is not supported; "
+                "only the full q_proj variant (Moonlight, DeepSeek-V2-Lite) is"
+            )
+        qk_nope_head_dim = config_int(config, "qk_nope_head_dim")
+        qk_rope_head_dim = config_int(config, "qk_rope_head_dim")
+        kv_lora_rank = config_int(config, "kv_lora_rank")
+        head_dim = qk_nope_head_dim + qk_rope_head_dim
+        if n_kv_heads != n_heads:
+            raise ValueError("MLA keys are per query head; expected num_key_value_heads == num_attention_heads")
+    elif config.get("head_dim") is not None:
+        head_dim = int(config["head_dim"])
+    elif d_model % n_heads:
         raise ValueError(f"hidden size {d_model} is not divisible by {n_heads} heads")
-    head_dim = int(config.get("head_dim", d_model // n_heads))
+    else:
+        head_dim = d_model // n_heads
 
     separate_qk_types = {
-        "cohere", "gemma", "gemma2", "gemma3_text", "llama", "mistral",
+        "cohere", "gemma", "gemma2", "gemma3_text", "glm4_moe", "llama", "mistral",
         "mixtral", "olmo", "olmo2", "qwen2", "qwen3",
     }
-    if model_type == "opt":
+    if model_type in mla_types:
+        layout = "mla"
+    elif model_type == "opt":
         layout = "separate_qk"
     elif model_type in separate_qk_types:
         layout = "separate_qk"
@@ -363,14 +397,27 @@ def architecture_from_config(config: Mapping[str, Any]) -> Architecture:
             float(config.get("rope_theta", config.get("rotary_emb_base", 10000.0)))
             if positional_method(config, model_type) == "rope" else None
         ),
-        rope_partial_factor=float(config.get("partial_rotary_factor", config.get("rotary_pct", 1.0))),
+        # For MLA the rotary coordinates are stored first and reordered to the
+        # split-half layout, so the stored forms use split-half RoPE on the
+        # leading qk_rope_head_dim coordinates like every other RoPE model.
+        rope_partial_factor=(
+            qk_rope_head_dim / head_dim if layout == "mla"
+            else float(config.get("partial_rotary_factor", config.get("rotary_pct", 1.0)))
+        ),
         rope_style=("split_half" if positional_method(config, model_type) == "rope" else None),
+        n_mtp_layers=int(config.get("num_nextn_predict_layers", 0)),
+        qk_nope_head_dim=qk_nope_head_dim,
+        qk_rope_head_dim=qk_rope_head_dim,
+        kv_lora_rank=kv_lora_rank,
     )
 
 
 def layer_number(name: str) -> int | None:
     match = re.search(r"(?:^|\.)(?:layers|h)\.(\d+)\.", name)
     return int(match.group(1)) if match else None
+
+
+MLA_ROLES = ("q_proj", "kv_a_proj_with_mqa", "kv_a_layernorm", "kv_b_proj")
 
 
 def discover_layers(
@@ -399,6 +446,10 @@ def discover_layers(
         elif architecture.layout == "mpt_fused":
             if name.endswith(".attn.Wqkv.weight"):
                 slot["qkv"] = (name, shard)
+        elif architecture.layout == "mla":
+            for role in MLA_ROLES:
+                if name.endswith(f".self_attn.{role}.weight"):
+                    slot[role] = (name, shard)
 
     specs: list[LayerSpec] = []
     for layer in sorted(found):
@@ -408,31 +459,57 @@ def discover_layers(
                 LayerSpec(layer, architecture.layout, slot["q"][0], slot["k"][0],
                           slot["q"][1], slot["k"][1])
             )
+        elif architecture.layout == "mla" and set(MLA_ROLES) <= slot.keys():
+            specs.append(
+                LayerSpec(layer, architecture.layout, slot["q_proj"][0], None,
+                          slot["q_proj"][1], None,
+                          extra=tuple((role, *slot[role]) for role in MLA_ROLES[1:]))
+            )
         elif "qkv" in slot:
             specs.append(
                 LayerSpec(layer, architecture.layout, slot["qkv"][0], None,
                           slot["qkv"][1], None)
             )
     expected = set(range(architecture.n_layers))
+    mtp = set(range(architecture.n_layers,
+                    architecture.n_layers + architecture.n_mtp_layers))
     actual = {spec.layer for spec in specs}
-    if actual != expected:
+    if actual != expected | mtp:
         missing = sorted(expected - actual)
+        extra = sorted(actual - expected - mtp)
         raise ValueError(
             f"Found {len(actual)}/{architecture.n_layers} attention layers; "
-            f"missing {missing[:20]}{'...' if len(missing) > 20 else ''}"
+            f"missing {missing[:20]}{'...' if len(missing) > 20 else ''}; "
+            f"unexpected {extra[:20]}"
         )
-    return specs
+    if mtp:
+        print(f"Skipping {len(mtp)} multi-token-prediction layer(s): {sorted(mtp)}", flush=True)
+    return [spec for spec in specs if spec.layer in expected]
 
 
-def reject_nonlinear_qk_normalization(weight_map: Mapping[str, str]) -> None:
-    """Reject checkpoints whose deployed attention score is not bilinear."""
+def reject_nonlinear_qk_normalization(weight_map: Mapping[str, str], allow: bool) -> None:
+    """Reject QK-norm checkpoints unless explicitly allowed.
+
+    With QK-norm the deployed score is the bilinear form W_K^T D W_Q
+    (D the product of the q_norm and k_norm gains) times per-token positive
+    scalars.  What is extracted is W_K^T W_Q, the pre-normalization form;
+    the gains are not applied.
+    """
     q_norms = [name for name in weight_map if name.endswith(".self_attn.q_norm.weight")]
     k_norms = [name for name in weight_map if name.endswith(".self_attn.k_norm.weight")]
-    if q_norms or k_norms:
+    if (q_norms or k_norms) and not allow:
         raise ValueError(
-            "Checkpoint applies nonlinear Q/K normalization after q_proj/k_proj; "
+            "Checkpoint applies Q/K normalization after q_proj/k_proj; "
             "its deployed attention scores are not fixed bilinear forms. "
-            "Pre-normalization Q/K matrices are intentionally not extracted."
+            "Pass --allow-qk-norm to extract the pre-normalization form W_K^T W_Q."
+        )
+    latent_norms = [name for name in weight_map if name.endswith(".self_attn.kv_a_layernorm.weight")]
+    if latent_norms and not allow:
+        raise ValueError(
+            "Checkpoint applies RMSNorm to the latent key (MLA kv_a_layernorm); "
+            "its deployed scores carry a per-token scalar on the key side. "
+            "Pass --allow-qk-norm to extract the weight form with the norm's gain "
+            "absorbed and the per-token scalar omitted."
         )
 
 
@@ -502,6 +579,7 @@ def split_qk(
     q_raw: torch.Tensor,
     k_raw: torch.Tensor | None,
     architecture: Architecture,
+    extra: Mapping[str, torch.Tensor] | None = None,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Return Q [n_q,h,d] and K [n_kv,h,d] in output-by-input convention."""
     d = architecture.d_model
@@ -509,17 +587,24 @@ def split_qk(
     nq = architecture.n_heads
     nk = architecture.n_kv_heads
 
+    if architecture.layout == "mla":
+        if extra is None or set(extra) != set(MLA_ROLES[1:]):
+            raise ValueError(f"MLA layout needs the tensors {MLA_ROLES[1:]}")
+        return split_qk_mla(q_raw, extra, architecture)
+
     if architecture.layout == "separate_qk":
         if k_raw is None:
             raise ValueError("Separate-Q/K layout requires a K tensor")
+        # nn.Linear weights are [output, input]; head i is rows i*h:(i+1)*h.
+        # Shape alone cannot distinguish the two orientations of a square
+        # matrix, so the convention is required rather than guessed.
         q = q_raw
         k = k_raw
-        if q.shape == (d, nq * h):
-            q = q.T
-        if k.shape == (d, nk * h):
-            k = k.T
         if q.shape != (nq * h, d) or k.shape != (nk * h, d):
-            raise ValueError(f"Unexpected separate Q/K shapes: {tuple(q.shape)}, {tuple(k.shape)}")
+            raise ValueError(
+                f"Unexpected separate Q/K shapes: {tuple(q.shape)}, {tuple(k.shape)}; "
+                f"expected [{nq * h}, {d}] and [{nk * h}, {d}] (output by input)"
+            )
         return q.reshape(nq, h, d), k.reshape(nk, h, d)
 
     if architecture.layout == "gpt2_fused":
@@ -554,6 +639,62 @@ def split_qk(
         return packed[:, 0], packed[:, 1]
 
     raise AssertionError(architecture.layout)
+
+
+def split_qk_mla(
+    q_raw: torch.Tensor,
+    extra: Mapping[str, torch.Tensor],
+    architecture: Architecture,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Q and K of multi-head latent attention as [n_heads, h, d] matrices.
+
+    Following DeepSeek's modeling code (q_lora_rank None):
+
+        q_h      = W_Q,h x                      split into nope (n_nope) and rope (n_rope)
+        c, k_R   = W_DKV x, W_KR x              (kv_a_proj_with_mqa; k_R shared by all heads)
+        k_nope,h = W_UK,h RMSNorm(c)            (kv_a_layernorm, then kv_b_proj)
+        score    = q_nope^T k_nope + RoPE(q_R)^T RoPE(k_R)
+
+    RMSNorm(c) = diag(gamma) c / rms(c); the gain gamma is absorbed into the
+    key and the per-token scalar 1/rms(c) is omitted, as the q_norm/k_norm
+    gains are for QK-norm models.  DeepSeek applies RoPE to interleaved pairs
+    (2i, 2i+1); those coordinates are reordered to the split-half layout
+    (i, i + n_rope/2) and placed first, so the stored head coordinates are
+    [rope (split-half order), nope] and the standard split-half RoPE on the
+    leading n_rope coordinates reproduces the model.
+    """
+    d = architecture.d_model
+    nq = architecture.n_heads
+    n_nope, n_rope, r = architecture.qk_nope_head_dim, architecture.qk_rope_head_dim, architecture.kv_lora_rank
+    assert n_nope is not None and n_rope is not None and r is not None
+    h = n_nope + n_rope
+    if n_rope % 2:
+        raise ValueError(f"qk_rope_head_dim {n_rope} is odd")
+    kv_a = extra["kv_a_proj_with_mqa"]
+    gamma = extra["kv_a_layernorm"]
+    kv_b = extra["kv_b_proj"]
+    if q_raw.shape != (nq * h, d):
+        raise ValueError(f"q_proj has shape {tuple(q_raw.shape)}, expected [{nq * h}, {d}]")
+    if kv_a.shape != (r + n_rope, d):
+        raise ValueError(f"kv_a_proj_with_mqa has shape {tuple(kv_a.shape)}, expected [{r + n_rope}, {d}]")
+    if gamma.shape != (r,):
+        raise ValueError(f"kv_a_layernorm has shape {tuple(gamma.shape)}, expected [{r}]")
+    if kv_b.shape[1] != r or kv_b.shape[0] % nq:
+        raise ValueError(f"kv_b_proj has shape {tuple(kv_b.shape)}, expected [{nq} * (n_nope + v_head_dim), {r}]")
+    per_head = kv_b.shape[0] // nq
+    if per_head <= n_nope:
+        raise ValueError(f"kv_b_proj rows per head {per_head} do not exceed qk_nope_head_dim {n_nope}")
+
+    q_raw, kv_a, gamma, kv_b = (t.to(torch.float64) for t in (q_raw, kv_a, gamma, kv_b))
+    q = q_raw.reshape(nq, h, d)
+    w_dkv, w_kr = kv_a[:r], kv_a[r:]
+    w_uk = kv_b.reshape(nq, per_head, r)[:, :n_nope, :]           # [nq, n_nope, r]
+    k_nope = w_uk @ (gamma[:, None] * w_dkv)                      # [nq, n_nope, d]
+    k_rope = w_kr.expand(nq, n_rope, d)
+    order = torch.cat((torch.arange(0, n_rope, 2), torch.arange(1, n_rope, 2)))   # interleaved -> split-half
+    q_out = torch.cat((q[:, n_nope:, :][:, order, :], q[:, :n_nope, :]), dim=1)
+    k_out = torch.cat((k_rope[:, order, :], k_nope), dim=1)
+    return q_out.contiguous(), k_out.contiguous()
 
 
 def reduced_forms(
@@ -933,7 +1074,7 @@ def process_model(args: argparse.Namespace, db: sqlite3.Connection, repo_id: str
         )
         weight_map = tensor_map_from_file(single_path)
 
-    reject_nonlinear_qk_normalization(weight_map)
+    reject_nonlinear_qk_normalization(weight_map, args.allow_qk_norm)
     all_specs = discover_layers(weight_map, architecture)
     selected_layers = parse_layer_selection(args.layers, architecture.n_layers)
     specs = [spec for spec in all_specs if spec.layer in selected_layers]
@@ -995,13 +1136,20 @@ def process_model(args: argparse.Namespace, db: sqlite3.Connection, repo_id: str
                     if spec.k_name is not None and spec.k_shard is not None
                     else None
                 )
+                extra = {
+                    role: load_tensor(shard_paths[shard], name)
+                    for role, name, shard in spec.extra
+                }
                 source_shapes = {spec.q_name: list(q_raw.shape)}
                 source_dtypes = {spec.q_name: str(q_raw.dtype)}
                 if k_raw is not None and spec.k_name is not None:
                     source_shapes[spec.k_name] = list(k_raw.shape)
                     source_dtypes[spec.k_name] = str(k_raw.dtype)
-                q_heads, k_heads = split_qk(q_raw, k_raw, architecture)
-                del q_raw, k_raw
+                for role, name, _ in spec.extra:
+                    source_shapes[name] = list(extra[role].shape)
+                    source_dtypes[name] = str(extra[role].dtype)
+                q_heads, k_heads = split_qk(q_raw, k_raw, architecture, extra or None)
+                del q_raw, k_raw, extra
                 forms, q_factors, k_factors, head_rows = reduced_forms(
                     q_heads, k_heads, architecture, compute_dtype, storage_dtype, progress
                 )
@@ -1175,6 +1323,8 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--skip-disk-check", action="store_true",
                      help="Proceed even when the conservative space estimate is too large.")
     run.add_argument("--allow-rope", action="store_true", help="Permit models detected as using RoPE.")
+    run.add_argument("--allow-qk-norm", action="store_true",
+                     help="Permit QK-norm models; the pre-normalization form W_K^T W_Q is extracted.")
     run.add_argument("--allow-unknown-position", action="store_true")
     run.add_argument("--continue-on-error", action="store_true")
     run.set_defaults(function=run_command)

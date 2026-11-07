@@ -296,9 +296,14 @@ def simplex_weights_for_form(
 
 def rope_inverse_frequencies(model: ModelRecord) -> np.ndarray:
     """Construct the checkpoint's base RoPE frequencies for one attention head."""
-    rotary_dim = int(model.head_dim * float(
-        model.config.get("partial_rotary_factor", model.config.get("rotary_pct", 1.0))
-    ))
+    if model.model_type in {"deepseek_v2", "deepseek_v3"}:
+        # MLA: the extractor stores the rotary coordinates first, in
+        # split-half order (see split_qk_mla in extract_qk_bilinear_db.py).
+        rotary_dim = int(model.config["qk_rope_head_dim"])
+    else:
+        rotary_dim = int(model.head_dim * float(
+            model.config.get("partial_rotary_factor", model.config.get("rotary_pct", 1.0))
+        ))
     rotary_dim -= rotary_dim % 2
     if rotary_dim <= 0:
         raise ValueError(f"{model.repo_id} has no even-dimensional rotary subspace")
@@ -961,10 +966,11 @@ def analyze_model(
     db: sqlite3.Connection,
     model: ModelRecord,
 ) -> dict[str, Any]:
-    if model.model_type == "qwen3":
+    if model.model_type in {"qwen3", "deepseek_v2", "deepseek_v3"} and not args.allow_qk_norm:
         raise ValueError(
-            f"{model.repo_id} applies nonlinear Q/K normalization, so its deployed "
-            "attention score is not a fixed bilinear form"
+            f"{model.repo_id} applies a per-token normalization on the query/key path "
+            "(QK-norm, or the MLA latent RMSNorm), so its deployed attention score is "
+            "not a fixed bilinear form; pass --allow-qk-norm to analyze the weight form anyway"
         )
     heads = head_records(db, model)
     n_extreme = args.n_extreme
@@ -1242,6 +1248,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
     parser.add_argument("--n-extreme", type=int)
     parser.add_argument("--force", action="store_true")
+    parser.add_argument("--allow-qk-norm", action="store_true",
+                        help="Analyze the raw weight form of models with QK normalization.")
     parser.add_argument(
         "--refresh-interactive-only", action="store_true",
         help="Rebuild only the interactive HTML from cached analysis data.",

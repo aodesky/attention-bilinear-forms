@@ -54,6 +54,11 @@ MODELS: list[tuple[str, str]] = [
     ("bloom-7b1", "bigscience/bloom-7b1"),
     ("pythia-70m-deduped", "EleutherAI/pythia-70m-deduped"),
     ("Mistral-Small-24B-Base", "mistralai/Mistral-Small-24B-Base-2501"),
+    # Added for the ICLR response: one QK-norm model and one Muon-trained model.
+    ("Qwen3-14B-Base", "Qwen/Qwen3-14B-Base"),
+    # Trained from scratch with Muon (multi-head latent attention).
+    ("Moonlight-16B-A3B", "moonshotai/Moonlight-16B-A3B"),
+    ("GLM-4.5-Air", "zai-org/GLM-4.5-Air"),
 ]
 
 TAGS = [tag for tag, _ in MODELS]
@@ -72,6 +77,7 @@ class ModelInfo:
     head_dim: int         # the head dimension n
     positional_method: str
     n_heads_total: int
+    n_parameters: int     # total parameters of the checkpoint
 
 
 def _connect() -> sqlite3.Connection:
@@ -84,19 +90,44 @@ def _connect() -> sqlite3.Connection:
     return con
 
 
+def _parameter_count(row: sqlite3.Row) -> int:
+    """The checkpoint's parameter count.
+
+    The database records it for most models; where the hub did not
+    report one it is computed from the configuration, as the embedding
+    plus, per layer, the four attention projections and the two
+    feed-forward ones.  Layer norms and biases are omitted, being a
+    negligible fraction.
+    """
+    if row["parameter_count"] is not None:
+        return int(row["parameter_count"])
+    config = json.loads(row["config_json"])
+    hidden = int(config["hidden_size"])
+    layers = int(config["num_hidden_layers"])
+    vocab = int(config["vocab_size"])
+    ffn = int(config.get("ffn_dim") or config.get("intermediate_size"))
+    per_layer = 4 * hidden * hidden + 2 * hidden * ffn
+    return vocab * hidden + layers * per_layer
+
+
 def model_info(tag: str) -> ModelInfo:
-    """Architecture and head count of one model, from the database."""
+    """Architecture, head count and size of one model, from the database."""
     repo = REPO_OF[tag]
     with _connect() as con:
         row = con.execute(
             """select m.n_layers, m.n_heads, m.n_kv_heads, m.d_model,
-                      m.head_dim, m.positional_method,
+                      m.head_dim, m.positional_method, m.parameter_count,
+                      m.config_json,
                       (select count(*) from heads h
                        where h.model_pk = m.model_pk) as n_heads_total
                from models m where m.repo_id = ?""", (repo,)).fetchone()
     if row is None:
         raise KeyError(f"{repo} is not in the extraction database")
-    return ModelInfo(tag=tag, repo_id=repo, **dict(row))
+    fields = {k: row[k] for k in
+              ("n_layers", "n_heads", "n_kv_heads", "d_model", "head_dim",
+               "positional_method", "n_heads_total")}
+    return ModelInfo(tag=tag, repo_id=repo,
+                     n_parameters=_parameter_count(row), **fields)
 
 
 def all_model_info() -> list[ModelInfo]:

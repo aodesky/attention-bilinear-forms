@@ -36,6 +36,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib as mpl
+
+mpl.use("Agg")
+
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
 
@@ -149,9 +152,9 @@ def draw_frame(ax):
     M = embed([0.5], [0.5], [0.0], [0.0])[0]
     for V in (VC, VD):
         ax.plot([M[0], V[0]], [M[1], V[1]], color=FAMILY_COLOR,
-                linewidth=1.2, zorder=3, solid_capstyle="round")
-    ax.plot(*M, marker="o", markersize=3.0, color=FAMILY_COLOR, zorder=4)
-    lab = 0.55 * np.asarray(VD) + 0.45 * M
+                linewidth=0.7, zorder=2, solid_capstyle="round")
+    ax.plot(*M, marker="o", markersize=2.0, color=FAMILY_COLOR, zorder=2)
+    lab = 0.40 * np.asarray(VD) + 0.60 * M
     ax.text(lab[0] - 0.03, lab[1], r"$\Theta$", color=FAMILY_COLOR,
             ha="right", va="center", fontsize=10)
 
@@ -175,7 +178,7 @@ def main() -> None:
         for cl in (1, 2, 3):
             m = labels == cl
             ax.scatter(P[m, 0], P[m, 1], **marker_kwargs(cl, s=14),
-                       zorder=2)
+                       zorder=3)
         ax.set_title(label, fontsize=11, pad=20)
         ax.set_aspect("equal")
         ax.axis("off")

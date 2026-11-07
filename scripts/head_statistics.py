@@ -142,15 +142,31 @@ def run(tags: list[str]) -> None:
 
     out = pd.DataFrame(all_rows)
     path = OUT / "head_statistics.csv"
+    if set(tags) != set(ms.TAGS):
+        # A partial run replaces only the recomputed models' rows and keeps
+        # the others, so that one model can be redone without clobbering
+        # the survey.
+        if not path.exists():
+            raise FileNotFoundError(f"{path} does not exist; run without --model first")
+        kept = pd.read_csv(path)
+        kept = kept[~kept.model.isin(tags)]
+        out = pd.concat([kept, out], ignore_index=True)
+        order = {tag: i for i, tag in enumerate(ms.TAGS)}
+        unknown = set(out.model) - set(order)
+        if unknown:
+            raise RuntimeError(f"{path} holds models not in model_set.py: {sorted(unknown)}")
+        out = out.sort_values(["model", "layer", "head"], key=lambda c: c.map(order) if c.name == "model" else c,
+                              kind="stable").reset_index(drop=True)
     out.to_csv(path, index=False)
     print(f"\nWrote {path}  ({len(out)} heads, {out.model.nunique()} models)")
 
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("--model", choices=ms.TAGS, help="only this model")
+    p.add_argument("--model", nargs="+", choices=ms.TAGS,
+                   help="recompute only these models; the other models' rows are kept")
     args = p.parse_args()
-    run([args.model] if args.model else ms.TAGS)
+    run(args.model if args.model else ms.TAGS)
 
 
 if __name__ == "__main__":

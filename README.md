@@ -7,7 +7,7 @@ Visit the [project website](https://aodesky.github.io/attention-bilinear-forms/)
 
 Every attention head of a decoder-only transformer carries a bilinear
 form `L = W_K^T W_Q` on the residual stream. This repository contains
-the code that extracts those forms from fourteen pretrained models,
+the code that extracts those forms from seventeen pretrained models,
 the derived per-head measurements the paper reports, an interactive
 view of the results, and the Lean formalization of the paper's
 mathematical results.
@@ -45,9 +45,11 @@ result in a content-addressed database:
 
     python scripts/extract_qk_bilinear_db.py run --out data/bilinear-forms
 
-With no `--models` argument it extracts the fourteen models the paper
-reports. The resulting database is about 3 GB and is not included
-here.
+With no `--models` argument it extracts the seventeen models the paper
+reports. The resulting database is about 6 GB and is not included
+here. `scripts/verify_extraction.py` then recomputes one layer of every
+model directly from the raw checkpoint and compares it with the stored
+forms.
 
 **Analysis** reads the extracted forms. The per-head measurements the
 paper quotes are included in `scripts/survey_results/`, so the figures
@@ -63,10 +65,12 @@ The set of models reported in the paper is listed in
 `scripts/model_set.py`:
 `distilgpt2`, `gpt2`, `gpt2-medium`, `gpt2-large`, the OPT models at
 125m, 350m, 1.3b, 2.7b, 6.7b and 13b, `bloom-3b`, `bloom-7b1`,
-`pythia-70m-deduped` and `Mistral-Small-24B-Base-2501`. Together they
-carry 9,512 attention heads, and span learned absolute, rotary and
-ALiBi positional encodings, head dimensions 64, 80 and 128, and both
-multi-head and grouped-query attention.
+`pythia-70m-deduped`, `Mistral-Small-24B-Base-2501`, `Qwen3-14B-Base`,
+`Moonlight-16B-A3B` and `GLM-4.5-Air`. Together they carry 15,960
+attention heads, and span learned absolute, rotary and ALiBi positional
+encodings, head dimensions 64, 80, 128 and 192, multi-head,
+grouped-query and multi-head latent attention, QK-norm, and training
+with the Muon optimizer.
 
 ## Interactive plots
 
