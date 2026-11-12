@@ -26,7 +26,7 @@ mpl.rcParams["text.usetex"] = True
 
 PROJECT = Path(__file__).resolve().parent.parent
 RESULTS = PROJECT / "scripts" / "cluster_results"
-GEOM = PROJECT / "scripts" / "qk_geometry_results" / "gpt2" / "head_summary.csv"
+STATS = PROJECT / "scripts" / "survey_results" / "head_statistics.csv"
 OUT = PROJECT / "figures" / "qk_geometry"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -63,8 +63,9 @@ def load_data():
         c[i] = (u[u > 0] ** 2).sum()
         d[i] = (u[u < 0] ** 2).sum()
 
-    df = pd.read_csv(GEOM)
-    s_energy = {(int(r.layer), int(r.head)): r.S_energy_ratio
+    df = pd.read_csv(STATS)
+    df = df[df.model == "gpt2"]
+    s_energy = {(int(r.layer), int(r.head)): r.symmetric_energy
                 for r in df.itertuples()}
     s = np.array([s_energy[k] for k in keys])
     return labels, b, c, d, s
@@ -74,7 +75,7 @@ def initialized_bcd(model_tag="gpt2", seed=0):
     """(b, c, d) of the symmetric parts of randomly initialized heads."""
     import torch
     from transformers import AutoConfig, AutoModelForCausalLM
-    from qk_geometry_diagnostics import iter_qk_heads
+    from checkpoint_heads import iter_qk_heads
     torch.manual_seed(seed)
     config = AutoConfig.from_pretrained(model_tag)
     model = AutoModelForCausalLM.from_config(config)

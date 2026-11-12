@@ -41,7 +41,7 @@ CACHE = RESULTS / "gpt2_sorted_fullmod.npy"
 def compute_profiles():
     import torch
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from qk_geometry_diagnostics import iter_qk_heads, load_model
+    from checkpoint_heads import iter_qk_heads, load_model
 
     model = load_model("gpt2")
     model.eval()

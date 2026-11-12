@@ -47,7 +47,7 @@ PROJECT = Path(__file__).resolve().parent.parent
 OUT = PROJECT / "figures" / "qk_geometry"
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from qk_geometry_diagnostics import iter_qk_heads, load_model
+from checkpoint_heads import iter_qk_heads, load_model
 from cluster_head_spectra import CLUSTER_NAMES, marker_kwargs
 from plot_simplex_scatter import load_data
 

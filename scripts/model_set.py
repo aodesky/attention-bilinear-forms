@@ -11,7 +11,7 @@ bilinear form ``L = W_K^T W_Q`` already restricted to the reduced
 subspace ``im(W_K^T) + im(W_Q^T)``, so nothing here needs model weights
 or a network connection.
 
-``MODELS`` lists the fourteen models reported in the paper, in the order
+``MODELS`` lists the seventeen models reported in the paper, in the order
 of the models subsection.  The extraction database also holds the two
 Qwen3 models; they are deliberately not part of the reported set, and
 ``MODELS`` is the single place that decides this.
@@ -54,10 +54,11 @@ MODELS: list[tuple[str, str]] = [
     ("bloom-7b1", "bigscience/bloom-7b1"),
     ("pythia-70m-deduped", "EleutherAI/pythia-70m-deduped"),
     ("Mistral-Small-24B-Base", "mistralai/Mistral-Small-24B-Base-2501"),
-    # Added for the ICLR response: one QK-norm model and one Muon-trained model.
+    # QK-norm.
     ("Qwen3-14B-Base", "Qwen/Qwen3-14B-Base"),
-    # Trained from scratch with Muon (multi-head latent attention).
+    # Trained from scratch with Muon; multi-head latent attention.
     ("Moonlight-16B-A3B", "moonshotai/Moonlight-16B-A3B"),
+    # Trained with Muon.
     ("GLM-4.5-Air", "zai-org/GLM-4.5-Air"),
 ]
 

@@ -86,7 +86,6 @@ checkpoint, independently of the extractor, and compares singular values.
     observation_*.py            one runnable file per observation
     survey_results/          per-head statistics and spectra (written)
     cluster_results/         sorted spectra used by the cluster figures
-    qk_geometry_results/     per-model summaries from the earlier survey
 
 Scripts whose names begin with `plot_` or `regenerate_` draw a figure of
 the paper and write it to `figures/qk_geometry/`. Scripts beginning with

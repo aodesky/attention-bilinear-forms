@@ -106,8 +106,8 @@ def load_spectra(tag):
 
     import sys
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from qk_geometry_diagnostics import (compute_reduced_spectrum,
-                                         iter_qk_heads, load_model)
+    from checkpoint_heads import (compute_reduced_spectrum, iter_qk_heads,
+                                  load_model)
 
     model = load_model(MODELS[tag])
     model.eval()
